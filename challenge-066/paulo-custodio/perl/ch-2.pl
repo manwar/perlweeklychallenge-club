@@ -2,7 +2,7 @@
 
 # Challenge 066
 #
-# TASK #2 › Power Integers
+# TASK #2 > Power Integers
 # Submitted by: Mohammad S Anwar
 #
 # You are given an integer $N.

@@ -1,0 +1,86 @@
+<!--
+SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+SPDX-License-Identifier: BSD-2-Clause
+-->
+
+# Peter Pentchev's solutions to PWC 287
+
+\[[Home][ringlet-home] | [GitHub][github]\]
+
+## Overview
+
+This directory contains Peter Pentchev's solutions to the two tasks in
+the [Perl & Raku Weekly Challenge 287][pwc-287].
+
+## General remarks
+
+### Task 2: Valid Number
+
+There are several approaches to solving this problem:
+
+- match the input string against a regular expression
+- try to parse the input string using a pre-built parser
+
+Some languages have built-in constructs for building parsers, others can handle
+regular expressions with ease, and some are good at both, so the approach depends on
+the programming language.
+
+## Running the test suite
+
+The `tests/` subdirectory contains a Perl test suite that outputs TAP, so that
+it can be run using `prove tests` (or, for the more adventurous, `prove -v tests`).
+
+### Task 2: Valid Number
+
+This task takes a string as input, so there are two ways of running the program:
+
+- if the `PWC_FROM_STDIN` environment variable is not set to the exact value `1`,
+  the program examines the seven strings given as examples, and produces seven words on
+  its standard output stream, each one on a line by itself.
+  In other words, the program must output `true\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\n` exactly.
+- if the `PWC_FROM_STDIN` environment variable is set, the program reads a single line of
+  text from its standard input, treats it as an expression to be examined, and produces
+  a single word (either "true" or "false") on a line by itself on its standard output stream.
+
+The `PWCTest::Ch287` module in `tests/lib/` defines a `test_valid_number_default` function that
+runs a program with `PWC_FROM_STDIN` unset and expects the exact output, and also
+a `test_valid_number` function that runs a series of tests with different sequences,
+each time running the program with `PWC_FROM_STDIN` set to 1 and feeding it the sequence.
+
+If the implementation in any language should provide more than one method, then
+the program should honor the `PWC_METHOD` environment variable.
+The value "0" indicates the use of the most natural method for the language,
+the value "1" indicates the use of an alternative method, and if there are more than two,
+then the values "2", "3", etc, are used to select them.
+If `PWC_METHOD` is set to a non-numeric value or to a value that is higher than
+the index of the last supported methods, it is ignored and the program proceeds as if
+`PWC_METHOD` was set to "0".
+
+The `tests/02-perl-ch-2.t` test runs these functions on the Perl implementation and
+produces TAP output suitable for the `prove` tool.
+
+## Implementation details
+
+### Task 2: Valid Number
+
+#### Perl
+
+The Perl solution has three major elements:
+
+- `$re_valid_number` - a documented (using the `/x` modifier) regular expression that
+  determines whether a string represents a valid number or not
+- `valid_number` - a function that returns either the string "true" or the string "false"
+  depending on whether the argument represents a valid number
+- `parse_stdin` - read a line from the standard input, return it as a string to be examined
+
+## Contact
+
+These solutions were written by [Peter Pentchev][roam].
+They are developed in [the common PWC-club GitHub repository][github].
+This documentation is hosted at [Ringlet][ringlet-home].
+
+[roam]: mailto:roam@ringlet.net "Peter Pentchev"
+[github]: https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-287/ppentchev "These solutions at GitHub"
+[ringlet-home]: https://devel.ringlet.net/misc/perlweeklychallenge-club/287/ "This documentation at Ringlet"
+
+[pwc-287]: https://theweeklychallenge.org/blog/perl-weekly-challenge-287/ "The 287th Perl & Raku Weekly Challenge"

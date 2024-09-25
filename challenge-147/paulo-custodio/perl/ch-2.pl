@@ -2,7 +2,7 @@
 
 # Challenge 147
 #
-# TASK #2 › Pentagon Numbers
+# TASK #2 > Pentagon Numbers
 # Submitted by: Mohammad S Anwar
 # Write a script to find the first pair of Pentagon Numbers whose sum and
 # difference are also a Pentagon Number.

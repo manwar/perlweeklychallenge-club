@@ -2,11 +2,11 @@
 
 # Challenge 067
 #
-# TASK #1 › Number Combinations
+# TASK #1 > Number Combinations
 # Submitted by: Mohammad S Anwar
 #
 # You are given two integers $m and $n. Write a script print all possible
-# combinations of $n numbers from the list 1 2 3 … $m.
+# combinations of $n numbers from the list 1 2 3 ... $m.
 #
 # Every combination should be sorted i.e. [2,3] is valid combination but [3,2] is not.
 #

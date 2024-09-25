@@ -2,7 +2,7 @@
 
 # Challenge 071
 #
-# TASK #1 › Peak Element
+# TASK #1 > Peak Element
 # Submitted by: Mohammad S Anwar
 # You are given positive integer $N (>1).
 #
@@ -11,7 +11,7 @@
 #
 # In the end it should print peak elements in the array, if found.
 #
-# An array element is called peak if it is bigger than it’s neighbour.
+# An array element is called peak if it is bigger than it's neighbour.
 #
 # Example 1
 # Array: [ 18, 45, 38, 25, 10, 7, 21, 6, 28, 48 ]

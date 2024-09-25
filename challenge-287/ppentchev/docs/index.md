@@ -261,6 +261,21 @@ directly as three scalar variables instead of any kind of structured data.
 Of course it would be possible to stash them into a hash or a simple object, but
 this way was a bit simpler.
 
+#### Raku
+
+The Raku solution is quite similar to the Perl one, but it encapsulates the number of
+actions taken and the current state of the password string into a `Strength` class.
+It also encapsulates the state of the parser used to find too-long runs of the same
+character into a `RunState` class.
+
+The `fix_runs()`, `fix_length()`, and `fix_missing()` functions are translated into
+the `fix-runs()`, `fix-length()`, and `fix-missing()` methods of the `Strength` class.
+
+#### Rust
+
+Just as in the Raku solution, we encapsulate some of the functions within the `RunState` and
+`Strength` structs.
+
 ### Task 2: Valid Number
 
 #### Perl
@@ -273,6 +288,22 @@ The Perl solution has three major elements:
   depending on whether the argument represents a valid number
 - `parse_stdin` - read a line from the standard input, return it as a string to be examined
 
+#### Raku
+
+In the Raku solution we chose the other way: write a simple grammar (`ValidNumber`) that
+will recognize a number as defined in the problem.
+The grammar is so simple that it does not even need to define any actions; returning
+a non-empty, defined result is enough to determine whether the input was recognized.
+
+Well, okay, since Raku grammars are actually regular expressions in disguise, one might
+argue that we did not go so far the other way then :)
+
+#### Rust
+
+In the Rust solution we use [the nom parser combinators library][rust-nom] to build
+a parser that, once again, returns nothing (all the `_p_*()` functions return
+the `()` unit as the parsed result), but recognizes a number when it sees one.
+
 ## Contact
 
 These solutions were written by [Peter Pentchev][roam].
@@ -284,3 +315,4 @@ This documentation is hosted at [Ringlet][ringlet-home].
 [ringlet-home]: https://devel.ringlet.net/misc/perlweeklychallenge-club/287/ "This documentation at Ringlet"
 
 [pwc-287]: https://theweeklychallenge.org/blog/perl-weekly-challenge-287/ "The 287th Perl & Raku Weekly Challenge"
+[rust-nom]: https://crates.io/crates/nom "nom, eating data byte by byte"

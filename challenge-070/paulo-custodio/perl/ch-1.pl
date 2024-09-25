@@ -2,7 +2,7 @@
 
 # Challenge 070
 #
-# TASK #1 › Character Swapping
+# TASK #1 > Character Swapping
 # Submitted by: Mohammad S Anwar
 # You are given a string $S of size $N.
 #

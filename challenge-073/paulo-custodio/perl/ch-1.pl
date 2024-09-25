@@ -2,7 +2,7 @@
 
 # Challenge 073
 #
-# TASK #1 › Min Sliding Window
+# TASK #1 > Min Sliding Window
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers @A and sliding window size $S.
 #

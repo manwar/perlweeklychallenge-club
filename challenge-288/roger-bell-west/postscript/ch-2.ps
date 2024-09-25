@@ -1,0 +1,212 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+/set.difference {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known not {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/encode {
+    aload pop
+    exch 1000000 mul add
+} bind def
+
+/decode {
+    dup 1000000 idiv
+    exch
+    1000000 mod
+    2 array astore
+} bind def
+
+/contiguousblock {
+    0 dict begin
+    /a exch def
+    /y a length def
+    /x a 0 get length def
+    /starts 0 dict def
+    0 1 x 1 sub {
+        /cx exch def
+        0 1 y 1 sub {
+            cx exch
+            2 array astore
+            encode
+            starts exch true put
+        } for
+    } for
+    /maxblock 0 def
+    {
+        starts length 0 le {
+            exit
+        } if
+        /start starts keys 0 get def
+        /cstart start decode def
+        /queue [ start ] def
+        /visited << start true >> def
+        {
+            queue length 0 le {
+                exit
+            } if
+            queue apop.left /here exch def /queue exch def
+            /chere here decode def
+            [
+                [ -1 0 ]
+                [ 1 0 ]
+                [ 0 -1 ]
+                [ 0 1 ]
+            ] {
+                /delta exch def
+                delta 0 get 0 ge chere 0 get 0 gt or
+                delta 0 get 0 le chere 0 get x 1 sub lt or and
+                delta 1 get 0 ge chere 1 get 0 gt or and
+                delta 1 get 0 le chere 1 get y 1 sub lt or and {
+                    /cthere [
+                        chere 0 get delta 0 get add
+                        chere 1 get delta 1 get add
+                    ] def
+                    /there cthere encode def
+                    visited there known not
+                    a cthere 1 get get cthere 0 get get
+                    a cstart 1 get get cstart 0 get get deepeq and {
+                        visited there true put
+                        /queue queue there apush.right def
+                    } if
+                } if
+            } forall
+        } loop
+        /sz visited keys length def
+        sz maxblock gt {
+            /maxblock sz def
+        } if
+        /starts starts visited set.difference def
+    } loop
+    maxblock
+    end
+} bind def
+
+(contiguousblock) test.start
+[[(x) (x) (x) (x) (o)] [(x) (o) (o) (o) (o)] [(x) (o) (o) (o) (o)] [(x) (x) (x) (o) (o)]] contiguousblock 11 eq test
+[[(x) (x) (x) (x) (x)] [(x) (o) (o) (o) (o)] [(x) (x) (x) (x) (o)] [(x) (o) (o) (o) (o)]] contiguousblock 11 eq test
+[[(x) (x) (x) (o) (o)] [(o) (o) (o) (x) (x)] [(o) (x) (x) (o) (o)] [(o) (o) (o) (x) (x)]] contiguousblock 7 eq test
+test.end

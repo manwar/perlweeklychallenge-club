@@ -2,7 +2,7 @@
 
 # Challenge 072
 #
-# TASK #1 › Trailing Zeroes
+# TASK #1 > Trailing Zeroes
 # Submitted by: Mohammad S Anwar
 # You are given a positive integer $N (<= 10).
 #

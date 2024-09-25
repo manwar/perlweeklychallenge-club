@@ -2,7 +2,7 @@
 
 # Challenge 066
 #
-# TASK #1 › Divide Integers
+# TASK #1 > Divide Integers
 # Submitted by: Mohammad S Anwar
 #
 # You are given two integers $M and $N.

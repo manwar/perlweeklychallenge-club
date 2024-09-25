@@ -2,7 +2,7 @@
 
 # Challenge 074
 #
-# TASK #1 › Majority Element
+# TASK #1 > Majority Element
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers of size $N.
 #

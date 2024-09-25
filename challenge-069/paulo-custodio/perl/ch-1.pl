@@ -2,7 +2,7 @@
 
 # Challenge 069
 #
-# TASK #1 › Strobogrammatic Number
+# TASK #1 > Strobogrammatic Number
 # Submitted by: Mohammad S Anwar
 # A strobogrammatic number is a number that looks the same when looked at upside
 # down.
