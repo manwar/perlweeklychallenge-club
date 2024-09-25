@@ -18,8 +18,8 @@
 ## Guest Language: Elixir
 
 * [Task 1](elixir/ch-1.exs)
-* [Task 2](elixir/ch-2.exs)
+<!-- * [Task 2](elixir/ch-2.exs) -->
 
 ## Blog Post
 
-[Perl Weekly Challenge: Strong but Valid](https://packy.dardan.com/b/RU)
+[Perl Weekly Challenge: A Man, A Plan, A Canal... PANAMA!](https://packy.dardan.com/b/Rm)
