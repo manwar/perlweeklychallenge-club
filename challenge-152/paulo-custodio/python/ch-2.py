@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 152
 #
@@ -20,27 +20,25 @@
 #
 # Output: 25
 
-use Modern::Perl;
-use List::Util qw( min max );
+import sys
 
-my($x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4) = @ARGV;
+x1, y1, x2, y2, x3, y3, x4, y4 = map(int, sys.argv[1:])
 
 # area of rectangles
-my $area12 = abs($x2-$x1)*abs($y2-$y1);
-my $area34 = abs($x4-$x3)*abs($y4-$y3);
+area12 = abs(x2-x1)*abs(y2-y1)
+area34 = abs(x4-x3)*abs(y4-y3)
 
 # intersection of rectangles
-my $x5 = max($x1, $x3);
-my $y5 = max($y1, $y3);
-my $x6 = min($x2, $x4);
-my $y6 = min($y2, $y4);
+x5 = max(x1, x3)
+y5 = max(y1, y3)
+x6 = min(x2, x4)
+y6 = min(y2, y4)
 
-my $area56 = abs($x6-$x5)*abs($y6-$y5);
+area56 = abs(x6-x5)*abs(y6-y5)
 
-if ($x5 > $x6 || $y5 > $y6) {   # no intersection
-    $area56 = 0;
-}
+if x5 > x6 or y5 > y6:   # no intersection
+    area56 = 0
 
-my $area = $area12 + $area34 - $area56;
+area = area12 + area34 - area56
 
-say $area;
+print(area)

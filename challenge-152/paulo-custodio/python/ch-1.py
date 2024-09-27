@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 152
 #
@@ -33,24 +33,18 @@
 #
 #     Minimum Sum Path = 5 + 2 + 1 + 0 + 1 => 9
 
-use Modern::Perl;
-use List::Util qw( sum min );
+import fileinput
 
-my @lines = read_lines();
-say min_sum_path(@lines);
+def read_input():
+    lines = []
+    for line in fileinput.input():
+        cols = [int(x) for x in line.split()]
+        lines.append(cols)
+    return lines
 
+def min_sum_path(lines):
+    path = [min(x) for x in lines]
+    return sum(path)
 
-sub read_lines {
-    my @lines;
-    while (<>) {
-        my @col = split " ", $_;
-        push @lines, \@col;
-    }
-    return @lines;
-}
-
-sub min_sum_path {
-    my(@lines) = @_;
-    my @path = map {min @$_} @lines;
-    return sum(@path);
-}
+lines = read_input()
+print(min_sum_path(lines))
