@@ -2,10 +2,10 @@
 
 # Challenge 149
 #
-# TASK #2 › Largest Square
+# TASK #2 > Largest Square
 # Submitted by: Roger Bell_West
 # Given a number base, derive the largest perfect square with no repeated
-# digits and return it as a string. (For base>10, use ‘A’..‘Z’.)
+# digits and return it as a string. (For base>10, use 'A'..'Z'.)
 #
 # Example:
 #     f(2)="1"

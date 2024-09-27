@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 153
 #
@@ -22,31 +22,20 @@
 #
 #     Since 1! + 2! + 3! => 1 + 2 + 6 <> 123
 
-use Modern::Perl;
-use List::Util qw( sum );
+import sys
 
-my $n = shift or die "Usage: ch-2.pl N\n";
-say is_factorian($n);
+def fact(n):
+    if n < 2:
+        return 1
+    else:
+        return n * fact(n-1)
 
+def is_factorian(n):
+    fact_sum = [fact(int(x)) for x in str(n)]
+    if sum(fact_sum) == n:
+        return True
+    else:
+        return False
 
-sub fact {
-    my($n) = @_;
-    if ($n < 2) {
-        return 1;
-    }
-    else {
-        return $n * fact($n-1);
-    }
-}
-
-sub is_factorian {
-    my($n) = @_;
-    my @digits = split //, $n;
-    my @fact = map { fact($_) } @digits;
-    if (sum(@fact) == $n) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
+n = int(sys.argv[1])
+print(1 if is_factorian(n) else 0)

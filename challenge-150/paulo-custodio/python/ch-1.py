@@ -28,21 +28,17 @@
 #     The 51st digit in the first term having at least 51 digits
 #     '1234567856781234567856781234567812345678567812345678' is 7.
 
-use Modern::Perl;
+import sys
 
-my $pos = 51;
+pos = 51
 
-@ARGV==2 or die "Usage: ch-1.pl word word\n";
-my @words = @ARGV;
-my $fib_word = fib_word(@words[0..1], $pos);
-say substr($fib_word, $pos-1, 1);
+def fib_word(a, b, length):
+    seq = [a, b]
+    while len(seq[-1]) <= length:
+        seq.append(seq[-2] + seq[-1])
+        seq.pop(0)
+    return seq[-1]
 
-sub fib_word {
-    my($a, $b, $len) = @_;
-    my @seq = ($a, $b);
-    while (length($seq[-1]) <= $len) {
-        push @seq, $seq[-2].$seq[-1];
-        shift @seq;
-    }
-    return $seq[-1];
-}
+words = sys.argv[1:3]
+fib_word_result = fib_word(words[0], words[1], pos)
+print(fib_word_result[pos - 1])

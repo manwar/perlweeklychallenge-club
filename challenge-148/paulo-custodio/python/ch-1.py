@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 148
 #
@@ -12,18 +12,15 @@
 # Example
 # 2, 4, 6, 30, 32 are the first 5 Eban numbers.
 
-use Modern::Perl;
-use Lingua::EN::Numbers qw(num2en);
+from num2words import num2words
 
-my @out;
-for my $n (1..100) {
-    push @out, $n if is_eban($n);
-}
-say join(", ", @out);
+def is_eban(n):
+    en = num2words(n)
+    return 'e' not in en
 
+out = []
+for n in range(1, 101):
+    if is_eban(n):
+        out.append(n)
 
-sub is_eban {
-    my($n) = @_;
-    my $en = num2en($n);
-    return $en !~ /e/;
-}
+print(", ".join(map(str, out)))

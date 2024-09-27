@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 151
 #
@@ -24,21 +24,15 @@
 # The best choice would be to first rob house (index=0) then rob house (index=3) then finally house (index=5).
 # This would give us 4 + 6 + 3 =13.
 
-use Modern::Perl;
-use List::Util qw( max );
+import sys
 
-say max_gain(@ARGV);
+def max_gain(valuables):
+    gain = valuables[0]
+    max_next = 0
+    for i in range(2, len(valuables)):
+        next = max_gain(valuables[i:])
+        max_next = max(max_next, next)
+    return gain+max_next
 
-
-sub max_gain {
-    my(@valuables) = @_;
-
-    my $gain = $valuables[0];       # start with this house
-    my $max_next = 0;
-    for my $i (2..$#valuables) {
-        my $next = max_gain(@valuables[$i .. $#valuables]);
-        $max_next = max( $max_next, $next );
-    }
-
-    return $gain + $max_next;
-}
+valuables = list(map(int, sys.argv[1:]))
+print(max_gain(valuables))

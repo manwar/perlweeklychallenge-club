@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 150
 #
@@ -16,21 +16,14 @@
 # The smallest positive square-free integers are
 #     1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 29, 30, ...
 
-use Modern::Perl;
-use ntheory qw( factor_exp );
+from sympy import factorint
 
-my @out;
-for my $n (1..500) {
-    push @out, $n if is_squarefree($n);
-}
-say join(", ", @out);
+def is_squarefree(n):
+    factors = factorint(n)
+    for k in factors.values():
+        if k > 1:
+            return False
+    return True
 
-sub is_squarefree {
-    my($n) = @_;
-    my @factors = factor_exp($n);
-    for (@factors) {
-        my($p, $k) = @$_;
-        return 0 if $k > 1;
-    }
-    return 1;
-}
+out = [n for n in range(1, 501) if is_squarefree(n)]
+print(", ".join(map(str, out)))
