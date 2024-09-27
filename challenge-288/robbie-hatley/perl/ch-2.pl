@@ -152,12 +152,9 @@ sub max_contiguous_block_size ($mref) {
                   # If we get to here, current AND neighbor already have block numbers.
                   # If they're the same, take no action:
                   next if $ids{$ne} == $ids{$id};
-                  # Otherwise, assign the lesser block number to all cells with the greater block number:
-                  my ($l, $g);
-                  if ($ids{$id}<$ids{$ne}) {$l = $ids{$id}; $g = $ids{$ne};}
-                  if ($ids{$id}>$ids{$ne}) {$g = $ids{$id}; $l = $ids{$ne};}
+                  # Otherwise, assign the neighbor's block number to all cells with the current block number:
                   for my $key (keys %ids) {
-                     if ($ids{$key} == $g) {$ids{$key} = $l;}
+                     if ($ids{$key} == $ids{$id}) {$ids{$key} = $ids{$ne};}
                   }
                }
             }
