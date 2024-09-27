@@ -2,7 +2,7 @@
 
 # Challenge 153
 #
-# TASK #1 › Left Factorials
+# TASK #1 > Left Factorials
 # Submitted by: Mohammad S Anwar
 # Write a script to compute Left Factorials of 1 to 10. Please refer
 # OEIS A003422 for more information.
