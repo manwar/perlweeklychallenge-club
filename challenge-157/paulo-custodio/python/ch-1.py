@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 157
 #
@@ -22,31 +22,25 @@
 # Input: @n = (1,2,3,4,5)
 # Output: AM = 3.0, GM = 2.6, HM = 2.2
 
-use Modern::Perl;
-use List::Util qw( sum product );
+import sys
+import numpy as np
 
-my @n = @ARGV or die "Usage: ch-1.pl n...\n";
-say "AM = ", f(am(@n)), ", GM = ", f(gm(@n)), ", HM = ", f(hm(@n));
+def am(n):
+    return np.sum(n) / len(n)
 
-sub am {
-    my(@n) = @_;
-    return sum(@n)/scalar(@n);
-}
+def gm(n):
+    base = abs(np.prod(n))
+    exp = 1 / len(n)
+    return base ** exp
 
-sub gm {
-    my(@n) = @_;
-    my $base = abs(product(@n));
-    my $exp = 1/scalar(@n);
-    return $base ** $exp;
-}
+def hm(n):
+    invn = [1/x for x in n]
+    return len(invn) / np.sum(invn)
 
-sub hm {
-    my(@n) = @_;
-    my @invn = map {1/$_} @n;
-    return scalar(@invn)/sum(@invn);
-}
+def f(n):
+    return f"{n:.1f}"
 
-sub f {
-    my($n) = @_;
-    return sprintf("%.1f", $n);
-}
+n = list(map(float, sys.argv[1:]))
+if not n:
+    raise ValueError("Usage: ch-1.py n...")
+print(f"AM = {f(am(n))}, GM = {f(gm(n))}, HM = {f(hm(n))}")
