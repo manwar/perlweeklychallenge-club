@@ -10,9 +10,6 @@
 
 use v5.36;
 
-our $verbose = 0;
-sub vsay( @args ) { say @args if $verbose };
-
 sub closest_palindrome_1( $str ) {
     # Searching in two directions: down and up, until we find a number
     # that is a palindrome.
