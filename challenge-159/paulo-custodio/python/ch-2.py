@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 159
 #
@@ -19,8 +19,8 @@
 # Input: $n = 20
 # Output: 0
 
-use Modern::Perl;
-use ntheory qw( moebius );
+from sympy.functions.combinatorial.numbers import mobius
+import sys
 
-my $n = shift || 1;
-say moebius($n);
+n = int(sys.argv[1])
+print(mobius(n))
