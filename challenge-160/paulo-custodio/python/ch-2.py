@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 160
 #
@@ -25,18 +25,16 @@
 # Input: @n = (2, 4, 2)
 # Output: 1
 
-use Modern::Perl;
-use List::Util qw( sum );
+import sys
 
-say equilibrium_index(@ARGV);
+def equilibrium_index(n):
+    for i in range(1, len(n) - 1):
+        left = sum(n[0:i])
+        right = sum(n[i + 1:])
+        if left == right:
+            return i
+        if left > right:
+            return -1
+    return -1
 
-sub equilibrium_index {
-    my(@n) = @_;
-    for my $i (1 .. $#n-1) {
-        my $left = sum(@n[0..$i-1]);
-        my $right = sum(@n[$i+1..$#n]);
-        return $i if $left==$right;
-        return -1 if $left>$right;
-    }
-    return -1;
-}
+print(equilibrium_index(list(map(int, sys.argv[1:]))))
