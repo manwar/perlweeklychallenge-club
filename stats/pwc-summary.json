@@ -2,6 +2,13 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
+   "subtitle" : {
+      "text" : "[Champions: 317] Last updated at 2024-09-28 09:51:24 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -323,12 +330,13 @@
          "Yves Orton"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -647,10 +655,10 @@
             44,
             11,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -705,8 +713,8 @@
             6,
             0,
             0,
-            1,
             8,
+            1,
             0,
             104,
             0,
@@ -767,7 +775,7 @@
             2,
             5,
             0,
-            214,
+            215,
             2,
             0,
             7,
@@ -969,10 +977,10 @@
             11,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -1291,25 +1299,17 @@
             5,
             10,
             1
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 317] Last updated at 2024-09-28 09:03:30 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
