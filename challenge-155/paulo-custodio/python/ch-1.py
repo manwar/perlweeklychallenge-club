@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 155
 #
@@ -15,22 +15,18 @@
 # Expected Output
 # 3, 5, 7, 13, 17, 19, 23, 37
 
-use Modern::Perl;
-use List::Util qw( product );
-use ntheory qw( is_prime next_prime );
+from math import prod
+from sympy import isprime, nextprime
 
-my %fortunate;
+fortunate = {}
 
-my @primes = (2);
-while (scalar(keys %fortunate) < 8) {
-    my $p = product(@primes);
-    my $m = 2;
-    while (!is_prime($p+$m)) {
-        $m++;
-    }
-    $fortunate{$m} = 1;
+primes = [2]
+while len(fortunate) < 8:
+    p = prod(primes)
+    m = 2
+    while not isprime(p + m):
+        m += 1
+    fortunate[m] = 1
+    primes.append(nextprime(primes[-1]))
 
-    push @primes, next_prime($primes[-1]);
-}
-
-say join(", ", sort {$a<=>$b} keys %fortunate);
+print(", ".join(map(str, sorted(fortunate.keys()))))

@@ -2,7 +2,7 @@
 
 # Challenge 154
 #
-# TASK #1 › Missing Permutation
+# TASK #1 > Missing Permutation
 # Submitted by: Mohammad S Anwar
 # You are given possible permutations of the string 'PERL'.
 #

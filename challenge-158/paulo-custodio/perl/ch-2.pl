@@ -2,7 +2,7 @@
 
 # Challenge 158
 #
-# TASK #2 › First Series Cuban Primes
+# TASK #2 > First Series Cuban Primes
 # Submitted by: Mohammad S Anwar
 # Write a script to compute first series Cuban Primes <= 1000. Please refer
 # wikipedia page for more informations.

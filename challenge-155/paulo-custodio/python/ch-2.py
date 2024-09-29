@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 155
 #
@@ -21,33 +21,37 @@
 # 0, 1, 1, 2, 0, 2, 2, 1, ...
 # This sequence has period 8, so p(3) = 8.
 
-use Modern::Perl;
-use Math::Fibonacci;
+from math import isqrt
 
-my $order = 3;
+order = 3
 
-my @fibs = Math::Fibonacci::series(100);
-my @fibs_mod = map {$_ % $order} @fibs;
-say find_period(@fibs_mod);
+def fibonacci_series(n):
+    fibs = [0, 1]
+    for i in range(2, n):
+        fibs.append(fibs[-1] + fibs[-2])
+    return fibs
 
-sub find_period {
-    my(@n) = @_;
-    my $period = 1;
-    while (1) {
-        return 0 if 3*$period > scalar(@n);
-        return $period if is_period($period, @n);
-        $period++;
-    }
-    return 0;
-}
+def is_period(period, n):
+    base = n[0:period]
+    ord1 = n[period:2*period]
+    ord2 = n[2*period:3*period]
 
-sub is_period {
-    my($period, @n) = @_;
-    my @base = @n[0 .. $period-1];
-    my @ord1 = @n[$period .. 2*$period-1];
-    my @ord2 = @n[2*$period .. 3*$period-1];
+    if base != ord1:
+        return 0
+    if base != ord2:
+        return 0
+    return 1
 
-    return 0 if "@base" ne "@ord1";
-    return 0 if "@base" ne "@ord2";
-    return 1;
-}
+def find_period(n):
+    period = 1
+    while True:
+        if 3 * period > len(n):
+            return 0
+        if is_period(period, n):
+            return period
+        period += 1
+    return 0
+
+fibs = fibonacci_series(100)
+fibs_mod = [fib % order for fib in fibs]
+print(find_period(fibs_mod))

@@ -2,9 +2,9 @@
 
 # Challenge 154
 #
-# TASK #2 › Padovan Prime
+# TASK #2 > Padovan Prime
 # Submitted by: Mohammad S Anwar
-# A Padovan Prime is a Padovan Number that’s also prime.
+# A Padovan Prime is a Padovan Number that's also prime.
 #
 # In number theory, the Padovan sequence is the sequence of integers P(n)
 # defined by the initial values.

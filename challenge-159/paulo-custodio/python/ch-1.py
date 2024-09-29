@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 159
 #
@@ -18,26 +18,21 @@
 # Input: $n = 4
 # Output: 0/1, 1/4, 1/3, 1/2, 2/3, 3/4, 1/1.
 
-use Modern::Perl;
-use ntheory qw( gcd );
+from math import gcd
+import sys
 
-my $n = shift || 1;
-say join(", ", farey_sequence($n));
+def farey_sequence(n):
+    seq = [(0, 1), (1, 1)]  # first and last terms
 
-sub farey_sequence {
-    my($n) = @_;
-    my @seq = ([0,1], [1,1]);   # first and last terms
+    for i in range(1, n + 1):
+        for j in range(i + 1, n + 1):
+            if gcd(i, j) == 1:
+                seq.append((i, j))
 
-    for my $i (1..$n) {
-        for my $j ($i+1..$n) {
-            if (gcd($i, $j)==1) {
-                push @seq, [$i,$j];
-            }
-        }
-    }
+    seq.sort(key=lambda x: x[0] / x[1])
+    seq = [f"{num[0]}/{num[1]}" for num in seq]
 
-    @seq = sort { $a->[0]/$a->[1] <=> $b->[0]/$b->[1] } @seq;
-    @seq = map {$_->[0].'/'.$_->[1]} @seq;
+    return seq
 
-    return @seq;
-}
+n = int(sys.argv[1])
+print(", ".join(farey_sequence(n)))

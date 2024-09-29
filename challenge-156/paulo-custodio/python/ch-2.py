@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 156
 #
@@ -27,32 +27,33 @@
 # As the proper divisors of 70 are 1, 2, 5, 7, 10, 14, and 35; these sum to
 # 74, but no subset of these sums to 70.
 
-use Modern::Perl;
-use Math::Combinatorics 'combine';
-use List::Util 'sum';
-use ntheory 'divisors';
+import sys
+from itertools import combinations
+from math import isqrt
 
-my $n = shift || 0;
-say is_weird($n);
+def divisors(n):
+    divs = set()
+    for i in range(1, isqrt(n) + 1):
+        if n % i == 0:
+            divs.add(i)
+            divs.add(n // i)
+    return divs
 
-sub proper_divisors {
-    my($n) = @_;
-    return grep {$_!=$n} divisors($n);
-}
+def proper_divisors(n):
+    return [d for d in divisors(n) if d != n]
 
-sub check_no_subset_sums_n {
-    my($n, @div) = @_;
-    for my $k (1 .. scalar(@div)) {
-        for my $combin (combine($k, @div)) {
-            return 0 if sum(@$combin) == $n;
-        }
-    }
-    return 1;
-}
+def check_no_subset_sums_n(n, div):
+    for k in range(1, len(div) + 1):
+        for combin in combinations(div, k):
+            if sum(combin) == n:
+                return False
+    return True
 
-sub is_weird {
-    my($n) = @_;
-    my @div = proper_divisors($n);
-    return 0 if sum(@div) <= $n;
-    return check_no_subset_sums_n($n, @div);
-}
+def is_weird(n):
+    div = proper_divisors(n)
+    if sum(div) <= n:
+        return False
+    return check_no_subset_sums_n(n, div)
+
+n = int(sys.argv[1])
+print(1 if is_weird(n) else 0)

@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 160
 #
@@ -24,24 +24,21 @@
 # Input: $n = 6
 # Output: Six is three, three is five, five is four, four is magic.
 
-use Modern::Perl;
-use Lingua::EN::Numbers qw(num2en);
+import sys
+from num2words import num2words
 
-say sequence(shift||1);
+def sequence(n=1):
+    out = []
+    while n != 4:
+        num_en = num2words(n)
+        length = len(num_en)
+        len_en = num2words(length)
 
-sub sequence {
-    my($n) = @_;
-    my @out;
-    while ($n != 4) {
-        my $num_en = num2en($n);
-        my $len = length($num_en);
-        my $len_en = num2en($len);
+        out.append(f"{num_en} is {len_en}")
+        n = length
 
-        push @out, "$num_en is $len_en";
-        $n = $len;
-    }
+    out.append("four is magic.")
+    out[0] = out[0].capitalize()
+    return ", ".join(out)
 
-    push @out, "four is magic.";
-    $out[0] =~ s/(\w)/\U$1/;
-    return join(", ", @out);
-}
+print(sequence(int(sys.argv[1])))

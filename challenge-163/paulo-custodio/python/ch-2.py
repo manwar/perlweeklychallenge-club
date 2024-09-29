@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 163
 #
@@ -35,20 +35,17 @@
 #            23 70
 #               70
 
-use Modern::Perl;
-use List::Util 'sum';
+import sys
+from functools import reduce
 
-sub summation {
-    my(@n)=@_;
-    while (@n>1) {
-        shift @n;
-        my @m;
-        for my $i (0..$#n) {
-            $m[$i]=sum(@n[0..$i]);
-        }
-        @n=@m;
-    }
-    return shift @n;
-}
+def summation(*n):
+    n = list(n)
+    while len(n) > 1:
+        n.pop(0)
+        m = []
+        for i in range(len(n)):
+            m.append(sum(n[:i + 1]))
+        n = m
+    return n[0]
 
-say summation(@ARGV);
+print(summation(*map(int, sys.argv[1:])))

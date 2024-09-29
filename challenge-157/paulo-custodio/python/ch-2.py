@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 157
 #
@@ -30,17 +30,24 @@
 #
 # Since 8 in base 3 is 22.
 
-use Modern::Perl;
-use Math::BaseCnv qw( cnv );
+import sys
+from math import log
 
-my $n = $ARGV[0] or die "Usage: ch-2.pl n\n";
-say is_brazilian($n);
+def cnv(n, base):
+    if n == 0:
+        return '0'
+    digits = []
+    while n:
+        digits.append(int(n % base))
+        n //= base
+    return ''.join(str(x) for x in digits[::-1])
 
-sub is_brazilian {
-    my($n) = @_;
-    for my $b (2 .. $n-2) {
-        my $cnv = cnv($n, 10, $b);
-        return 1 if $cnv =~ /^(\w)\1*$/;
-    }
-    return 0;
-}
+def is_brazilian(n):
+    for b in range(2, n - 1):
+        cnv_value = cnv(n, b)
+        if all(c == cnv_value[0] for c in cnv_value):
+            return True
+    return False
+
+n = int(sys.argv[1])
+print(1 if is_brazilian(n) else 0)
