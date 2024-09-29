@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 163
 #
@@ -22,17 +22,12 @@
 #
 # Since (2 & 3) + (2 & 4) + (3 & 4) => 2 + 0 + 0 =>  2.
 
-use Modern::Perl;
+def sum_biwise_and(*n):
+    total_sum = 0
+    for i in range(len(n) - 1):
+        for j in range(i + 1, len(n)):
+            total_sum += n[i] & n[j]
+    return total_sum
 
-sub sum_biwise_and {
-    my(@n)=@_;
-    my $sum=0;
-    for my $i (0..$#n-1) {
-        for my $j ($i+1..$#n) {
-            $sum+=$n[$i]&$n[$j];
-        }
-    }
-    return $sum;
-}
-
-say sum_biwise_and(@ARGV);
+import sys
+print(sum_biwise_and(*map(int, sys.argv[1:])))
