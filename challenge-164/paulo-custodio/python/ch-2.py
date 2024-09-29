@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 164
 #
@@ -28,26 +28,25 @@
 #                       => 1 + 0 + 0
 #                       => 1
 
-use Modern::Perl;
-use List::Util 'sum';
+import sys
+from typing import List
 
-sub is_happy {
-    my($n)=@_;
-    my %seen;
-    while ($n!=1) {
-        return 0 if $seen{$n}++;
-        $n=sum(map {$_*$_} split //, $n);
-    }
-    return 1;
-}
+def is_happy(n: int) -> bool:
+    seen = set()
+    while n != 1:
+        if n in seen:
+            return False
+        seen.add(n)
+        n = sum(int(digit) ** 2 for digit in str(n))
+    return True
 
-sub happy_numbers {
-    my($n)=@_;
-    my @happy;
-    for (my $i=1; @happy<$n; $i++) {
-        push @happy,$i if is_happy($i);
-    }
-    return @happy;
-}
+def happy_numbers(n: int) -> List[int]:
+    happy = []
+    i = 1
+    while len(happy) < n:
+        if is_happy(i):
+            happy.append(i)
+        i += 1
+    return happy
 
-say join ", ", happy_numbers(shift);
+print(", ".join(map(str, happy_numbers(int(sys.argv[1])))))
