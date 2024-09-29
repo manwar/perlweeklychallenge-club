@@ -1,340 +1,279 @@
-# About Passwords, Birds, and Common Regexes
+# The Simple and the Fast
 
-**Challenge 287 solutions in Perl by Matthias Muth**
+**Challenge 288 solutions in Perl by Matthias Muth**
 
-## Task 1: Strong Password
+Two quite different solutions for Task 1:<br/>
+'The Simple', looping away from the input number until it finds a palindrome, and<br/>
+'The Fast', which *constructs* three palindromes that are candidates to be the closest,
+and then chooses among them.<br/>
+Read more below!
 
-> You are given a string, $str.<br/>
-> Write a program to return the minimum number of steps required to make the given string very strong password. If it is already strong then return 0.<br/>
-> Criteria:<br/>
-> - It must have at least 6 characters.<br/>
-> - It must contains at least one lowercase letter, at least one upper case letter and at least one digit.<br/>
-> - It shouldn't contain 3 repeating characters in a row.<br/>
-> 
-> Following can be considered as one step:<br/>
-> - Insert one character<br/>
-> - Delete one character<br/>
-> - Replace one character with another<br/>
-> 
-> Example 1<br/>
-> Input: \$str = "a"<br/>
-> Output: 5<br/>
-> <br/>
-> Example 2<br/>
-> Input: \$str = "aB2"<br/>
-> Output: 3<br/>
-> <br/>
-> Example 3<br/>
-> Input: \$str = "PaaSW0rd"<br/>
-> Output: 0<br/>
-> <br/>
-> Example 4<br/>
-> Input: \$str = "Paaasw0rd"<br/>
-> Output: 1<br/>
-> <br/>
-> Example 5<br/>
-> Input: \$str = "aaaaa"<br/>
-> Output: 3<br/>
+And for Task 2, a 'recursive flood-filling-and-counting' solution.
 
-#### Dealing with short passwords
+Great challenges!<br/>
+Thank you, Mohammad Anwar and Peter Campbell Smith!
 
-If the password is too short, there is no other way than inserting characters up to the required length.
+## Task 1: Closest Palindrome
 
-Example 2 is a test case for this:<br/>
-    `aB2` => 3 (like insert `X`, `Y`, `Z` to get `aB1XYZ` )<br/>
-but also:<br/>
-    `""` => 6 (like `aB1cde`).
-
-#### Dealing with missing categories
-
-For every category (digits, upper case or lower case letters) that we don't find, we can choose to *insert* a new character or to *replace* an existing one.
-
-We will see later that both operations have their use, in different cases.
-
-We can use some extra test cases for this:<br/>
-    `abcABC` => 1 (e.g. *insert* `1` to get `abcABC1`, or *replace* `b` by `1` to get `a1cABC`)<br/>
-    `abcdef` => 2 (e.g. *insert* `1` and `A` to get `abcdef1A`, or *replace* `b` by `1` and `c` by `A` to get `a1Adef`)<br/>
-
-#### Dealing with repeating characters (like 'aaaaa')
-
-The third criteria says that the password '*shouldn't contain 3 repeating characters in a row*'.<br/>
-If we find a sequence that is longer, there are three ways to modify it to comply with the rule:
-
-* *Insert* a different character into the sequence after every second character.<br/>
-  This will split the sequence into chunks of two, separated by the new characters:<br/>
-    `aaaaaa => aaiaaiaa` (2 *insert*s for a sequence of 6)<br/>
-    `aaaaaaaaa => aaiaaiaaiaaia` (**4 *inserts*** for a sequence of 9)<br/>
-* *Replace* every third character by a different one.<br/>
-  This also splits it into chunks of 2, but it is more efficient.
-  Each replaced character 'consumes' one character of the sequence and thus reduces the amount of work still left to do:<br/>
-      `aaaaaa => aaraar`  (2 replacements for a sequence of 6)<br/>
-      `aaaaaaaaa => aaraaraar` (**3 *replacements*** for a sequence of 9)<br/>
-
-* *Delete* all characters in excess of the first 2.<br/>
-    Deleting characters is a dangerous thing, and it is inefficient:<br/>
-    Dangerous, because it also reduces the overall length of the password,
-    and in the end we might be violating the 'at least 6 characters' criteria.<br/>
-    Inefficient, because each *deletion* only takes care of exactly one excess character,
-    whereas at the same time, *replacing* one character at the right spot 'neutralizes' three of them:<br/>
-        `aaaaaa => aa`  (4 *deletions* for a sequence of 6)<br/>
-        `aaaaaaaaa => aa` (**7 *deletions*** for a sequence of 9)<br/>
-    So we better do not consider 'delete' operations at all.
-
-Some more examples:
-
-| sequence length | example sequence | *insert* result     | *replace* result | *insert* operations needed | *replace* operations needed |
-| :-------------: | :--------------- | :------------------ | :--------------- | :------------------------: | :-------------------------: |
-|        6        | `aaaaaa`         | `aabaabaa`          | `aabaab`         |             2              |              2              |
-|        7        | `aaaaaaa`        | `aabaabaaba`        | `aabaaba`        |             3              |            **2**            |
-|        9        | `aaaaaaaaa`      | `aabaabaabaaba`     | `aabaabaab`      |             4              |            **3**            |
-|       12        | `aaaaaaaaaaaa`   | `aabaabaabaabaabaa` | `aaXaaXaaXaaX`   |             5              |            **4**            |
-
-These examples show that for dealing with longer sequences, *replacing* characters is more efficient than *inserting* characters.<br/>
-This leads us to some more test cases:<br/>
-    `aaa1B` => 1 (e.g. *inserting* one `b` to get `aaba1B`)<br/>    `aaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aaba1B`)<br/>    `aaaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aabaa1B`)<br/>    `aaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaab1B`)<br/>    `aaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaaba1B`)<br/>    `aaaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaabaa1B`)<br/>
-    `aaaaaaaaaaaa1B` => 4 (e.g. *replacing* 4 times `a` by `b` to get `aabaabaabaab1B`)
-
-#### Up to three birds with one shot!
-
-It turns out that if we are lucky, by *inserting* one character we can solve three problems at the same time:
-
-* make the password longer,
-* add a missing category by choosing the character to be from that category,
-* shorten a long repeated-character sequence by inserting the character to split off two characters of the sequence.
-
-In this example, one operation solves all three shortcomings, which makes it another good test case:<br/>
-`aaaBc` => 1 (e.g. by *inserting * one digit at the right place, like `aa1aBc`).<br/>
-
-#### And another two birds with another shot...
-
-Similarly, we also can solve *two* problems at the same time by *replacing* one character:
-
-* add a missing category by choosing the character to be from that category,
-* shorten a long repeating character sequence by choosing a 'third' character to be replaced, which will 'neutralize' the two characters preceding it.
-
-For example (and yet another test case):<br/>
-    `aaaabC` => `aa1abC` => 1 change only for solving two shortcomings.
-
-
-#### Solution structure
-
-For our solution this means that we can proceed as follows:
-
-1. We determine how many *inserts* are needed
-    for reaching the **minimum password length**.<br/>
-    Every *insert* is counted as a cost for our final result
-    (the number of operations needed).<br/>
-    In addition, we keep a separate counter for the inserted characters,
-    which we will decrement when we use them 'for more birds'
-    (to add categories or to split up long sequences).
-
-2. For each **missing category**,
-    we first use one of the characters inserted in step 1
-    for adding that category.<br/>
-    This causes *no additional cost*,
-    as long as we have any of those characters left.
-
-3. If we *still* are missing categories,
-    we *replace* existing characters of another category
-    by a character of the respective missing category.<br/>
-    Every character to be replaced is counted as a cost.<br/>
-    We don't care to choose *which* characters to be replaced here,
-    because we might choose good positions later,
-    when we try to split long repeating sequences.<br/>
-    For this, we also keep another counter for the replaced characters.<br/>
-    The reason why we prefer replacing to inserting here is that later on,
-    *replaced* characters might serve better than *inserted* ones.
-
-4. For every **long repeating character sequence** that we find,
-    we do this:
-
-    Position any *replacement* characters from the previous step
-    on every third character of the sequence,
-    each one 'neutralizing' *three* characters of the repetition,
-    until we have used all the *replacement* characters, or the sequence is fully neutralized.<br/>
-    There's *no additional cost* for this.
-
-    If there are no *replaced* characters available any more,
-    position any *inserted* characters from step 1
-    after every second character of the sequence,
-    neutralizing two characters of the sequence.<br/>
-    Even if using the *inserted* characters is less efficient than using replacements, these here come for free, because we've paid for them already. Now they can be used with *no additional cost*.
-
-    For the rest of the sequence,
-    we *replace* every third characters within the sequence to split it up further.<br/>
-    These replacements count for the cost, though.
-
-5. We return the cost that we have determined.
-
-Here are some more 'combination' test cases:<br/>
-
-    `aaaacccc` => 2 (like `aa1accBc)
-         (replacing one `a` by a digit,<br/>
-         and one `c` by an upper case character.<br/>
-         and two `b`s by anything else but a `b`).<br/>
-    `aaaaaabbbbbb` => 4 (like `aa1aaXbbYbbY`),<br/>
-         (replacing one `a` by a digit,<br/>
-         another `a` by  an upper case character,<br/>
-         and two `b`s by anything else but a `b`).<br/>
-    `aaacc` => 2 (e.g. `aa1ccX`).<br/>
-
-And this is my solution:
-
-```perl
-use v5.36;
-
-use List::Util qw( sum min );
-
-use constant MIN_PASSWORD_LENGTH => 6;
-
-sub strong_password( $str ) {
-    # Make pattern matches easier to write.
-    $_ = $str;
-
-    my ( $cost, $available_inserted, $available_replaced ) = ( 0, 0, 0 );
-
-    # 1: Do *inserts* for bringing the password up to length.
-    if ( length() < MIN_PASSWORD_LENGTH ) {
-        $available_inserted = MIN_PASSWORD_LENGTH - length();
-        $cost += $available_inserted;
-    }
-
-    # 2: Use the inserted characters to add missing categories
-    #    (*no additional cost!*),
-    my $n_missing_categories = sum( ! /\d/, ! /[a-z]/, ! /[A-Z]/ );
-    if ( $n_missing_categories && $available_inserted ) {
-        my $n_to_use = min( $n_missing_categories, $available_inserted );
-        $n_missing_categories -= $n_to_use;
-    }
-
-    # 3: If there still are categories missing,
-    #    we *replace* existing characters.
-    if ( $n_missing_categories ) {
-        $available_replaced = $n_missing_categories;
-        $cost += $available_replaced;
-    }
-
-    # 4: Deal with long repeating sequences (3 or more same characters).
-    while ( /(.)\1\1\1*/g ) {
-        my $sequence_length = length( $& );
-        while ( $sequence_length > 2 && $available_replaced ) {
-            $sequence_length -= 3;
-            --$available_replaced;
-        }
-        while ( $sequence_length > 2 && $available_inserted ) {
-            $sequence_length -= 2;
-            --$available_inserted;
-        }
-        while ( $sequence_length > 2 ) {
-            $sequence_length -= 3;
-            ++$cost;
-        }
-    }
-    return $cost;
-}
-```
-
-The `ch-1.pl` file also contains switchable debugging output, and all the test cases. This is its output:
-
-```terminal
-ok 1 - Example 1: strong_password( 'a' ) == 5
-ok 2 - Example 2: strong_password( 'aB2' ) == 3
-ok 3 - Example 3: strong_password( 'PaaSW0rd' ) == 0
-ok 4 - Example 4: strong_password( 'Paaasw0rd' ) == 1
-ok 5 - Example 5: strong_password( 'aaaaa' ) == 2 (like 'aa1aaB')
-ok 6 - Extra 1: strong_password( '' ) == 6 (like '1aBcde')
-ok 7 - Extra 2: strong_password( 'abcABC' ) == 1 (like 'a1cABC')
-ok 8 - Extra 3: strong_password( 'abcdef' ) == 2 (like 'a1Adef')
-ok 9 - Extra 4: strong_password( 'aaa1B' ) == 1 (like 'aaba1B' using one insert)
-ok 10 - Extra 5: strong_password( 'aaaa1B' ) == 1 (like 'aaba1B' using one replace)
-ok 11 - Extra 6: strong_password( 'aaaaa1B' ) == 1 (like 'aabaa1B')
-ok 12 - Extra 7: strong_password( 'aaaaaa1B' ) == 2 (like 'aabaab1B')
-ok 13 - Extra 8: strong_password( 'aaaaaaa1B' ) == 2 (like 'aabaaba1B')
-ok 14 - Extra 9: strong_password( 'aaaaaaaa1B' ) == 2 (like 'aabaabaa1B')
-ok 15 - Extra 10: strong_password( 'aaaaaaaaaaaa1B' ) == 4 (like 'aabaabaabaab1B')
-ok 16 - Extra 11: strong_password( 'aaabC' ) == 1 (like 'aa1abC' using one insert)
-ok 17 - Extra 12: strong_password( 'aaaabC' ) == 1 (like 'aa1abC')
-ok 18 - Extra 13: strong_password( 'aaaacccc' ) == 2 (like 'aa1accBc')
-ok 19 - Extra 14: strong_password( 'aaaaaabbbbbb' ) == 4 (like 'aa1aaXbbYbbY')
-ok 20 - Extra 15: strong_password( 'aaacc' ) == 2 (like 'aa1ccX')
-1..20
-```
-
-It has never been easier to create good passwords! :wink::joy:
-
-
-
-## Task 2: Valid Number
-
-> You are given a string, $str.<br/>
-> Write a script to find if it is a valid number.<br/>
-> Conditions for a valid number:<br/>
->
-> - An integer number followed by an optional exponent.<br/>
-> - A decimal number followed by an optional exponent.<br/>
-> - An integer number is defined with an optional sign '-' or '+' followed by digits.<br/>
-> <br/>
-> Decimal Number:<br/>
-> A decimal number is defined with an optional sign '-' or '+' followed by one of the following definitions:<br/>
-> - Digits followed by a dot '.'.<br/>
-> - Digits followed by a dot '.' followed by digits.<br/>
-> - A dot '.' followed by digits.<br/>
-> <br/>
-> Exponent:<br/>
-> An exponent is defined with an exponent notation 'e' or 'E' followed by an integer number.<br/>
-> <br/>
+> You are given a string, \$str, which is an integer.<br/>
+> Write a script to find out the closest palindrome, not including itself. If there are more than one then return the smallest.<br/>
+> The closest is defined as the absolute difference minimized between two integers.<br/>
 > <br/>
 > Example 1<br/>
-> Input: $str = "1"<br/>
-> Output: true<br/>
+> Input: \$str = "123"<br/>
+> Output: "121"<br/>
 > <br/>
 > Example 2<br/>
-> Input: $str = "a"<br/>
-> Output: false<br/>
+> Input: \$str = "2"<br/>
+> Output: "1"<br/>
+> There are two closest palindrome "1" and "3". Therefore we return the smallest "1".<br/>
 > <br/>
 > Example 3<br/>
-> Input: $str = "."<br/>
-> Output: false<br/>
+> Input: \$str = "1400"<br/>
+> Output: "1441"<br/>
 > <br/>
 > Example 4<br/>
-> Input: $str = "1.2e4.2"<br/>
-> Output: false<br/>
-> <br/>
-> Example 5<br/>
-> Input: $str = "-1."<br/>
-> Output: true<br/>
-> <br/>
-> Example 6<br/>
-> Input: $str = "+1E-8"<br/>
-> Output: true<br/>
-> <br/>
-> Example 7<br/>
-> Input: $str = ".44"<br/>
-> Output: true<br/>
+> Input: \$str = "1001"<br/>
+> Output: "999"<br/>
 
-Probably the easiest way to solve this is to use the `Regexp::Common` CPAN module:
+#### The Simple
+
+I first thought about *generating* the closest palindrome,
+but seeing the rich variety of cases in the examples,
+I found it too complicated at first.
+That's why I did a quick and simple 'brute force' approach.
+
+This was really easy to write (and easy to read, I hope!).<br/>
+Testing a number for being a palindrome in Perl is as simple as it can get:<br/>
+    `reverse( $s ) eq $s`.<br/>
+
+So let's try every possible distance, from close to further away.
+Trying a distance value first below our number and then above
+already gives us the right priority.
+If the number at that distance is a palindrone: Done!
+
+```perl
+sub closest_palindrome() {
+    for ( my $distance = 1; ; ++$distance ) {
+        for my $try ( $str - $distance, $str + $distance ) {
+            return $try
+                if reverse( $try ) eq $try;
+        }
+    }
+}
+```
+
+This works like a breeze!<br/>
+Except that for large values, looping over all possible numbers  may take a while. 
+
+So that 'constructing' idea didn't get out of my head,
+because it would be so much faster!<br/>
+And I found a solution, too!
+
+#### The Fast
+
+Let's consider input numbers with an even number of digits first.
+Like `345678`.<br/>
+Splitting it into a left half and a right half, the general form is<br/>
+                $` L_{1} \cdots L_{n} R_{1} \cdots R_{n} `$.<br/>
+Looking for a palindrome that is close,
+any changes we do to the original number should preferably be in the 'lower' digits
+(those further to the right).
+So for a good guess, let's keep the left part as it is,
+and mirror it to the right to get a palindrome:<br/>
+                $` L_{1} \cdots L_{n} L_{n} \cdots L_{1} `$.<br/>
+This gives us `345543`.
+
+We see that actually the only degrees of freedom we have are in the left part,
+because for any palindrome, the right part is fully determined by the left part.
+
+The left part kind of identifies a 'block' of numbers of $n$ digits on the right side,
+ranging from  $` 0 0 \cdots 0 `$ to $` 9 9 \cdots 9 `$.
+There is exactly one palindrome in each block
+(where the right side is equal to the left side reversed).
+It's obvious that the palindromes 'closest' to our input number
+can only be in the same block, one block above or one block below.
+
+As each 'block' contains exactly one palindrome,
+we only need to generate the three palindromes of those three blocks,
+and then choose the closest.
+
+To illustrate this, for our example of `345678` with its left part of `345`,
+one of these three palindromes will be the closest:
+
+* The left part, *in*creased by one, then concatenated with the reversed result of that:<br/>
+        $L_{1} \cdots ( L_{n} + 1) ( L_{n} + 1 ) \dots L_{1}$:    `346-643`
+
+* The left part itself, concatenated with its reversed:<br/>
+        $L_{1} \cdots L_{n} L_{n} \dots L_{1}$:                          `345-543`  (this is the closest!)
+
+* The left part, *de*creased by one, then concatenated with itself reversed:<br/>
+        $L_{1} \cdots ( L_{n} - 1) ( L_{n} - 1 ) \dots L_{1}$:    `344-443`
+
+We have a special case when the left part consists of `9`s only,
+as for example for `999234` with its left part of `999`.
+This becomes `1000` when increased, which is one digit longer.
+We must make sure to mirror one digit less in this case,
+or we can simply 'construct' the whole palindrome in this case,
+using `( '1' . ( '0' x ( $n - 1 ) ) . '1' )`.
+That's `1000001` (from `1000-001`) in this example.
+
+The second special case is when the left part is a power of ten,
+as for `100234` with its left part of `100`.
+The decreased left part will consist of `9`s only,
+having one digit less than the original left part.
+We generate that palindrome as `( '9' x ( $n - 1 ) )`,
+resulting in `99999` (from `99-999`) in this example.
+
+From the three numbers generated,
+we choose the one that is closest to our input number,
+making sure that the chosen number is not the input number itself.
+We also need to prefer a lower number if the distance is the same.
+
+For input numbers with odd lengths, it's actually the same, only that the
+'left part' must include the 'middle' digit, and for the 'right' part of
+the palindrome, we only use as many digits as needed, *not* including
+that middle digit.
+The two special cases work the same, we 'construct' the palindromes just like before.
+
+We need to deal with one other special case: negative numbers as input.
+They are not excluded in the task description
+('which is an integer' -- might be a negative integer, too!).
+As `0` is a palindrome (well...ahem...),
+it is the also the closest palindrome to any negative integer.<br/>
+Voilà.
 
 ```perl
 use v5.36;
 
-use Regexp::Common;
+sub closest_palindrome( $str ) {
+    return undef unless $str =~ /^-?[0-9]+$/;
 
-sub valid_number( $str ) {
-    return $str =~ /^$RE{num}{real}$/;
+    # Edge case: negative numbers.
+    return "0" if $str < 0;
+
+    my $left_part = substr( $str, 0, int( ( length( $str ) + 1 ) / 2 ) );
+    my ( $closest, $closest_distance ) = ( undef, undef );
+    for my $try ( $left_part - 1, $left_part, $left_part + 1 ) {
+        next unless $try >= 0;    # Edge case on input '0'.
+        my $palindrome =
+            length $try < length $left_part
+                ? '9' x ( length( $str ) - 1 ) :
+            length $try > length $left_part
+                ? ( '1' . ( '0' x ( length( $str ) - 1 ) ) . '1' )
+                : ( $try
+                    . substr( reverse( $try ), length( $str ) % 2 ) );
+        my $distance = abs( $palindrome - $str );
+        if ( $palindrome != $str
+            && ( ! defined $closest_distance
+                ||  $distance < $closest_distance ) )
+        {
+            $closest = $palindrome;
+            $closest_distance = abs( $palindrome - $str );
+        }
+    }
+    return $closest;
 }
 ```
-This works well for all examples.
 
-If you don't want to use a module, this regular expression might be used instead:
+This is the more direct path to the closest palindrome.<br/> 
+Palindrome algorithms for every need! :-)
+
+
+## Task 2: Contiguous Block
+
+> You are given a rectangular matrix where all the cells contain either x or o.<br/>
+> Write a script to determine the size of the largest contiguous block.<br/>
+> A contiguous block consists of elements containing the same symbol which share an edge (not just a corner) with other elements in the block, and where there is a path between any two of these elements that crosses only those shared edges.<br/>
+> <br/>
+> Example 1<br/>
+>     Input: \$matrix = [<br/>
+>                        ['x', 'x', 'x', 'x', 'o'],<br/>
+>                        ['x', 'o', 'o', 'o', 'o'],<br/>
+>                        ['x', 'o', 'o', 'o', 'o'],<br/>
+>                        ['x', 'x', 'x', 'o', 'o'],<br/>
+>                      ]<br/>
+>     Ouput: 11<br/>
+>         There is a block of 9 contiguous cells containing 'x'.<br/>
+>         There is a block of 11 contiguous cells containing 'o'.<br/>
+> <br/>
+> Example 2<br/>
+>     Input: \$matrix = [<br/>
+>                        ['x', 'x', 'x', 'x', 'x'],<br/>
+>                        ['x', 'o', 'o', 'o', 'o'],<br/>
+>                        ['x', 'x', 'x', 'x', 'o'],<br/>
+>                        ['x', 'o', 'o', 'o', 'o'],<br/>
+>                      ]<br/>
+>     Ouput: 11<br/>
+>         There is a block of 11 contiguous cells containing 'x'.<br/>
+>         There is a block of 9 contiguous cells containing 'o'.<br/>
+> <br/>
+> Example 3<br/>
+>     Input: \$matrix = [<br/>
+>                        ['x', 'x', 'x', 'o', 'o'],<br/>
+>                        ['o', 'o', 'o', 'x', 'x'],<br/>
+>                        ['o', 'x', 'x', 'o', 'o'],<br/>
+>                        ['o', 'o', 'o', 'x', 'x'],<br/>
+>                      ]<br/>
+>     Ouput: 7<br/>
+>         There is a block of 7 contiguous cells containing 'o'.<br/>
+>         There are two other 2-cell blocks of 'o'.<br/>
+>         There are three 2-cell blocks of 'x' and one 3-cell.<br/>
+
+#### Easy and recursive
+
+I am using a recursive flood fill algorithm to traverse contiguous areas.<br/>
+Maybe that sounds more complicates than it actually is.
+
+The main function holds  a matrix `@visited`, where we mark all cells that we have identified to be part of an area. The main subroutine finds the next un-visited cell and calls the recursive `flood_and_mark` function, with the input matrix, the row and column coordinates of the cell, and a reference to the `@visited` matrix as parameters.
+Of all returned values, the maximum is kept, and returned in the end.
+
+The `flood_and_mark` function is built to return the number of cells that could be 'flood-filled'. At least one for the cell itself, but also added the results of flood-filling all neighbor cells that have the same symbol (`'x'` or `'o'`) and that are not marked visited yet. The most complicated thing here is to find the coordinates of the neighbor cells, without accessing coordinates outside of the matrix.
+
+The number of recursions is the number of cells in the largest contiguous area *at most*.
+So for the examples and also for some bigger matrices this should not be a constraint.
+
+I'm using a multiple values `for` loop for iterating of the `( $r, $c )` coordinate pairs of the neighbor cells.
+Together with those coordinate pairs being stored 'flat' in the `@neighbors` array this makes things easy.<br/>(The `for_loop` feature, stable and part of the implicit feature bundle since Perl 5.36).
+
 ```perl
 use v5.36;
 
-sub valid_number( $str ) {
-    return
-        $str =~ /^ [+-]? (?: \.\d+ | \d+(?:\.\d*)? ) (?: [Ee] [+-]? \d+ )? $/xa;
+use List::Util qw( max );
+
+sub flood_and_mark( $matrix, $r, $c, $visited ) {
+    $visited->[$r][$c] = 1;
+    my @neighbors = (
+        $r > 0                  ? ( $r - 1, $c ) : (),
+        $c > 0                  ? ( $r, $c - 1 ) : (),
+        $c < $matrix->[$r]->$#* ? ( $r, $c + 1 ) : (),
+        $r < $matrix->$#*       ? ( $r + 1, $c ) : (),
+    );
+    my $symbol = $matrix->[$r][$c];
+    my $count = 1;      # For this field itself.
+    for my ( $next_r, $next_c ) ( @neighbors ) {
+        next
+            if $matrix->[$next_r][$next_c] ne $symbol
+                || $visited->[$next_r][$next_c];
+        $count += flood_and_mark( $matrix, $next_r, $next_c, $visited );
+    }
+    return $count;
+}
+
+sub contiguous_block( $matrix ) {
+    my @visited;
+    my $max = 0;
+    for my $r ( 0..$matrix->$#* ) {
+        for my $c ( 0..$matrix->[$r]->$#* ) {
+            if ( ! $visited[$r][$c] ) {
+                my $area = flood_and_mark( $matrix, $r, $c, \@visited );
+                $max = $area
+                    if $area > $max;
+            }
+        }
+    }
+    return $max;
 }
 ```
-
-Nothing really special about it, except maybe the `a` modifier, which is used to make sure that no other Unicode characters with a 'digit' property match `\d`. Basically this makes `\d` equivalent to `[0-9]`, which is the safer most of the time.
 
 #### **Thank you for the challenge!**
