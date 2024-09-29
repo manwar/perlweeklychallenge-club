@@ -75,7 +75,8 @@ Interface
 ---------
 1. If no command-line arguments are given, the test suite is run. Otherwise:
 2. A single string is entered on the command-line, e.g., "xxxo xooo xooo xxoo".
-   This string comprises whitespace-separated rows; each row contains only the characters 'x' or 'o'. The matrix represented must be rectangular and not
+   This string comprises whitespace-separated rows; each row contains only the
+   characters 'x' or 'o'. The matrix represented must be rectangular and not
    empty.
 3. If $VERBOSE is set to a true value, the output is augmented with a matrix
    diagram showing the different contiguous blocks found, and identifying the
