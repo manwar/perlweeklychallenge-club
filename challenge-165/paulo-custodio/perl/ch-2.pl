@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 165
 #
@@ -44,6 +44,7 @@ END
 
 sub svg_circle {
     my($cx, $cy, $r)=@_;
+    for($cx, $cy, $r) {$_=int($_);}
     return <<END;
 <circle cx="$cx" cy="$cy" r="$r" stroke="black" />
 END
@@ -56,6 +57,7 @@ sub svg_point {
 
 sub svg_line {
     my($x1,$y1,$x2,$y2)=@_;
+    for($x1,$y1,$x2,$y2) {$_=int($_);}
     return <<END;
 <line x1="$x1" y1="$y1" x2="$x2" y2="$y2" stroke="black" />
 END
