@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 166
 #
@@ -32,14 +32,14 @@
 #     Find phrases of words that total 8 characters in length
 #     (e.g., 0xFee1Face), rather than just individual words.
 
-use Modern::Perl;
+import sys
 
-@ARGV==1 or die "usage: ch-1.pl words.txt\n";
-while (<>) {
-    chomp;
-    if (/^[a-f0list]{2,8}$/i) {
-        my $word=$_;
-        $word=~tr/olist/01157/;
-        say "0x".uc($word);
-    }
-}
+if len(sys.argv) != 2:
+    sys.exit("usage: ch-1.py words.txt")
+
+f = open(sys.argv[1], "r")
+for line in f.readlines():
+    word = line.strip()
+    if len(word) >= 2 and len(word) <= 8 and all(c in 'abcdef0list' for c in word.lower()):
+        word = word.translate(str.maketrans('olist', '01157'))
+        print("0x" + word.upper())

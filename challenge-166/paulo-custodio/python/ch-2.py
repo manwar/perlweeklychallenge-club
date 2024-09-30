@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 166
 #
@@ -37,61 +37,47 @@
 # Old_Fonts/     |                 |
 #                | Tahoma.ttf      |
 
-use Modern::Perl;
+import os
+import sys
 
-use constant WIDTH => 16;
+WIDTH = 16
 
-sub read_dir {
-    my($dir)=@_;
-    opendir(my $d, $dir) or die "opendir $dir: $!";
-    return sort
-           map  {-d "$dir/$_" ? "$_/" : $_ }
-           grep {$_ ne "." && $_ ne ".."} readdir($d);
-}
+def read_dir(dir):
+    try:
+        with os.scandir(dir) as entries:
+            return sorted((entry.name + '/' if entry.is_dir() else entry.name) for entry in entries if entry.name not in {'.', '..'})
+    except OSError as e:
+        print(f"opendir {dir}: {e}", file=sys.stderr)
+        sys.exit(1)
 
-sub read_dirs {
-    my(@dirs)=@_;
-    return map {[read_dir($_)]} @dirs;
-}
+def read_dirs(*dirs):
+    return [read_dir(dir) for dir in dirs]
 
-sub print_line {
-    my(@cells)=@_;
-    for my $i (0..$#cells) {
-        printf("%-*s", WIDTH, $cells[$i]);
-        print " | " if $i!=$#cells;
-    }
-    print "\n";
-}
+def print_line(*cells):
+    for i in range(len(cells)):
+        print(f"{cells[i]:<{WIDTH}}", end=" | " if i != len(cells) - 1 else "")
+    print()
 
-sub print_diff {
-    my($dirs, @contents)=@_;
-
+def print_diff(dirs, contents):
     # print header
-    print_line(@$dirs);
-    print_line(("-" x WIDTH) x scalar(@$dirs));
+    print_line(*dirs)
+    print_line(*(["-" * WIDTH] * len(dirs)))
 
     # collect files
-    my %files;
-    my %files_dir;
-    for my $i (0..$#$dirs) {
-        my $dir=$dirs->[$i];
-        my @files=@{$contents[$i]};
-        for my $file (@files) {
-            $files{$file}++;
-            $files_dir{$file}{$dir}++;
-        }
-    }
+    files = {}
+    files_dir = {}
+    for i, dir in enumerate(dirs):
+        for file in contents[i]:
+            files[file] = True
+            if file not in files_dir:
+                files_dir[file] = {}
+            files_dir[file][dir] = True
 
     # print rows
-    for my $file (sort keys %files) {
-        my @row;
-        for my $i (0..$#$dirs) {
-            my $dir=$dirs->[$i];
-            push @row, $files_dir{$file}{$dir} ? $file : "";
-        }
-        print_line(@row) if grep {$_ eq ""} @row;
-    }
-}
+    for file in sorted(files.keys()):
+        row = [file if dir in files_dir.get(file, {}) else "" for dir in dirs]
+        if any(cell == "" for cell in row):
+            print_line(*row)
 
-@ARGV>1 or die "usage: ch-1.pl dir...\n";
-print_diff(\@ARGV, read_dirs(@ARGV));
+if len(sys.argv) > 2:
+    print_diff(sys.argv[1:], read_dirs(*sys.argv[1:]))
