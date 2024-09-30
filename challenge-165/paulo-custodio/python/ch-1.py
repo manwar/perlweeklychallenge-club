@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 165
 #
@@ -31,56 +31,41 @@
 # Then, generate an SVG file plotting all points, and all lines. If done
 # correctly, you can view the output .svg file in your browser.
 
-use Modern::Perl;
-
-sub svg_header {
-    my($width,$height)=@_;
-    return <<END;
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+def svg_header(width, height):
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg height="$height" width="$width" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-END
-}
+<svg height="{height}" width="{width}" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+'''
 
-sub svg_footer {
-    return <<'END';
-</svg>
-END
-}
+def svg_footer():
+    return '''</svg>
+'''
 
-sub svg_circle {
-    my($cx, $cy, $r)=@_;
-    return <<END;
-<circle cx="$cx" cy="$cy" r="$r" stroke="black" />
-END
-}
+def svg_circle(cx, cy, r):
+    return f'<circle cx="{cx}" cy="{cy}" r="{r}" stroke="black" />\n'
 
-sub svg_point {
-    my($cx, $cy)=@_;
-    return svg_circle($cx,$cy,1);
-}
+def svg_point(cx, cy):
+    return svg_circle(cx, cy, 1)
 
-sub svg_line {
-    my($x1,$y1,$x2,$y2)=@_;
-    return <<END;
-<line x1="$x1" y1="$y1" x2="$x2" y2="$y2" stroke="black" />
-END
-}
+def svg_line(x1, y1, x2, y2):
+    return f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="black" />\n'
 
-my $file=shift or die "usage: ch-1.pl file.svg\n";
-open(my $f, ">", $file) or die "open $file: $!";
-print $f svg_header(100,100);
-while (<>) {
-    chomp;
-    my @p=split /\s*,\s*/,$_;
-    if (@p==2) {
-        print $f svg_point(@p);
-    }
-    elsif (@p==4) {
-        print $f svg_line(@p);
-    }
-    else {
-        die "cannot parse: $_";
-    }
-}
-print $f svg_footer();
+import sys
+
+file = sys.argv[1] if len(sys.argv) > 1 else None
+if file is None:
+    raise Exception("usage: ch-1.py file.svg")
+
+with open(file, "w") as f:
+    f.write(svg_header(100, 100))
+    for line in sys.stdin:
+        line = line.strip()
+        p = line.split(',')
+        p = [int(coord.strip()) for coord in p]
+        if len(p) == 2:
+            f.write(svg_point(*p))
+        elif len(p) == 4:
+            f.write(svg_line(*p))
+        else:
+            raise Exception(f"cannot parse: {line}")
+    f.write(svg_footer())
