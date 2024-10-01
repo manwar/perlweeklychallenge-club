@@ -15,7 +15,7 @@ say jumbled-letters("They've shouldn't've, __LINE__ under_score y'all you're");
 
 sub jumbled-letters($text)
 {
-    my @split = $text.split(/ <[\s — - ]> /, :v);
+    my @split = $text.split(/ <[\s — -]> /, :v);
 
     for @split[0,2...*]
     {
