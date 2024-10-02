@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 167
 #
@@ -65,4 +65,4 @@ sub gamma {
     return drop_imag($y);
 }
 
-say gamma(Math::Complex->new(shift));
+say sprintf("%.0f", gamma(Math::Complex->new(shift)));
