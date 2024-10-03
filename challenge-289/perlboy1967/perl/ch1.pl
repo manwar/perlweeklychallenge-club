@@ -25,9 +25,9 @@ use Test2::V0 qw(-no_srand);
 
 use List::Util qw(uniq);
 
-sub nThMaximum :prototype(\@$) ($arInts,$n){ 
-  my @l = uniq(@$arInts);
-  (sort { $a <=> $b } @l)[@l < $n ? -1 : -$n];
+sub nThMaximum :prototype(\@$) ($arInts,$n){
+  my @l = sort { $a <=> $b } uniq(@$arInts);
+  $l[@l < $n ? -1 : -$n];
 }
 
 is(nThMaximum(@{[5,6,4,1]},3),4,'Example 1');
