@@ -23,14 +23,17 @@ use common::sense;
 
 use Test2::V0 qw(-no_srand);
 
+use List::Util qw(uniq);
+
 sub nThMaximum :prototype(\@$) ($arInts,$n){ 
-  my $n2 = ($#$arInts+1 >= $n ? $n : $#$arInts+1);
-  (sort { $a <=> $b } @$arInts)[-$n2];
+  my @l = uniq(@$arInts);
+  my $n2 = ($#l+1 >= $n ? $n : $#l+1);
+  (sort { $a <=> $b } @l)[-$n2];
 }
 
 is(nThMaximum(@{[5,6,4,1]},3),4,'Example 1');
 is(nThMaximum(@{[4,5]},3),4,'Example 2');
-is(nThMaximum(@{[1,2,2,3]},3),2,'Example 3');
+is(nThMaximum(@{[1,2,2,3]},3),1,'Example 3');
 is(nThMaximum(@{[5,3,2]},2),3,'Own example');
 
 done_testing;
