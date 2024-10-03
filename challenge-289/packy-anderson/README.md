@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: A Man, A Plan, A Canal... PANAMA!](https://packy.dardan.com/b/Rm)
+[Perl Weekly Challenge: Tirhd Mumixam Prel Welkey Caelhlnge](https://packy.dardan.com/b/Ry)
