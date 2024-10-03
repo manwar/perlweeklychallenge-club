@@ -45,7 +45,8 @@ use common::sense;
 use List::Util qw(shuffle);
 
 sub jumbledLetters ($str) {
-  $str =~ s{([a-z])([a-z]+)([a-z])}{$1.join('',shuffle split //,$2).$3}geisr;
+  $str =~ s{([A-Za-z])([A-Za-z]+)([A-Za-z])}
+           {$1.join('',shuffle split //,$2).$3}gesr;
 }
 
 say jumbledLetters(<<EOT); 
