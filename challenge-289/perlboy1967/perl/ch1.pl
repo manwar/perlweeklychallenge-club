@@ -27,12 +27,11 @@ use List::Util qw(uniq);
 
 sub nThMaximum :prototype(\@$) ($arInts,$n){ 
   my @l = uniq(@$arInts);
-  my $n2 = ($#l+1 >= $n ? $n : $#l+1);
-  (sort { $a <=> $b } @l)[-$n2];
+  (sort { $a <=> $b } @l)[@l < $n ? -1 : -$n];
 }
 
 is(nThMaximum(@{[5,6,4,1]},3),4,'Example 1');
-is(nThMaximum(@{[4,5]},    3),4,'Example 2');
+is(nThMaximum(@{[4,5]},    3),5,'Example 2');
 is(nThMaximum(@{[1,2,2,3]},3),1,'Example 3');
 is(nThMaximum(@{[5,3,2]},  2),3,'Own example');
 
