@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 171
 #
@@ -17,14 +17,16 @@
 # $h = compose($f, $g)
 # $f->($g->($x,$y, ..)) == $h->($x, $y, ..) for any $x, $y, ...
 
-use Modern::Perl;
+import sys
 
-sub compose {
-    my($f, $g) = @_;
-    return sub { return $f->($g->(@_)); };
-}
+def compose(f, g):
+    return lambda x: f(g(x))
 
-sub times3 { return 3*$_[0]; }
-sub times5 { return 5*$_[0]; }
-my $h = compose(\&times3, \&times5);
-say $h->(shift);
+def times3(x):
+    return 3 * x
+
+def times5(x):
+    return 5 * x
+
+h = compose(times3, times5)
+print(h(int(int(sys.argv[1]))))
