@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 168
 #
@@ -6,7 +6,7 @@
 # Submitted by: Roger Bell_West
 #
 # The Perrin sequence is defined to start with [3, 0, 2]; after that, term N is
-# the sum of terms N-2 and N-3. (So it continues 3, 2, 5, 5, 7, ….)
+# the sum of terms N-2 and N-3. (So it continues 3, 2, 5, 5, 7, ....)
 #
 #     A Perrin prime is a number in the Perrin sequence which is also a prime
 #     number.

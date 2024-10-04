@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 173
 #
@@ -18,17 +18,16 @@
 # 5456 is an esthetic number as |5 - 4| = |4 - 5| = |5 - 6| = 1
 # 120 is not an esthetic numner as |1 - 2| != |2 - 0| != 1
 
-use Modern::Perl;
+def is_esthetic(n):
+    n = list(map(int, str(n)))
+    while len(n) > 1:
+        if abs(n[0] - n[1]) != 1:
+            return 0
+        n.pop(0)
+    return 1
 
-sub is_esthetic {
-    my($n) = @_;
-    my @n = split //, $n;
-    while (@n > 1) {
-        return 0 if abs($n[0] - $n[1]) != 1;
-        shift @n;
-    }
-    return 1;
-}
+import sys
 
-@ARGV==1 or die "usage: ch-1.pl n\n";
-say is_esthetic(shift);
+if len(sys.argv) != 2:
+    raise ValueError("usage: ch-1.py n")
+print(1 if is_esthetic(sys.argv[1]) else 0)
