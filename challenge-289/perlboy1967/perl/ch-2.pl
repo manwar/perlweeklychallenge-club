@@ -45,10 +45,11 @@ use common::sense;
 use List::Util qw(shuffle);
 
 sub jumbledLetters ($str) {
-  $str =~ s{([a-z])([a-z]+)([a-z])}{$1.join('',shuffle split //,$2).$3}geisr;
+  $str =~ s{([A-Za-z])([A-Za-z]+)([A-Za-z])}
+           {$1.join('',shuffle split //,$2).$3}gesr;
 }
 
-say jumbledLetters(<<EOT); 
+say jumbledLetters(<<EOT);
 According to a research at Cambridge University, it doesn't matter in what order
 the letters in a word are, the only important thing is that the first and last
 letter be at the right place. The rest can be a total mess and you can still
