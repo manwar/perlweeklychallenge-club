@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 176
 #
@@ -21,25 +21,22 @@
 # 30, 32, 34, 36, 41, 43, 45, 50, 52,
 # 54, 61, 63, 70, 72, 81, 90
 
-use Modern::Perl;
+def is_reversible(n):
+    rev = int(str(n)[::-1])
+    return (n + rev) % 2 == 1 and all(d in '13579' for d in str(n + rev))
 
-sub is_reversible {
-    my($n) = @_;
-    my $rev = join '', reverse split //, $n;
-    return ($n+$rev) =~ /^[13579]+$/;
-}
+def reversibles_up_to(N):
+    result = []
+    n = 1
+    while n < N:
+        if is_reversible(n):
+            result.append(n)
+        n += 1
+    return result
 
-sub reversibles_up_to {
-    my($N) = @_;
-    my $n = 1;
-    my @result;
-    while ($n < $N) {
-        push @result, $n if is_reversible($n);
-        $n++;
-    }
-    return @result;
-}
+import sys
 
-@ARGV==1 or die "usage: ch-2.pl N\n";
-my $N = shift;
-say join ", ", reversibles_up_to($N);
+if len(sys.argv) != 2:
+    raise ValueError("usage: ch-2.py N")
+N = int(sys.argv[1])
+print(", ".join(map(str, reversibles_up_to(N))))
