@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 165
 #
@@ -7,13 +7,13 @@
 #
 # Scalable Vector Graphics (SVG) are not made of pixels, but lines, ellipses,
 # and curves, that can be scaled to any size without any loss of quality. If you
-# have ever tried to resize a small JPG or PNG, you know what I mean by “loss of
-# quality”! What many people do not know about SVG files is, they are simply XML
+# have ever tried to resize a small JPG or PNG, you know what I mean by "loss of
+# quality"! What many people do not know about SVG files is, they are simply XML
 # files, so they can easily be generated programmatically.
 #
-# For this task, you may use external library, such as Perl’s SVG library,
+# For this task, you may use external library, such as Perl's SVG library,
 # maintained in recent years by our very own Mohammad S Anwar. You can instead
-# generate the XML yourself; it’s actually quite simple. The source for the
+# generate the XML yourself; it's actually quite simple. The source for the
 # example image for Task #2 might be instructive.
 #
 # Your task is to accept a series of points and lines in the following format,

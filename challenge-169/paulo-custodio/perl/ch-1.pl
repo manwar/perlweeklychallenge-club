@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 169
 #
@@ -9,7 +9,7 @@
 #
 #     Brilliant numbers are numbers with two prime factors of the same length.
 #
-# The number should have exactly two prime factors, i.e. it’s the product of two
+# The number should have exactly two prime factors, i.e. it's the product of two
 # primes of the same length.
 #
 # For example,

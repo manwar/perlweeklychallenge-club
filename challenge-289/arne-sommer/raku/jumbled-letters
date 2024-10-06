@@ -1,0 +1,46 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file = "unjumbled.txt", :v(:$verbose));
+
+for (slurp $file).lines -> $line
+{
+  say $line.split(" ").map({ scramble($_) }).join(" ");
+}
+
+sub scramble ($word is copy)
+{
+  if $word.chars <= 2
+  {
+    say ": [$word] -> $word" if $verbose;
+    return $word;
+  }
+
+  print ": [$word -> " if $verbose;
+
+  my $first = $word.substr(0,1);
+  $word     = $word.substr(1);
+  
+  my $last  = $word.substr($word.chars -1);
+  $word     = $word.substr(0, $word.chars -1);
+
+  if $last ~~ /\W$/ {
+    $last =  $word.substr($word.chars -1) ~ $last;
+    $word = $word.substr(0, $word.chars -1);
+  }
+
+  print "$first|$word|$last]" if $verbose; 
+
+  my $return;
+  my @random = $word.comb.grep({ /\w/ }).pick(*);
+
+  for $word.comb -> $letter
+  {
+    $letter ~~ /\w/
+      ?? ( $return ~= @random.shift )
+      !! ( $return ~= $letter );
+   }
+
+  say " -> $first$return$last" if $verbose;
+  
+  return $first ~ $return ~ $last;
+}

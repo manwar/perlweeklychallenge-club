@@ -1,0 +1,38 @@
+--
+-- Perl Weekly Challenge 289
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-289>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc289;
+
+CREATE OR REPLACE FUNCTION
+pwc289.task2_plperl( text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   use List::Util qw/shuffle/;
+   my ( $words ) = @_;
+
+   for my $current_word ( $words->@* ) {
+       my @letters = split //, $current_word;
+       my @new_word;
+
+       my ( $first_index, $last_index ) = ( 0, $#letters );
+       my ( $first, $last ) = ( @letters[ $first_index ], @letters[ $last_index ] );
+
+       while ( $last !~ /[a-z0-9]/i ) {
+       	     $last_index--;
+	     $last = $letters[ $last_index ];
+       }
+
+
+       # shuffle the remaining part
+       my @shuffled = shuffle @letters[ $first_index + 1 .. $last_index - 1 ];
+
+       return_next( join '', $first, @shuffled, $last, @letters[ $last_index + 1 .. $#letters ] );
+   }
+
+return undef;	
+$CODE$
+LANGUAGE plperlu;

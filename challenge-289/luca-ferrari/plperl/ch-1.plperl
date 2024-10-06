@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 289
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-289>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc289;
+
+CREATE OR REPLACE FUNCTION
+pwc289.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   my $classify = {};
+   $classify->{ $_ }++ for ( $numbers->@* );
+
+   my @sorted = sort keys $classify->%*;
+   return $sorted[ -1 ] if ( @sorted < 3 );
+   return $sorted[ -3 ];
+   
+$CODE$
+LANGUAGE plperl;

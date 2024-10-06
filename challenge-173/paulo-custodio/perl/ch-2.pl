@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 173
 #
-# Task 2: Sylvester’s sequence
+# Task 2: Sylvester's sequence
 # Submitted by: Mohammad S Anwar
 #
 # Write a script to generate first 10 members of Sylvester's sequence. For more
