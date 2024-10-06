@@ -1,279 +1,266 @@
-# The Simple and the Fast
+# The Mxamium Jmubled Wkeely Chllaegne
 
-**Challenge 288 solutions in Perl by Matthias Muth**
+**Challenge 289 solutions in Perl by Matthias Muth**
 
-Two quite different solutions for Task 1:<br/>
-'The Simple', looping away from the input number until it finds a palindrome, and<br/>
-'The Fast', which *constructs* three palindromes that are candidates to be the closest,
-and then chooses among them.<br/>
-Read more below!
+## Task 1: Third Maximum
 
-And for Task 2, a 'recursive flood-filling-and-counting' solution.
-
-Great challenges!<br/>
-Thank you, Mohammad Anwar and Peter Campbell Smith!
-
-## Task 1: Closest Palindrome
-
-> You are given a string, \$str, which is an integer.<br/>
-> Write a script to find out the closest palindrome, not including itself. If there are more than one then return the smallest.<br/>
-> The closest is defined as the absolute difference minimized between two integers.<br/>
-> <br/>
+> You are given an array of integers, @ints.
+>
+> Write a script to find the third distinct maximum in the given array. If third maximum doesn’t exist then return the maximum number.
+>
 > Example 1<br/>
-> Input: \$str = "123"<br/>
-> Output: "121"<br/>
-> <br/>
+> Input: @ints = (5, 6, 4, 1)<br/>
+> Output: 4<br/>
+> The first distinct maximum is 6.<br/>
+> The second distinct maximum is 5.<br/>
+> The third distinct maximum is 4.
+>
 > Example 2<br/>
-> Input: \$str = "2"<br/>
-> Output: "1"<br/>
-> There are two closest palindrome "1" and "3". Therefore we return the smallest "1".<br/>
-> <br/>
+> Input: @ints = (4, 5)<br/>
+> Output: 5<br/>
+> In the given array, the third maximum doesn't exist therefore returns the maximum.
+>
+>
 > Example 3<br/>
-> Input: \$str = "1400"<br/>
-> Output: "1441"<br/>
-> <br/>
-> Example 4<br/>
-> Input: \$str = "1001"<br/>
-> Output: "999"<br/>
+> Input: @ints =  (1, 2, 2, 3)<br/>
+> Output: 1<br/>
+> The first distinct maximum is 3.<br/>
+> The second distinct maximum is 2.<br/>
+> The third distinct maximum is 1.
 
-#### The Simple
+This is an easy one:
 
-I first thought about *generating* the closest palindrome,
-but seeing the rich variety of cases in the examples,
-I found it too complicated at first.
-That's why I did a quick and simple 'brute force' approach.
-
-This was really easy to write (and easy to read, I hope!).<br/>
-Testing a number for being a palindrome in Perl is as simple as it can get:<br/>
-    `reverse( $s ) eq $s`.<br/>
-
-So let's try every possible distance, from close to further away.
-Trying a distance value first below our number and then above
-already gives us the right priority.
-If the number at that distance is a palindrone: Done!
+We need to sort the array so that the maximum is in the front:
 
 ```perl
-sub closest_palindrome() {
-    for ( my $distance = 1; ; ++$distance ) {
-        for my $try ( $str - $distance, $str + $distance ) {
-            return $try
-                if reverse( $try ) eq $try;
-        }
-    }
-}
+    sort { $b <=> $a } @ints
 ```
 
-This works like a breeze!<br/>
-Except that for large values, looping over all possible numbers  may take a while. 
+For getting the *distinct* maximum,
+we use `uniq` from `List::Util` to eliminate double entries:
 
-So that 'constructing' idea didn't get out of my head,
-because it would be so much faster!<br/>
-And I found a solution, too!
+```perl
+    uniq sort { $b <=> $a } @ints
+```
 
-#### The Fast
+Actually, it's better to reduce the number of elements *before* sorting,
+so that `sort` has less work to do:
 
-Let's consider input numbers with an even number of digits first.
-Like `345678`.<br/>
-Splitting it into a left half and a right half, the general form is<br/>
-                $` L_{1} \cdots L_{n} R_{1} \cdots R_{n} `$.<br/>
-Looking for a palindrome that is close,
-any changes we do to the original number should preferably be in the 'lower' digits
-(those further to the right).
-So for a good guess, let's keep the left part as it is,
-and mirror it to the right to get a palindrome:<br/>
-                $` L_{1} \cdots L_{n} L_{n} \cdots L_{1} `$.<br/>
-This gives us `345543`.
+```perl
+    my @sorted_uniq = sort { $b <=> $a } uniq @ints;
+```
 
-We see that actually the only degrees of freedom we have are in the left part,
-because for any palindrome, the right part is fully determined by the left part.
+Then we return the third element of that sorted list of unique maximums.<br/>
+Perl makes it easy in that we don't need to check its existence first,
+but we will get an `undef` value if it doesn't  exist.<br/>
+And together with the 'defined or' operator,
+returning the result is simple, too:
 
-The left part kind of identifies a 'block' of numbers of $n$ digits on the right side,
-ranging from  $` 0 0 \cdots 0 `$ to $` 9 9 \cdots 9 `$.
-There is exactly one palindrome in each block
-(where the right side is equal to the left side reversed).
-It's obvious that the palindromes 'closest' to our input number
-can only be in the same block, one block above or one block below.
+```perl
+    return $sorted_uniq[2] // $sorted_uniq[0];
+```
 
-As each 'block' contains exactly one palindrome,
-we only need to generate the three palindromes of those three blocks,
-and then choose the closest.
-
-To illustrate this, for our example of `345678` with its left part of `345`,
-one of these three palindromes will be the closest:
-
-* The left part, *in*creased by one, then concatenated with the reversed result of that:<br/>
-        $L_{1} \cdots ( L_{n} + 1) ( L_{n} + 1 ) \dots L_{1}$:    `346-643`
-
-* The left part itself, concatenated with its reversed:<br/>
-        $L_{1} \cdots L_{n} L_{n} \dots L_{1}$:                          `345-543`  (this is the closest!)
-
-* The left part, *de*creased by one, then concatenated with itself reversed:<br/>
-        $L_{1} \cdots ( L_{n} - 1) ( L_{n} - 1 ) \dots L_{1}$:    `344-443`
-
-We have a special case when the left part consists of `9`s only,
-as for example for `999234` with its left part of `999`.
-This becomes `1000` when increased, which is one digit longer.
-We must make sure to mirror one digit less in this case,
-or we can simply 'construct' the whole palindrome in this case,
-using `( '1' . ( '0' x ( $n - 1 ) ) . '1' )`.
-That's `1000001` (from `1000-001`) in this example.
-
-The second special case is when the left part is a power of ten,
-as for `100234` with its left part of `100`.
-The decreased left part will consist of `9`s only,
-having one digit less than the original left part.
-We generate that palindrome as `( '9' x ( $n - 1 ) )`,
-resulting in `99999` (from `99-999`) in this example.
-
-From the three numbers generated,
-we choose the one that is closest to our input number,
-making sure that the chosen number is not the input number itself.
-We also need to prefer a lower number if the distance is the same.
-
-For input numbers with odd lengths, it's actually the same, only that the
-'left part' must include the 'middle' digit, and for the 'right' part of
-the palindrome, we only use as many digits as needed, *not* including
-that middle digit.
-The two special cases work the same, we 'construct' the palindromes just like before.
-
-We need to deal with one other special case: negative numbers as input.
-They are not excluded in the task description
-('which is an integer' -- might be a negative integer, too!).
-As `0` is a palindrome (well...ahem...),
-it is the also the closest palindrome to any negative integer.<br/>
-Voilà.
+So all put together:
 
 ```perl
 use v5.36;
 
-sub closest_palindrome( $str ) {
-    return undef unless $str =~ /^-?[0-9]+$/;
+use List::Util qw( uniq );
 
-    # Edge case: negative numbers.
-    return "0" if $str < 0;
-
-    my $left_part = substr( $str, 0, int( ( length( $str ) + 1 ) / 2 ) );
-    my ( $closest, $closest_distance ) = ( undef, undef );
-    for my $try ( $left_part - 1, $left_part, $left_part + 1 ) {
-        next unless $try >= 0;    # Edge case on input '0'.
-        my $palindrome =
-            length $try < length $left_part
-                ? '9' x ( length( $str ) - 1 ) :
-            length $try > length $left_part
-                ? ( '1' . ( '0' x ( length( $str ) - 1 ) ) . '1' )
-                : ( $try
-                    . substr( reverse( $try ), length( $str ) % 2 ) );
-        my $distance = abs( $palindrome - $str );
-        if ( $palindrome != $str
-            && ( ! defined $closest_distance
-                ||  $distance < $closest_distance ) )
-        {
-            $closest = $palindrome;
-            $closest_distance = abs( $palindrome - $str );
-        }
-    }
-    return $closest;
+sub third_maximum( @ints ) {
+    my @sorted_uniq = sort { $b <=> $a } uniq @ints;
+    return $sorted_uniq[2] // $sorted_uniq[0];
 }
 ```
 
-This is the more direct path to the closest palindrome.<br/> 
-Palindrome algorithms for every need! :-)
 
 
-## Task 2: Contiguous Block
+## Task 2: Jumbled Letters
 
-> You are given a rectangular matrix where all the cells contain either x or o.<br/>
-> Write a script to determine the size of the largest contiguous block.<br/>
-> A contiguous block consists of elements containing the same symbol which share an edge (not just a corner) with other elements in the block, and where there is a path between any two of these elements that crosses only those shared edges.<br/>
-> <br/>
-> Example 1<br/>
->     Input: \$matrix = [<br/>
->                        ['x', 'x', 'x', 'x', 'o'],<br/>
->                        ['x', 'o', 'o', 'o', 'o'],<br/>
->                        ['x', 'o', 'o', 'o', 'o'],<br/>
->                        ['x', 'x', 'x', 'o', 'o'],<br/>
->                      ]<br/>
->     Ouput: 11<br/>
->         There is a block of 9 contiguous cells containing 'x'.<br/>
->         There is a block of 11 contiguous cells containing 'o'.<br/>
-> <br/>
-> Example 2<br/>
->     Input: \$matrix = [<br/>
->                        ['x', 'x', 'x', 'x', 'x'],<br/>
->                        ['x', 'o', 'o', 'o', 'o'],<br/>
->                        ['x', 'x', 'x', 'x', 'o'],<br/>
->                        ['x', 'o', 'o', 'o', 'o'],<br/>
->                      ]<br/>
->     Ouput: 11<br/>
->         There is a block of 11 contiguous cells containing 'x'.<br/>
->         There is a block of 9 contiguous cells containing 'o'.<br/>
-> <br/>
-> Example 3<br/>
->     Input: \$matrix = [<br/>
->                        ['x', 'x', 'x', 'o', 'o'],<br/>
->                        ['o', 'o', 'o', 'x', 'x'],<br/>
->                        ['o', 'x', 'x', 'o', 'o'],<br/>
->                        ['o', 'o', 'o', 'x', 'x'],<br/>
->                      ]<br/>
->     Ouput: 7<br/>
->         There is a block of 7 contiguous cells containing 'o'.<br/>
->         There are two other 2-cell blocks of 'o'.<br/>
->         There are three 2-cell blocks of 'x' and one 3-cell.<br/>
+> An Internet legend dating back to at least 2001 goes something like this:<br/>
+>
+> Aoccdrnig to a rscheearch at Cmabrigde Uinervtisy, it deosn’t mttaer in waht oredr the ltteers in a wrod are, the olny iprmoetnt tihng is taht the frist and lsat ltteer be at the rghit pclae. The rset can be a toatl mses and you can sitll raed it wouthit porbelm. Tihs is bcuseae the huamn mnid deos not raed ervey lteter by istlef, but the wrod as a wlohe.
+>
+> This supposed Cambridge research is unfortunately an urban legend. However, the effect has been studied. For example—and with a title that probably made the journal’s editor a little nervous—Raeding wrods with jubmled lettres: there is a cost by Rayner, White, et. al. looked at reading speed and comprehension of jumbled text.
+>
+> Your task is to write a program that takes English text as its input and outputs a jumbled version as follows:
+>
+> 1. The first and last letter of every word must stay the same
+> 2. The remaining letters in the word are scrambled in a random order (if that happens to be the original order, that is OK).
+> 3. Whitespace, punctuation, and capitalization must stay the same
+> 4. The order of words does not change, only the letters inside the word
+>
+> So, for example, “Perl” could become “Prel”, or stay as “Perl,” but it could not become “Pelr” or “lreP”.
+>
+> I don’t know if this effect has been studied in other languages besides English, but please consider sharing your results if you try!
 
-#### Easy and recursive
+#### Let's jumble!
 
-I am using a recursive flood fill algorithm to traverse contiguous areas.<br/>
-Maybe that sounds more complicates than it actually is.
-
-The main function holds  a matrix `@visited`, where we mark all cells that we have identified to be part of an area. The main subroutine finds the next un-visited cell and calls the recursive `flood_and_mark` function, with the input matrix, the row and column coordinates of the cell, and a reference to the `@visited` matrix as parameters.
-Of all returned values, the maximum is kept, and returned in the end.
-
-The `flood_and_mark` function is built to return the number of cells that could be 'flood-filled'. At least one for the cell itself, but also added the results of flood-filling all neighbor cells that have the same symbol (`'x'` or `'o'`) and that are not marked visited yet. The most complicated thing here is to find the coordinates of the neighbor cells, without accessing coordinates outside of the matrix.
-
-The number of recursions is the number of cells in the largest contiguous area *at most*.
-So for the examples and also for some bigger matrices this should not be a constraint.
-
-I'm using a multiple values `for` loop for iterating of the `( $r, $c )` coordinate pairs of the neighbor cells.
-Together with those coordinate pairs being stored 'flat' in the `@neighbors` array this makes things easy.<br/>(The `for_loop` feature, stable and part of the implicit feature bundle since Perl 5.36).
+I decided to use a very straightforward technique for 'jumbling' a string of characters,
+that is easy to implement in Perl.
+It works by randomly selecting a character from the input string,
+removing it from there and adding it to the output string.
+This is repeated until no characters remain.
+I find it easiest to use an array for all the operations.
 
 ```perl
-use v5.36;
-
-use List::Util qw( max );
-
-sub flood_and_mark( $matrix, $r, $c, $visited ) {
-    $visited->[$r][$c] = 1;
-    my @neighbors = (
-        $r > 0                  ? ( $r - 1, $c ) : (),
-        $c > 0                  ? ( $r, $c - 1 ) : (),
-        $c < $matrix->[$r]->$#* ? ( $r, $c + 1 ) : (),
-        $r < $matrix->$#*       ? ( $r + 1, $c ) : (),
-    );
-    my $symbol = $matrix->[$r][$c];
-    my $count = 1;      # For this field itself.
-    for my ( $next_r, $next_c ) ( @neighbors ) {
-        next
-            if $matrix->[$next_r][$next_c] ne $symbol
-                || $visited->[$next_r][$next_c];
-        $count += flood_and_mark( $matrix, $next_r, $next_c, $visited );
-    }
-    return $count;
-}
-
-sub contiguous_block( $matrix ) {
-    my @visited;
-    my $max = 0;
-    for my $r ( 0..$matrix->$#* ) {
-        for my $c ( 0..$matrix->[$r]->$#* ) {
-            if ( ! $visited[$r][$c] ) {
-                my $area = flood_and_mark( $matrix, $r, $c, \@visited );
-                $max = $area
-                    if $area > $max;
-            }
-        }
-    }
-    return $max;
+sub jumble_string( $str ) {
+    my @chars = split "", $str;
+    return join "", map { splice @chars, rand( @chars ), 1, () } 0..$#chars;
 }
 ```
+
+What this does in detail:
+
+- `my @chars = split "", $str;`<br/>
+splits up the string into an array of characters.
+- `map {...} 0..$#chars`<br/>
+executes the `{...}` code block as many times as we have characters in `@char`.
+- Within the code block,<br/>
+`rand( @chars )`<br/>
+randomly chooses an index from the list.
+It returns a floating point number,
+but using it as an array index, implicitly, only the integer part will be used.
+- Then,<br/>
+`splice @chars, rand( @chars ), 1, ()`<br/>
+returns that random entry from the array,
+at the same time replacing it with the empty list `()`,
+thus deleting it from the array.<br/>
+- Eventually,<br/>
+`return join "", ...;`<br/>
+combines the extracted random characters into a string, and returns that now 'jumbled' string.
+
+#### Applying the Jumble
+
+The next thing is to apply the 'jumbling' to only the inner part of the words found in the input text.
+Not a big problem with Perl regular expressions &mdash;
+a global substitution with an evaluated expression as a replacement does the job:
+
+```perl
+sub jumbled_letters( $str ) {
+    return $str =~ s{
+            (?<=[A-Za-z]) [a-z]+ (?=[a-z])
+        }{
+            jumble_string( $& )
+        }xegr;
+}
+```
+
+The first and last characters of a word are matched by a lookbehind and a lookahead, respectively,
+so that the matched string will be the inner part only.<br/>
+There is the `x` flag for better readability,
+the `e` flag for using the substitution part as an evaluated expression,
+the `g` flag for doing the substitution as many times as possible,
+and the `r` flag for returning the result of the substitution
+instead of changing the `$str` variable itself.
+
+#### Testing the Random
+
+In this task, we don't have any examples containing expected results for a given input,
+which most other Weekly Challenge tasks have.
+In addition, the output is supposed to be produced using random changes to the input,
+so we cannot rely on any repeatability when we run the program several times.
+
+But I found that there are at least two criteria that we *can* test:
+
+- *The output is expected to be different from the input.*<br/>
+Ok, there's this case where we 'randomly' produce output that is exactly the same as the input.
+But the probability for getting this reminds me of the story of the monkey hitting random keys
+on a typewriter who will eventually produce the complete works of William Shakespeare,
+if he types long enough...<br/>
+So let's at least assume that if our implementation is correct,
+there will be a (very) high probability that the output will differ from the input.
+- *All words of the input text contain the same characters as the words in the output text.*<br/>
+This should help us to verify that the output is not just a *completely* random text,
+but has the same structure as the input.       
+
+So we have at least two test cases that we can implement.<br/>
+Using `Test2::V0` (which I cannot help repeating that it is now a core module!),
+the first test is easy:
+
+```perl
+my $input_text = <<EOF;
+According to a researchch at Cambridge University, it doesn’t matter in what
+order the letters in a word are, the only importent thing is that the first and
+last letter be at the right place.
+The rest can be a total mess and you can still read it without problem.
+This is because the human mind does not read every letter by itself,
+but the word as a whole.
+EOF
+
+my $jumbled = jumbled_letters( $input_text );
+
+ok $jumbled ne $input_text,
+    "Jumbled text and original text differ";
+```
+
+For the second test, we need to put in a little more effort.<br/>
+To compare whether the *inner* of all words of the input and output texts
+contain the same characters, I implemented a 'normalization' function.
+It works very similar to the `jumble_letters` function itself,
+but instead of jumbling the inner characters, it *sorts* them.
+If we compare the input and output texts both 'normalized' in that way,
+they have to be the same!
+It's like completely 'un-jumbling' both, before comparing them.
+
+So we can add this for the second test case:
+
+```perl
+sub normalize( $str ) {
+    return $str =~ s{
+            (?<=[A-Za-z]) [a-z]+ (?=[a-z])
+        }{
+            join( "", sort split "", $& );
+        }xegr;
+}
+
+is normalize( $jumbled ), normalize( $input_text ),
+    "Normalized jumbled text and normalized original text are equal";
+
+done_testing;
+```
+
+Whatever implementation of 'jumbling' you have,
+it should produce at least the following testing output:
+
+```text
+ok 1 - Jumbled text and original text differ
+ok 2 - Normalized jumbled text and normalized original text are equal
+1..2
+```
+
+#### Readability?
+
+Concerning the readability of the jumbled text,
+I personally find that
+as long as there are only some character pairs that are flipped
+(in addition to keeping the first and last letter the same),
+it's quite ok.<br/>
+But as soon as the letters move further away from their original positions,
+as it is easily the case with the 'jumbling' implemented here,
+readability goes down a lot.<br/>
+The typical output produced by my jumbling looks much more difficult to read
+than the famous original jumbled text:
+
+```text
+Acdinrocg to a reeacshcrh at Camrgbdie Usirvtiney, it doesn’t mttear in what
+oderr the leretts in a wrod are, the only iormptent thnig is that the fsrit and
+last leettr be at the rgiht palce.
+```
+
+Maybe it would be interesting to only *flip* pairs of characters at some random positions,
+not modifying  the same character twice,
+and not moving characters too far away from their original position.
+
+Actually I think that this is the way that the original jumbled text was produced:
+in general only flipping characters,
+maybe with some extra rules for repeated characters (like in 'l(tt/e)ers')
+or for some other fixed letter combinations (like 'w(out/hi)t').<br/>
+Maybe there also was a bit of 'cheating',
+at least being selective for jumbled words not looking too strange.
+
+Checking the difference in readability for different 'jumbling' algorithms
+seems like a real research topic.<br/>
+It's a pity that that is more than can be done within a Weekly Challenge. :-)
 
 #### **Thank you for the challenge!**
