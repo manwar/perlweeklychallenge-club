@@ -1,0 +1,67 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/doubleexist {
+    0 dict begin
+    /a exch def
+    false
+    0 1 a length 2 sub {
+        /i exch def
+        i 1 a length 1 sub {
+            /j exch def
+            a i get a j get
+            2 copy
+            2 mul eq
+            3 1 roll
+            exch 2 mul eq or {
+                pop true
+                exit
+            } if
+        } for
+        dup {
+            exit
+        } if
+    } for
+    end
+} bind def
+
+(doubleexist) test.start
+[6 2 3 3] doubleexist test
+[3 1 4 13] doubleexist not test
+[2 1 4 2] doubleexist test
+test.end
