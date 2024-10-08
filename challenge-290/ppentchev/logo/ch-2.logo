@@ -1,0 +1,68 @@
+#!/usr/bin/ucblogo
+; SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+; SPDX-License-Identifier: BSD-2-Clause
+
+; check_luhn - run Luhn's algorithm on a string
+to check_luhn :str
+localmake "digits reverse map [(ascii ?) - 48] filter [and (ascii ?) >= 48 (ascii ?) <= 57] :str
+if empty? :digits [(throw "error [No digits at all])]
+localmake "cksum pop "digits
+
+localmake "double 1 = 1
+localmake "sum 0
+foreach :digits [
+   localmake "value ifelse :double [? * 2] [?]
+   localmake "toadd ifelse :value > 9 [:value - 9] [:value]
+
+   make "sum :sum + :toadd
+   if :sum >= 100 [make "sum remainder :sum 10]
+   make "double not :double
+]
+
+op (remainder (:sum + :cksum) 10) = 0
+end
+
+; test_check_luhn - run check_luhn on several test strings
+to test_check_luhn
+foreach [
+    ; The test strings from the problem
+    ["17893729974 1]
+    ["4137\ 8947\ 1175\ 5904 1]
+    ["4137\ 8974\ 1175\ 5904 0]
+
+    ; Let's start simple...
+    ["00 1]
+    ["01 0]
+    ["05 0]
+    ["18 1]
+    ["19 0]
+    ["11 0]
+    ["59 1]
+    ["50 0]
+    ["67 1]
+    ["66 0]
+
+    ; Now make sure we can ignore extraneous characters
+    ["\ ?23a#2\ :) 1]
+    ["\ ?32a#2\ :) 0]
+    ["a0b1c2d3e4f5g6h7i8j9k0 0]
+    ["a0b1c2d3e4f5g6h7i8j9k1 0]
+    ["a0b1c2d3e4f5g6h7i8j9k2 0]
+    ["a0b1c2d3e4f5g6h7i8j9k3 0]
+    ["a0b1c2d3e4f5g6h7i8j9k4 0]
+    ["a0b1c2d3e4f5g6h7i8j9k5 0]
+    ["a0b1c2d3e4f5g6h7i8j9k6 0]
+    ["a0b1c2d3e4f5g6h7i8j9k7 1]
+    ["a0b1c2d3e4f5g6h7i8j9k8 0]
+    ["a0b1c2d3e4f5g6h7i8j9k9 0]
+] [
+    localmake "str first ?
+    localmake "expected_int last ?
+    localmake "expected :expected_int = 1
+    localmake "res check_luhn :str
+    localmake "failure ifelse :expected = :res ["OK] [standout "FAILURE]
+    (show :str "expected :expected "got :res :failure)
+]
+end
+
+test_check_luhn

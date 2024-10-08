@@ -1,0 +1,57 @@
+#!/usr/bin/ucblogo
+; SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+; SPDX-License-Identifier: BSD-2-Clause
+
+; double_exist - figure out whether a list contains double-pairs
+to double_exist :double_exist.seq
+erpl "double_exist_cache
+
+foreach :double_exist.seq [
+    if not empty? gprop "double_exist_cache ? * 2 [
+        erpl "double_exist_cache
+        op 1 = 1
+    ]
+
+    if not empty? gprop "double_exist_cache ? / 2 [
+        erpl "double_exist_cache
+        op 1 = 1
+    ]
+
+    pprop "double_exist_cache ? 1
+]
+
+erpl "double_exist_cache
+op 1 = 0
+end
+
+; test_double_exist - run double_exist on several test sequences
+to test_double_exist
+foreach [
+    [[6 2 3 3] 1]
+    [[3 1 4 13] 0]
+    [[2 1 4 2] 1]
+
+    [[] 0]
+    [[0] 0]
+    [[0 0] 1]
+    [[0 1] 0]
+    [[1 0 0] 1]
+    [[2 0 1] 1]
+    
+    [[1 2 3 4] 1]
+    [[1 2 3 5] 1]
+    [[1 3 4 5] 0]
+    
+    [[1 4] 0]
+    [[1 2 4] 1]
+] [
+    localmake "seq first ?
+    localmake "expected_int last ?
+    localmake "expected :expected_int = 1
+    localmake "res double_exist :seq
+    localmake "failure ifelse :expected = :res ["OK] [standout "FAILURE]
+    (show :seq "expected :expected "got :res :failure)
+]
+end
+
+test_double_exist
