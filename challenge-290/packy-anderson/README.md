@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Tirhd Mumixam Prel Welkey Caelhlnge](https://packy.dardan.com/b/Ry)
+[Perl Weekly Challenge: Perl Weekly Challenge: Double Your Pleasure, Double Your Luhn](https://packy.dardan.com/b/SB)
