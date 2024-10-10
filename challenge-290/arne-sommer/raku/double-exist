@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where all(@ints) ~~ Int && @ints.elems > 0);
+
+my @double = @ints.map: * * 2;
+
+say so ( any(@ints) == any(@double) );
