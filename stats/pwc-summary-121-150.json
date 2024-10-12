@@ -1,15 +1,18 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-10-08 08:43:12 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
    },
    "xAxis" : {
       "categories" : [
@@ -45,17 +48,15 @@
          "Kjetil Skotheim"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             2,
@@ -87,10 +88,10 @@
             0,
             16,
             110
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -122,8 +123,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -161,7 +161,7 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-10-12 08:03:17 GMT"
    }
 }
