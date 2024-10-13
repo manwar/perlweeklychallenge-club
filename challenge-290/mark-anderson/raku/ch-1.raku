@@ -7,10 +7,5 @@ ok  double-exist(2,1,4,2);
 
 sub double-exist(+@ints)
 {
-    while @ints
-    {
-        return True if @ints.shift == 2 * any @ints
-    }
-
-    return False
+    any @ints == any @ints >>*>> 2
 }
