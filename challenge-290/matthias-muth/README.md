@@ -6,13 +6,13 @@ A classical simple and short solution for Task 1.
 
 For Task 2, I have found some ways to reduce the complexity of the computation a bit (read below),<br/> and implemented several solutions;  
 
-* a 'short' one, just calling the `is_valid` function from `Algorithm::LUHN` from CPAN,
-* a 'classic' one, simply following the task description word by word,
-* a 'modern' one, using some optimizations of the algorithm, and making use of recent Perl language additions,<br/>
-   like `builtin 'indexes'` and `feature 'for_list` for a multi-variable `for` loop,
-*  a 'pairmap' one, using `pairmap` from `List::Util` to avoid permanently checking whether we are on an even or odd iteration.
+* a 'short' solution, just calling the `is_valid` function from `Algorithm::LUHN` from CPAN,
+* a 'classic' solution, simply following the task description word by word,
+* a 'modern' solution, using some optimizations of the algorithm, and making use of recent Perl language additions,<br/>
+   like `builtin 'indexes'` for numbering the elements of an array, and `feature 'for_list` for a multi-variable `for` loop,
+*  a 'pairmap' solution, using `pairmap` from `List::Util` to avoid permanently checking whether we are on an even or odd iteration.
 
-A little benchmark proves that the optimized 'pairmap' solution really is faster... 
+A little benchmark proves that the optimized 'pairmap' solution really is faster than the others...
 
 
 ## Task 1: Double Exist
