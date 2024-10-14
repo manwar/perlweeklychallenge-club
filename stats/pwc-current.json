@@ -1,28 +1,14 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2024-10-14 23:10:26 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 291"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
    },
    "legend" : {
@@ -32,31 +18,54 @@
       {
          "data" : [
             {
-               "y" : 1,
-               "name" : "Paulo Custodio",
-               "drilldown" : "Paulo Custodio"
+               "y" : 2,
+               "name" : "David Ferrone",
+               "drilldown" : "David Ferrone"
             },
             {
-               "drilldown" : "Peter Meszaros",
+               "y" : 1,
+               "drilldown" : "Paulo Custodio",
+               "name" : "Paulo Custodio"
+            },
+            {
                "y" : 2,
+               "drilldown" : "Peter Meszaros",
                "name" : "Peter Meszaros"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 291"
+         "name" : "The Weekly Challenge - 291",
+         "colorByPoint" : 1
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2024-10-14 23:22:26 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "David Ferrone",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "David Ferrone"
+         },
+         {
+            "name" : "Paulo Custodio",
             "id" : "Paulo Custodio",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "name" : "Paulo Custodio"
+            ]
          },
          {
             "id" : "Peter Meszaros",
@@ -70,9 +79,15 @@
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
