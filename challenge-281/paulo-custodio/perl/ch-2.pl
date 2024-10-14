@@ -2,7 +2,7 @@
 
 # Challenge 281
 #
-# Task 2: Knight’s Move
+# Task 2: Knight's Move
 # Submitted by: Peter Campbell Smith
 #
 # A Knight in chess can move from its current position to any square two rows
