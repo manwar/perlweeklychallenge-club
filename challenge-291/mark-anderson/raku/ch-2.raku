@@ -34,61 +34,28 @@ sub poker-hand-rankings
     
         if [eq] @suits
         {
-            if "2345E" eq $ranks || $straight ~~ / $ranks /
-            {
-                $bh<straight-flush>++;
-                return
-            }
+            if "2345E" eq $ranks || $straight ~~ / $ranks / { $bh<straight-flush>++ }
     
-            else
-            {
-                $bh<flush>++;
-                return
-            }
+            else { $bh<flush>++ }
+                
+            return
         }
     
         given $ranks
         {
-            when / (.) $0 $0 $0 /
-            {
-                $bh<four>++;
-                return
-            }
+            when / (.) $0 $0 $0 / { $bh<four>++ }
     
-            when / (.) $0 $0 (.) $1 || (.) $0 (.) $1 $1 /
-            {
-                $bh<full-house>++;
-                return
-            }
+            when / (.) $0 $0 (.) $1 || (.) $0 (.) $1 $1 / { $bh<full-house>++ }
     
-            when "2345E" eq $_ || $straight.match(/ $_ /)
-            {
-                $bh<straight>++;
-                return
-            }
+            when "2345E" eq $_ || $straight.match(/ $_ /) { $bh<straight>++ }
     
-            when / (.) $0 $0 /
-            {
-                $bh<three>++;
-                return
-            }
+            when / (.) $0 $0 / { $bh<three>++ }
     
-            when / (.) $0 (.) $1 . || (.) $0 . (.) $1 || . (.) $0 (.) $1 / 
-            {
-                $bh<two-pair>++;
-                return
-            } 
+            when / (.) $0 (.) $1 || (.) $0 . (.) $1 / { $bh<two-pair>++ } 
     
-            when / (.) $0 /
-            {
-                $bh<pair>++;
-                return
-            }
+            when / (.) $0 / { $bh<pair>++ }
     
-            default 
-            {
-                $bh<high-card>++
-            }
+            default { $bh<high-card>++ }
         }
     }
 
