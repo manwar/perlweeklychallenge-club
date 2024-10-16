@@ -87,7 +87,7 @@ sub poker-hand-rankings
     
             default 
             {
-                $bh<high-card>++;
+                $bh<high-card>++
             }
         }
     }
