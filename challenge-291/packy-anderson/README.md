@@ -18,8 +18,8 @@
 ## Guest Language: Elixir
 
 * [Task 1](elixir/ch-1.exs)
-<!-- * [Task 2](elixir/ch-2.exs) -->
+* [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
 
-[Perl Weekly Challenge: Perl Weekly Challenge: Double Your Pleasure, Double Your Luhn](https://packy.dardan.com/b/SB)
+[Perl Weekly Challenge: You Got to Know When to $HOLD Them](https://packy.dardan.com/b/SQ)
