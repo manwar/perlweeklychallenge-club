@@ -3,6 +3,7 @@ use warnings;
 use Getopt::Long;
 use Test::More;
 
+
 my $run_tests;
 GetOptions("test" => \$run_tests);
 
@@ -30,6 +31,9 @@ sub find_middle_index{
 if (defined $run_tests){
    subtest 'test_with_example_arrays' => \&test_with_example_arrays;
    done_testing;
+}
+else{
+    print("\nPlease run with -test flag to start test suite.\n");
 }
 
 sub test_with_example_arrays{
