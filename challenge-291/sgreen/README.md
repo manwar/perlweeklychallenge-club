@@ -1,3 +1,3 @@
-# The Weekly Challenge 290
+# The Weekly Challenge 291
 
-Blog: [Double Luhn](https://dev.to/simongreennet/double-luhn-3jmp)
+Blog: [Index and poker games](https://dev.to/simongreennet/index-and-poker-games-c1a)
