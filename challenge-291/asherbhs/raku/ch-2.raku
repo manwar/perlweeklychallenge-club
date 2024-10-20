@@ -24,3 +24,4 @@ for @hands -> @hand {
 	# doesn't work because the statement modifier doesn't short-circuit :(
 }
 say @counts; # 0 40 624 3744 5108 10200 54912 123552 1098240 1302540
+say @hands == @counts.sum;
