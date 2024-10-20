@@ -1,376 +1,394 @@
-# Take Me to the Luhn and Back
+# Challenge 291 tasks: No Bluffing
 
-**Challenge 290 solutions in Perl by Matthias Muth**
+**Challenge 291 solutions in Perl by Matthias Muth**
 
-A classical simple and short solution for Task 1.
-
-For Task 2, I have found some ways to reduce the complexity of the computation a bit (read below),<br/> and implemented several solutions;  
-
-* a 'short' solution, just calling the `is_valid` function from `Algorithm::LUHN` from CPAN,
-* a 'classic' solution, simply following the task description word by word,
-* a 'modern' solution, using some optimizations of the algorithm, and making use of recent Perl language additions,<br/>
-   like `builtin 'indexes'` for numbering the elements of an array, and `feature 'for_list` for a multi-variable `for` loop,
-*  a 'pairmap' solution, using `pairmap` from `List::Util` to avoid permanently checking whether we are on an even or odd iteration.
-
-A little benchmark proves that the optimized 'pairmap' solution really is faster than the others...
-
-
-## Task 1: Double Exist
+## Task 1: Middle Index
 
 > You are given an array of integers, @ints.<br/>
-> Write a script to find if there exist two indices \$i and \$j such that:<br/>
+> Write a script to find the leftmost middle index (MI) i.e. the smallest amongst all the possible ones.<br/>
+> A middle index is an index where ints[0] + ints[1] + … + ints[MI-1] == ints[MI+1] + ints[MI+2] + … + ints[ints.length-1].<br/>
+> If MI == 0, the left side sum is considered to be 0. Similarly,<br/>
+> if MI == ints.length - 1, the right side sum is considered to be 0.<br/>
+> Return the leftmost MI that satisfies the condition, or -1 if there is no such index.<br/>
+> <br/>
+> Example 1<br/>
+> Input: @ints = (2, 3, -1, 8, 4)<br/>
+> Output: 3<br/>
+> The sum of the numbers before index 3 is: 2 + 3 + -1 = 4<br/>
+> The sum of the numbers after index 3 is: 4 = 4<br/>
+> <br/>
+> Example 2<br/>
+> Input: @ints = (1, -1, 4)<br/>
+> Output: 2<br/>
+> The sum of the numbers before index 2 is: 1 + -1 = 0<br/>
+> The sum of the numbers after index 2 is: 0<br/>
+> <br/>
+> Example 3<br/>
+> Input: @ints = (2, 5)<br/>
+> Output: -1<br/>
+> There is no valid MI.<br/>
+
+Seems that we need to try every position for being the middle index or not. But instead of computing the left and right sums again and again for every position, we can *adjust* the two sums as we move from one index to the next one. Similar to this:
+
+![Diagram 1](https://github.com/MatthiasMuth/perlweeklychallenge-club/blob/muthm-291/challenge-291/matthias-muth/Screenshot_2024-10-20_100335.png)
+
+If we initialize the left sum to be zero, and the right sum to be the sum of *all* values (including `$ints[0]`), then the steps in each iteration are these:
+
+*  subtract the value at the current index from the right sum,
+* return the current index if the left and right sums now are equal,
+* add the value at the current index to the left sum, in preparation for the next iteration.
+
+If we didn't find a good 'middle index' in the loop, we return `-1` as requested.
+
+This is my solution (comments removed):
+
+```perl
+use v5.36;
+
+use List::Util qw( sum );
+
+sub middle_index( @ints ) {
+    my ( $right_sum, $left_sum ) = ( sum( @ints ), 0 );
+    for ( 0..$#ints ) {
+        $right_sum -= $ints[$_];
+        return $_
+            if $left_sum == $right_sum;
+        $left_sum += $ints[$_];
+    }
+    return -1;
+}
+```
+
+
+
+## Task 2: Poker Hand Rankings
+
+> A draw poker hand consists of 5 cards, drawn from a pack of 52: no jokers, no wild cards. An ace can rank either high or low.<br/>
+> Write a script to determine the following three things:<br/>
 >
-> 1) $i != $j<br/>
-> 2) 0 <= ($i, $j) < scalar @ints<br/>
-> 3) $ints[$i] == 2 * $ints[$j]<br/>
-> <br/>
-> Example 1<br/>
-> Input: @ints = (6, 2, 3, 3)<br/>
-> Output: true<br/>
-> For $i = 0, $j = 2<br/>
-> $ints[$i] = 6 => 2 * 3 =>  2 * $ints[$j]<br/>
-> <br/>
-> Example 2<br/>
-> Input: @ints = (3, 1, 4, 13)<br/>
-> Output: false<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (2, 1, 4, 2)<br/>
-> Output: true<br/>
-> For $i = 2, $j = 3<br/>
-> $ints[$i] = 4 => 2 * 2 =>  2 * $ints[$j]<br/>
+> 1. How many different 5-card hands can be dealt?<br/>
+> 2. How many different hands of each of the 10 ranks can be dealt?<br/>
+>    See here for descriptions of the 10 ranks of Poker hands:<br/>
+>    https://en.wikipedia.org/wiki/List_of_poker_hands#Hand-ranking_categories<br/>
+> 3. Check the ten numbers you get in step 2 by adding them together<br/>
+>    and showing that they're equal to the number you get in step 1.<br/>
 
-This task is a variation of the *'Create a hash, then check existence'* theme.<br/>
-Here, we use a simple hash for existence lookup (not a frequency table, as we often need),
-where we can put the hash's declaration and populating its values in one line.
+#### No cheating!
 
-We check whether there is any number for which its doubled value exists in the lookup.
-Instead of programming a loop, I use the `any` function from `List::Util` here.<br/>
-Simple as this:
+Wikipedia contains another *very* helpful entry about poker hands: [Poker probability](https://en.wikipedia.org/wiki/Poker_probability).<br/>
+Actually it contains all the solutions to this task.<br/>But no cheating!!
+I try to find the numbers myself!<br/>
+Yet it's good to have a reference to build good test cases!
+
+#### Helper functions
+
+I have built two helper functions, one to compute factorials ${n!}$, and another one to compute 'n choose k' , for the number of different ways to choose $k$  objects out of a set of $n$ elements, without putting back the objects, and with permutations of the drawn objects to be all equivalent.  That's $\binom{n}{k} = \frac{n!}{k!(n-k)!}$.
+
+I could have used a CPAN module for that (like `Math::Combinations`), but I wanted to do it myself, to see whether it was possible to avoid using `Math::BigInt` for large factorials (considering that $52!$ is a number with 68 digits!).<br/>As our $k$ is 5 at maximum (5 cards to draw), in fact we have a maximum of 5 numbers above and below the fraction bar. 
+
+So here we go:
 
 ```perl
 use v5.36;
 
-use List::Util qw( any );
+use List::Util qw( reduce sum pairkeys );
 
-sub double_exist( @ints ) {
-    my %existence = map { $_ => 1 } @ints;
-    return any { $existence{ $_ * 2 } } @ints;
+sub factorial( $n ) { return reduce { $a * $b } 1..$n; }
+
+sub n_choose_k( $n, $k ) {
+    return
+        ( reduce { $a *= $b } ( $n - $k + 1 ) .. $n )
+        / ( reduce { $a *= $b } 1..$k );
 }
 ```
 
+#### The combinations
 
-## Task 2: Luhn’s Algorithm
-
-> You are given a string \$str containing digits (and possibly other characters which can be ignored). The last digit is the payload; consider it separately. Counting from the right, double the value of the first, third, etc. of the remaining digits.<br/>
-> For each value now greater than 9, sum its digits.<br/>
-> The correct check digit is that which, added to the sum of all values, would bring the total mod 10 to zero.<br/>
-> Return true if and only if the payload is equal to the correct check digit.<br/>
-> It was originally posted on reddit.<br/>
-> <br/>
-> Example 1<br/>
-> Input: "17893729974"<br/>
-> Output: true<br/>
-> Payload is 4.<br/>
-> Digits from the right:<br/>
-> 7 * 2 = 14, sum = 5<br/>
-> 9 = 9<br/>
-> 9 * 2 = 18, sum = 9<br/>
-> 2 = 2<br/>
-> 7 * 2 = 14, sum = 5<br/>
-> 3 = 3<br/>
-> 9 * 2 = 18, sum = 9<br/>
-> 8 = 8<br/>
-> 7 * 2 = 14, sum = 5<br/>
-> 1 = 1<br/>
-> Sum of all values = 56, so 4 must be added to bring the total mod 10 to zero. The payload is indeed 4.<br/>
-> <br/>
-> Example 2<br/>
-> Input: "4137 8947 1175 5904"<br/>
-> Output: true<br/>
-> <br/>
-> Example 3<br/>
-> Input: "4137 8974 1175 5904"<br/>
-> Output: false<br/>
-
-#### First Version: Very Short!
-
-For this task, I guess that this here is among the shortest possible solutions: 
-
-```perl
-use Algorithm::LUHN qw( is_valid );
-
-sub luhn_s_algorithm_by_module( $input ) {
-    return is_valid( $input =~ s/\D//gr );
-}
-```
-
-CPAN is your friend!
-
-#### Second version: Very Classic.
-
-For a first Do-It-Yourself solution, we closely follow the task description.<br/>
-After extracting the digits from the input string into an array using a `/\d/g`regular expression,
-we reverse the array.
-That way, the digits are in the order we need to process them.<br/>
-The first digit now is the check digit,
-which we `shift` out from the array into a separate variable.
-
-We check the special case of not finding any digits in the input string,
-and return a false value (actually, implicitly an empty list) in that case.
-
-Next, we loop over the digits, building the checksum.
-Depending on being in an even or odd iteration, we simply add the digit, or we double it.
-When we do that, the task description says:<br/>
-    *'For each value now greater than 9, sum its digits.'*<br/>
-I use the most Perlish approach: split the digits up using `split`, and then `sum` them up.
-
-For the return value we have to compute the check digit from the checksum,
-which is  'the difference to the next number divisible by ten'.
-The [Wikipedia article](https://en.wikipedia.org/wiki/Luhn_algorithm) about Luhn's Algorithm gives this formula:
-$(10-(s \mod 10 )) \mod 10$.<br/>
-Then we compare the computed check_digit with the one from the input string.
-
-Nothing really special in there.<br/>
-But there is potential for improvement! 
-
-```perl
-#
-#   luhn_s_algorithm_classic
-#
-#   Extracting the digits, separating the check digit,
-#   then walking through the digits in a loop.
-#   Taking a 'perlish' approach for doing the digit sum of doubled digits.
-#
-#   Hold your breath, this is not the final version!
-#
-sub luhn_s_algorithm_classic( $input ) {
-
-    # Extract the digits into an array.
-    my @digits = $input =~ /\d/g;
-
-    # Return if there are no digits.
-    @digits or return;
-
-    # Extract the check-digit.
-    my $check_digit = pop @digits;
-
-    # Reverse the digit array to process the digits in the suggested order.
-    @digits = reverse @digits;
-
-    # Determine the checksum in a loop.
-    my $checksum = 0;
-    for my $index ( 0..$#digits ) {
-        $checksum +=
-            ( $index % 2 == 0 )
-            ? sum( split "", 2 * $digits[$index] )
-            : $digits[$index];
-    }
-
-    # Return true if the difference between the checksum and the next
-    # number divisible by 10 is equal to the check-digit.
-    return ( 10 - $checksum % 10 ) % 10 == $check_digit;
-}
-```
-
-#### Some Algorithm Simplifications
-
-There are some simplifications that we can apply to the algorithm to make things easier:
-
-* When we do the doubling of every other digit, we have some knowledge:<br/>
-  We know that the number cannot be larger than 18 (two times the digit 9).<br/>
-  So let's see if this helps to avoid the overhead of two subroutine calls just for
-  splitting and adding up at most two digits.
-  
-  * For digits up to 4, their highest double value is 8.<br/>
-    That's a one digit number.<br/>
-    Now this is a very simple digit sum!
-  * For digits from 5 to 9, the double is between 10 and 18.<br/>
-    So we need to add the '1' and the lower digit of the double.<br/>
-    That lower digit happens to be the double minus 10
-    (we're using our knowledge here! ).<br/>
-    So we got 'one plus the double minus 10',
-    which is the same as 'the double minus 9' for the digits 5 to 9.<br/>
-    That's not too bad, either!<br/>
-  
-  That means instead of calling `split`  and `sum` we can use this simple numeric expression in Perl for the digit sum of the doubled digit:
+* **Five of a kind**<br/>
+  This one is easy.<br/>
+  As we don't use wild cards in our card deck,
+  it is not possible to get a 'Five of a kind' hand at all.<br/>
+  So this is it:<br/>
   
   ```perl
-     $digit < 5 ? ( 2 * $digit ) : ( 2 * $digit ) - 9
+      "Five of a kind" => 0,
   ```
   
-* When we compute the check digit for a checksum,
-  it is chosen to *complement* the checksum up to the next number divisible by ten.<br/>
-  But that means that if we add the check_digit to the checksum,
-  the result will be divisible by 10.
-  
-  So we can simplify
+* **Straight flush**<br/>
+  We choose one of the 4 suits.<br/>
+  Next we choose the starting face value for the straight,
+  from **A** (for **A-K-Q-J-10**) down to **6** (for **6-5-4-3-2**),<br/>
+  adding one for the 'low ace' (**5-4-3-2-A**) straight.<br/>
+  In total:
   
   ```perl
-      ( 10 - $checksum % 10 ) % 10 == $check_digit
+      "Straight flush" => 4 * ( 13 - 4 + 1 ),
   ```
   
-  to
+* **Four of a kind**<br/>
+  We have 13 choices for the face value that the 'Four of a kind' shall have.<br/>
+  Then we still have to choose the 5th card from the $(52 - 4)$ remaining cards:
   
   ```perl
-      ( $checksum + $check_digit ) % 10 == 0
+      "Four of a kind" => 13 * ( 52 - 4 ),
   ```
   
-  This saves us one modulo operation. But that's not all!
+* **Full house**<br/>
+  For the triplet, we choose the first card from all 52 cards of the deck,<br/>
+  then the second card from of the three other cards of the same face value,<br/>
+  and then the third card from the remaining two of that face value.<br/>
+  Then we divide by $3!$ to eliminate the permutations of these three cards.
   
-  If we include the check digit already when we sum up all the digits,
-  we can get rid of the separate `$check_digit` variable completely.
+  Next, for the pair,
+  we similarly choose one card from 48 cards of the rest of the deck
+  (with the triplet removed,
+  but also the fourth card of that face value removed).<br/>
+  Then we choose the second card for the pair from the remaining three cards
+  of the same face value.<br/>
+  We divide by $2!$ to ignore the permutations of the two cards
+  (knowing that there are only two ways of 'permuting' them,
+  and $2!$ happens to be just $2$).
   
-  We only need to make sure that it is counted simple, not double.<br/>
-  But we get this automatically, if we just don't
-  'double the value of the *first*, *third*, etc. of the remaining digits',
-  but we 'double the value of the *second*, *fourth*, etc.'.
+  ```perl
+      "Full house" =>
+          ( 52 * 3 * 2 ) / factorial( 3 )
+          * ( ( 52 - 4 ) * 3 ) / factorial( 2 ),
+  ```
+  
+  Actually, for the triplet, we could also first choose a face value (out of 13),
+  and then three out of the four cards of that face value.<br/>
+  The formula then is $13 \cdot \binom{4}{3}$.<br/>
+  Which is equal to
+  $ 13 \frac{ 4 \cdot 3 \cdot 2  \cdot 1 }{ 3 \cdot 2  \cdot 1 }
+  = 13 \cdot \frac{4}{1} = 52$
+  
+  *What??*<br/>
+  I have exactly 52 choices of choosing a *triplet* from a deck of 52 cards?
+  Just as many as there are cards?
+  
+  Well, actually that's right:<br/>
+  I can choose just any one of the 52 cards,
+  and then take the three others of the same face value as my triplet.<br/>
+  Any triplet is uniquely identified
+  by the single card that is *not* in the triplet.
+  Funny!
+  
+* **Flush**<br/>
+  For a flush, we choose the suit for the flush, out of 4 possible suits.<br/>
+  Then we choose 5 cards out of the 13 cards of that suit
+  ($\binom{13}{5}
+    = \frac{ 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9 }
+           { 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 }$).<br/>
+  Some of the hands are 'Straight flush',
+  so we have to subtract those to not count them twice.
+  
+  ```perl  
+      "Flush" => 4 * n_choose_k( 13, 5 ) - ( 13 - 4 + 1 ) * 4,
+  ```
+  
+* **Straight**<br/>
+  
+  Other than for the 'Straight flush',
+  we *first* choose the starting face value for the straight,<br/>
+  from **A** (for **A-K-Q-J-10**) down to **6** (for **6-5-4-3-2**),<br/>
+  again adding one for the 'low ace' (**5-4-3-2-A**) straight.<br/>
+  But now we have to choose the suit for each of the five cards,
+  separately for each one of them,
+  because each of them can be from any of the 4 suits.<br/>
+  We have to subtract the number of combinations for
+  'Straight Flush' here, too, because we counted them already.
+  
+  ```perl
+      "Straight" =>
+          ( 13 - 4 + 1 )
+          * 4 * 4 * 4 * 4 * 4
+              - ( 13 - 4 + 1 ) * 4,
+  ```
+  
+* **Three of a kind**<br/>
+  We start out the same as for a 'Full house', choosing the triplet.<br/>
+  Then we choose the two single cards from the rest of the deck,
+  but the two remaining cards must have different face values.
+  The first one we can choose from the deck
+  without the four cards having the triplet's face value, so $(52 - 4)$.<br/>
+  For the second one, we also ignore all four cards having the face value
+  of the first one, too, to make sure the second card is different.
+  So here, we choose from $(52 - 8)$ cards.<br/>
+  As we may have drawn the two singles in any of two orders,
+  we must once more divide by $2!$, or just $2$,
+  'the number of permutations of 2 cards'.
+  
+  ```perl
+      "Three of a kind" =>
+          52 * 3 * 2 / factorial( 3 )
+              * ( 52 - 4 ) * ( 52 -8 ) / factorial( 2 ),
+  ```
+  
+* **Two pair**<br/>
+  We need to choose the two pairs:
+  For the first pair, it's one card from 52,
+  then, as we did it before, the second card from the three others of the same face value,
+  divided by $2!$ for the 'permutations' of the two cards.<br/>
+  The same for the second pair, but choosing from $( 52 - 4 )$ cards.<br/>
+  Now the two pairs could be in one or the other order, too,
+  so we divide by $2!$ once again.<br/>
+  Eventually, we choose the fifth card from a face value not used
+  in the pairs, of which there are $(52 - 8)$ cards.
+  ```perl
+      "Two pair" =>
+          52 * 3 / factorial( 2 )
+              * ( 52 - 4 ) * 3 / factorial( 2 )
+              / factorial( 2 )
+              * ( 52 - 8 ),
+  ```
 
-Let's see how these simplifications look in real code:
+* **One pair**<br/>
+  We now already know how to choose a pair from 52 cards.<br/>
+  After doing so, we choose three cards with a different face values,
+  the first from $(52 - 4) = 48$ cards, the second from $(52 - 8) = 44$,
+  and the third from $(52 - 12) = 40$ cards.<br/>
+  The three single cards can be in any order,
+  so as usual we get rid of the permutaions by dividing by $3!$.
+  
+  ```perl
+      "One pair" =>
+          52 * 3 / factorial( 2 )
+              * ( 52 - 4 ) * ( 52 - 8 ) * ( 52 - 12 )
+              / factorial( 3 ),
+  ```
 
-#### Third Version: Explicit and 'Modern'.
+* **High card**<br/>
+  Choosing five cards from the deck,
+  but they all need to have different face values.<br/>
+  We choose the first one from the full deck ($52$ cards),
+  the second one from $(52 -4)$ cards,
+  without those having the first card's face value,
+  and so on for all five cards.<br/>Then we ignore the permutations by dividing by $5!$.<br/>
+  We still have to subtract all combinations that we already counted
+  that have all different face values:<br/>
+  'Straight flush', 'Flush', and 'Straight'.<br/>
+  In the program, we do this correction later,
+  when the hash entries for those have been set up.
+  
+  ```perl
+      "High card" =>
+          ( 52 * (52 - 4 ) * (52 - 8 ) * (52 - 12 ) * (52 - 16 ) )
+              / factorial( 5 ),
+  ...
+      $combinations{"High card"} -=
+          ( $combinations{"Straight flush"}
+              + $combinations{"Flush"}
+              + $combinations{"Straight"} );
+  ```
 
-So our next, simplified, DIY version, extracts *all* the digits, including the check digit.
-We can do all of extraction, reversing the list and the check for an empty list in one statement.
+#### The program
+
+This is the Perl program for this task's solution, after the helper function definition as shown before.
+
+I have put the combination calculations into an array, not a hash,
+because I want to keep the entries in the same order as in the Wikipedia article.
+
+I want to be able to do lookups for the numbers, with the hand names as keys,
+and still keep an array for the order of names.
+So after the definition, I transfer the data into a hash of the same name (`%combinations`) *and* create another array (`@hand_types`) to contain only the names.
 
 ```perl
-    my @digits = reverse $input =~ /\d/g
-        or return;
-```
+my @combinations = (
+    "Five of a kind" => 0,
+    "Straight flush" => 4 * ( 13 - 4 + 1 ),
+    "Four of a kind" => 13 * ( 52 - 4 ),
+    "Full house" =>
+        ( 52 * 3 * 2 ) / factorial( 3 ) * ( ( 52 - 4 ) * 3 ) / factorial( 2 ),
+    "Flush" =>
+        4 * n_choose_k( 13, 5 ) - ( 13 - 4 + 1 ) * 4,
+    "Straight" =>
+        ( 13 - 4 + 1 )
+        * 4 * 4 * 4 * 4 * 4
+            - ( 13 - 4 + 1 ) * 4,
+    "Three of a kind" =>
+        52 * 3 * 2 / factorial( 3 )
+            * ( 52 - 4 ) * ( 52 -8 ) / factorial( 2 ),
+    "Two pair" =>
+        52 * 3 / factorial( 2 )
+            * ( 52 - 4 ) * 3 / factorial( 2 )
+            / factorial( 2 )
+            * ( 52 - 8 ),
+    "One pair" =>
+        52 * 3 / factorial( 2 )
+            * ( 52 - 4 ) * ( 52 - 8 ) * ( 52 - 12 )
+            / factorial( 3 ),
+    "High card" =>
+        52 * (52 - 4 ) * (52 - 8 ) * (52 - 12 ) * (52 - 16 )
+            / factorial( 5 ),
+);
 
-For the loop, in this version I use a combination of two 'modern' Perl features,
-`use builtin 'indexed'` and `feature 'for_list'`, available from Perl 5.36 onwards:
+my %combinations = ( @combinations );
+my @hand_types = pairkeys @combinations;
 
--  `indexed @digits` gives us a list with every digit's index followed by the digit itself,
-  like:<br/>
-  `indexed( 7, 9, 9, 2)  => ( 0, 7, 1, 9, 2, 9, 3, 2 )`
+$combinations{"High card"} -=
+    ( $combinations{"Straight flush"}
+        + $combinations{"Flush"}
+        + $combinations{"Straight"} );
 
-- A multi-variable `for` loop then gives us access on the index and the digit easily,
-  so that we can sum up correctly:
+$combinations{"Total"} = sum values %combinations;
 
-  ```perl
-  my $checksum = 0;
-  for my ( $index, $digit ) ( indexed @digits ) {
-      $checksum +=
-          $index % 2 == 0
-          ? ...       # expression for even positions
-          : ...;      # expression for odd positions
-  }
-  ```
-  One nice thing about this 'indexed'/multi-variable `for` loop combination is
-  that the index variable is an integral part of the loop, scoped within the loop only.
-  
-  But more importantly, in comparison to the typical index auto-increment,
-  we also *avoid needing to think* about these typical questions:
-
-  - 'Do we need a pre- or post-increment here?' (depends on how it's initialized!),
-  - 'Shall I put it on the first use, or on the last use? (the same!),
-  - 'Oops, I have an off-by-one problem now' (oh, I chose the wrong place in the last question),
-  - 'Why the hell do I have an endless loop? &ndash;
-    Ah, I forgot to put the auto-increment on a separate statement
-    when the expression got too complicated.' ...
-
-  Actually all my own experience, of course!.<br/>
-  That's why I like the clearness of the `indexed` 'for' loop.
-
-All this, and the optimizations described before, put  together:
-
-```perl
-use v5.36;
-use builtin qw 'indexed';
-no warnings 'experimental';
-
-#
-#   luhn_s_algorithm_modern
-#   Algorithmic simplifications:
-#   - summing up *including* the check-digit, the total sum modulo 10
-#     must then be zero,
-#   - using a simplified, numeric formula for the digit sum of
-#     doubled digits (less function calls, less type conversions).
-#   Using 'modern' Perl features:
-#   - using the 'indexed' builtin to add indices to the digits,
-#   - together with a multi-variable 'for' loop,
-#   - using the 'false' builtin to return false when the input string
-#     contains no digits.
-sub luhn_s_algorithm_modern( $input ) {
-    my @digits = reverse( $input ) =~ /\d/g
-        or return;
-    my $checksum = 0;
-    for my ( $index, $digit ) ( indexed @digits ) {
-        $checksum +=
-            $index % 2 == 0
-            ? $digit
-            : $digit <= 4 ? ( 2 * $digit ) : ( 2 * $digit ) - 9;
-    }
-    return $checksum % 10 == 0;
+sub poker_hand_rankings( $hand ) {
+    return $combinations{$hand};
 }
 ```
 
-#### Third Version: Pairmap.
+My `poker_hands_ranking` function returns the number of combinations
+for the hand given as the parameter.<br/>
+At least my guess of the number of combinations...
 
-As nice as the `indexed` for loop is, there's one thing that I still find inefficient:
-we need to compute whether we are at an even or odd index for each iteration,
-so again and again.<br/>
-Could that not be avoided?<br/>
-It can:
+#### The tests
 
-`List::Util` contains the `pairs` function, that returns pairs of elements of an array at a time.<br/>
-Its sibling function, `pairmap` even assigns the two element to `$a` and `$b`,
-and offers a code block to do the iteration work.<br/>
-So let's do that, summing up the results of all iterations using `sum`.
-
-We only need to make sure that we have an even number of elements in the array for `pairmap`.
-We append a zero if not.
+As I wrote before, there's a cool other [Wikipedia article](https://en.wikipedia.org/wiki/Poker_probability)
+that presents the *correct* number of combinations.<br/>
+I used the data from that article to write my tests:
 
 ```perl
-#
-#   luhn_s_algorithm_using_pairmap
-#
-#   Using 'sum' and 'pairmap' to compute the checksum,
-#   making even/odd computations unneccessary.
-#   We need to make sure that we have an even number of digits,
-#   so we add a '0' if necessary.
-#   The digits will be $a and $b inside the pairmap code block.
-#
+use Test2::V0 qw( -no_srand );
+use Data::Dump qw( pp );
 
-use List::Util qw( sum pairmap );
- 
-sub luhn_s_algorithm_using_pairmap( $input ) {
-    my @digits = reverse $input =~ /\d/g
-        or return;
-    @digits % 2 == 0 or push @digits, 0;
-    my $checksum =
-        sum( pairmap {
-                $a + ( $b <= 4 ? ( 2 * $b ) : ( 2 * $b ) - 9 )
-            } @digits );
-    return $checksum % 10 == 0;
-}
+my %expected = (
+    "Five of a kind"  => 0,
+    "Straight flush"  => 40,
+    "Four of a kind"  => 624,
+    "Full house"      => 3744,
+    "Flush"           => 5108,
+    "Straight"        => 10200,
+    "Three of a kind" => 54912,
+    "Two pair"        => 123552,
+    "One pair"        => 1098240,
+    "High card"       => 1302540,
+    "Total"           => 2598960,
+);
+
+is $combinations{$_}, $expected{$_},
+    "$expected{$_} combinations for '$_'";
+    for @hand_types, "Total";
+
+done_testing;
 ```
 
-Now I am happy with this solution .<br/>
-Especially as I have run a little benchmark with the `Benchmark` core module
-to compare the run times of the four functions:
+And I'm glad that I get this output:
 
 ```text
-            Rate classic  module  modern pairmap
-classic 141953/s      --    -18%    -27%    -41%
-module  172504/s     22%      --    -11%    -29%
-modern  194323/s     37%     13%      --    -20%
-pairmap 241917/s     70%     40%     24%      --
+ok 1 - 0 combinations for 'Five of a kind'
+ok 2 - 40 combinations for 'Straight flush'
+ok 3 - 624 combinations for 'Four of a kind'
+ok 4 - 3744 combinations for 'Full house'
+ok 5 - 5108 combinations for 'Flush'
+ok 6 - 10200 combinations for 'Straight'
+ok 7 - 54912 combinations for 'Three of a kind'
+ok 8 - 123552 combinations for 'Two pair'
+ok 9 - 1098240 combinations for 'One pair'
+ok 10 - 1302540 combinations for 'High card'
+ok 11 - 2598960 combinations for 'Total'
+1..11
 ```
 
-Obviously, the 'classic' version is slower than all the others.
-That's probably due to the digit count `split` and `sum`.<br/>
-And it shows that the 'pairmap' version really is quite a bit faster than the 'modern' version.
+It was nice to freshen up my knowledge in combinatorics!
 
-The reason for the CPAN version ('module') being slower
-than the other homemade solutions probably lies in its added functionality
-of being able to use additional values for any digits or symbols (like 10..35 for 'A' to 'Z').
-It therefore has to do a lookup of the value attached to any processed digit.<br/>
-For production code, I probably still would prefer using `Algorithm::LUHN`.
-It's well documented, well tested, 
-and it avoids maintenance  cost for any code of our own.
-
-Stlll, it was nice developing and optimizing these solutions!
-
-**Thank you for the challenge!**
+#### **Thank you for the challenge!**
