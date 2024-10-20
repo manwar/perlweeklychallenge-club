@@ -7,14 +7,14 @@ sub infix:<C>($n,$k) { $n! / ($k! * ($n - $k)!) }
 my %result = poker-hand-rankings();
 
 is %result<straight-flush>, (10 C 1)*(4 C 1);                      # 40 
-is %result<four>,           (13 C 1)*(4 C 4)*(12 C 1)*(4 C 1);     # 624; 
-is %result<full-house>,     (13 C 1)*(4 C 3)*(12 C 1)*(4 C 2);     # 3744; 
-is %result<flush>,          (13 C 5)*(4 C 1)-(10 C 1)*(4 C 1);     # 5108; 
-is %result<straight>,       (10 C 1)*(4 C 1)⁵-(10 C 1)*(4 C 1);    # 10200; 
-is %result<three>,          (13 C 1)*(4 C 3)*(12 C 2)*(4 C 1)²;    # 54912; 
-is %result<two-pair>,       (13 C 2)*(4 C 2)²*(11 C 1)*(4 C 1);    # 123552;
-is %result<pair>,           (13 C 1)*(4 C 2)*(12 C 3)*(4 C 1)³;    # 1098240; 
-is %result<high-card>,     ((13 C 5)-(10 C 1))*((4 C 1)⁵-(4 C 1)); # 1302540; 
+is %result<four>,           (13 C 1)*(4 C 4)*(12 C 1)*(4 C 1);     # 624 
+is %result<full-house>,     (13 C 1)*(4 C 3)*(12 C 1)*(4 C 2);     # 3744 
+is %result<flush>,          (13 C 5)*(4 C 1)-(10 C 1)*(4 C 1);     # 5108 
+is %result<straight>,       (10 C 1)*(4 C 1)⁵-(10 C 1)*(4 C 1);    # 10200 
+is %result<three>,          (13 C 1)*(4 C 3)*(12 C 2)*(4 C 1)²;    # 54912 
+is %result<two-pair>,       (13 C 2)*(4 C 2)²*(11 C 1)*(4 C 1);    # 123552
+is %result<pair>,           (13 C 1)*(4 C 2)*(12 C 3)*(4 C 1)³;    # 1098240 
+is %result<high-card>,     ((13 C 5)-(10 C 1))*((4 C 1)⁵-(4 C 1)); # 1302540 
 is %result.values.sum,      (52 C 5);                              # 2598960
 
 sub poker-hand-rankings
