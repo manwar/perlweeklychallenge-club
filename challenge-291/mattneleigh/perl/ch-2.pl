@@ -9,7 +9,8 @@ use English;
 ################################################################################
 
 ################################################################################
-# A draw poker hand consists of 5 cards, drawn from a pack of 52: no jokers, no wild cards. An ace can rank either high or low.
+# A draw poker hand consists of 5 cards, drawn from a pack of 52: no jokers, no
+# wild cards. An ace can rank either high or low.
 # 
 # Write a script to determine the following three things:
 # 
