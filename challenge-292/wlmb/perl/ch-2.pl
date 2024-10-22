@@ -4,6 +4,7 @@
 #
 # See https://wlmb.github.io/2024/10/21/PWC292/#task-2-zuma-game
 use v5.36;
+use Memoize;
 die <<~"FIN" unless @ARGV==2;
     $0 board hand
     to play the Zuma Game. The board and hand are string where each
@@ -11,6 +12,7 @@ die <<~"FIN" unless @ARGV==2;
     to clear the board or -1 if it is not possible
     FIN
 my ($board, $hand) = @ARGV;
+memoize "play";
 say "@ARGV -> ", play($board, $hand);
 
 sub play($board, $hand){
