@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 179
 #
@@ -15,7 +15,7 @@
 # 62 => sixty-second
 # 99 => ninety-ninth
 
-use Modern::Perl;
-use Lingua::EN::Numbers 'num2en_ordinal';
+from num2words import num2words
+import sys
 
-say num2en_ordinal(shift);
+print(num2words(int(sys.argv[1]), to='ordinal'))
