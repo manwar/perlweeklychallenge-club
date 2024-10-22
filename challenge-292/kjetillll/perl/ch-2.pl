@@ -9,7 +9,6 @@ sub zuma_game_steps {
     my($board, $hand) = @_;
     my @try = ( [$board, $hand, 0] );
     my %tried;
-    my$m=0;
     while( @try ){
 	my($b, $h, $steps) = @{ shift @try };
 	1 while $b =~ s/(.)\1\1+//g;
@@ -19,7 +18,7 @@ sub zuma_game_steps {
 		my $h_try = $h =~ s/$try_letter//r;
 		my $b_try = $b =~ s/^.{$i}\K/$try_letter/r;
 		next if $tried{ $b_try, $h_try }++; #speedup
-		push @try, [$b_try, $h_try, $steps + 1 ];
+		push @try, [ $b_try, $h_try, $steps + 1 ];
 	    }
 	}
     }
