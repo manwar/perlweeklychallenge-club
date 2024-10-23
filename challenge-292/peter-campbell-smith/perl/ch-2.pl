@@ -130,5 +130,4 @@ sub zuma_game_play {
 			zuma_game_play($new_row, $new_hand, $so_far + 1, qq[$trace $new_row $new_hand, ]);
 		}
 	}
-}
-
+}  
