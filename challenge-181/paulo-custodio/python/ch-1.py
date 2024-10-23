@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 181
 #
@@ -25,30 +25,22 @@
 #     much No positive, see seen the to to tried wasn't. and be
 #     coming end going it pretty The to was wasn't.
 
-use Modern::Perl;
-use Text::Wrap;
+import sys
+import textwrap
 
-sub read_input {
-    local $/;
-    my $text = <>;
-    $text =~ s/\s+/ /g;
-    return $text;
-}
+def read_input():
+    text = sys.stdin.read()
+    text = ' '.join(text.split())
+    return text
 
-sub order_sentences {
-    my($text) = @_;
-    $text =~ s/\.\s*$//s;   # remove last period
-    my @sentences = map {s/^\s+//; s/\s+$//; $_} split(/\./, $text);
-    for (@sentences) {
-        $_ = (join " ", sort {lc($a) cmp lc($b)} split " ", $_).".";
-    }
-    return join " ", @sentences;
-}
+def order_sentences(text):
+    text = text.rstrip('.')  # remove last period
+    sentences = [s.strip() for s in text.split('.')]
+    for i in range(len(sentences)):
+        sentences[i] = ' '.join(sorted(sentences[i].split(), key=str.lower)) + '.'
+    return ' '.join(sentences)
 
-sub reflow {
-    my($text) = @_;
-    local $Text::Wrap::columns = 60;
-    return wrap("", "", $text);
-}
+def reflow(text):
+    return textwrap.fill(text, width=60)
 
-print reflow(order_sentences(read_input()));
+print(reflow(order_sentences(read_input())))

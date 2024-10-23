@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 180
 #
@@ -19,9 +19,11 @@
 # Input: @n = (9,0,6,2,3,8,5) and $i = 4
 # Output: (9,6,8,5)
 
-use Modern::Perl;
+import sys
 
-@ARGV>2 or die "usage: ch-2.pl list... i\n";
-my @list = @ARGV;
-my $i = pop(@list);
-say join ", ", grep {$_ > $i} @list;
+if len(sys.argv) <= 2:
+    raise ValueError("usage: ch-2.py list... i")
+
+list_values = list(map(int, sys.argv[1:-1]))
+i = int(sys.argv[-1])
+print(", ".join(str(x) for x in list_values if x > i))
