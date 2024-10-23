@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 180
 #
@@ -19,10 +19,10 @@
 # Input: $s = "Long Live Perl"
 # Output: 1 as 'o' is the first unique character
 
-use Modern::Perl;
+import sys
+from collections import Counter
 
-my @chars = split //, "@ARGV";
-my %count; $count{$_}++ for @chars;
-my $pos = (map {$_->[0]} grep {$_->[1] == 1} map {[$_, $count{$chars[$_]}]}
-           0..$#chars)[0];
-say $pos;
+chars = list("".join(sys.argv[1:]))
+count = Counter(chars)
+pos = next((i for i in range(len(chars)) if count[chars[i]] == 1), None)
+print(pos)
