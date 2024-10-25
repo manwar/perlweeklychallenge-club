@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 182
 #
@@ -17,7 +17,8 @@
 # Input: @n = (4, 2, 3, 1, 5, 0)
 # Output: 4 (as 5th element in the list is the biggest number)
 
-use Modern::Perl;
+import sys
 
-my @in = @ARGV;
-say((map {$_->[0]} sort {$b->[1] <=> $a->[1]} map {[$_, $in[$_]]} 0..$#in)[0]);
+in_list = sys.argv[1:]
+result = sorted(((value, index) for index, value in enumerate(in_list)), key=lambda x: x[0], reverse=True)[0][1]
+print(result)
