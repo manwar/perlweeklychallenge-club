@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 183
 #
@@ -57,22 +57,22 @@
 #        $date2 = '2021-09-16'
 # Output: 2 years 1 day
 
-use Modern::Perl;
-use DateTime;
-use DateTime::Format::Strptime;
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+import sys
 
-sub date_diff {
-    my($dt1, $dt2) = @_;
-    my $diff = $dt2->subtract_datetime($dt1);
-    my $years = $diff->in_units('years');
-    my $result = $years==0 ? "" : $years==1 ? "1 year " : "$years years ";
-    $dt1->add_duration(DateTime::Duration->new(years=>$years));
-    my $days = $dt2->delta_days($dt1)->delta_days();
-    $result .= $days==0 ? "" : $days==1 ? "1 day" : "$days days";
-    return $result;
-}
+def date_diff(dt1, dt2):
+    diff = relativedelta(dt2, dt1)
+    years = diff.years
+    result = "" if years == 0 else "1 year " if years == 1 else f"{years} years "
+    dt1 += relativedelta(years=years)
+    days = (dt2 - dt1).days
+    result += "" if days == 0 else "1 day" if days == 1 else f"{days} days"
+    return result
 
-@ARGV==2 or die "usage: ch-2.pl yyyy-mm-dd yyyy-mm-dd\n";
-my $strp = DateTime::Format::Strptime->new(pattern=>'%Y-%m-%d');
-my @dt = map {$strp->parse_datetime($_)} @ARGV;
-say date_diff(@dt);
+if len(sys.argv) != 3:
+    raise ValueError("usage: script.py yyyy-mm-dd yyyy-mm-dd")
+
+strp = "%Y-%m-%d"
+dt = [datetime.strptime(arg, strp) for arg in sys.argv[1:]]
+print(date_diff(*dt))
