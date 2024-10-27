@@ -31,7 +31,7 @@ exit(0);
 
 ################################################################################
 # Determine whether the maximum value in a list of integers is twice as large
-# as the second-largest value, and 
+# as the second-largest value, and if so, report its location within the list
 # Takes one argument:
 # * The list of integers to examine (e.g. ( 2, 4, 1, 0 ) )
 # Returns:
