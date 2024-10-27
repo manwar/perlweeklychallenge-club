@@ -1,4 +1,4 @@
-# Challenge 292 tasks: Twice the Largest - Once the Zuma
+# Twice the Largest - Once the Zuma
 
 **Challenge 292 solutions in Perl by Matthias Muth**
 
