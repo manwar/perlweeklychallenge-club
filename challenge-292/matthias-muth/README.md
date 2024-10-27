@@ -1,394 +1,241 @@
-# Challenge 291 tasks: No Bluffing
+# Challenge 292 tasks: Twice the Largest - Once the Zuma
 
-**Challenge 291 solutions in Perl by Matthias Muth**
+**Challenge 292 solutions in Perl by Matthias Muth**
 
-## Task 1: Middle Index
+## Task 1: Twice Largest
 
-> You are given an array of integers, @ints.<br/>
-> Write a script to find the leftmost middle index (MI) i.e. the smallest amongst all the possible ones.<br/>
-> A middle index is an index where ints[0] + ints[1] + … + ints[MI-1] == ints[MI+1] + ints[MI+2] + … + ints[ints.length-1].<br/>
-> If MI == 0, the left side sum is considered to be 0. Similarly,<br/>
-> if MI == ints.length - 1, the right side sum is considered to be 0.<br/>
-> Return the leftmost MI that satisfies the condition, or -1 if there is no such index.<br/>
+> You are given an array of integers, @ints, where the largest integer is unique.<br/>
+> Write a script to find whether the largest element in the array is at least twice as big as every element in the given array. If it is return the index of the largest element or return -1 otherwise.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (2, 3, -1, 8, 4)<br/>
-> Output: 3<br/>
-> The sum of the numbers before index 3 is: 2 + 3 + -1 = 4<br/>
-> The sum of the numbers after index 3 is: 4 = 4<br/>
+> Input: @ints = (2, 4, 1, 0)<br/>
+> Output: 1<br/>
+> The largest integer is 4.<br/>
+> For every other elements in the given array is at least twice as big.<br/>
+> The index value of 4 is 1.<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (1, -1, 4)<br/>
-> Output: 2<br/>
-> The sum of the numbers before index 2 is: 1 + -1 = 0<br/>
-> The sum of the numbers after index 2 is: 0<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (2, 5)<br/>
+> Input: @ints = (1, 2, 3, 4)<br/>
 > Output: -1<br/>
-> There is no valid MI.<br/>
+> The largest integer is 4.<br/>
+> 4 is less than twice the value of 3, so we return -1.<br/>
 
-Seems that we need to try every position for being the middle index or not. But instead of computing the left and right sums again and again for every position, we can *adjust* the two sums as we move from one index to the next one. Similar to this:
+I have two solutions for this task:<br/>First, the short 'Perlish' solution,
+easy to understand and fast to implement:
 
-![Diagram 1](https://github.com/MatthiasMuth/perlweeklychallenge-club/blob/muthm-291/challenge-291/matthias-muth/Screenshot_2024-10-20_100335.png)
+I don't really need to compare the largest element to all the others, as the task text suggests. It's enough to check whether the largest one is at least twice as large as the *second* largest. If so, it will also be more than twice as large as all other elements.
 
-If we initialize the left sum to be zero, and the right sum to be the sum of *all* values (including `$ints[0]`), then the steps in each iteration are these:
-
-*  subtract the value at the current index from the right sum,
-* return the current index if the left and right sums now are equal,
-* add the value at the current index to the left sum, in preparation for the next iteration.
-
-If we didn't find a good 'middle index' in the loop, we return `-1` as requested.
-
-This is my solution (comments removed):
+So I sort the array numerically, largest first.<br/>
+Then I only need to compare the first and the second elements
+(the largest and twice the second largest).<br/>
+I return the result of that comparison if it is true, and a `-1` if not,
+using a `||` 'logical or' shortcut.
 
 ```perl
 use v5.36;
 
-use List::Util qw( sum );
+sub twice_largest( @ints ) {
+    my @sorted = sort { $b <=> $a } @ints;
+    return $sorted[0] >= 2 * $sorted[1] || -1;
+}
+```
 
-sub middle_index( @ints ) {
-    my ( $right_sum, $left_sum ) = ( sum( @ints ), 0 );
-    for ( 0..$#ints ) {
-        $right_sum -= $ints[$_];
-        return $_
-            if $left_sum == $right_sum;
-        $left_sum += $ints[$_];
+I typed this on my mobile phone (I agree that sigils are a bit of a pain there! :-D).<br/>
+It worked immediately, and I love this solution.
+
+My only worries were that as `sort` does not have a linear runtime,
+it might take longer than simply going through the array once
+for finding the largest and second largest numbers.
+So I implemented that as well, to do some benchmarks.
+
+I tried to make it as fast as possible,
+so I had to do a good initialization of the two variables
+to avoid 'defined' checks within the loop.
+As a result, it looks way more complicated than the first solution:
+
+```perl
+sub twice_largest_2( @ints ) {
+    return -1
+        unless @ints >= 2;
+    my ( $largest, $second ) =
+        $ints[0] > $ints[1]
+        ? @ints[0,1]
+        : @ints[1,0];
+    for ( 2..$#ints ) {
+        if ( $ints[$_] > $second ) {
+            if ( $ints[$_] > $largest ) {
+                ( $largest, $second ) = ( $ints[$_], $largest );
+            }
+            else {
+                $second = $ints[$_];
+            }
+        }
     }
+    return $largest >= 2 * $second || -1;
+}
+```
+
+But what about the runtime?<br/>
+These are the comparison results for 10, 100, 1000 and 10000 entries in the `@ints` array:
+
+```text
+             Rate loop_10 sort_10
+loop_10  756560/s      --    -28%
+sort_10 1050584/s     39%      --
+
+             Rate loop_100 sort_100
+loop_100 121069/s       --     -14%
+sort_100 141127/s      17%       --
+
+             Rate sort_1000 loop_1000
+sort_1000  9399/s        --      -33%
+loop_1000 14065/s       50%        --
+
+             Rate sort_10000 loop_10000
+sort_10000  616/s         --       -57%
+loop_10000 1423/s       131%         --
+```
+
+It turns out that up to 100 entries, the simple and nice first solution (that uses `sort`) is faster than the manual linear search in a loop. This doesn't astonish me too much, since the underlying `sort` function probably is implemented in `C`, while my own loop is 'Pure Perl'.
+
+Only for larger arrays, the linear search gains advantage.
+For 10000 entries, it is more than twice as fast.
+
+Moral:
+Most of the times a simple and nice 'Perlish' solution is
+not only easier to write and to maintain, but also fast enough.<br/>
+Only once speed really becomes a problem
+it is time to think about putting effort into optimizations.
+
+
+## Task 2: Zuma Game
+
+> You are given a single row of colored balls, \$row and a random number of colored balls in \$hand.<br/>
+> Here is the variation of Zuma game as your goal is to clear all of the balls from the board. Pick any ball from your hand and insert it in between two balls in the row or on either end of the row. If there is a group of three or more consecutive balls of the same color then remove the group of balls from the board. If there are no more balls on the board then you win the game. Repeat this process until you either win or do not have any more balls in your hand.<br/>
+> Write a script to minimum number of balls you have to insert to clear all the balls from the board. If you cannot clear all the balls from the board using the balls in your hand, return -1.<br/>
+> <br/>
+> Example 1<br/>
+> Input: \$board = "WRRBBW", \$hand = "RB"<br/>
+> Output: -1<br/>
+> It is impossible to clear all the balls. The best you can do is:<br/>
+>
+> - Insert 'R' so the board becomes WRRRBBW. WRRRBBW -> WBBW.<br/>
+> - Insert 'B' so the board becomes WBBBW. WBBBW -> WW.<br/>
+> There are still balls remaining on the board, and you are out of balls to insert.<br/>
+> <br/>
+> Example 2<br/>
+> Input: \$board = "WWRRBBWW", \$hand = "WRBRW"<br/>
+> Output: 2<br/>
+> To make the board empty:<br/>
+> - Insert 'R' so the board becomes WWRRRBBWW. WWRRRBBWW -> WWBBWW.<br/>
+> - Insert 'B' so the board becomes WWBBBWW. WWBBBWW -> WWWW -> empty.<br/>
+> 2 balls from your hand were needed to clear the board.<br/>
+> <br/>
+> Example 3<br/>
+> Input: \$board = "G", \$hand = "GGGGG"<br/>
+> Output: 2<br/>
+> To make the board empty:<br/>
+> - Insert 'G' so the board becomes GG.<br/>
+> - Insert 'G' so the board becomes GGG. GGG -> empty.<br/>
+> 2 balls from your hand were needed to clear the board.<br/>
+
+I couldn't find a solution that does *not* traverse the tree of all possible moves and all their possible continuations. So I had to implement a 'broadth-first search' (BFS) to find the smallest number of moves.
+
+I find that actually, a BFS is not too complicated to implement, once the following things are decided on:
+
+* What are the data needed to *describe* a node in the graph and the possible ways to continue from there?
+  
+  For us, these are:
+  
+  * the current board,
+  * the current hand,
+  * the number of moves made so far, so that we can return the number of moves done once the end condition is fulfilled.
+  
+* What are the data to *identify* a node in the graph, in order to avoid running into circles?
+  
+  For us, this is not a problem.<br/>
+  In every move, we remove one ball from the 'hand',
+  so that any further moves will always have a different 'hand'
+  (because it contains less balls),
+  and will never be identical.<br/>
+  This means that we don't have to take care about not 'revisiting' nodes at all.
+  So we don't need a `%visited` structure or anything similar here.
+  
+* What are the next possible nodes to move to from one node?
+
+  Here, we need to think a little.
+
+  We need to consider all balls that we have in our 'hand'.<br/>
+  But actually, all balls of the same color will lead to the same situation that follows.
+We therefore consider only one ball for every color that we have in our 'hand'
+to generate moves.
+
+  Each ball that we try, we need to try at all places in the 'board',
+including in front of the first existing ball and also behind the last one.
+
+  This leads to a double loop to create all possible follow-up situations,
+for trying each available ball color at each possible position.  
+
+* What is the end condition?
+  
+  After putting a ball at a position
+  and then trying to remove all possible sequences of at least three same-colored balls,
+  we check whether the result  is an empty board.
+  If yes, we directly return the current  number of moves.
+  
+* When to further proceed into the graph?
+
+  If the end condition is not met with the new board, we put the board, the new hand (reduced by a ball of the color we just have put into the board) and the new number of moves on the queue for further traversal from there. 
+
+Having decided all this, we can construct our `zuma_game` subroutine:
+
+```perl
+use v5.36;
+use List::Util qw( uniq );
+
+sub zuma_game( $board, $hand ) {
+    # Initialize the queue with the initial situation.
+    my @queue = ( [ $board, $hand, 0 ] );
+
+    # Traverse the graph.
+    while ( @queue ) {
+        my ( $board, $hand, $n_moves ) = @{ shift @queue };
+
+        # Go through the colors of the existing balls
+        # (do not repeat the same color).
+        for my $insertion ( uniq split "", $hand ) {
+
+            # Remove *one* ball of the insertion color from the hand.
+            my $reduced_hand = $hand =~ s/$insertion//r;
+
+            # Try all positions for that ball.
+            for ( 0..length( $board ) ) {
+                # Insert the ball at that position.
+                substr( my $new_board = $board, $_, 0 ) = $insertion;
+
+                # Do as many removals as possible.
+                while ( $new_board =~ s/(.)\g{-1}{2,}// ) {
+                    # Everything is in the loop condition.
+                }
+
+                # Check end criteria.
+                return $n_moves + 1
+                    if $new_board eq "";
+
+                # Descend further (if needed and possible).
+                push @queue, [ $new_board, $reduced_hand, $n_moves + 1 ]
+                    if $reduced_hand ne "";
+            }
+        }
+    }
+
+    # No solution found.
     return -1;
 }
 ```
 
+Good exercise!
 
 
-## Task 2: Poker Hand Rankings
-
-> A draw poker hand consists of 5 cards, drawn from a pack of 52: no jokers, no wild cards. An ace can rank either high or low.<br/>
-> Write a script to determine the following three things:<br/>
->
-> 1. How many different 5-card hands can be dealt?<br/>
-> 2. How many different hands of each of the 10 ranks can be dealt?<br/>
->    See here for descriptions of the 10 ranks of Poker hands:<br/>
->    https://en.wikipedia.org/wiki/List_of_poker_hands#Hand-ranking_categories<br/>
-> 3. Check the ten numbers you get in step 2 by adding them together<br/>
->    and showing that they're equal to the number you get in step 1.<br/>
-
-#### No cheating!
-
-Wikipedia contains another *very* helpful entry about poker hands: [Poker probability](https://en.wikipedia.org/wiki/Poker_probability).<br/>
-Actually it contains all the solutions to this task.<br/>But no cheating!!
-I try to find the numbers myself!<br/>
-Yet it's good to have a reference to build good test cases!
-
-#### Helper functions
-
-I have built two helper functions, one to compute factorials ${n!}$, and another one to compute 'n choose k' , for the number of different ways to choose $k$  objects out of a set of $n$ elements, without putting back the objects, and with permutations of the drawn objects to be all equivalent.  That's $\binom{n}{k} = \frac{n!}{k!(n-k)!}$.
-
-I could have used a CPAN module for that (like `Math::Combinations`), but I wanted to do it myself, to see whether it was possible to avoid using `Math::BigInt` for large factorials (considering that $52!$ is a number with 68 digits!).<br/>As our $k$ is 5 at maximum (5 cards to draw), in fact we have a maximum of 5 numbers above and below the fraction bar. 
-
-So here we go:
-
-```perl
-use v5.36;
-
-use List::Util qw( reduce sum pairkeys );
-
-sub factorial( $n ) { return reduce { $a * $b } 1..$n; }
-
-sub n_choose_k( $n, $k ) {
-    return
-        ( reduce { $a *= $b } ( $n - $k + 1 ) .. $n )
-        / ( reduce { $a *= $b } 1..$k );
-}
-```
-
-#### The combinations
-
-* **Five of a kind**<br/>
-  This one is easy.<br/>
-  As we don't use wild cards in our card deck,
-  it is not possible to get a 'Five of a kind' hand at all.<br/>
-  So this is it:<br/>
-  
-  ```perl
-      "Five of a kind" => 0,
-  ```
-  
-* **Straight flush**<br/>
-  We choose one of the 4 suits.<br/>
-  Next we choose the starting face value for the straight,
-  from **A** (for **A-K-Q-J-10**) down to **6** (for **6-5-4-3-2**),<br/>
-  adding one for the 'low ace' (**5-4-3-2-A**) straight.<br/>
-  In total:
-  
-  ```perl
-      "Straight flush" => 4 * ( 13 - 4 + 1 ),
-  ```
-  
-* **Four of a kind**<br/>
-  We have 13 choices for the face value that the 'Four of a kind' shall have.<br/>
-  Then we still have to choose the 5th card from the $(52 - 4)$ remaining cards:
-  
-  ```perl
-      "Four of a kind" => 13 * ( 52 - 4 ),
-  ```
-  
-* **Full house**<br/>
-  For the triplet, we choose the first card from all 52 cards of the deck,<br/>
-  then the second card from of the three other cards of the same face value,<br/>
-  and then the third card from the remaining two of that face value.<br/>
-  Then we divide by $3!$ to eliminate the permutations of these three cards.
-  
-  Next, for the pair,
-  we similarly choose one card from 48 cards of the rest of the deck
-  (with the triplet removed,
-  but also the fourth card of that face value removed).<br/>
-  Then we choose the second card for the pair from the remaining three cards
-  of the same face value.<br/>
-  We divide by $2!$ to ignore the permutations of the two cards
-  (knowing that there are only two ways of 'permuting' them,
-  and $2!$ happens to be just $2$).
-  
-  ```perl
-      "Full house" =>
-          ( 52 * 3 * 2 ) / factorial( 3 )
-          * ( ( 52 - 4 ) * 3 ) / factorial( 2 ),
-  ```
-  
-  Actually, for the triplet, we could also first choose a face value (out of 13),
-  and then three out of the four cards of that face value.<br/>
-  The formula then is $13 \cdot \binom{4}{3}$.<br/>
-  Which is equal to
-  $ 13 \frac{ 4 \cdot 3 \cdot 2  \cdot 1 }{ 3 \cdot 2  \cdot 1 }
-  = 13 \cdot \frac{4}{1} = 52$
-  
-  *What??*<br/>
-  I have exactly 52 choices of choosing a *triplet* from a deck of 52 cards?
-  Just as many as there are cards?
-  
-  Well, actually that's right:<br/>
-  I can choose just any one of the 52 cards,
-  and then take the three others of the same face value as my triplet.<br/>
-  Any triplet is uniquely identified
-  by the single card that is *not* in the triplet.
-  Funny!
-  
-* **Flush**<br/>
-  For a flush, we choose the suit for the flush, out of 4 possible suits.<br/>
-  Then we choose 5 cards out of the 13 cards of that suit
-  ($\binom{13}{5}
-    = \frac{ 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9 }
-           { 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 }$).<br/>
-  Some of the hands are 'Straight flush',
-  so we have to subtract those to not count them twice.
-  
-  ```perl  
-      "Flush" => 4 * n_choose_k( 13, 5 ) - ( 13 - 4 + 1 ) * 4,
-  ```
-  
-* **Straight**<br/>
-  
-  Other than for the 'Straight flush',
-  we *first* choose the starting face value for the straight,<br/>
-  from **A** (for **A-K-Q-J-10**) down to **6** (for **6-5-4-3-2**),<br/>
-  again adding one for the 'low ace' (**5-4-3-2-A**) straight.<br/>
-  But now we have to choose the suit for each of the five cards,
-  separately for each one of them,
-  because each of them can be from any of the 4 suits.<br/>
-  We have to subtract the number of combinations for
-  'Straight Flush' here, too, because we counted them already.
-  
-  ```perl
-      "Straight" =>
-          ( 13 - 4 + 1 )
-          * 4 * 4 * 4 * 4 * 4
-              - ( 13 - 4 + 1 ) * 4,
-  ```
-  
-* **Three of a kind**<br/>
-  We start out the same as for a 'Full house', choosing the triplet.<br/>
-  Then we choose the two single cards from the rest of the deck,
-  but the two remaining cards must have different face values.
-  The first one we can choose from the deck
-  without the four cards having the triplet's face value, so $(52 - 4)$.<br/>
-  For the second one, we also ignore all four cards having the face value
-  of the first one, too, to make sure the second card is different.
-  So here, we choose from $(52 - 8)$ cards.<br/>
-  As we may have drawn the two singles in any of two orders,
-  we must once more divide by $2!$, or just $2$,
-  'the number of permutations of 2 cards'.
-  
-  ```perl
-      "Three of a kind" =>
-          52 * 3 * 2 / factorial( 3 )
-              * ( 52 - 4 ) * ( 52 -8 ) / factorial( 2 ),
-  ```
-  
-* **Two pair**<br/>
-  We need to choose the two pairs:
-  For the first pair, it's one card from 52,
-  then, as we did it before, the second card from the three others of the same face value,
-  divided by $2!$ for the 'permutations' of the two cards.<br/>
-  The same for the second pair, but choosing from $( 52 - 4 )$ cards.<br/>
-  Now the two pairs could be in one or the other order, too,
-  so we divide by $2!$ once again.<br/>
-  Eventually, we choose the fifth card from a face value not used
-  in the pairs, of which there are $(52 - 8)$ cards.
-  ```perl
-      "Two pair" =>
-          52 * 3 / factorial( 2 )
-              * ( 52 - 4 ) * 3 / factorial( 2 )
-              / factorial( 2 )
-              * ( 52 - 8 ),
-  ```
-
-* **One pair**<br/>
-  We now already know how to choose a pair from 52 cards.<br/>
-  After doing so, we choose three cards with a different face values,
-  the first from $(52 - 4) = 48$ cards, the second from $(52 - 8) = 44$,
-  and the third from $(52 - 12) = 40$ cards.<br/>
-  The three single cards can be in any order,
-  so as usual we get rid of the permutaions by dividing by $3!$.
-  
-  ```perl
-      "One pair" =>
-          52 * 3 / factorial( 2 )
-              * ( 52 - 4 ) * ( 52 - 8 ) * ( 52 - 12 )
-              / factorial( 3 ),
-  ```
-
-* **High card**<br/>
-  Choosing five cards from the deck,
-  but they all need to have different face values.<br/>
-  We choose the first one from the full deck ($52$ cards),
-  the second one from $(52 -4)$ cards,
-  without those having the first card's face value,
-  and so on for all five cards.<br/>Then we ignore the permutations by dividing by $5!$.<br/>
-  We still have to subtract all combinations that we already counted
-  that have all different face values:<br/>
-  'Straight flush', 'Flush', and 'Straight'.<br/>
-  In the program, we do this correction later,
-  when the hash entries for those have been set up.
-  
-  ```perl
-      "High card" =>
-          ( 52 * (52 - 4 ) * (52 - 8 ) * (52 - 12 ) * (52 - 16 ) )
-              / factorial( 5 ),
-  ...
-      $combinations{"High card"} -=
-          ( $combinations{"Straight flush"}
-              + $combinations{"Flush"}
-              + $combinations{"Straight"} );
-  ```
-
-#### The program
-
-This is the Perl program for this task's solution, after the helper function definition as shown before.
-
-I have put the combination calculations into an array, not a hash,
-because I want to keep the entries in the same order as in the Wikipedia article.
-
-I want to be able to do lookups for the numbers, with the hand names as keys,
-and still keep an array for the order of names.
-So after the definition, I transfer the data into a hash of the same name (`%combinations`) *and* create another array (`@hand_types`) to contain only the names.
-
-```perl
-my @combinations = (
-    "Five of a kind" => 0,
-    "Straight flush" => 4 * ( 13 - 4 + 1 ),
-    "Four of a kind" => 13 * ( 52 - 4 ),
-    "Full house" =>
-        ( 52 * 3 * 2 ) / factorial( 3 ) * ( ( 52 - 4 ) * 3 ) / factorial( 2 ),
-    "Flush" =>
-        4 * n_choose_k( 13, 5 ) - ( 13 - 4 + 1 ) * 4,
-    "Straight" =>
-        ( 13 - 4 + 1 )
-        * 4 * 4 * 4 * 4 * 4
-            - ( 13 - 4 + 1 ) * 4,
-    "Three of a kind" =>
-        52 * 3 * 2 / factorial( 3 )
-            * ( 52 - 4 ) * ( 52 -8 ) / factorial( 2 ),
-    "Two pair" =>
-        52 * 3 / factorial( 2 )
-            * ( 52 - 4 ) * 3 / factorial( 2 )
-            / factorial( 2 )
-            * ( 52 - 8 ),
-    "One pair" =>
-        52 * 3 / factorial( 2 )
-            * ( 52 - 4 ) * ( 52 - 8 ) * ( 52 - 12 )
-            / factorial( 3 ),
-    "High card" =>
-        52 * (52 - 4 ) * (52 - 8 ) * (52 - 12 ) * (52 - 16 )
-            / factorial( 5 ),
-);
-
-my %combinations = ( @combinations );
-my @hand_types = pairkeys @combinations;
-
-$combinations{"High card"} -=
-    ( $combinations{"Straight flush"}
-        + $combinations{"Flush"}
-        + $combinations{"Straight"} );
-
-$combinations{"Total"} = sum values %combinations;
-
-sub poker_hand_rankings( $hand ) {
-    return $combinations{$hand};
-}
-```
-
-My `poker_hands_ranking` function returns the number of combinations
-for the hand given as the parameter.<br/>
-At least my guess of the number of combinations...
-
-#### The tests
-
-As I wrote before, there's a cool other [Wikipedia article](https://en.wikipedia.org/wiki/Poker_probability)
-that presents the *correct* number of combinations.<br/>
-I used the data from that article to write my tests:
-
-```perl
-use Test2::V0 qw( -no_srand );
-use Data::Dump qw( pp );
-
-my %expected = (
-    "Five of a kind"  => 0,
-    "Straight flush"  => 40,
-    "Four of a kind"  => 624,
-    "Full house"      => 3744,
-    "Flush"           => 5108,
-    "Straight"        => 10200,
-    "Three of a kind" => 54912,
-    "Two pair"        => 123552,
-    "One pair"        => 1098240,
-    "High card"       => 1302540,
-    "Total"           => 2598960,
-);
-
-is $combinations{$_}, $expected{$_},
-    "$expected{$_} combinations for '$_'";
-    for @hand_types, "Total";
-
-done_testing;
-```
-
-And I'm glad that I get this output:
-
-```text
-ok 1 - 0 combinations for 'Five of a kind'
-ok 2 - 40 combinations for 'Straight flush'
-ok 3 - 624 combinations for 'Four of a kind'
-ok 4 - 3744 combinations for 'Full house'
-ok 5 - 5108 combinations for 'Flush'
-ok 6 - 10200 combinations for 'Straight'
-ok 7 - 54912 combinations for 'Three of a kind'
-ok 8 - 123552 combinations for 'Two pair'
-ok 9 - 1098240 combinations for 'One pair'
-ok 10 - 1302540 combinations for 'High card'
-ok 11 - 2598960 combinations for 'Total'
-1..11
-```
-
-It was nice to freshen up my knowledge in combinatorics!
 
 #### **Thank you for the challenge!**
