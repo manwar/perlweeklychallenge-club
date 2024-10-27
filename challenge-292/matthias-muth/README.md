@@ -1,4 +1,4 @@
-# Twice the Largest - Once the Zuma
+# Challenge 292 tasks: Twice the Largest - Once the Zuma
 
 **Challenge 292 solutions in Perl by Matthias Muth**
 
@@ -139,9 +139,11 @@ it is time to think about putting effort into optimizations.
 > - Insert 'G' so the board becomes GGG. GGG -> empty.<br/>
 > 2 balls from your hand were needed to clear the board.<br/>
 
-I couldn't find a solution that does *not* traverse the tree of all possible moves and all their possible continuations. So I had to implement a 'broadth-first search' (BFS) to find the smallest number of moves.
+I couldn't find a solution that analyzes the 'board' and the 'hand' and directly determines the number of moves needed.
+So I implemented a 'breadth-first search' (BFS) to  traverse the tree of all possible moves
+and find the smallest number of moves.
 
-I find that actually, a BFS is not too complicated to implement, once the following things are decided on:
+I find that actually, a BFS is not too intimidating to implement, once the following things are cleared up:
 
 * What are the data needed to *describe* a node in the graph and the possible ways to continue from there?
   
