@@ -14,5 +14,5 @@ sub boomerang(+@points)
     return False unless @points.unique(:with(&[eqv])) == 3;
     my $m1 = do given @points { (.[0;1] - .[1;1]) / (.[0;0] - .[1;0]) } 
     my $m2 = do given @points { (.[0;1] - .[2;1]) / (.[0;0] - .[2;0]) }
-    not $m1 == $m2 
+    $m1 !== $m2 
 }
