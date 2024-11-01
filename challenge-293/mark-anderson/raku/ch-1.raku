@@ -10,7 +10,7 @@ sub similar-dominos(+@dominos)
 {
     sum gather while @dominos
     {
-        my @m = @dominos.grep({ @dominos[0] (==) $_ }, :k);
+        my @m = @dominos.grep(@dominos[0] (==) *, :k);
         take .elems if .end given @m;
         @dominos[@m]:eject
     }
