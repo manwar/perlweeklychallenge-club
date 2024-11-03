@@ -1,3 +1,3 @@
-# The Weekly Challenge 291
+# The Weekly Challenge 293
 
-Blog: [Index and poker games](https://dev.to/simongreennet/index-and-poker-games-c1a)
+Blog: [Similar boomerang](https://dev.to/simongreennet/similar-boomerang-2h88)
