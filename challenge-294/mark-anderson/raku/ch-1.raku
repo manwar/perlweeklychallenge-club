@@ -17,16 +17,14 @@ sub cons-seq(+@ints)
         {
             for $k...-Inf 
             {
-                last unless $s{$_};
-                .take; 
-                $s{$_}-- 
+                $s{$_}-- or last;
+                .take
             }
 
             for $k.succ...Inf
             {
-                last unless $s{$_};
-                .take; 
-                $s{$_}-- 
+                $s{$_}-- or last;
+                .take 
             }
         }
     } 
