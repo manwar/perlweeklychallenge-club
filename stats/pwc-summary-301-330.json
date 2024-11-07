@@ -1,6 +1,7 @@
 {
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             8,
             0,
@@ -21,10 +22,10 @@
             85,
             21,
             8
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             2,
@@ -45,10 +46,10 @@
             20,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -69,17 +70,14 @@
             6,
             14,
             1
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 19] Last updated at 2024-11-05 14:39:13 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 19] Last updated at 2024-11-07 00:30:43 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -104,11 +102,9 @@
          "Yves Orton"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
       "title" : {
@@ -116,8 +112,12 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    }
 }
