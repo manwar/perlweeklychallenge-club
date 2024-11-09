@@ -22,6 +22,8 @@
 
 use v5.40;
 
+use List::MoreUtils qw/last_index/;
+
 
 use Getopt::Long;
 my $Verbose = false;
@@ -32,17 +34,43 @@ GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchm
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say nextPerm(@ARGV);
+say "(", join(", ", nextPerm(@ARGV)->@*), ")";
 
 sub nextPerm(@ints)
 {
+    my $pivot = -1;
+    for my $p ( reverse 0 .. ($#ints-1) )
+    {
+        if ( $ints[$p] lt $ints[$p+1] )
+        {
+            $pivot = $p;
+            last;
+        }
+    }
+    if ( $pivot < 0 )
+    {
+        return [ sort @ints ];
+    }
+    my $successor = last_index { $_ gt $ints[$pivot] } @ints;
+
+    ($ints[$pivot], $ints[$successor]) = ($ints[$successor], $ints[$pivot]);
+
+    @ints[$pivot+1 .. $#ints] = reverse @ints[$pivot+1 .. $#ints];
+
+    return \@ints;
 }
 
 sub runTest
 {
     use Test2::V0;
 
-    is( task(), 1, "FAIL");
+    is( nextPerm(1,2,3), [1,3,2], "Example 1");
+    is( nextPerm(2,1,3), [2,3,1], "Example 2");
+    is( nextPerm(3,1,2), [3,2,1], "Example 3");
+
+    is( nextPerm(3,2,1), [1,2,3], "Roll over");
+
+    is( nextPerm(1,3,5,4,2), [1,4,2,3,5], "1 3 5 4 2");
 
     done_testing;
 }
