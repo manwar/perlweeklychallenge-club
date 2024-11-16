@@ -7,5 +7,5 @@ nok word-break("sonsanddaughters", <sons sand daughters>);
 
 sub word-break($str, @words)
 {
-    $str ~~ /^ [ @words ]* $/
+    $str ~~ /^ @words* $/
 }
