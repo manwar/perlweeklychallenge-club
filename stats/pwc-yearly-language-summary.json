@@ -1,55 +1,47 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
-         "colorByPoint" : "true",
          "name" : "The Weekly Challenge Languages",
          "data" : [
             {
-               "name" : "2024",
-               "y" : 4890,
-               "drilldown" : "2024"
+               "y" : 4900,
+               "drilldown" : "2024",
+               "name" : "2024"
             },
             {
+               "drilldown" : "2023",
                "name" : "2023",
-               "y" : 5702,
-               "drilldown" : "2023"
+               "y" : 5702
             },
             {
-               "y" : 5373,
                "drilldown" : "2022",
-               "name" : "2022"
+               "name" : "2022",
+               "y" : 5373
             },
             {
+               "drilldown" : "2021",
                "name" : "2021",
-               "y" : 4976,
-               "drilldown" : "2021"
+               "y" : 4976
             },
             {
-               "y" : 5187,
+               "name" : "2020",
                "drilldown" : "2020",
-               "name" : "2020"
+               "y" : 5187
             },
             {
                "y" : 3511,
-               "drilldown" : "2019",
-               "name" : "2019"
+               "name" : "2019",
+               "drilldown" : "2019"
             }
-         ]
+         ],
+         "colorByPoint" : "true"
       }
    ],
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-16 08:25:22 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-17 16:42:45 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -60,36 +52,35 @@
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "tooltip" : {
-      "followPointer" : "true",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "2024",
+            "id" : "2024",
             "data" : [
                [
                   "Perl",
-                  2513
+                  2519
                ],
                [
                   "Raku",
-                  1287
+                  1290
                ],
                [
                   "Blog",
-                  1090
+                  1091
                ]
-            ],
-            "id" : "2024",
-            "name" : "2024"
+            ]
          },
          {
-            "name" : "2023",
             "data" : [
                [
                   "Perl",
@@ -104,7 +95,8 @@
                   1197
                ]
             ],
-            "id" : "2023"
+            "id" : "2023",
+            "name" : "2023"
          },
          {
             "data" : [
@@ -125,6 +117,8 @@
             "id" : "2022"
          },
          {
+            "name" : "2021",
+            "id" : "2021",
             "data" : [
                [
                   "Perl",
@@ -138,9 +132,7 @@
                   "Blog",
                   921
                ]
-            ],
-            "name" : "2021",
-            "id" : "2021"
+            ]
          },
          {
             "data" : [
@@ -161,6 +153,7 @@
             "name" : "2020"
          },
          {
+            "name" : "2019",
             "id" : "2019",
             "data" : [
                [
@@ -175,12 +168,19 @@
                   "Blog",
                   452
                ]
-            ],
-            "name" : "2019"
+            ]
          }
       ]
    },
    "title" : {
       "text" : "The Weekly Challenge Language"
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
