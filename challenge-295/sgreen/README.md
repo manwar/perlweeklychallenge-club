@@ -1,3 +1,3 @@
-# The Weekly Challenge 293
+# The Weekly Challenge 295
 
-Blog: [Similar boomerang](https://dev.to/simongreennet/similar-boomerang-2h88)
+Blog: [The Break Game](https://dev.to/simongreennet/the-break-game-2jp8)
