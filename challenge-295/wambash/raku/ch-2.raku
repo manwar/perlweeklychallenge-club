@@ -2,15 +2,12 @@
 
 sub jump ($from, +@ints) {
     $from «+« ( 1..@ints[$from] )
-    andthen .Slip
 }
 
 sub jump-game (+@ints) {
-    (0,), { .unique.map: { jump $_, @ints } } ... -> @where {  @ints.end ∈ @where }\
-    andthen .skip
+    (0,), { .unique.map: { |jump $_, @ints } } ... *
     andthen .head: @ints.elems
-    andthen .elems
-    andthen $_ ≤ @ints.end ?? $_ !! -1
+    andthen .first: -> @where {  @ints.end ∈ @where }, :k
 }
 
 multi MAIN (Bool :test($)!) {
@@ -20,12 +17,12 @@ multi MAIN (Bool :test($)!) {
     is jump( 1, (2,3,1,1,4) ), (2,3,4);
     is jump-game(2,3,1,1,4),2;
     is jump-game(2,3,0,4),2;
-    is jump-game(2,0,0,4),-1;
+    is jump-game(2,0,0,4),Nil;
     is jump-game(1,1,1,1,1,1,0),6;
-    is jump-game(0,0),-1;
+    is jump-game(0,0),Nil;
     done-testing;
 }
 
 multi MAIN (+@ints) {
-    say jump-game @ints
+    say jump-game( @ints ) // -1
 }
