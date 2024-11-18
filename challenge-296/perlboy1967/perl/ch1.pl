@@ -28,11 +28,11 @@ use Test2::V0 qw(-no_srand);
 
 no warnings qw(experimental::signatures);
 sub str2rle ($str) {
-  $str =~ s#([a-zA-Z])(\1{1,})#length($&).$1#ger
+  $str =~ s#([a-zA-Z])(\1{1,})#$1.length($&)#ger
 }
 
 sub rle2str ($rle) {
-  $rle =~ s#(\d+)([a-zA-Z])#$2 x $1#ger
+  $rle =~ s#([a-zA-Z])(\d+)#$1 x $2#ger
 }
 
 for ([1,'abbc'],[2,'aaabccc'],[3,'abcc']) {
