@@ -13,14 +13,10 @@ is decompress("b4a2bc14a3c"),             "baaaabbcaaaaaaaaaaaaaaccc";
 
 sub compress($chars)
 {
-    [~] do for $chars ~~ m:g/(<.alpha>)$0*/
-    {
-        my $chars = .pos - .from;
-        $chars == 1 ?? .[0] !! $chars ~ .[0]           
-    }
+    [~] gather $chars ~~ m:g/(<.alpha>) $0* {} :my $len = $/.pos - $/.from; { take $len == 1 ?? $/[0] !! $len ~ $/[0] }/           
 }
 
 sub decompress($chars)
 {
-    [~] gather $chars ~~ m:g/(<.digit>+)?(<.alpha>) { take $0 ?? $1 x $0 !! $1 }/ 
+    [~] gather $chars ~~ m:g/(<.digit>+)? (<.alpha>) { take $0 ?? $1 x $0 !! $1 }/ 
 }
