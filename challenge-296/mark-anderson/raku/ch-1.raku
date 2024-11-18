@@ -1,17 +1,17 @@
 #!/usr/bin/env raku
 use Test;
 
-is string-compression("abbc"),                      "a2bc";
-is string-compression("aaabccc"),                   "3ab3c";
-is string-compression("abcc"),                      "ab2c";
-is string-compression("baaaabbcaaaaaaaaaaaaaaccc"), "b4a2bc14a3c";
+is compress("abbc"),                      "a2bc";
+is compress("aaabccc"),                   "3ab3c";
+is compress("abcc"),                      "ab2c";
+is compress("baaaabbcaaaaaaaaaaaaaaccc"), "b4a2bc14a3c";
 
-is string-decompression("a2bc"),        "abbc";
-is string-decompression("3ab3c"),       "aaabccc";
-is string-decompression("ab2c"),        "abcc";
-is string-decompression("b4a2bc14a3c"), "baaaabbcaaaaaaaaaaaaaaccc";
+is decompress("a2bc"),                    "abbc";
+is decompress("3ab3c"),                   "aaabccc";
+is decompress("ab2c"),                    "abcc";
+is decompress("b4a2bc14a3c"),             "baaaabbcaaaaaaaaaaaaaaccc";
 
-sub string-compression($chars)
+sub compress($chars)
 {
     [~] do for $chars ~~ m:g/(<.alpha>)$0*/
     {
@@ -20,10 +20,7 @@ sub string-compression($chars)
     }
 }
 
-sub string-decompression($chars is copy)
+sub decompress($chars)
 {
-    $chars ~~ s/^(<.alpha>)/1{$0}/;
-    $chars ~~ s:g/(<.alpha>)(<.alpha>)/{$0}1{$1}/;
-    my $seq = $chars.split(/<.alpha>/, :v:skip-empty);
-    [~] do .value x .key for $seq.pairup
+    [~] gather $chars ~~ m:g/(<.digit>+)?(<.alpha>) { take $0 ?? $1 x $0 !! $1 }/ 
 }
