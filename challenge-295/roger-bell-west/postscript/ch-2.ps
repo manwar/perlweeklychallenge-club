@@ -1,0 +1,79 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/jumpgame {
+    0 dict begin
+    /a exch def
+    /target a length 1 sub def
+    /here << 0 true >> def
+    /moves 0 def
+    {
+        /moves moves 1 add def
+        /there 0 dict def
+        here keys {
+            /n exch def
+            n 1 add 1 n a n get add target min {
+                there exch true put
+            } for
+        } forall
+        there length 0 eq {
+            -1
+            exit
+        } if
+        there target known {
+            moves
+            exit
+        } if
+        /here there def
+    } loop
+    end
+} bind def
+
+(jumpgame) test.start
+[2 3 1 1 4] jumpgame 2 eq test
+[2 3 0 4] jumpgame 2 eq test
+[2 0 0 4] jumpgame -1 eq test
+test.end
