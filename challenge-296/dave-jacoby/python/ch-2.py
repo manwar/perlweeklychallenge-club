@@ -46,41 +46,5 @@ def matchstick_square( sticks, board=[[],[],[],[]], side=0 ):
         sticks_copy.append(stick)
     return any(output)
 
-# sub matchstick_square( $sticks, $board = [], $side = 0 ) {
-#     if ( $side > 3 ) {
-#         my @summed = map { sum0( $_->@* ) } $board->@*;
-#         if (   $summed[0] == $summed[1]
-#             && $summed[0] == $summed[2]
-#             && $summed[0] == $summed[3]
-#             && !scalar $sticks->@* )
-#         {
-#             return 'true';
-#         }
-#         return 'false';
-#     }
-#     my @output;
-#     my @sticks = $sticks->@*;
-#     for my $i ( 0 .. -1 + scalar @sticks ) {
-#         my $stick = shift @sticks;
-#         my @board = map { [@$_] } $board->@*;
-#         push $board[$side]->@*, $stick;
-#         if ( $side == 0 ) {
-#             push @output, matchstick_square( \@sticks, \@board, $side + 1 );
-#         }
-#         elsif ( sum0( $board[$side] ) >= sum0( $board[0] ) ) {
-#             push @output, matchstick_square( \@sticks, \@board, $side + 1 );
-#         }
-#         else {
-#             push @output, matchstick_square( \@sticks, \@board, $side );
-#         }
-#         push @sticks, $stick;
-#     }
-#     if ( any { /true/mix } @output ) {
-#         return 'true';
-#     }
-#     return 'false';
-# }
-
-
 if __name__ == '__main__':
     main()
