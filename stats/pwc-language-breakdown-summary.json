@@ -1,7 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -11,53 +8,56 @@
       },
       "type" : "category"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2024-11-19 18:25:33 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Perl",
+               15487
+            ],
+            [
+               "Raku",
+               8739
+            ],
+            [
+               "Blog",
+               5458
+            ]
+         ],
          "dataLabels" : {
-            "enabled" : "true",
+            "rotation" : -90,
             "align" : "right",
-            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
             "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         },
-         "data" : [
-            [
-               "Perl",
-               15475
-            ],
-            [
-               "Raku",
-               8735
-            ],
-            [
-               "Blog",
-               5455
-            ]
-         ],
-         "name" : "Contributions"
+            "y" : 10
+         }
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2024-11-19 19:21:33 GMT"
    }
 }
