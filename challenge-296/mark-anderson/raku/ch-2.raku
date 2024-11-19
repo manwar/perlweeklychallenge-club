@@ -30,9 +30,8 @@ sub sides(+@ints)
     {
         last unless $bag;
 
-        while all $bag{|$partition}
+        while $bag (>=) $partition
         {
-            last unless $bag (>=) $partition;
             take $partition; 
             $bag (-)= $partition
         }
