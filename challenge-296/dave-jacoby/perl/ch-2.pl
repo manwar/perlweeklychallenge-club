@@ -7,12 +7,14 @@ use experimental qw{ say state postderef signatures };
 use List::Util qw{any sum0};
 
 my @examples = (
+
     [ 2, 2, 2, 2 ],
     [ 1, 2, 2, 2, 1 ],
     [ 2, 2, 2, 4 ],
     [ 2, 2, 2, 2, 4 ],
     [ 3, 4, 1, 4, 3, 1 ],
     [ 1, 1, 1, 1, 1, 5, 2, 3, 4, 1 ],
+    [ 2, 3, 2, 3, 4, 1, 4, 1 ]
 );
 
 for my $example (@examples) {
@@ -39,10 +41,12 @@ sub matchstick_square( $sticks, $board = [], $side = 0 ) {
     my @output;
     my @sticks = $sticks->@*;
     for my $i ( 0 .. -1 + scalar @sticks ) {
+        next if any { /true/mix } @output;
         my $stick = shift @sticks;
         my @board = map { [@$_] } $board->@*;
         push $board[$side]->@*, $stick;
         if ( $side == 0 ) {
+            push @output, matchstick_square( \@sticks, \@board, $side );
             push @output, matchstick_square( \@sticks, \@board, $side + 1 );
         }
         elsif ( sum0( $board[$side] ) >= sum0( $board[0] ) ) {
