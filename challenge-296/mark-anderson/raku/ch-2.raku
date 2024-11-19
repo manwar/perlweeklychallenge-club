@@ -26,14 +26,14 @@ sub sides(+@ints)
 
     my $bag = @ints.BagHash;
 
-    return .List given gather for reverse partitions($sum div 4)
+    return .List given gather for reverse partitions($sum div 4) -> $partition
     {
         last unless $bag;
 
-        while all $bag{$_}
+        while all $bag{|$partition}
         {
-            .take;
-            $bag (-)= .Bag
+            take $partition;
+            $bag (-)= $partition
         }
     }
 }
