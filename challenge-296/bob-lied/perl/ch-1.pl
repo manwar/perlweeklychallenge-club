@@ -31,6 +31,8 @@ GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchm
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
+say "", ($_ =~ s/((.)\2*)/(length($1)==1?"":length($1)).$2/ger ) for @ARGV;
+
 say rle_enc($_) for @ARGV;
 
 sub rle_enc($str)
@@ -42,10 +44,24 @@ sub rle_enc($str)
     {
         my $n = 1;
         while ( @s && $s[0] eq $c ) { $n++; shift @s; }
-        $out .= ( $n>1 ? $n : "" ) . $c;
+        $out .= ( $n > 1 ? $n : "" ) . $c;
     }
 
     return $out;
+}
+
+sub rleRE($str)
+{
+    return ( $str =~ s/((.)\2*)/my $n=$+[1]-$-[1];($n>1?$n:"").$2/ger );
+    #return ( $str =~ s/((.)\2*)/(length($1)==1?"":length($1)).$2/ger );
+
+#    my $out = "";
+#while ( $str =~ s/^((.)\2*)//g )
+#    {
+#        my $n = length($1);
+#        $out .= ( $n > 1 ? $n : "" ) . $2;
+#    }
+#    return $out;
 }
 
 sub rle_dec($str)
@@ -59,6 +75,11 @@ sub rle_dec($str)
     return $out;
 }
 
+sub rle_dec_RE($str)
+{
+    return $str =~ s/(\d+)(.)/$2x$1/ger;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -67,9 +88,17 @@ sub runTest
     is( rle_enc("aaabccc"), "3ab3c", "Example 2 encode");
     is( rle_enc("abcc"),    "ab2c",  "Example 3 encode");
 
+    is( rleRE("abbc"),    "a2bc",  "Example 1 encode RE");
+    is( rleRE("aaabccc"), "3ab3c", "Example 2 encode RE");
+    is( rleRE("abcc"),    "ab2c",  "Example 3 encode RE");
+
     is( rle_dec("a2bc"),    "abbc",    "Example 1 decode");
     is( rle_dec("3ab3c"),   "aaabccc", "Example 2 decode");
     is( rle_dec("ab2c"),    "abcc",    "Example 3 decode");
+
+    is( rle_dec_RE("a2bc"),    "abbc",    "Example 1 decode RE");
+    is( rle_dec_RE("3ab3c"),   "aaabccc", "Example 2 decode RE");
+    is( rle_dec_RE("ab2c"),    "abcc",    "Example 3 decode RE");
 
     is( rle_enc("rrrrrrrrrrr"), "11r", "Double digits encode");
     is( rle_dec("11r"), "rrrrrrrrrrr", "Double digits decode");
@@ -81,7 +110,10 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my $str = "#=============================================================================#ch-.plPerlWeeklyChallengeTaskStringCompression#=============================================================================#Youaregivenastringofalphabeticcharacters,chars.#Writeascripttocompressthestringwithrun-lengthencoding,asshown#intheexamples.Acompressedunitcanbeeitherasinglecharacterora#countfollowedbyacharacter.";
+
     cmpthese($repeat, {
-            label => sub { },
+            array => sub { rle_enc($str) },
+            regex => sub { rleRE($str) },
         });
 }
