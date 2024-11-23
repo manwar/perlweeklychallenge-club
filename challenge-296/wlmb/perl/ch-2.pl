@@ -21,8 +21,8 @@ sub test_aux(@l){
     my $first = shift(@l);
     return 0 if $first > $side;
     return test_aux(@l) if $first == $side; # Matched one side, test the rest
-    for(1..@l-1){ # join two sticks and test
-	return 1 if test_aux($first + $l[$_], @l[1..$_-1,$_+1..@l-1])
+    for(0..@l-1){ # join two sticks and test
+	return 1 if test_aux($first + $l[$_], @l[0..$_-1,$_+1..@l-1])
     }
     return 0; # fail if joining any sticks to the first fails
 }
