@@ -17,3 +17,43 @@ Example 3
 Input: $chars = "abcc"
 Output: "ab2c"
 =cut
+
+my @inputs = ("abbc","aaabccc","abcc");
+
+foreach(@inputs){
+    my $str = $_;
+    my $compressed = stringCompress($str);
+    print "$str -> $compressed \n";
+}
+
+sub stringCompress{
+    my $s = shift;
+
+    my %hash = mapString($s);
+    my $comp = "";
+    my @keys = sort keys %hash;
+    foreach(@keys){
+        my $value = $hash{$_};
+        if($value == 1){
+            $comp .= "$_";
+        }else{
+            $comp .= "$value$_";
+        }
+    }
+    return $comp;
+}
+
+sub mapString{
+    my $string = shift;
+    my @S = split("",$string);
+    my %seen;
+    foreach(@S){
+        if(exists($seen{$_})){
+            $seen{$_} += 1;
+        }else{
+            $seen{$_} = 1;
+        }
+    }
+
+    return %seen;
+}
