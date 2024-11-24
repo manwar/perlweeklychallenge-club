@@ -16,13 +16,14 @@ def can_make_sums( sums: List[Int], lengths: List[Int] ): Boolean =
     else if( sums(0) == 0 )
         if( sums.size == 1 ) true
         else can_make_sums( sums.tail, lengths )
-    else (0 to lengths.size-1).exists(
-        x => can_make_sums( sums.patch(0, List(sums(0)-lengths(x)), 1), lengths.patch(x, Nil, 1) ) )
+    else lengths.indices.exists(
+        i => can_make_sums( List( sums(0)-lengths(i) ) ++ sums.tail,
+                            lengths.patch(i, Nil, 1) ) )
 
 def can_make_square( lengths: List[Int] ): Boolean =
     lengths.sum % 4 == 0
     &&
-    can_make_sums( List(lengths.sum/4, lengths.sum/4, lengths.sum/4, lengths.sum/4), lengths )
+    can_make_sums( List.fill(4)(lengths.sum/4), lengths )
 
 val tests = List(
   ( List( 1, 2, 2, 2, 1 ),                   true  ),
