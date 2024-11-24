@@ -1,3 +1,3 @@
-# The Weekly Challenge 295
+# The Weekly Challenge 296
 
-Blog: [The Break Game](https://dev.to/simongreennet/the-break-game-2jp8)
+Blog: [Matchstick compression](https://dev.to/simongreennet/matchstick-compression-2d83)
