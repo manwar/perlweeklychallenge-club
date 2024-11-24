@@ -1,9 +1,8 @@
 ## The Weekly Challenge
-## Week 295 solutions in Perl by Matthias Muth
+#### Week 296 solutions in Perl by Matthias Muth
 
-See
-[here](https://dev.to/muthm/jump-but-dont-break-the-game-pwc-295-2i34)
-for a blog post describing this week's solutions.
+See my blog post
+[**The Run-Length of Matchsticks (PWC 296)**](https://dev.to/muthm/the-run-length-of-matchsticks-pwc-296-24b4)
+describing my solutions for this week.
 
 #### Thank you for the challenge!
-
