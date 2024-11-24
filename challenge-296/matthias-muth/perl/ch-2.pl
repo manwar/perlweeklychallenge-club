@@ -44,7 +44,7 @@ sub matchstick_square_by_iterators( @ints ) {
     my $total = sum( @ints );
     if ( $total % 4 != 0 ) {
         return false;
-    }
+
     my $side_length = $total / 4;
 
     # Get a combination for the first side of the square.
