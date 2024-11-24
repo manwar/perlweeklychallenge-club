@@ -1,0 +1,76 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($chars where $chars.chars > 0,
+               :v(:$verbose));
+
+my $second = $chars ~~ /<[0..9]>/
+  ?? str-decompress($chars)
+  !! str-compress($chars);
+
+say $second;
+
+my $third = $second ~~ /<[0..9]>/
+  ?? str-decompress($second)
+  !! str-compress($second);
+
+die "Rountripping is broken ($chars <=> $third)" unless $chars eq $third;
+
+say ":\n: Rountripping ok" if $verbose;
+
+sub str-compress ($string)
+{
+  my @chars  = $string.comb;
+  my $result = "";
+  my $first  = @chars.shift;
+  my $count  = 1;
+
+  say ": Letter $first (the first)" if $verbose;
+
+  while (@chars.elems)
+  {
+    my $next = @chars.shift;
+
+    say ": Letter $next" if $verbose;
+
+    if $first eq $next
+    {
+      $count++;
+      say ": - $first count $count" if $verbose;
+    }
+    else
+    {
+      $result ~= ( $count == 1 ?? $first !! "$count$first" );
+      $first = $next;
+      $count = 1;
+    }
+  }
+
+  $result ~= ( $count == 1 ?? $first !! "$count$first" );
+
+  return $result;
+}
+
+sub str-decompress ($string)
+{
+  my @chars  = $string.comb;
+  my $result = "";
+
+  while (@chars.elems)
+  {
+    my $current = @chars.shift;
+    my $count = "";
+
+    say ": Current letter $current" if $verbose;
+   
+    while $current ~~ /^<[1..9]>$/
+    {
+      $count ~= $current;
+      $current = @chars.shift || die "Missing letter";
+      say ": - Real letter $current" if $verbose;
+    }
+    $count = 1 unless $count;
+    $result ~= ( $current x $count );
+  }    
+
+  return $result;
+}
