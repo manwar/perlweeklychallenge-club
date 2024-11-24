@@ -30,9 +30,9 @@ my @Test =
     # in                    exp
     (0,),                   0,
     (9,),                   0,
-    #(1,0),                 1,
-    #(0,1),               Int,
-    #(9,0),                 1,
+    (1,0),                  1,
+    (0,1),                 -1,
+    (9,0),                  1,
     (2, 3, 1, 1, 4),        2,
     (2,-3, 1, 1, 4),        3,
     (2, 3, 0, 4),           2,
@@ -55,6 +55,7 @@ multi task( @a is copy -->Int) {
         return Int if $nxt ≤ $i;                    # no progress
         $i = $nxt;                                  # done
     }
+    return $i;
 }
 
 for @Dead -> @in {
