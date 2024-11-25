@@ -42,8 +42,8 @@ sub matchstick_square_by_iterators( @ints ) {
 
     # The total sum of the matchstick lengths must be divisible by 4.
     my $total = sum( @ints );
-    if ( $total % 4 != 0 ) {
-        return false;
+    return false
+	if $total % 4 != 0;
 
     my $side_length = $total / 4;
 
