@@ -1,0 +1,42 @@
+--
+-- Perl Weekly Challenge 297
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-297>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc297;
+
+CREATE OR REPLACE FUNCTION
+pwc297.task2_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $ints ) = @_;
+
+   my $swaps = 0;
+   my $index = 0;
+   
+   my $current_index = ( 
+   			map { $_->[ 1 ] }
+   			grep { $_->[ 0 ] == 1 }
+   			map { [ $ints->[ $_ ], $_ ] } 0 .. $ints->@* - 1 )[ 0 ];
+
+  $ints = [ 1, $ints->@[ 0 .. $current_index - 1 ],
+               $ints->@[ $current_index + 1 .. -1 ] ];
+  $swaps += $current_index;
+  
+
+  $current_index = (
+   			map { $_->[ 1 ] }
+   			grep { $_->[ 0 ] == scalar $ints->@* }
+   			map { [ $ints[ $_ ], $_ ] } 0 .. $ints->@* - 1 )[ 0 ];
+
+  $ints = [ $ints->@[ 0 .. $current_index - 1 ],
+            $ints->@[ $current_index + 1 .. -1 ],
+	    scalar $ints->@* ];
+
+  $swaps +=  scalar( $ints->@* ) - $current_index - 1;
+  return $swaps;
+   
+$CODE$
+LANGUAGE plperl;
