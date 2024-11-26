@@ -1,40 +1,95 @@
 {
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-26 12:22:29 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : "true",
+         "data" : [
+            {
+               "name" : "2024",
+               "y" : 5040,
+               "drilldown" : "2024"
+            },
+            {
+               "y" : 5702,
+               "drilldown" : "2023",
+               "name" : "2023"
+            },
+            {
+               "name" : "2022",
+               "drilldown" : "2022",
+               "y" : 5375
+            },
+            {
+               "y" : 4976,
+               "drilldown" : "2021",
+               "name" : "2021"
+            },
+            {
+               "name" : "2020",
+               "drilldown" : "2020",
+               "y" : 5187
+            },
+            {
+               "name" : "2019",
+               "drilldown" : "2019",
+               "y" : 3511
+            }
+         ],
+         "name" : "The Weekly Challenge Languages"
+      }
+   ],
+   "legend" : {
+      "enabled" : "false"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "2024",
             "name" : "2024",
             "data" : [
                [
                   "Perl",
-                  2587
+                  2591
                ],
                [
                   "Raku",
-                  1322
+                  1324
                ],
                [
                   "Blog",
-                  1124
+                  1125
                ]
-            ],
-            "id" : "2024"
+            ]
          },
          {
-            "id" : "2023",
+            "name" : "2023",
             "data" : [
                [
                   "Perl",
@@ -49,10 +104,10 @@
                   1197
                ]
             ],
-            "name" : "2023"
+            "id" : "2023"
          },
          {
-            "id" : "2022",
+            "name" : "2022",
             "data" : [
                [
                   "Perl",
@@ -67,9 +122,10 @@
                   1010
                ]
             ],
-            "name" : "2022"
+            "id" : "2022"
          },
          {
+            "id" : "2021",
             "name" : "2021",
             "data" : [
                [
@@ -84,11 +140,11 @@
                   "Blog",
                   921
                ]
-            ],
-            "id" : "2021"
+            ]
          },
          {
             "id" : "2020",
+            "name" : "2020",
             "data" : [
                [
                   "Perl",
@@ -102,8 +158,7 @@
                   "Blog",
                   780
                ]
-            ],
-            "name" : "2020"
+            ]
          },
          {
             "id" : "2019",
@@ -125,62 +180,7 @@
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true"
-   },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-26 10:02:23 GMT"
-   },
-   "series" : [
-      {
-         "colorByPoint" : "true",
-         "name" : "The Weekly Challenge Languages",
-         "data" : [
-            {
-               "drilldown" : "2024",
-               "name" : "2024",
-               "y" : 5033
-            },
-            {
-               "drilldown" : "2023",
-               "name" : "2023",
-               "y" : 5702
-            },
-            {
-               "drilldown" : "2022",
-               "name" : "2022",
-               "y" : 5375
-            },
-            {
-               "y" : 4976,
-               "drilldown" : "2021",
-               "name" : "2021"
-            },
-            {
-               "y" : 5187,
-               "name" : "2020",
-               "drilldown" : "2020"
-            },
-            {
-               "name" : "2019",
-               "drilldown" : "2019",
-               "y" : 3511
-            }
-         ]
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
