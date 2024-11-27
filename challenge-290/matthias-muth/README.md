@@ -1,266 +1,376 @@
-# The Mxamium Jmubled Wkeely Chllaegne
+# Take Me to the Luhn and Back
 
-**Challenge 289 solutions in Perl by Matthias Muth**
+**Challenge 290 solutions in Perl by Matthias Muth**
 
-## Task 1: Third Maximum
+A classical simple and short solution for Task 1.
 
-> You are given an array of integers, @ints.
+For Task 2, I have found some ways to reduce the complexity of the computation a bit (read below),<br/> and implemented several solutions;  
+
+* a 'short' solution, just calling the `is_valid` function from `Algorithm::LUHN` from CPAN,
+* a 'classic' solution, simply following the task description word by word,
+* a 'modern' solution, using some optimizations of the algorithm, and making use of recent Perl language additions,<br/>
+   like `builtin 'indexes'` for numbering the elements of an array, and `feature 'for_list` for a multi-variable `for` loop,
+*  a 'pairmap' solution, using `pairmap` from `List::Util` to avoid permanently checking whether we are on an even or odd iteration.
+
+A little benchmark proves that the optimized 'pairmap' solution really is faster than the others...
+
+
+## Task 1: Double Exist
+
+> You are given an array of integers, @ints.<br/>
+> Write a script to find if there exist two indices \$i and \$j such that:<br/>
 >
-> Write a script to find the third distinct maximum in the given array. If third maximum doesn’t exist then return the maximum number.
->
+> 1) $i != $j<br/>
+> 2) 0 <= ($i, $j) < scalar @ints<br/>
+> 3) $ints[$i] == 2 * $ints[$j]<br/>
+> <br/>
 > Example 1<br/>
-> Input: @ints = (5, 6, 4, 1)<br/>
-> Output: 4<br/>
-> The first distinct maximum is 6.<br/>
-> The second distinct maximum is 5.<br/>
-> The third distinct maximum is 4.
->
+> Input: @ints = (6, 2, 3, 3)<br/>
+> Output: true<br/>
+> For $i = 0, $j = 2<br/>
+> $ints[$i] = 6 => 2 * 3 =>  2 * $ints[$j]<br/>
+> <br/>
 > Example 2<br/>
-> Input: @ints = (4, 5)<br/>
-> Output: 5<br/>
-> In the given array, the third maximum doesn't exist therefore returns the maximum.
->
->
+> Input: @ints = (3, 1, 4, 13)<br/>
+> Output: false<br/>
+> <br/>
 > Example 3<br/>
-> Input: @ints =  (1, 2, 2, 3)<br/>
-> Output: 1<br/>
-> The first distinct maximum is 3.<br/>
-> The second distinct maximum is 2.<br/>
-> The third distinct maximum is 1.
+> Input: @ints = (2, 1, 4, 2)<br/>
+> Output: true<br/>
+> For $i = 2, $j = 3<br/>
+> $ints[$i] = 4 => 2 * 2 =>  2 * $ints[$j]<br/>
 
-This is an easy one:
+This task is a variation of the *'Create a hash, then check existence'* theme.<br/>
+Here, we use a simple hash for existence lookup (not a frequency table, as we often need),
+where we can put the hash's declaration and populating its values in one line.
 
-We need to sort the array so that the maximum is in the front:
-
-```perl
-    sort { $b <=> $a } @ints
-```
-
-For getting the *distinct* maximum,
-we use `uniq` from `List::Util` to eliminate double entries:
-
-```perl
-    uniq sort { $b <=> $a } @ints
-```
-
-Actually, it's better to reduce the number of elements *before* sorting,
-so that `sort` has less work to do:
-
-```perl
-    my @sorted_uniq = sort { $b <=> $a } uniq @ints;
-```
-
-Then we return the third element of that sorted list of unique maximums.<br/>
-Perl makes it easy in that we don't need to check its existence first,
-but we will get an `undef` value if it doesn't  exist.<br/>
-And together with the 'defined or' operator,
-returning the result is simple, too:
-
-```perl
-    return $sorted_uniq[2] // $sorted_uniq[0];
-```
-
-So all put together:
+We check whether there is any number for which its doubled value exists in the lookup.
+Instead of programming a loop, I use the `any` function from `List::Util` here.<br/>
+Simple as this:
 
 ```perl
 use v5.36;
 
-use List::Util qw( uniq );
+use List::Util qw( any );
 
-sub third_maximum( @ints ) {
-    my @sorted_uniq = sort { $b <=> $a } uniq @ints;
-    return $sorted_uniq[2] // $sorted_uniq[0];
+sub double_exist( @ints ) {
+    my %existence = map { $_ => 1 } @ints;
+    return any { $existence{ $_ * 2 } } @ints;
 }
 ```
 
 
+## Task 2: Luhn’s Algorithm
 
-## Task 2: Jumbled Letters
+> You are given a string \$str containing digits (and possibly other characters which can be ignored). The last digit is the payload; consider it separately. Counting from the right, double the value of the first, third, etc. of the remaining digits.<br/>
+> For each value now greater than 9, sum its digits.<br/>
+> The correct check digit is that which, added to the sum of all values, would bring the total mod 10 to zero.<br/>
+> Return true if and only if the payload is equal to the correct check digit.<br/>
+> It was originally posted on reddit.<br/>
+> <br/>
+> Example 1<br/>
+> Input: "17893729974"<br/>
+> Output: true<br/>
+> Payload is 4.<br/>
+> Digits from the right:<br/>
+> 7 * 2 = 14, sum = 5<br/>
+> 9 = 9<br/>
+> 9 * 2 = 18, sum = 9<br/>
+> 2 = 2<br/>
+> 7 * 2 = 14, sum = 5<br/>
+> 3 = 3<br/>
+> 9 * 2 = 18, sum = 9<br/>
+> 8 = 8<br/>
+> 7 * 2 = 14, sum = 5<br/>
+> 1 = 1<br/>
+> Sum of all values = 56, so 4 must be added to bring the total mod 10 to zero. The payload is indeed 4.<br/>
+> <br/>
+> Example 2<br/>
+> Input: "4137 8947 1175 5904"<br/>
+> Output: true<br/>
+> <br/>
+> Example 3<br/>
+> Input: "4137 8974 1175 5904"<br/>
+> Output: false<br/>
 
-> An Internet legend dating back to at least 2001 goes something like this:<br/>
->
-> Aoccdrnig to a rscheearch at Cmabrigde Uinervtisy, it deosn’t mttaer in waht oredr the ltteers in a wrod are, the olny iprmoetnt tihng is taht the frist and lsat ltteer be at the rghit pclae. The rset can be a toatl mses and you can sitll raed it wouthit porbelm. Tihs is bcuseae the huamn mnid deos not raed ervey lteter by istlef, but the wrod as a wlohe.
->
-> This supposed Cambridge research is unfortunately an urban legend. However, the effect has been studied. For example—and with a title that probably made the journal’s editor a little nervous—Raeding wrods with jubmled lettres: there is a cost by Rayner, White, et. al. looked at reading speed and comprehension of jumbled text.
->
-> Your task is to write a program that takes English text as its input and outputs a jumbled version as follows:
->
-> 1. The first and last letter of every word must stay the same
-> 2. The remaining letters in the word are scrambled in a random order (if that happens to be the original order, that is OK).
-> 3. Whitespace, punctuation, and capitalization must stay the same
-> 4. The order of words does not change, only the letters inside the word
->
-> So, for example, “Perl” could become “Prel”, or stay as “Perl,” but it could not become “Pelr” or “lreP”.
->
-> I don’t know if this effect has been studied in other languages besides English, but please consider sharing your results if you try!
+#### First Version: Very Short!
 
-#### Let's jumble!
-
-I decided to use a very straightforward technique for 'jumbling' a string of characters,
-that is easy to implement in Perl.
-It works by randomly selecting a character from the input string,
-removing it from there and adding it to the output string.
-This is repeated until no characters remain.
-I find it easiest to use an array for all the operations.
+For this task, I guess that this here is among the shortest possible solutions: 
 
 ```perl
-sub jumble_string( $str ) {
-    my @chars = split "", $str;
-    return join "", map { splice @chars, rand( @chars ), 1, () } 0..$#chars;
+use Algorithm::LUHN qw( is_valid );
+
+sub luhn_s_algorithm_by_module( $input ) {
+    return is_valid( $input =~ s/\D//gr );
 }
 ```
 
-What this does in detail:
+CPAN is your friend!
 
-- `my @chars = split "", $str;`<br/>
-splits up the string into an array of characters.
-- `map {...} 0..$#chars`<br/>
-executes the `{...}` code block as many times as we have characters in `@char`.
-- Within the code block,<br/>
-`rand( @chars )`<br/>
-randomly chooses an index from the list.
-It returns a floating point number,
-but using it as an array index, implicitly, only the integer part will be used.
-- Then,<br/>
-`splice @chars, rand( @chars ), 1, ()`<br/>
-returns that random entry from the array,
-at the same time replacing it with the empty list `()`,
-thus deleting it from the array.<br/>
-- Eventually,<br/>
-`return join "", ...;`<br/>
-combines the extracted random characters into a string, and returns that now 'jumbled' string.
+#### Second version: Very Classic.
 
-#### Applying the Jumble
+For a first Do-It-Yourself solution, we closely follow the task description.<br/>
+After extracting the digits from the input string into an array using a `/\d/g`regular expression,
+we reverse the array.
+That way, the digits are in the order we need to process them.<br/>
+The first digit now is the check digit,
+which we `shift` out from the array into a separate variable.
 
-The next thing is to apply the 'jumbling' to only the inner part of the words found in the input text.
-Not a big problem with Perl regular expressions &mdash;
-a global substitution with an evaluated expression as a replacement does the job:
+We check the special case of not finding any digits in the input string,
+and return a false value (actually, implicitly an empty list) in that case.
+
+Next, we loop over the digits, building the checksum.
+Depending on being in an even or odd iteration, we simply add the digit, or we double it.
+When we do that, the task description says:<br/>
+    *'For each value now greater than 9, sum its digits.'*<br/>
+I use the most Perlish approach: split the digits up using `split`, and then `sum` them up.
+
+For the return value we have to compute the check digit from the checksum,
+which is  'the difference to the next number divisible by ten'.
+The [Wikipedia article](https://en.wikipedia.org/wiki/Luhn_algorithm) about Luhn's Algorithm gives this formula:
+$(10-(s \mod 10 )) \mod 10$.<br/>
+Then we compare the computed check_digit with the one from the input string.
+
+Nothing really special in there.<br/>
+But there is potential for improvement! 
 
 ```perl
-sub jumbled_letters( $str ) {
-    return $str =~ s{
-            (?<=[A-Za-z]) [a-z]+ (?=[a-z])
-        }{
-            jumble_string( $& )
-        }xegr;
+#
+#   luhn_s_algorithm_classic
+#
+#   Extracting the digits, separating the check digit,
+#   then walking through the digits in a loop.
+#   Taking a 'perlish' approach for doing the digit sum of doubled digits.
+#
+#   Hold your breath, this is not the final version!
+#
+sub luhn_s_algorithm_classic( $input ) {
+
+    # Extract the digits into an array.
+    my @digits = $input =~ /\d/g;
+
+    # Return if there are no digits.
+    @digits or return;
+
+    # Extract the check-digit.
+    my $check_digit = pop @digits;
+
+    # Reverse the digit array to process the digits in the suggested order.
+    @digits = reverse @digits;
+
+    # Determine the checksum in a loop.
+    my $checksum = 0;
+    for my $index ( 0..$#digits ) {
+        $checksum +=
+            ( $index % 2 == 0 )
+            ? sum( split "", 2 * $digits[$index] )
+            : $digits[$index];
+    }
+
+    # Return true if the difference between the checksum and the next
+    # number divisible by 10 is equal to the check-digit.
+    return ( 10 - $checksum % 10 ) % 10 == $check_digit;
 }
 ```
 
-The first and last characters of a word are matched by a lookbehind and a lookahead, respectively,
-so that the matched string will be the inner part only.<br/>
-There is the `x` flag for better readability,
-the `e` flag for using the substitution part as an evaluated expression,
-the `g` flag for doing the substitution as many times as possible,
-and the `r` flag for returning the result of the substitution
-instead of changing the `$str` variable itself.
+#### Some Algorithm Simplifications
 
-#### Testing the Random
+There are some simplifications that we can apply to the algorithm to make things easier:
 
-In this task, we don't have any examples containing expected results for a given input,
-which most other Weekly Challenge tasks have.
-In addition, the output is supposed to be produced using random changes to the input,
-so we cannot rely on any repeatability when we run the program several times.
+* When we do the doubling of every other digit, we have some knowledge:<br/>
+  We know that the number cannot be larger than 18 (two times the digit 9).<br/>
+  So let's see if this helps to avoid the overhead of two subroutine calls just for
+  splitting and adding up at most two digits.
+  
+  * For digits up to 4, their highest double value is 8.<br/>
+    That's a one digit number.<br/>
+    Now this is a very simple digit sum!
+  * For digits from 5 to 9, the double is between 10 and 18.<br/>
+    So we need to add the '1' and the lower digit of the double.<br/>
+    That lower digit happens to be the double minus 10
+    (we're using our knowledge here! ).<br/>
+    So we got 'one plus the double minus 10',
+    which is the same as 'the double minus 9' for the digits 5 to 9.<br/>
+    That's not too bad, either!<br/>
+  
+  That means instead of calling `split`  and `sum` we can use this simple numeric expression in Perl for the digit sum of the doubled digit:
+  
+  ```perl
+     $digit < 5 ? ( 2 * $digit ) : ( 2 * $digit ) - 9
+  ```
+  
+* When we compute the check digit for a checksum,
+  it is chosen to *complement* the checksum up to the next number divisible by ten.<br/>
+  But that means that if we add the check_digit to the checksum,
+  the result will be divisible by 10.
+  
+  So we can simplify
+  
+  ```perl
+      ( 10 - $checksum % 10 ) % 10 == $check_digit
+  ```
+  
+  to
+  
+  ```perl
+      ( $checksum + $check_digit ) % 10 == 0
+  ```
+  
+  This saves us one modulo operation. But that's not all!
+  
+  If we include the check digit already when we sum up all the digits,
+  we can get rid of the separate `$check_digit` variable completely.
+  
+  We only need to make sure that it is counted simple, not double.<br/>
+  But we get this automatically, if we just don't
+  'double the value of the *first*, *third*, etc. of the remaining digits',
+  but we 'double the value of the *second*, *fourth*, etc.'.
 
-But I found that there are at least two criteria that we *can* test:
+Let's see how these simplifications look in real code:
 
-- *The output is expected to be different from the input.*<br/>
-Ok, there's this case where we 'randomly' produce output that is exactly the same as the input.
-But the probability for getting this reminds me of the story of the monkey hitting random keys
-on a typewriter who will eventually produce the complete works of William Shakespeare,
-if he types long enough...<br/>
-So let's at least assume that if our implementation is correct,
-there will be a (very) high probability that the output will differ from the input.
-- *All words of the input text contain the same characters as the words in the output text.*<br/>
-This should help us to verify that the output is not just a *completely* random text,
-but has the same structure as the input.       
+#### Third Version: Explicit and 'Modern'.
 
-So we have at least two test cases that we can implement.<br/>
-Using `Test2::V0` (which I cannot help repeating that it is now a core module!),
-the first test is easy:
+So our next, simplified, DIY version, extracts *all* the digits, including the check digit.
+We can do all of extraction, reversing the list and the check for an empty list in one statement.
 
 ```perl
-my $input_text = <<EOF;
-According to a researchch at Cambridge University, it doesn’t matter in what
-order the letters in a word are, the only importent thing is that the first and
-last letter be at the right place.
-The rest can be a total mess and you can still read it without problem.
-This is because the human mind does not read every letter by itself,
-but the word as a whole.
-EOF
-
-my $jumbled = jumbled_letters( $input_text );
-
-ok $jumbled ne $input_text,
-    "Jumbled text and original text differ";
+    my @digits = reverse $input =~ /\d/g
+        or return;
 ```
 
-For the second test, we need to put in a little more effort.<br/>
-To compare whether the *inner* of all words of the input and output texts
-contain the same characters, I implemented a 'normalization' function.
-It works very similar to the `jumble_letters` function itself,
-but instead of jumbling the inner characters, it *sorts* them.
-If we compare the input and output texts both 'normalized' in that way,
-they have to be the same!
-It's like completely 'un-jumbling' both, before comparing them.
+For the loop, in this version I use a combination of two 'modern' Perl features,
+`use builtin 'indexed'` and `feature 'for_list'`, available from Perl 5.36 onwards:
 
-So we can add this for the second test case:
+-  `indexed @digits` gives us a list with every digit's index followed by the digit itself,
+  like:<br/>
+  `indexed( 7, 9, 9, 2)  => ( 0, 7, 1, 9, 2, 9, 3, 2 )`
+
+- A multi-variable `for` loop then gives us access on the index and the digit easily,
+  so that we can sum up correctly:
+
+  ```perl
+  my $checksum = 0;
+  for my ( $index, $digit ) ( indexed @digits ) {
+      $checksum +=
+          $index % 2 == 0
+          ? ...       # expression for even positions
+          : ...;      # expression for odd positions
+  }
+  ```
+  One nice thing about this 'indexed'/multi-variable `for` loop combination is
+  that the index variable is an integral part of the loop, scoped within the loop only.
+  
+  But more importantly, in comparison to the typical index auto-increment,
+  we also *avoid needing to think* about these typical questions:
+
+  - 'Do we need a pre- or post-increment here?' (depends on how it's initialized!),
+  - 'Shall I put it on the first use, or on the last use? (the same!),
+  - 'Oops, I have an off-by-one problem now' (oh, I chose the wrong place in the last question),
+  - 'Why the hell do I have an endless loop? &ndash;
+    Ah, I forgot to put the auto-increment on a separate statement
+    when the expression got too complicated.' ...
+
+  Actually all my own experience, of course!.<br/>
+  That's why I like the clearness of the `indexed` 'for' loop.
+
+All this, and the optimizations described before, put  together:
 
 ```perl
-sub normalize( $str ) {
-    return $str =~ s{
-            (?<=[A-Za-z]) [a-z]+ (?=[a-z])
-        }{
-            join( "", sort split "", $& );
-        }xegr;
+use v5.36;
+use builtin qw 'indexed';
+no warnings 'experimental';
+
+#
+#   luhn_s_algorithm_modern
+#   Algorithmic simplifications:
+#   - summing up *including* the check-digit, the total sum modulo 10
+#     must then be zero,
+#   - using a simplified, numeric formula for the digit sum of
+#     doubled digits (less function calls, less type conversions).
+#   Using 'modern' Perl features:
+#   - using the 'indexed' builtin to add indices to the digits,
+#   - together with a multi-variable 'for' loop,
+#   - using the 'false' builtin to return false when the input string
+#     contains no digits.
+sub luhn_s_algorithm_modern( $input ) {
+    my @digits = reverse( $input ) =~ /\d/g
+        or return;
+    my $checksum = 0;
+    for my ( $index, $digit ) ( indexed @digits ) {
+        $checksum +=
+            $index % 2 == 0
+            ? $digit
+            : $digit <= 4 ? ( 2 * $digit ) : ( 2 * $digit ) - 9;
+    }
+    return $checksum % 10 == 0;
 }
-
-is normalize( $jumbled ), normalize( $input_text ),
-    "Normalized jumbled text and normalized original text are equal";
-
-done_testing;
 ```
 
-Whatever implementation of 'jumbling' you have,
-it should produce at least the following testing output:
+#### Third Version: Pairmap.
+
+As nice as the `indexed` for loop is, there's one thing that I still find inefficient:
+we need to compute whether we are at an even or odd index for each iteration,
+so again and again.<br/>
+Could that not be avoided?<br/>
+It can:
+
+`List::Util` contains the `pairs` function, that returns pairs of elements of an array at a time.<br/>
+Its sibling function, `pairmap` even assigns the two element to `$a` and `$b`,
+and offers a code block to do the iteration work.<br/>
+So let's do that, summing up the results of all iterations using `sum`.
+
+We only need to make sure that we have an even number of elements in the array for `pairmap`.
+We append a zero if not.
+
+```perl
+#
+#   luhn_s_algorithm_using_pairmap
+#
+#   Using 'sum' and 'pairmap' to compute the checksum,
+#   making even/odd computations unneccessary.
+#   We need to make sure that we have an even number of digits,
+#   so we add a '0' if necessary.
+#   The digits will be $a and $b inside the pairmap code block.
+#
+
+use List::Util qw( sum pairmap );
+ 
+sub luhn_s_algorithm_using_pairmap( $input ) {
+    my @digits = reverse $input =~ /\d/g
+        or return;
+    @digits % 2 == 0 or push @digits, 0;
+    my $checksum =
+        sum( pairmap {
+                $a + ( $b <= 4 ? ( 2 * $b ) : ( 2 * $b ) - 9 )
+            } @digits );
+    return $checksum % 10 == 0;
+}
+```
+
+Now I am happy with this solution .<br/>
+Especially as I have run a little benchmark with the `Benchmark` core module
+to compare the run times of the four functions:
 
 ```text
-ok 1 - Jumbled text and original text differ
-ok 2 - Normalized jumbled text and normalized original text are equal
-1..2
+            Rate classic  module  modern pairmap
+classic 141953/s      --    -18%    -27%    -41%
+module  172504/s     22%      --    -11%    -29%
+modern  194323/s     37%     13%      --    -20%
+pairmap 241917/s     70%     40%     24%      --
 ```
 
-#### Readability?
+Obviously, the 'classic' version is slower than all the others.
+That's probably due to the digit count `split` and `sum`.<br/>
+And it shows that the 'pairmap' version really is quite a bit faster than the 'modern' version.
 
-Concerning the readability of the jumbled text,
-I personally find that
-as long as there are only some character pairs that are flipped
-(in addition to keeping the first and last letter the same),
-it's quite ok.<br/>
-But as soon as the letters move further away from their original positions,
-as it is easily the case with the 'jumbling' implemented here,
-readability goes down a lot.<br/>
-The typical output produced by my jumbling looks much more difficult to read
-than the famous original jumbled text:
+The reason for the CPAN version ('module') being slower
+than the other homemade solutions probably lies in its added functionality
+of being able to use additional values for any digits or symbols (like 10..35 for 'A' to 'Z').
+It therefore has to do a lookup of the value attached to any processed digit.<br/>
+For production code, I probably still would prefer using `Algorithm::LUHN`.
+It's well documented, well tested, 
+and it avoids maintenance  cost for any code of our own.
 
-```text
-Acdinrocg to a reeacshcrh at Camrgbdie Usirvtiney, it doesn’t mttear in what
-oderr the leretts in a wrod are, the only iormptent thnig is that the fsrit and
-last leettr be at the rgiht palce.
-```
+Stlll, it was nice developing and optimizing these solutions!
 
-Maybe it would be interesting to only *flip* pairs of characters at some random positions,
-not modifying  the same character twice,
-and not moving characters too far away from their original position.
-
-Actually I think that this is the way that the original jumbled text was produced:
-in general only flipping characters,
-maybe with some extra rules for repeated characters (like in 'l(tt/e)ers')
-or for some other fixed letter combinations (like 'w(out/hi)t').<br/>
-Maybe there also was a bit of 'cheating',
-at least being selective for jumbled words not looking too strange.
-
-Checking the difference in readability for different 'jumbling' algorithms
-seems like a real research topic.<br/>
-It's a pity that that is more than can be done within a Weekly Challenge. :-)
-
-#### **Thank you for the challenge!**
+**Thank you for the challenge!**

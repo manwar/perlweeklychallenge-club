@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 295
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-295>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc295;
+
+CREATE OR REPLACE FUNCTION
+pwc295.task1_plperl( text, text[] )
+RETURNS bool
+AS $CODE$
+
+   my ( $sentence, $words ) = @_;
+
+   for ( $words->@* ) {
+       last if $sentence !~ /$_/;
+       $sentence =~ s/$_//g;
+   }
+
+   return $sentence ? 0 : 1;
+
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,59 @@
+--
+-- Perl Weekly Challenge 290
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-290>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc290;
+
+CREATE OR REPLACE FUNCTION
+pwc290.task2_plperl( text )
+RETURNS bool
+AS $CODE$
+
+   my ( $string ) = @_;
+   my @numbers = grep { $_ =~ /\d/ } split //, $string;
+
+   my $sum = sub {
+      my $value = 0;
+      for my $v ( split //, $_[ 0 ] ) {
+      	  $value += $v;
+      }
+
+      return $value;
+   };
+
+   my $payload = $numbers[ -1 ];
+   # my @checksums = map { $_ <= 9 ? $_ : $sum->( $_ ) }
+   #                 map { $_ * 2 }
+   # 		   @numbers[ 0 .. $#numbers - 1 ];
+
+
+   my @checksums;
+   my $last;
+   for my $v ( @numbers[ 0 .. $#numbers - 1 ] ) {
+       next if ( $last && $last == $v );
+       
+       $v *= 2;
+       if ( $v > 9 ) {
+       	  $v = $sum->( $v );
+       }
+
+       push @checksums, $v;
+   }
+
+   my $check = 0;
+   for ( @checksums ) {
+       $check += $_;
+   }
+
+
+   $check += $payload;
+   return 1 if ( $check % 10 == 0 );
+   return 0;
+
+   
+   
+   
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,37 @@
+--
+-- Perl Weekly Challenge 295
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-295>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc295;
+
+CREATE OR REPLACE FUNCTION
+pwc295.task2_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+   my $position;
+   my ($min) = $numbers->@* + 1;
+
+   for my $index ( 0 .. $numbers->@* - 2 ) {
+
+       $position = $index;
+       my $counter = $index;
+
+       while ( $position < $numbers->@* - 1 ) {
+         my $jump = $numbers->@[ $position ];
+         last if ! $jump;
+         $position += $jump;
+         $counter++;
+       }
+
+       $min = $counter if ( $counter < $min && $position == $numbers->@* - 1 );
+   }
+
+   return $min if ( $min < $numbers->@* );
+   return -1;
+
+$CODE$
+LANGUAGE plperl;

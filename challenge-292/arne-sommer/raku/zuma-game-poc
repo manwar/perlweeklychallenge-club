@@ -1,0 +1,29 @@
+#! /usr/bin/env raku
+
+subset BALLS of Str where { /^ (<[A .. Z]>)+ $/ };
+
+unit sub MAIN ($row  where $row  ~~ BALLS,
+               $hand where $hand ~~ BALLS,
+               :v(:$verbose));
+
+my $row-bag  = $row.comb.Bag;
+my $hand-bag = $hand.comb.Bag;
+
+say ": Row (bag): $row-bag" if $verbose;
+say ": Hand (bag): $hand-bag" if $verbose;
+
+for $row-bag.sort({ $^a.value <=> $^b.value }) -> $ball-type
+{
+  say ": Ball { $ball-type.key }: Board: { $ball-type.value } + Hand: { $hand-bag{$ball-type.key} }" if $verbose;
+
+  if $ball-type.value + $hand-bag{$ball-type.key} < 3
+  {
+    say ": Unable to get rid of '{ $ball-type.key }' balls; too few (total: { $ball-type.value + $hand-bag{$ball-type.key} })." if $verbose;
+    say -1;
+    exit;
+  }
+}
+
+say "Ok (so far)";
+
+## Play the actual game

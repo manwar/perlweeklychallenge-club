@@ -1,0 +1,86 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/wordbreak {
+    0 dict begin
+    /words exch def
+    /a exch def
+    /queue [ a ] def
+    false
+    {
+        queue length 1 lt {
+            exit
+        } if
+        queue apop.left /remnant exch def /queue exch def
+        remnant length 0 eq {
+            pop true
+            exit
+        } if
+        words {
+            /candidate exch def
+            remnant candidate anchorsearch {
+                pop pop
+                /queue queue
+                remnant
+                candidate length
+                remnant length candidate length  sub
+                getinterval
+                apush.right def
+            } {
+                pop
+            } ifelse
+        } forall
+    } loop
+    end
+} bind def
+
+(wordbreak) test.start
+(weeklychallenge) [(challenge) (weekly)] wordbreak test
+(perlrakuperl) [(raku) (perl)] wordbreak test
+(sonsanddaughters) [(sons) (sand) (daughters)] wordbreak not test
+test.end
