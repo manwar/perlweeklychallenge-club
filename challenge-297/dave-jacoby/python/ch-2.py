@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 
-import copy
-import re
-
 
 def main():
     examples = [
