@@ -1,12 +1,12 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
@@ -22,13 +22,15 @@
                ],
                [
                   "Blog",
-                  1126
+                  1127
                ]
             ],
-            "name" : "2024",
-            "id" : "2024"
+            "id" : "2024",
+            "name" : "2024"
          },
          {
+            "name" : "2023",
+            "id" : "2023",
             "data" : [
                [
                   "Perl",
@@ -42,13 +44,11 @@
                   "Blog",
                   1197
                ]
-            ],
-            "name" : "2023",
-            "id" : "2023"
+            ]
          },
          {
-            "name" : "2022",
             "id" : "2022",
+            "name" : "2022",
             "data" : [
                [
                   "Perl",
@@ -65,8 +65,6 @@
             ]
          },
          {
-            "id" : "2021",
-            "name" : "2021",
             "data" : [
                [
                   "Perl",
@@ -80,7 +78,9 @@
                   "Blog",
                   921
                ]
-            ]
+            ],
+            "name" : "2021",
+            "id" : "2021"
          },
          {
             "id" : "2020",
@@ -120,67 +120,67 @@
          }
       ]
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : "true",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
          "data" : [
             {
+               "name" : "2024",
                "drilldown" : "2024",
-               "y" : 5055,
-               "name" : "2024"
+               "y" : 5056
             },
             {
-               "y" : 5702,
+               "name" : "2023",
                "drilldown" : "2023",
-               "name" : "2023"
+               "y" : 5702
             },
             {
+               "name" : "2022",
                "y" : 5375,
-               "drilldown" : "2022",
-               "name" : "2022"
+               "drilldown" : "2022"
             },
             {
-               "name" : "2021",
+               "y" : 4976,
                "drilldown" : "2021",
-               "y" : 4976
+               "name" : "2021"
             },
             {
+               "name" : "2020",
                "y" : 5187,
-               "drilldown" : "2020",
-               "name" : "2020"
+               "drilldown" : "2020"
             },
             {
                "name" : "2019",
-               "drilldown" : "2019",
-               "y" : 3511
+               "y" : 3511,
+               "drilldown" : "2019"
             }
          ],
-         "name" : "The Weekly Challenge Languages",
-         "colorByPoint" : "true"
+         "colorByPoint" : "true",
+         "name" : "The Weekly Challenge Languages"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-27 15:06:55 GMT"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-11-28 23:24:25 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
