@@ -33,14 +33,13 @@ say max_contig(@ARGV);
 # https://github.sommrey.de/the-bears-den/2024/11/29/ch-297.html#task-1
 
 sub max_contig {
-    my %firstlast = (0 => [0]);
+    my %first = (0 => 0);
     my ($max, $s, $i) = 0;
     for my $b (@_) {
         $s += $b || -1;
         $i++;
-        my $fl = $firstlast{$s} //= [$i];
-        $fl->[1] = $i;
-        my $len = $fl->[1] - $fl->[0];
+        $first{$s} = $i, next unless exists $first{$s};
+        my $len = $i - $first{$s};
         $max = $len if $len > $max;
     }
     $max;
