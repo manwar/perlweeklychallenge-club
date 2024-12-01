@@ -1,3 +1,3 @@
-# The Weekly Challenge 296
+# The Weekly Challenge 297
 
-Blog: [Matchstick compression](https://dev.to/simongreennet/matchstick-compression-2d83)
+Blog: [Weekly Challenge 297](https://dev.to/simongreennet/weekly-challenge-297-3b3e)
