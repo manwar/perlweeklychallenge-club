@@ -1,8 +1,8 @@
 ## The Weekly Challenge
-#### Week 296 solutions in Perl by Matthias Muth
+#### Week 297 solutions in Perl by Matthias Muth
 
 See my blog post
-[**The Run-Length of Matchsticks (PWC 296)**](https://dev.to/muthm/the-run-length-of-matchsticks-pwc-296-24b4)
+[**Ups and Downs, Beginnings and Ends (PWC 297)**](https://dev.to/muthm/ups-and-downs-beginnings-and-ends-pwc-297-4hc8)
 describing my solutions for this week.
 
 #### Thank you for the challenge!
