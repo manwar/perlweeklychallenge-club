@@ -59,6 +59,10 @@ sub maxSquare($matrix)
     {
         for (my $ulCol = 0; $ulCol <= $width; $ulCol++ )
         {
+            next if $matrix->[$ulRow][$ulCol] == 0; # Find a 1 in this row
+
+            # Check all possible squares that begin from this corner.
+            # Only need to check those that might be larger than known max.
             for my $side ( $max .. $box )
             {
                 next if ( $ulRow + $side > $height || $ulCol + $side > $width );
