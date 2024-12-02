@@ -46,11 +46,11 @@ GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchm
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say $_ for @ARGV;   # TODO command line processing here
+my @intervals = map { [ split(" ", trim($_ =~ s/[^\d]+/ /gr)) ] } @ARGV;
+say "(", join(", ", rightIntvl(@intervals)->@*), ")";
 
 sub rightIntvl(@intervals)
 {
-    my @byStart = sort { $a->[0] <=> $b->[0] } @intervals;
     my @answer;
     for my $end ( map { $_->[1] } @intervals)
     {
