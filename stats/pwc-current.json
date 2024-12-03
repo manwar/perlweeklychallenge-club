@@ -1,79 +1,79 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 298"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2024-12-03 21:53:23 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Dave Jacoby"
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "David Ferrone",
-            "id" : "David Ferrone"
+            "id" : "David Ferrone",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
-            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Feng Chang"
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
-            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -84,20 +84,19 @@
                   10
                ]
             ],
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
          },
          {
-            "id" : "Matthew Neleigh",
             "name" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Matthew Neleigh"
          },
          {
-            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -108,10 +107,11 @@
                   1
                ]
             ],
-            "id" : "Peter Campbell Smith"
+            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith"
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -122,10 +122,10 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          },
          {
-            "id" : "Thomas Kohler",
+            "name" : "Thomas Kohler",
             "data" : [
                [
                   "Perl",
@@ -136,33 +136,50 @@
                   2
                ]
             ],
-            "name" : "Thomas Kohler"
+            "id" : "Thomas Kohler"
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke"
          }
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 298"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 298",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Dave Jacoby",
+               "y" : 2,
                "name" : "Dave Jacoby",
-               "y" : 2
+               "drilldown" : "Dave Jacoby"
             },
             {
-               "drilldown" : "David Ferrone",
                "y" : 2,
+               "drilldown" : "David Ferrone",
                "name" : "David Ferrone"
             },
             {
-               "drilldown" : "E. Choroba",
                "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
                "y" : 2
             },
             {
-               "drilldown" : "Feng Chang",
                "y" : 2,
+               "drilldown" : "Feng Chang",
                "name" : "Feng Chang"
             },
             {
@@ -171,9 +188,9 @@
                "y" : 12
             },
             {
-               "y" : 2,
+               "drilldown" : "Matthew Neleigh",
                "name" : "Matthew Neleigh",
-               "drilldown" : "Matthew Neleigh"
+               "y" : 2
             },
             {
                "y" : 3,
@@ -181,19 +198,21 @@
                "drilldown" : "Peter Campbell Smith"
             },
             {
-               "name" : "Roger Bell_West",
                "y" : 4,
+               "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West"
             },
             {
+               "drilldown" : "Thomas Kohler",
                "name" : "Thomas Kohler",
-               "y" : 4,
-               "drilldown" : "Thomas Kohler"
+               "y" : 4
+            },
+            {
+               "y" : 3,
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
             }
          ]
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2024-12-03 11:40:47 GMT"
-   }
+   ]
 }
