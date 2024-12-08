@@ -48,7 +48,7 @@ sub maximal_square($matrix) {
                          : 1;
                 $strips[$y][$x][VERTICAL]
                     = $y ? 1 + $strips[ $y - 1 ][$x][VERTICAL]
-                         : 0;
+                         : 1;
                 $strips[$y][$x][SQUARE]
                     = ($x && $y)
                       ? min(1 + $strips[ $y - 1 ][ $x - 1 ][SQUARE],
@@ -64,7 +64,7 @@ sub maximal_square($matrix) {
     return $maxsize * $maxsize
 }
 
-use Test::More tests => 3 + 2;
+use Test::More tests => 3 + 3;
 
 is maximal_square([[1, 0, 1, 0, 0],
                    [1, 0, 1, 1, 1],
@@ -95,6 +95,15 @@ is maximal_square([[qw[ 0 0 0 0 0 0 0 0 0 0 0 0 0 ]],
                    [qw[ 0 1 1 1 1 1 0 0 0 1 1 1 0 ]],
                    [qw[ 0 0 0 0 0 0 0 0 0 0 0 0 0 ]]]),
     9, 'Larger with a hole';
+
+is maximal_square([[qw[ 0 0 1 1 0 0 0 ]],
+                   [qw[ 0 0 1 1 0 0 0 ]],
+                   [qw[ 0 0 0 0 0 0 0 ]],
+                   [qw[ 0 0 0 0 0 0 0 ]],
+                   [qw[ 0 0 0 0 0 0 0 ]],
+                   [qw[ 0 0 0 0 0 0 0 ]]]),
+    4, 'Bugfix';
+
 
 # Check the speed:
 use Time::HiRes qw{ clock };
