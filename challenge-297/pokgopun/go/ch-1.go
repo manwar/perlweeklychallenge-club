@@ -52,15 +52,27 @@ import (
 type binaries []int
 
 func (bs binaries) ca() int {
+	for i, v := range bs {
+		if v == 0 {
+			bs[i] = -1
+		}
+	}
 	l := len(bs)
-	i := 0
 	c := 0
-	for l-i > 1 {
-		if bs[i] != bs[i+1] {
-			c += 2
-			i += 2
-		} else {
-			i++
+	for i := range l - 1 {
+		j := l - ((l - i) % 2)
+		for j > i+1 {
+			sm := 0
+			for _, v := range bs[i:j] {
+				sm += v
+			}
+			if sm == 0 {
+				c = max(c, j-i)
+				if c >= l-i-((l-i)%2)-2 {
+					return c
+				}
+			}
+			j -= 2
 		}
 	}
 	return c
@@ -75,6 +87,9 @@ func main() {
 		{binaries{0, 1, 0}, 2},
 		{binaries{0, 0, 0, 0, 0}, 0},
 		{binaries{0, 1, 0, 0, 1, 0}, 4},
+		{binaries{0, 1, 1, 0, 1, 0}, 6},
+		{binaries{0, 1, 1, 0, 1, 0, 1, 1}, 6},
+		{binaries{0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1}, 10},
 	} {
 		//fmt.Println(data.input, data.output)
 		io.WriteString(os.Stdout, cmp.Diff(data.input.ca(), data.output)) // blank if ok, otherwise show the difference
