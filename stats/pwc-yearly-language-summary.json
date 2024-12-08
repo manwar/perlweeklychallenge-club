@@ -1,8 +1,65 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge Languages",
+         "data" : [
+            {
+               "drilldown" : "2024",
+               "name" : "2024",
+               "y" : 5146
+            },
+            {
+               "y" : 5702,
+               "name" : "2023",
+               "drilldown" : "2023"
+            },
+            {
+               "drilldown" : "2022",
+               "name" : "2022",
+               "y" : 5375
+            },
+            {
+               "drilldown" : "2021",
+               "y" : 4976,
+               "name" : "2021"
+            },
+            {
+               "name" : "2020",
+               "y" : 5187,
+               "drilldown" : "2020"
+            },
+            {
+               "y" : 3511,
+               "name" : "2019",
+               "drilldown" : "2019"
+            }
+         ],
+         "colorByPoint" : "true"
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "2024",
             "name" : "2024",
             "data" : [
                [
@@ -15,12 +72,12 @@
                ],
                [
                   "Blog",
-                  1152
+                  1154
                ]
-            ]
+            ],
+            "id" : "2024"
          },
          {
-            "id" : "2023",
             "data" : [
                [
                   "Perl",
@@ -35,10 +92,10 @@
                   1197
                ]
             ],
-            "name" : "2023"
+            "name" : "2023",
+            "id" : "2023"
          },
          {
-            "name" : "2022",
             "data" : [
                [
                   "Perl",
@@ -53,10 +110,10 @@
                   1010
                ]
             ],
+            "name" : "2022",
             "id" : "2022"
          },
          {
-            "id" : "2021",
             "name" : "2021",
             "data" : [
                [
@@ -71,9 +128,11 @@
                   "Blog",
                   921
                ]
-            ]
+            ],
+            "id" : "2021"
          },
          {
+            "id" : "2020",
             "data" : [
                [
                   "Perl",
@@ -88,10 +147,11 @@
                   780
                ]
             ],
-            "name" : "2020",
-            "id" : "2020"
+            "name" : "2020"
          },
          {
+            "id" : "2019",
+            "name" : "2019",
             "data" : [
                [
                   "Perl",
@@ -105,82 +165,22 @@
                   "Blog",
                   452
                ]
-            ],
-            "name" : "2019",
-            "id" : "2019"
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-12-08 15:02:46 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
    },
    "tooltip" : {
       "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : "true",
       "headerFormat" : "<span style=\"font-size:11px\"></span>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge Languages",
-         "colorByPoint" : "true",
-         "data" : [
-            {
-               "drilldown" : "2024",
-               "name" : "2024",
-               "y" : 5144
-            },
-            {
-               "name" : "2023",
-               "drilldown" : "2023",
-               "y" : 5702
-            },
-            {
-               "y" : 5375,
-               "name" : "2022",
-               "drilldown" : "2022"
-            },
-            {
-               "drilldown" : "2021",
-               "name" : "2021",
-               "y" : 4976
-            },
-            {
-               "y" : 5187,
-               "name" : "2020",
-               "drilldown" : "2020"
-            },
-            {
-               "drilldown" : "2019",
-               "name" : "2019",
-               "y" : 3511
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-12-08 09:03:04 GMT"
    }
 }
