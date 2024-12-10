@@ -23,9 +23,11 @@ sub find-word-from(Str:D $word, UInt:D \row, UInt:D \col, @m --> Bool:D) {
         next unless in-bound(row_, col_);
         next unless @m[row_;col_] eq $c;
 
-        my @m_ = @m.deepmap(*.clone);
-        @m_[row_;col_] := '.';
-        find-word-from($word.substr(1), row_, col_, @m_)
+        @m[row_;col_] := '.';
+        my $r = find-word-from($word.substr(1), row_, col_, @m);
+        @m[row_;col_] := $c;
+
+        $r
     }).any
 }
 
@@ -35,9 +37,11 @@ sub find-word(Str:D $word, @m --> Bool:D) {
     with @m[*;*].grep($word.substr(0, 1), :k) {
         so .map(-> \pos {
             my (\row, \col) = pos div cols, pos % cols;
-            my @m_ = @m.deepmap(*.clone);
-            @m_[row;col] := '.';
-            find-word-from($word.substr(1), row, col, @m_)
+            @m[row;col] := '.';
+            my $r = find-word-from($word.substr(1), row, col, @m);
+            @m[row;col] := $word.substr(0,1);
+
+            $r
         }).any
     } else {
         False
