@@ -51,29 +51,47 @@ import (
 
 type binaries []int
 
-func (bs binaries) ca() int {
-	for i, v := range bs {
-		if v == 0 {
-			bs[i] = -1
-		}
+func (bins binaries) ca() int {
+	l := len(bins)
+	if l < 2 { // not a single pair exists, no contigious 0/1
+		return 0
 	}
-	l := len(bs)
-	c := 0
-	for i := range l - 1 {
-		j := l - ((l - i) % 2)
-		for j > i+1 {
-			sm := 0
-			for _, v := range bs[i:j] {
-				sm += v
-			}
-			if sm == 0 {
-				c = max(c, j-i)
-				if c >= l-i-((l-i)%2)-2 {
-					return c
+	bsm := 0 // calculate sum of 1 and 0 in the based array
+	for _, v := range bins[:l] {
+		bsm += v
+	}
+	switch bsm {
+	case 0: // based sum equal 0 means the based array only contains 0s so there is no contigious  0/1
+		return 0
+	case 1: // based array contains single 1 and at least single 0 (as l >= 2), thus contigious 0/1 is 2
+		return 2
+	}
+	c := 0                 // contigious array starts with 0
+	for i := range l - 1 { // sub array starts with index0 and will increase by one
+		sm := bsm           // sum of sub array start of with the sum of based array
+		o := (l - i) % 2    // detect if the sub array has odd number of members
+		sm -= bins[l-1] * o // remove the last member from the sum of sub array if it has odd number of members
+		j := l - o          // the sub array will start with maximum size, also adjust if its size is of odd numbers
+		for j > i+1 {       // size will be reduce until the sub array has single pair
+			//fmt.Println(i, j, "=>", bins[i:j], "sum =", sm)
+			sl := j - i     // length of sub array
+			if sm == sl/2 { // detect if sub array is contigious 0/1, thanks to SG
+				//fmt.Println("new ca found =>", sl)
+				if c < sl { // store new max size of contigious array
+					c = sl
+					// max contigious found if one from this based array is greater than next based array
+					if c >= l-i-o-2 { // quit function as ca already reaches possible max
+						//fmt.Println("max =", c)
+						return c
+					}
 				}
 			}
+			// remove the last two members from the sum of sub array and it size (i.e. j)
+			sm -= bins[j-2] + bins[j-1]
 			j -= 2
 		}
+		// reduced the sum of based array as the start index increases
+		bsm -= bins[i]
 	}
 	return c
 }
@@ -88,7 +106,9 @@ func main() {
 		{binaries{0, 0, 0, 0, 0}, 0},
 		{binaries{0, 1, 0, 0, 1, 0}, 4},
 		{binaries{0, 1, 1, 0, 1, 0}, 6},
+		{binaries{1, 1, 1, 0, 1, 0}, 4},
 		{binaries{0, 1, 1, 0, 1, 0, 1, 1}, 6},
+		{binaries{1, 1, 1, 0, 1, 0, 1, 1}, 4},
 		{binaries{0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1}, 10},
 	} {
 		//fmt.Println(data.input, data.output)
