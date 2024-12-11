@@ -1,10 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-12-09 08:00:01 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Aubrey Quarcoo",
@@ -39,18 +33,30 @@
          "Cristina Heredia"
       ]
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-12-11 18:46:06 GMT"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             6,
@@ -82,8 +88,7 @@
             3,
             2,
             63
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -156,11 +161,6 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    }
