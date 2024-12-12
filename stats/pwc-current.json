@@ -1,28 +1,20 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Ali Moradi",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Ali Moradi"
+         },
          {
             "id" : "David Ferrone",
             "data" : [
@@ -44,6 +36,8 @@
             "id" : "E. Choroba"
          },
          {
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -51,42 +45,40 @@
                ],
                [
                   "Blog",
-                  1
-               ]
-            ],
-            "id" : "Peter Campbell Smith",
-            "name" : "Peter Campbell Smith"
-         },
-         {
-            "name" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Roger Bell_West"
-         },
-         {
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Raku",
                   1
                ]
             ]
          },
          {
-            "name" : "W. Luis Mochan",
+            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell_West"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke"
+         },
+         {
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -97,58 +89,85 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan"
+            "name" : "W. Luis Mochan"
          }
       ]
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 299"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2024-12-12 17:10:31 GMT"
    },
    "series" : [
       {
          "data" : [
             {
-               "drilldown" : "David Ferrone",
-               "y" : 2,
-               "name" : "David Ferrone"
-            },
-            {
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith",
+               "drilldown" : "Ali Moradi",
+               "name" : "Ali Moradi",
                "y" : 3
             },
             {
-               "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
-            },
-            {
                "y" : 2,
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke"
+               "drilldown" : "David Ferrone",
+               "name" : "David Ferrone"
             },
             {
-               "name" : "W. Luis Mochan",
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 2
+            },
+            {
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
          ],
          "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 299"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2024-12-12 16:45:30 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "The Weekly Challenge - 299"
    }
 }
