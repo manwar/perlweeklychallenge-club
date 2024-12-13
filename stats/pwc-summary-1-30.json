@@ -1,16 +1,21 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -48,11 +53,6 @@
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    },
    "series" : [
       {
@@ -126,7 +126,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -158,10 +157,11 @@
             0,
             0,
             4
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-12-12 17:10:31 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-12-13 18:26:38 GMT"
    }
 }
