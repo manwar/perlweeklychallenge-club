@@ -188,7 +188,7 @@ sub _search_adjacent_cells{
         $next_i = $i + $direction->[0];
         $next_j = $j + $direction->[1];
 
-        # See if we should process this next cell...
+        # See if we should skip this next cell...
         next
             unless(
                 # Will the next cell be inside the matrix?
