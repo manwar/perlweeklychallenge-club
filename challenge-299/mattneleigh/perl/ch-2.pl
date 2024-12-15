@@ -178,7 +178,7 @@ sub _search_adjacent_cells{
     my $next_i;
     my $next_j;
 
-    # Mark the current coordinate as cell_traversed
+    # Mark the current coordinate as traversed
     $cell_traversed->{$coord_string} = 1;
 
     # Check each of the four adjacent cells in
