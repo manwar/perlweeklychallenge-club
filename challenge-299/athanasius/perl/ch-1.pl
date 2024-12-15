@@ -55,7 +55,8 @@ Assumptions
 1. Matching is case-sensitive.
 2. When words are replaced, punctuation should be retained.
 3. If some of the given words are substrings of others, the shortest should be
-   used as the replacement. For example, if the sentence is "I'm not ready for parenthood.", and the given words include both "parent" and "par", then re-
+   used as the replacement. For example, if the sentence is "I'm not ready for
+   parenthood.", and the given words include both "parent" and "par", then re-
    placement should produce "I'm not ready for par."
 
 =cut
