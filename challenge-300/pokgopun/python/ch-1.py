@@ -42,17 +42,32 @@ Task 2: Nested Array
 """
 ### solution by pokgopun@gmail.com
 
-from itertools import permutations
+from typing import List,Tuple
+
+class Processor:
+    def __init__(self, s:List[int], p:List[int]):
+        self.s = s
+        self.p = p
+        #print(self.s, self.p)
+    def __repr__(self):
+        return f'({self.s},{self.p}'
 
 def ba(n: int) -> int:
+    rng = range(n)
+    return bpermute(Processor([i+1 for i in rng], [0 for i in rng]))
+
+def bpermute(p: Processor) -> int:
+    l = len(p.s)
+    if l == 0:
+        #print("=>",p.p)
+        return 1
     c = 0
-    ints = range(1,n+1,1)
-    for p in permutations(ints,n):
-        for i in ints:
-            if p[i-1] % i != 0 and  i % p[i-1] != 0:
-                break
-        else:
-            c += 1
+    idx = len(p.p) - l + 1
+    for i in range(l):
+        if idx % p.s[i] != 0 and p.s[i] % idx != 0:
+            continue
+        p.p[idx-1] = p.s[i]
+        c += bpermute(Processor(p.s[:i] + p.s[i+1:],p.p))
     return c
 
 import unittest

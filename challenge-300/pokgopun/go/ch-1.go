@@ -46,25 +46,47 @@ package main
 
 import (
 	"io"
-	"iter"
 	"os"
 
 	"github.com/google/go-cmp/cmp"
 )
 
+type processor struct {
+	s, p []int
+}
+
 func ba(n int) int {
+	s := make([]int, n)
+	for n > 0 {
+		n--
+		s[n] = n + 1
+	}
+	return bpermute(processor{s, make([]int, len(s))})
+}
+
+func bpermute(p processor) int {
+	l := len(p.s)
+	if l == 0 {
+		//fmt.Println(p.p)
+		return 1
+	}
 	c := 0
-	for p := range permutation(n) {
-		i := 1
-		for i <= n {
-			pn := p[i-1] + 1
-			if pn%i != 0 && i%pn != 0 {
-				break
-			}
-			i++
+	idx := len(p.p) - l + 1
+	for i := range l {
+		if idx%p.s[i] != 0 && p.s[i]%idx != 0 {
+			continue
 		}
-		if i > n {
-			c++
+		p.p[idx-1] = p.s[i]
+		switch i {
+		case 0:
+			c += bpermute(processor{p.s[1:], p.p})
+		case l - 1:
+			c += bpermute(processor{p.s[:l-1], p.p})
+		default:
+			ss := make([]int, l-1)
+			copy(ss[:i], p.s[:i])
+			copy(ss[i:], p.s[i+1:])
+			c += bpermute(processor{ss, p.p})
 		}
 	}
 	return c
@@ -76,49 +98,8 @@ func main() {
 	}{
 		{2, 2},
 		{1, 1},
-		{10, 700},
+		//	{10, 700},
 	} {
 		io.WriteString(os.Stdout, cmp.Diff(ba(data.input), data.output)) // blank if ok, otherwise show the difference
 	}
-}
-
-func factorial(n int) int {
-	if n == 0 {
-		return 1
-	}
-	return n * factorial(n-1)
-}
-
-func permutation(n int) iter.Seq[[]int] {
-	return func(yield func([]int) bool) {
-		fact := factorial(n)
-		for r := 0; r < fact; r++ {
-			if !yield(rank2permutation(n, r)) {
-				break
-			}
-		}
-	}
-}
-
-func rank2permutation(n, r int) []int {
-	fact := factorial(n - 1)
-	if r > fact*n-1 {
-		return []int{}
-	}
-	digits := make([]int, n)
-	for i := 0; i < n; i++ {
-		digits[i] = i
-	}
-	p := []int{}
-	var q int
-	for i := 0; i < n; i++ {
-		q = r / fact
-		r %= fact
-		p = append(p, digits[q])
-		digits = append(digits[:q], digits[q+1:]...)
-		if i != n-1 {
-			fact /= n - 1 - i
-		}
-	}
-	return p
 }
