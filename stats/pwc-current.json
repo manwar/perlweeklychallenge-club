@@ -1,55 +1,19 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 300"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Ulrich Rieke"
-         },
-         {
-            "id" : "W. Luis Mochan",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "W. Luis Mochan"
-         }
-      ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2024-12-16 17:47:14 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -60,27 +24,78 @@
          }
       }
    },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba"
+         },
+         {
+            "id" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Ulrich Rieke"
+         },
+         {
+            "name" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "W. Luis Mochan"
+         }
+      ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2024-12-17 13:15:24 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 300"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 300",
          "data" : [
             {
-               "y" : 4,
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke"
+               "drilldown" : "E. Choroba",
+               "y" : 2,
+               "name" : "E. Choroba"
             },
             {
-               "drilldown" : "W. Luis Mochan",
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 4
+            },
+            {
+               "name" : "W. Luis Mochan",
                "y" : 3,
-               "name" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 300"
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   }
+   ]
 }
