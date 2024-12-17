@@ -11,11 +11,13 @@ sub nested-array(+@ints)
     .max given gather for ^@ints  
     {
         my $i = $_;
-        my @a = @ints;
-
-        take .elems given do loop
         {
-           $i = @a[$i]:delete // last
+            temp @ints;
+
+            take .elems given do loop
+            {
+                $i = @ints[$i]:delete // last
+            }
         }
     } 
 }
