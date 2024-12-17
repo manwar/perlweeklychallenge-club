@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/nestedarray {
+    0 dict begin
+    /a exch def
+    /arr 0 def
+    0 1 a length 1 sub {
+        /j exch def
+        /trail 0 dict def
+        {
+            /j a j get def
+            trail j known {
+                exit
+            } if
+            trail j true put
+        } loop
+        /arr arr trail keys length max def
+    } for
+    arr
+    end
+} bind def
+
+(nestedarray) test.start
+[5 4 0 3 1 6 2] nestedarray 4 eq test
+[0 1 2] nestedarray 1 eq test
+test.end
