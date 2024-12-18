@@ -45,14 +45,19 @@ exit(0);
 # * The number of Beautiful Permutations found (e.g. 700)
 ################################################################################
 sub count_beautiful_arrangements{
-    my @ints = 1 .. shift();
+    my $n = shift();
 
     my $beautiful_ct = 0;
 
     # Call the permutation generator
     permute_list_sequence_recursive(
+        # See documentation for
+        # permute_list_sequence_recursive() for a
+        # description of the callback subroutine's
+        # expected calling convention
+        #### Begin callback subroutine ####
         sub{
-            # Not using the data argument
+            # Not using the data argument 
             shift();
 
             # Examine each member of this permutation
@@ -73,19 +78,24 @@ sub count_beautiful_arrangements{
 
             # If we got here, this is a beautiful
             # permutation; increment the count and move
-            # on to the next permutation
+            # on to the next permutation ($beautiful_ct
+            # being scoped to the calling code)
             $beautiful_ct++;
 
             return(0);
 
         },
+        #### End callback subroutine ####
 
         # No data arg to pass
         undef,
 
-        \@ints,
+        # Generate the list of numbers to permute, and
+        # define the region to act on (the entire
+        # list)
+        [ 1 .. $n ],
         0,
-        scalar(@ints)
+        $n
     );
 
     return($beautiful_ct);
