@@ -76,8 +76,8 @@ sub count_beautiful_arrangements{
                     );
             }
 
-            # If we got here, this is a beautiful
-            # permutation; increment the count and move
+            # If we got here, this is a Beautiful
+            # Permutation; increment the count and move
             # on to the next permutation ($beautiful_ct
             # being scoped to the calling code)
             $beautiful_ct++;
