@@ -1,15 +1,15 @@
 # Ryan Thompson
 
-## Week 290 Solutions
+## Week 300 Solutions
 
-### Task 1 › Double Exist
+### Task 1 › Beautiful Arrangement
 
  * [Perl](perl/ch-1.pl)
 
-### Task 2 › Luhn's Algorithm
+### Task 2 › Nested Loop
 
  * [Perl](perl/ch-2.pl)
 
 ## Blog
 
- * [Seeing Double, Twice!](https://ry.ca/2024/10/pwc-290-seeing-double-twice/)
+ * [You there, Perl, may you live forever!](https://ry.ca/2024/12/pwc-300-you-there-perl/)
