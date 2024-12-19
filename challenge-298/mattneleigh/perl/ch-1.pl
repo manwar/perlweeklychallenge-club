@@ -90,44 +90,47 @@ sub maximal_ones_square_area{
     my $local_i;
     my $local_j;
     my $square_size;
-    my $growing;
+    my $square_growing;
     my $max_square = 0;
 
     # Loop over each coordinate in the matrix, but only
     # up to the point at which we might find a square
-    # larger than any yet seen
+    # of 1's larger than any yet seen
     for $j (0 .. $#$matrix - $max_square){
         for $i (0 .. $#{$matrix->[0]} - $max_square){
             # See if there's a 1 here
             if($matrix->[$j][$i]){
                 $square_size = 1;
-                $growing = 1;
+                $square_growing = 1;
 
-                while($growing){
+                # Loop while the square of 1's is growing
+                while($square_growing){
                     # Check the next column for 1's; a coordinate
                     # outside the matrix evaluates as undef which
                     # effectively counts as 0
                     for $local_j ($j .. $j + $square_size){
                         unless($matrix->[$local_j][$i + $square_size]){
-                            $growing = 0;
+                            $square_growing = 0;
                             last;
                         }
                     }
 
                     # Check the next row for 1's- but stop one short
-                    # since that element was checked already, above
-                    if($growing){
+                    # since the last element in the row was checked
+                    # already, above
+                    if($square_growing){
                         for $local_i ($i .. $i + $square_size - 1){
                             unless($matrix->[$j + $square_size][$local_i]){
-                                $growing = 0;
+                                $square_growing = 0;
                                 last;
                             }
                         }
                     }
 
-                    # Enlarge the square
+                    # If we didn't hit a 0, the square is still
+                    # growing- enlarge it for the next iteration
                     $square_size++
-                        if($growing);
+                        if($square_growing);
                 }
 
                 # If this square was larger than the previous, make

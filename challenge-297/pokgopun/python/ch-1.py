@@ -43,16 +43,29 @@ Task 2: Semi-Ordered Permutation
 from typing import Tuple
 
 def ca(bins: Tuple[int]) -> int:
-    bins = tuple(-1 if e == 0 else e for e in bins)
     l = len(bins)
+    if l < 2:
+        return  0
+    bsm = sum(bins)
+    match bsm:
+        case 0:
+            return 0
+        case 1:
+            return 2
     c = 0
-    for i in range(l-1):
-        #for j in range(i + 2, l + 1 - ((l - i) % 2), 2):
-        for j in range(l - ((l - i) % 2), i + 1, -2):
-            if sum(bins[i:j]) == 0:
-                c = max(c, j - i)
-                if c >= l - i - ((l - i) % 2) - 2:
-                    return c
+    for i in range(l - 1):
+        sm = bsm
+        o = (l - i) % 2
+        sm -= bins[l - 1] * o
+        for j in range(l - o, i + 1, -2):
+            sl = j - i
+            if sm == sl / 2:
+                if c < sl:
+                    c = sl
+                    if c >= l - i - o - 2:
+                        return c
+            sm -= sum(bins[j-2:j])
+        bsm -= bins[i]
     return c
 
 import unittest
@@ -65,7 +78,9 @@ class TestCA(unittest.TestCase):
                 (0, 0, 0, 0, 0): 0,
                 (0, 1, 0, 0, 1, 0): 4,
                 (0, 1, 1, 0, 1, 0): 6,
+                (1, 1, 1, 0, 1, 0): 4,
                 (0, 1, 1, 0, 1, 0, 1, 1): 6,
+                (1, 1, 1, 0, 1, 0, 1, 1): 4,
                 (0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1): 10,
                 }.items():
             #print(inpt,otpt)
