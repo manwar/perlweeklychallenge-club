@@ -26,5 +26,5 @@ pwc-test './ch-1.raku', 9, 250, 'Beautiful Arrangements: 9 => 250';
 pwc-test './ch-1.raku', 10, 700, 'Beautiful Arrangements: 10 => 700';
 
 # Task 2, Nested Array
-pwc-test './ch-2.raku', <5 4 0 3 1 6 2>, 4, 'Nested Array: 5,4,0,3,1,6,2  => 4';
-pwc-test './ch-2.raku', <0 1 2>,         1, 'Nested Array: 0,1,2          => 1';
+pwc-test './ch-2.raku', <5 4 0 3 1 6 2>, 4, 'Nested Array: 5,4,0,3,1,6,2 => 4';
+pwc-test './ch-2.raku', <0 1 2>,         1, 'Nested Array: 0,1,2         => 1';
