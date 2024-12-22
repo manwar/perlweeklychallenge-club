@@ -1,3 +1,3 @@
-# The Weekly Challenge 299
+# The Weekly Challenge 300
 
-Blog: [The one about words](https://dev.to/simongreennet/the-one-about-words-4jo2)
+Blog: [Nested beauty](https://dev.to/simongreennet/nested-beauty-53ic)
