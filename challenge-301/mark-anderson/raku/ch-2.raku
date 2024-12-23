@@ -6,10 +6,8 @@ is hamming-distance(4,14,4), 4;
 
 sub hamming-distance(+@ints)
 {
-    my $fmt = "%0" ~ @ints.max.base(2).chars ~ "b";
-
     .sum given @ints.combinations(2).map(-> ($a, $b) 
     {
-        ($a +^ $b).fmt($fmt).indices(1)
+        ($a +^ $b).base(2).indices(1)
     })
 }
