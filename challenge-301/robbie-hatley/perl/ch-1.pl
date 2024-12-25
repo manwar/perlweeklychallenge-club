@@ -26,10 +26,11 @@ Output: 9534330
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 While it's tempting to just "sort and join", while that would work with some numbers (eg, Example #1), it
-wouldn't work with others (eg, Example #2). So I'll use the non-OOP "permute" function from my favorite CPAN
-module, "Math::Combinatorics", to get all permutations, join each, and see which is greatest. (I'm sure there
-are ways of doing this with smaller big-O, but I've got other things to do this week, so I'll go for the
-Godzilla smash instead of the surgical precision.)
+wouldn't work with others (eg, Example #2).
+
+However, a somewhat-more-sophisticated sort using {$b.$a cmp $a.$b} DOES work, because instead of comparing
+$b to $a, it compares $b.$a to $a.$b, which is what we're really after. And it's a LOT faster the a method
+based on permutations, with complexity of around O(xlog(x)) instead of O(e**x).
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
