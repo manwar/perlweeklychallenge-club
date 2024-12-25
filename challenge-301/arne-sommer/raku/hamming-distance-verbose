@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 1 && all(@ints) ~~ Int,
+               :v(:$verbose));
+
+my $sum = 0;
+
+for @ints.combinations(2) -> @combo
+{
+  my $distance = ( [+^] @combo ).fmt('%b').comb.sum;
+
+  $sum += $distance;
+
+  say ": HammingDistance({ @combo.join(",") }) = $distance" if $verbose;
+}
+
+say $sum;
