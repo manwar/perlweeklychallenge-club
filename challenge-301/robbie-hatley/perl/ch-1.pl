@@ -35,7 +35,7 @@ Godzilla smash instead of the surgical precision.)
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of arrays of positive integers, in proper Perl syntax, like so:
-./ch-1.pl '([3,8,437,2264,73894],[3,23,9,385,4298])'
+./ch-1.pl '([3,8,437,2264,73894],[3,23,9,385,4298],[2,11,286,37,194,87,1935,30,285,24,57,631])'
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
@@ -44,16 +44,9 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-   use v5.36;
-   use Math::Combinatorics;
-   sub largest (@nums) {
-      my @perms = permute @nums;
-      my $max = 0;
-      foreach my $perm (@perms) {
-         my $num = join '', @$perm;
-         if($num>$max){$max=$num}
-      }
-      return $max;
+   use v5.16;
+   sub largest {
+      join '', sort {$b.$a cmp $a.$b} @_
    }
 
 # ------------------------------------------------------------------------------------------------------------
