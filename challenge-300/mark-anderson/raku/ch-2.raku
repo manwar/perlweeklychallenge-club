@@ -8,9 +8,8 @@ is nested-array(0,1,8,5,4,9,3,2,7,6),  4;
 
 sub nested-array(+@ints)
 {
-    .max given gather for ^@ints  
+    .max given gather for ^@ints -> $i is copy 
     {
-        my $i = $_;
         {
             temp @ints;
 
