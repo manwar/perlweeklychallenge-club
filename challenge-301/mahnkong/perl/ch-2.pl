@@ -1,5 +1,4 @@
 use strict;
-use Data::Dumper;
 
 my @numbers = @ARGV;
 if ($#numbers < 1) {
