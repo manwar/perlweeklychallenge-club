@@ -1,0 +1,107 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/beautifularrangement {
+    0 dict begin
+    /a exch def
+    /precalc [
+        0 1 a {
+            pop
+            [
+                0 1 a {
+                    pop
+                    false
+                } for
+            ]
+        } for
+    ] def
+    1 1 a {
+        /i exch def
+        i i a {
+            /j exch def
+            precalc i get j true put
+            precalc j get i true put
+        } for
+    } for
+    /ct 0 def
+    mark
+    [
+        1 1 a {
+        } for
+    ]
+    {
+        counttomark 0 eq {
+            pop exit
+        } if
+        /trail exch def
+        trail length 1 eq {
+            /ct ct 1 add def
+        } {
+            /p a trail length sub 2 add def
+            trail {
+                /i exch def
+                precalc i get p get {
+                    trail { i ne } filter
+                } if
+            } forall
+        } ifelse
+    } loop
+    ct
+    end
+} bind def
+
+(beautifularrangement) test.start
+2 beautifularrangement 2 eq test
+1 beautifularrangement 1 eq test
+10 beautifularrangement 700 eq test
+20 beautifularrangement 1939684 eq test
+test.end

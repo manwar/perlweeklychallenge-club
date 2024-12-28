@@ -1,3 +1,3 @@
-# The Weekly Challenge 298
+# The Weekly Challenge 299
 
-Blog: [Maximizing the interval](https://dev.to/simongreennet/maximizing-the-interval-46fh)
+Blog: [The one about words](https://dev.to/simongreennet/the-one-about-words-4jo2)
