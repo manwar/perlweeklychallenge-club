@@ -1,3 +1,3 @@
-# The Weekly Challenge 300
+# The Weekly Challenge 301
 
-Blog: [Nested beauty](https://dev.to/simongreennet/nested-beauty-53ic)
+Blog: [Hammering lists](https://dev.to/simongreennet/hammering-lists-40cc)
