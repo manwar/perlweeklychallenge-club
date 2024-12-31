@@ -1,70 +1,90 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2024-12-30 17:40:13 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
+               "drilldown" : "Andreas Mahnke",
+               "name" : "Andreas Mahnke"
+            },
+            {
+               "name" : "Bob Lied",
                "drilldown" : "Bob Lied",
-               "name" : "Bob Lied"
+               "y" : 2
             },
             {
                "y" : 2,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
                "name" : "David Ferrone",
-               "drilldown" : "David Ferrone"
+               "drilldown" : "David Ferrone",
+               "y" : 2
             },
             {
-               "name" : "Jan Krnavek",
+               "y" : 1,
                "drilldown" : "Jan Krnavek",
-               "y" : 1
+               "name" : "Jan Krnavek"
             },
             {
-               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Peter Meszaros",
                "name" : "Peter Meszaros",
-               "drilldown" : "Peter Meszaros"
+               "y" : 2
+            },
+            {
+               "name" : "Robbie Hatley",
+               "drilldown" : "Robbie Hatley",
+               "y" : 3
             },
             {
                "y" : 3,
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 302"
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2024-12-31 11:00:24 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge - 302"
    },
    "legend" : {
       "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -75,40 +95,71 @@
                   2
                ]
             ],
-            "id" : "Bob Lied",
-            "name" : "Bob Lied"
+            "id" : "Andreas Mahnke",
+            "name" : "Andreas Mahnke"
          },
          {
+            "id" : "Bob Lied",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "name" : "Bob Lied"
+         },
+         {
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
+         {
             "id" : "David Ferrone",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "name" : "David Ferrone"
          },
          {
-            "name" : "Jan Krnavek",
             "id" : "Jan Krnavek",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "name" : "Jan Krnavek"
          },
          {
-            "name" : "Peter Meszaros",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Peter Meszaros"
+            "id" : "Peter Meszaros",
+            "name" : "Peter Meszaros"
          },
          {
+            "name" : "Robbie Hatley",
             "data" : [
                [
                   "Perl",
@@ -119,8 +170,21 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan"
+            "id" : "Robbie Hatley"
+         },
+         {
+            "name" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "W. Luis Mochan"
          }
       ]
    }
