@@ -36,10 +36,11 @@ use strict;
 use warnings;
 use Test2::V0 -no_srand => 1;
 use Data::Dumper;
+use Algorithm::Combinatorics qw/combinations/;
 
 my $cases = [
     [[["10", "0001", "111001", "1", "0"], 5, 3], 4, 'Example 1'],
-    [[["10",    "1",      "0"],           1, 1], 3, 'Example 2'],
+    [[["10",    "1",      "0"],           1, 1], 2, 'Example 2'],
 ];
 
 sub ones_and_zeroes
@@ -49,10 +50,16 @@ sub ones_and_zeroes
     my $y = $_[0]->[2];
 
     my $cnt = 0;
-    for my $i (@$l) {
-        my @l = split //, $i;
-        my $z = grep { $_ eq '0' } @l;
-        ++$cnt if $z <= $x && (@l - $z) <= $y;
+    for my $i (1 .. @$l) {
+        my $iter = combinations($l, $i);
+        while (my $c = $iter->next) {
+            my $str = join '', @$c;
+            my $z = $str =~ tr/0//;
+            my $o = $str =~ tr/1//;
+            if ($z <= $x && $o <= $y) {
+                $cnt = $i if $i > $cnt;
+            }
+        }
     }
     return $cnt;
 }
