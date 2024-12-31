@@ -50,19 +50,23 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    use builtin 'inf';
    no warnings qw( experimental::builtin );
 
-   # What is the minimum positive starting value for a given finite sequence of integers so that
-   # no member of the sequence of partial sums is less than 1?
+   # What is the minimum positive starting value for a
+   # given finite sequence of integers so that no member
+   # of the sequence of partial sums is less than 1?
    sub min_pos_start (@sequence) {
-      # First, tack a 0 to the left of the sequence and use THAT as our test starting value:
+      # First, tack a 0 to the left of the sequence
+      # and use THAT as our test starting value:
       unshift @sequence, 0;
-      # Now calculate the partial sums, keeping track of the minimum partial sum encountered:
+      # Now calculate the partial sums, keeping track of
+      # the minimum partial sum encountered:
       my $ps = 0;     # Partial Sum
       my $mp = inf;   # Minimum Partial Sum
       for my $term (@sequence) {
          $ps += $term;
          if ($ps < $mp) {$mp = $ps}
       }
-      # If $mp >= 0, "minimum positive starting value" will be 1; else it will be (1 - $mp):
+      # If $mp >= 0, "minimum positive starting value"
+      # will be 1, else it will be (1 - $mp):
       $mp >= 0 ? 1 : 1 - $mp;
    }
 

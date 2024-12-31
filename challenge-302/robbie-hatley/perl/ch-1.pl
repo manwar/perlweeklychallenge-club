@@ -99,10 +99,8 @@ Output is to STDOUT and will be each input followed by the corresponding output.
       my $zeros = 0;
       my $ones  = 0;
       for my $string (@strings) {
-         my $local_zeros = length $string =~ s/[^0]//gr;
-         my $local_ones  = length $string =~ s/[^1]//gr;
-         $zeros += $local_zeros;
-         $ones  += $local_ones;
+         $zeros += length $string =~ s/[^0]//gr;
+         $ones  += length $string =~ s/[^1]//gr;
       }
       $zeros <= $x && $ones <= $y;
    }
@@ -110,16 +108,16 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    # What is the first largest subset found meeting the given
    # maximum numbers of 0s and 1s?
    sub largest_subset ($x, $y, @strings) {
-      my @largest = ();         # Largest conforming subset.
-      my $lsize   = 0;          # Size of largest conforming subset.
-      my @power = ();           # Power set of @strings.
+      # First declare the various variables we'll need:
+      my @largest = (); # Largest conforming subset.
+      my $lsize   =  0; # Size of largest conforming subset.
+      my @power   = (); # Power set of @strings.
       my $n = scalar(@strings); # Number of strings.
-      for my $m (0..$n) {
-         my @combine = combine($m, @strings);
-         for my $cref (@combine) {
-            push @power, $cref;
-         }
-      }
+      # Make the power set (set of all subsets) of @strings,
+      # by collecting all combinations of all possible sizes:
+      for my $m (0..$n) {push @power, combine($m, @strings)}
+      # Riffle through those subsets and find the first largest
+      # subset conforming to the given limits on 0s and 1s:
       for my $sref (@power) {
          my @subset = @$sref;
          if (meets_criteria($x, $y, @subset)) {
@@ -134,16 +132,8 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
-my @arrays = @ARGV ? eval($ARGV[0]) :
-(
-   # Example #1 inputs:
-   [5, 3, "10", "0001", "111001", "1", "0"],
-   # Expected output: 4
-
-   # Example #2 input:
-   [1, 1, "10", "1", "0"],
-   # Expected output: 2
-);
+my @arrays = @ARGV ? eval($ARGV[0]) : ([5, 3, "10", "0001", "111001", "1", "0"] , [1, 1, "10", "1", "0"]);
+#                  Expected outputs :                      4                                  2
 
 # ------------------------------------------------------------------------------------------------------------
 # MAIN BODY OF PROGRAM:
