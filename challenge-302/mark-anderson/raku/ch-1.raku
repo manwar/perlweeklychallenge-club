@@ -4,7 +4,7 @@ use Test;
 is ones-and-zeroes(< 10 0001 111001 1 0 >, 5, 3), 4;
 is ones-and-zeroes(< 10 1 0 >,             1, 1), 2;
 
-sub ones-and-zeroes(@str is copy, $x, $y)
+sub ones-and-zeroes(@str, $x, $y)
 {
     for @str.combinations.reverse
     {
