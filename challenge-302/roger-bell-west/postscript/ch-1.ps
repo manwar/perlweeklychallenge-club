@@ -1,0 +1,99 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/onesandzeroes {
+    0 dict begin
+    /ones exch def
+    /zeroes exch def
+    /a exch def
+    /ax [
+        a {
+            /o 0 def
+            /n 0 def
+            {
+                dup 48 eq {
+                    /o o 1 add def
+                } if
+                49 eq {
+                    /n n 1 add def
+                } if
+            } forall
+            [ o n ]
+        } forall
+    ] def
+    0
+    1 1 1 ax length bitshift 1 sub {
+        /mask exch def
+        /o 0 def
+        /n 0 def
+        /ct 0 def
+        ax enumerate.array {
+            aload pop
+            /x exch def
+            /i exch def
+            mask 1 i bitshift and 0 gt {
+                /o o x 0 get add def
+                /n n x 1 get add def
+                /ct ct 1 add def
+                o zeroes gt n ones gt or {
+                    exit
+                } if
+            } if
+        } forall
+        o zeroes le n ones le and {
+            ct max
+        } if
+    } for
+    end
+} bind def
+
+(onesandzeroes) test.start
+[(10) (0001) (111001) (1) (0)] 5 3 onesandzeroes 4 eq test
+[(10) (1) (0)] 1 1 onesandzeroes 2 eq test
+test.end
