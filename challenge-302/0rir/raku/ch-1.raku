@@ -41,16 +41,16 @@ my @Test =
 my @Default  =  '0', '0', '11';
 my @Test-def =
   # exp zed one
-    0, -1, -1,      # < 1 multi's
+    0, -1, -1,
     0, -1,  1,
     0,  1, -1,
 
-    1,  1,  0,      # logic per arg s/b same
+    1,  1,  0,
     2,  2,  0,
     2,  3,  0,
     2,  4,  0,
 
-    0,  0,  0,      # general
+    0,  0,  0,
     0,  0,  1,
     1,  0,  2,
     1,  0,  3,
@@ -82,9 +82,7 @@ sub reform( @str is copy --> Array ) {
     });
 }
 
-multi task($zeds where * < 0, $ones, @str -->0) {}
-multi task($zeds, $ones where * < 0, @str -->0) {}
-
+# multis for zeds == 0, and for ones == 0 elided
 multi task($zeds, $ones, @str --> Int)  {
     my $*zed-max = $zeds;
     my $*one-max = $ones;
