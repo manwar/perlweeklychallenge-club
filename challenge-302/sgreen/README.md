@@ -1,3 +1,3 @@
-# The Weekly Challenge 301
+# The Weekly Challenge 302
 
-Blog: [Hammering lists](https://dev.to/simongreennet/hammering-lists-40cc)
+Blog: [Step zero, step one](https://dev.to/simongreennet/step-zero-step-one-20dh)

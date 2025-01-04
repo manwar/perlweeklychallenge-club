@@ -32,23 +32,38 @@
 # 
 
 package require tcltest
+package require math::combinatorics 
 
 set cases {
     {{{"10" "0001" "111001" "1" "0"} 5 3} 4 "Example 1"}
-    {{{"10"    "1"      "0"}         1 1} 3 "Example 2"}
+    {{{"10"    "1"      "0"}         1 1} 2 "Example 2"}
 }
 
 proc ones_and_zeroes {p} {
     set l [lindex $p 0]
     set x [lindex $p 1]
     set y [lindex $p 2]
+
+    set len [llength $l]
     set cnt 0
-    foreach i $l {
-        set z [regexp -all "0" $i]
-        set o [regexp -all "1" $i]
-        if {$z <= $x && $o <= $y} {
-            incr cnt
+
+    for {set i 1} {$i <= $len} {incr i} {
+        set comb [::math::combinatorics::combinationObj create "comb" $len $i]
+        $comb setElements $l
+        set p [$comb nextElements]
+        while {[llength $p] == $i} {
+            set str [join $p {}]
+            set z [regsub -all {0} $str {} dummy]
+            set o [regsub -all {1} $str {} dummy]
+            if {$z <= $x && $o <= $y} {
+                if {$i > $cnt} {
+                    set cnt $i
+                }
+            }
+            set p [$comb nextElements]
         }
+
+        $comb destroy
     }
     return $cnt
 }
@@ -61,4 +76,3 @@ foreach case $cases {
 }
 
 exit 0
-
