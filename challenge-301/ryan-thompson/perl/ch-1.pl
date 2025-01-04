@@ -6,6 +6,7 @@ sub largest(@ints) {
     my $sub = sub {
         my $num = shift;
         return $num.($_[0]//0) if @_ <= 1;
+        my $call = "sub($num, @_) -->";
 
         my $max_val = 0; # Our candidate answer
 
@@ -17,7 +18,8 @@ sub largest(@ints) {
             splice @new_ints, $i, 1; # Remove $i-th element
 
             my $val = __SUB__->($num.$_[$i], @new_ints);
-            $max_val = $val if $val > $max_val;
+            $max_val = length($val) > length($max_val) ? $val
+                            : $val gt        $max_val  ? $val : $max_val;
         }
 
         $max_val;
