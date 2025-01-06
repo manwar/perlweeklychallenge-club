@@ -49,7 +49,7 @@ sub run($@) {
 
             my $points = $int * $ints{$int};
 
-            if ($points > $max_points && $points > $left_points + $right_points) {
+            if (! $max_points || ($points > $max_points && $points > $left_points + $right_points)) {
                 $int_to_take = $int;
                 $max_points = $points;
             }
