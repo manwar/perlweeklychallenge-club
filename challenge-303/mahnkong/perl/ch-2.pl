@@ -112,7 +112,7 @@ sub test() {
 
     my @example3_input = (2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4);
     my $c3 = new Challenge(verbose => 1);
-    is($c3->run(@example3_input), 20, "Example 2");
+    is($c3->run(@example3_input), 20, "Example 3");
 
 }
 
