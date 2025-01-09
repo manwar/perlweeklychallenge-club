@@ -30,6 +30,7 @@ use Test2::V0 qw(-no_srand);
 use List::Util qw(max);
 
 no warnings qw(experimental::signatures);
+
 sub deleteAndEarn (@ints) {
   my %c; map $c{$_}++,@ints;
   my $m = max(keys %c);
@@ -38,7 +39,7 @@ sub deleteAndEarn (@ints) {
 
   for my $n (0 .. $m) {
     $d[$n] = $n == 0 ? 0 : 
-             $n == 1 ? $d[$n] = $c{$n} // 0 : 
+             $n == 1 ? $c{$n} // 0 : 
              max($d[$n-1], $d[$n-2] + $n * ($c{$n} // 0));
   }
 
