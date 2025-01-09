@@ -42,38 +42,36 @@ SO WHAT DO YOU THINK ?
 
 from typing import Tuple,Dict
 
-def dae(ints: Tuple[int]) -> int:
-    intc: Dict[int,int] = {}
-    for n in ints:
-        intc[n] = intc.get(n, 0) + 1
-    score = 0
-    while len(intc) > 0:
-        k = None
-        mx = None
-        for n, c in intc.items():
-            v = n * c
-            vp = n - 1
-            cp = intc.get(vp, None)
-            if cp is not None:
-                v -= vp * cp
-            vn = n + 1
-            cn = intc.get(vn, None)
-            if cn is not None:
-                v -= vn * cn
-            if k is None:
-                k = n
-                mx = v
-                continue
-            if v > mx:
-                mx = v
-                k = n
-        score += k * intc[k]
-        intc.pop(k)
-        if intc.get(k-1, None) is not None:
-            intc.pop(k-1)
-        if intc.get(k+1, None) is not None:
-            intc.pop(k+1)
-    return score
+class Ints:
+    def __init__(self, ints: Tuple[int]):
+        self.intc: Dict[int,int] = {}
+        for n in ints:
+            self.intc[n] = self.intc.get(n,0) + 1
+
+    def check(self, n: int) -> int:
+        score = n * self.intc.get(n,0)
+        cost = 0
+        for i in (n-1,n+1):
+            cost += i * self.intc.get(i,0)
+        def daeFunc() -> int:
+            for i in range(-1,2,1):
+                self.intc.pop(n+i,None)
+            return score
+        return score - cost, daeFunc
+
+    def dae(self) -> int:
+        score = 0
+        while len(self.intc) > 0:
+            mx, fx = None, None
+            for n in self.intc.keys():
+                if mx == None:
+                    mx, fx = self.check(n)
+                    continue
+                m, f = self.check(n)
+                if m > mx:
+                    mx, fx = m, f
+            score += fx()
+        return score
 
 import unittest
 
@@ -83,6 +81,6 @@ class TestDae(unittest.TestCase):
                 (3, 4, 2): 6,
                 (2, 2, 3, 3, 3, 4): 9,
                 }.items():
-            self.assertEqual(dae(inpt),otpt)
+            self.assertEqual(Ints(inpt).dae(),otpt)
 
 unittest.main()
