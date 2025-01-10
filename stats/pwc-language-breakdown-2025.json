@@ -1,7 +1,25 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "xAxis" : {
       "type" : "category"
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "303",
+               "y" : 32,
+               "drilldown" : "303"
+            }
+         ],
+         "name" : "The Weekly Challenge Languages",
+         "colorByPoint" : "true"
+      }
+   ],
    "title" : {
       "text" : "The Weekly Challenge Language"
    },
@@ -11,10 +29,11 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "303",
             "data" : [
                [
                   "Perl",
-                  18
+                  20
                ],
                [
                   "Raku",
@@ -22,50 +41,31 @@
                ],
                [
                   "Blog",
-                  3
+                  4
                ]
             ],
-            "name" : "303",
             "id" : "303"
          }
       ]
    },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-10 15:09:37 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-09 22:28:33 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+         }
       }
    },
    "tooltip" : {
       "followPointer" : "true",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge Languages",
-         "data" : [
-            {
-               "name" : "303",
-               "drilldown" : "303",
-               "y" : 29
-            }
-         ],
-         "colorByPoint" : "true"
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
    }
 }
