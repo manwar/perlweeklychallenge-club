@@ -61,32 +61,35 @@ func (is ints) intc() intc {
 
 type intc map[int]int
 
-func (ic intc) check(n int, clean bool) int {
-	score := n*ic[n] - (n-1)*ic[n-1] - (n+1)*ic[n+1]
-	if clean {
+func (ic intc) check(n int) (int, func() int) {
+	score := n * ic[n]
+	return score - (n-1)*ic[n-1] - (n+1)*ic[n+1], func() int {
 		for i := -1; i < 2; i++ {
 			delete(ic, n+i)
 		}
+		return score
 	}
-	return score
 }
 
 func (ic intc) dae() int {
 	score := 0
 	for len(ic) > 0 {
-		var s [][2]int
+		var (
+			mx []int
+			fx func() int
+		)
 		for n := range ic {
-			if len(s) == 0 {
-				s = append(s, [2]int{n, ic.check(n, false)})
+			if len(mx) == 0 {
+				mx = make([]int, 1)
+				mx[0], fx = ic.check(n)
 				continue
 			}
-			v := ic.check(n, false)
-			if v > s[0][1] {
-				s[0] = [2]int{n, v}
+			if m, f := ic.check(n); m > mx[0] {
+				mx[0] = m
+				fx = f
 			}
 		}
-		score += s[0][0] * ic[s[0][0]]
-		ic.check(s[0][0], true)
+		score += fx()
 	}
 	return score
 }
