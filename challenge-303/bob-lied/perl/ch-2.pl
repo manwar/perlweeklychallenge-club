@@ -25,7 +25,7 @@
 #=============================================================================
 
 use v5.40;
-use List::Util qw/uniq/;
+use List::Util qw/max/;
 
 use Getopt::Long;
 my $Verbose = false;
@@ -44,9 +44,56 @@ my $logger;
 exit(!runTest()) if $DoTest;
 
 say deleteGame(@ARGV);
+# say deleteGame_DFS(@ARGV);
 
 #=============================================================================
+# Assuming the range of integers isn't ridiculous (max=100,000 maybe) we can
+# count the occurrences of each number, put them in order, and look at
+# adjoining sets. That way we can do one pass from smallest to largest.
+# Example: 2,2,3,3,3,4,6,6 becomes [0] [1] [2] [3] [4] [5] [6] [7]
+#                                   0   0   4   9   4   0   12  0
+#
+# For a set of three adjoining numbers, its possible point value
+# is either the middle (eliminating the first and third), or the
+# sum of the first and third (eliminating the middle).
+#
+# After a triple is evaluated, slide right, but replace the middle
+# with best points so far.
+#
+# The game plays in sets of three numbers, taking advantage of the zeroes
+# for non-existent numbers. The middle gets updated with the best choice
+# so far in each triple.
+#    0      -> 0    # Startup, handles array of one
+#   [0] 0   -> 0    # Startup, max([0],[1]) handles array of two
+#    0 [0]  4                 # max(0 + 4, 0) => [4]
+#       0  [4]  9              # max(0 + 9, 4) => [9]
+#           4  [9]  4            # max(4 + 4, 9) => [9]
+#               9  [9]  0         # max(9 + 0, 9) => [9]
+#                  [9]  [9]  12     # max(9 + 12, 9) => [21]
+#                       [9] [21] 0   # max(9 + 0, 21) => [21]
 sub deleteGame(@ints)
+{
+    # Array of 0s extending over the range of ints, extra to handle boundary
+    my @intSum = (0) x (1 + max(@ints));
+    $intSum[$_] += $_ for @ints;
+
+    # Look at triples of numbers, but first handle the start of the array
+    my $first  = shift @intSum;
+    my $second = my $points = max($first, (shift @intSum) // 0);
+    while ( defined(my $third = shift @intSum) )
+    {
+        $points = max( $first + $third, $second);
+        $logger->debug("($first, [$second], $third) = $points -> ($second, [$points], _)");
+        ($first, $second) = ($second, $points);
+    }
+    return $points;
+}
+
+
+#=============================================================================
+# The hard way, depth-first search. Gets out of hand if the array is long,
+# but handles very large integers. 
+sub deleteGame_DFS(@ints)
 {
     my $best = 0;
 
@@ -95,10 +142,11 @@ sub runTest
 {
     use Test2::V0;
 
-    is( deleteGame(5),           5, "Singleton");
-    is( deleteGame(5,5,5,5),    20, "Repeats");
-    is( deleteGame(3,4,2),       6, "Example 1");
-    is( deleteGame(2,2,3,3,3,4), 9, "Example 2");
+    is( deleteGame(5),                5, "Singleton");
+    is( deleteGame(5,5,5,5),         20, "Repeats");
+    is( deleteGame(3,4,2),            6, "Example 1");
+    is( deleteGame(2,2,3,3,3,4),      9, "Example 2");
+    is( deleteGame(2,2,3,3,3,4,6,6), 21, "Example 2 extended");
 
     done_testing;
 }
