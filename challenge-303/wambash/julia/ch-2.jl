@@ -11,15 +11,12 @@ function delete_and_earn(ints)
     @variable(model, x[i in adepts], Bin)
     @objective(model, Max, sum(i * freq[i] * x[i]  for i in keys(freq)) )
 
+    #@constraint(model, [i in adepts if i+1 in adepts], x[i]+x[i+1] ≤ 1)
     for i in adepts
         if i+1 in adepts
-            @constraint(model, x[i] + x[i+1]  ≤ 1)
-        end
-        if i-1 in adepts
-            @constraint(model, x[i-1] + x[i]  ≤ 1)
+            @constraint(model, x[i] + x[i + 1] ≤ 1)
         end
     end
-
     optimize!(model)
     #@show value.(x)
     objective_value(model)
