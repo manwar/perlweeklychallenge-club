@@ -1,3 +1,3 @@
-# The Weekly Challenge 302
+# The Weekly Challenge 303
 
-Blog: [Step zero, step one](https://dev.to/simongreennet/step-zero-step-one-20dh)
+Blog: [Earn with 3 digits](https://dev.to/simongreennet/earn-with-3-digits-45b6)
