@@ -22,7 +22,9 @@ max_score(Values, Score) :-
         max_score([Upper|Second_Part_Without_Upper], USPS),
         Score_Without_Pivot is FPLS + USPS,
         Score is max(Score_With_Pivot, Score_Without_Pivot).
-        
+
+% this is the solution for the case where we absolutely *must* clear the whole array, even at the cost of taking =< 0 values
+% otherwise, we could just erase those values from the input before ever doing anything because all they ever could do is decrease the score we can get
 task2(Ints, Max_Score) :-
         msort(Ints, Ints_Sorted),
         clumped(Ints_Sorted, Ints_Grouped),
