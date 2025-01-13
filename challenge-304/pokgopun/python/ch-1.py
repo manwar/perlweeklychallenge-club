@@ -44,6 +44,8 @@ def ab(ints: Tuple[int], n: int) -> bool:
             i += 2
             continue
         i += 1
+    if i == l and ints[i] == 0:
+        n -= 1
     return n <= 0
 
 import unittest
@@ -55,6 +57,12 @@ class testAb(unittest.TestCase):
                 ((1, 0, 0, 0, 1), 2): False,
                 ((1, 1, 0, 0, 0, 1), 1): False,
                 ((1, 0, 0, 0, 1, 1), 1): False,
+                ((1, 0, 0), 1): True,
+                ((0, 0, 1), 1): True,
+                ((1, 0, 0, 0, 0, 1), 2): False,
+                ((1, 0, 0, 0, 0, 0, 1), 2): True,
+                ((0, 0, 0, 0, 0), 3): True,
+                ((0, 0, 0, 0, 0), 4): False,
                 }.items():
             self.assertEqual(ab(ints, n), otpt)
 

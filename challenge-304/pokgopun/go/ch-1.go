@@ -64,6 +64,9 @@ func (in input) process() bool {
 		}
 		i++
 	}
+	if i == l && is[i] == 0 {
+		n--
+	}
 	return n <= 0
 }
 
@@ -76,6 +79,12 @@ func main() {
 		{input{ints{1, 0, 0, 0, 1}, 2}, false},
 		{input{ints{1, 1, 0, 0, 0, 1}, 1}, false},
 		{input{ints{1, 0, 0, 0, 1, 1}, 1}, false},
+		{input{ints{1, 0, 0}, 1}, true},
+		{input{ints{0, 0, 1}, 1}, true},
+		{input{ints{1, 0, 0, 0, 0, 1}, 2}, false},
+		{input{ints{1, 0, 0, 0, 0, 0, 1}, 2}, true},
+		{input{ints{0, 0, 0, 0, 0}, 3}, true},
+		{input{ints{0, 0, 0, 0, 0}, 4}, false},
 	} {
 		io.WriteString(os.Stdout, cmp.Diff(data.input.process(), data.output)) // blank if ok, otherwise show the difference
 	}
