@@ -1,0 +1,85 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/maximumaverage {
+    0 dict begin
+    /n exch def
+    /a exch def
+    /mx 0 def
+    a n n 1 sub neg rotor {
+        { add } reduce mx max /mx exch def
+    } forall
+    mx cvr n cvr div
+    end
+} bind def
+
+(maximumaverage) test.start
+[1 12 -5 -6 50 3] 4 maximumaverage 12.75 eq test
+[5] 1 maximumaverage 5 eq test
+test.end

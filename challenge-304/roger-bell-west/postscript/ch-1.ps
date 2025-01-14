@@ -1,0 +1,71 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/arrangebinary {
+    0 dict begin
+    /t exch def
+    /b exch def
+    0 1 b length 1 sub {
+        /i exch def
+        b i get 0 eq
+        i 0 eq {
+            true
+        } {
+            b i 1 sub get 0 eq
+        } ifelse
+        i b length 1 sub eq {
+            true
+        } {
+            b i 1 add get 0 eq
+        } ifelse
+        and and {
+            b i 1 put
+            /t t 1 sub def
+            t 0 eq {
+                exit
+            } if
+        } if
+    } for
+    t 0 eq
+    end
+} bind def
+
+(arrangebinary) test.start
+[1 0 0 0 1] 1 arrangebinary test
+[1 0 0 0 1] 2 arrangebinary not test
+test.end
