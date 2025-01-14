@@ -1,8 +1,11 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -13,17 +16,17 @@
                   1
                ]
             ],
-            "id" : "Dave Jacoby"
+            "name" : "Dave Jacoby"
          },
          {
-            "id" : "David Ferrone",
+            "name" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "David Ferrone"
+            "id" : "David Ferrone"
          },
          {
             "name" : "E. Choroba",
@@ -37,13 +40,13 @@
          },
          {
             "name" : "Feng Chang",
-            "id" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Feng Chang"
          },
          {
             "id" : "Peter Campbell Smith",
@@ -60,16 +63,17 @@
             "name" : "Peter Campbell Smith"
          },
          {
-            "name" : "Peter Meszaros",
-            "id" : "Peter Meszaros",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Peter Meszaros",
+            "id" : "Peter Meszaros"
          },
          {
+            "id" : "Robbie Hatley",
             "name" : "Robbie Hatley",
             "data" : [
                [
@@ -80,10 +84,24 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Robbie Hatley"
+            ]
          },
          {
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West"
+         },
+         {
+            "id" : "Thomas Kohler",
             "data" : [
                [
                   "Perl",
@@ -94,7 +112,6 @@
                   2
                ]
             ],
-            "id" : "Thomas Kohler",
             "name" : "Thomas Kohler"
          },
          {
@@ -112,7 +129,6 @@
             "name" : "Ulrich Rieke"
          },
          {
-            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan",
             "data" : [
                [
@@ -123,50 +139,52 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
    "title" : {
       "text" : "The Weekly Challenge - 304"
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 304",
-         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3
             },
             {
-               "y" : 2,
+               "name" : "David Ferrone",
                "drilldown" : "David Ferrone",
-               "name" : "David Ferrone"
-            },
-            {
-               "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "name" : "Feng Chang",
-               "drilldown" : "Feng Chang",
                "y" : 2
             },
             {
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith",
-               "y" : 3
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
             },
             {
-               "drilldown" : "Peter Meszaros",
                "y" : 2,
-               "name" : "Peter Meszaros"
+               "name" : "Feng Chang",
+               "drilldown" : "Feng Chang"
+            },
+            {
+               "y" : 3,
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
+               "y" : 2,
+               "name" : "Peter Meszaros",
+               "drilldown" : "Peter Meszaros"
             },
             {
                "name" : "Robbie Hatley",
@@ -175,48 +193,49 @@
             },
             {
                "y" : 4,
-               "drilldown" : "Thomas Kohler",
-               "name" : "Thomas Kohler"
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
             },
             {
-               "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke",
+               "name" : "Thomas Kohler",
+               "drilldown" : "Thomas Kohler",
                "y" : 4
             },
             {
-               "drilldown" : "W. Luis Mochan",
+               "y" : 4,
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
                "y" : 3,
-               "name" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "xAxis" : {
       "type" : "category"
    },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2025-01-14 11:07:15 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2025-01-14 10:14:13 GMT"
    }
 }
