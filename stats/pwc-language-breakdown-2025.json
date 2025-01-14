@@ -1,58 +1,58 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-14 18:58:12 GMT"
+   },
    "series" : [
       {
          "name" : "The Weekly Challenge Languages",
+         "colorByPoint" : "true",
          "data" : [
             {
-               "name" : "304",
                "drilldown" : "304",
-               "y" : 32
+               "y" : 34,
+               "name" : "304"
             },
             {
+               "drilldown" : "303",
                "y" : 68,
-               "name" : "303",
-               "drilldown" : "303"
+               "name" : "303"
             }
-         ],
-         "colorByPoint" : "true"
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
    "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
       "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
       "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-14 11:07:15 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "304",
+            "name" : "304",
             "data" : [
                [
                   "Perl",
-                  20
+                  22
                ],
                [
                   "Raku",
@@ -63,10 +63,9 @@
                   6
                ]
             ],
-            "name" : "304"
+            "id" : "304"
          },
          {
-            "name" : "303",
             "data" : [
                [
                   "Perl",
@@ -81,14 +80,15 @@
                   12
                ]
             ],
+            "name" : "303",
             "id" : "303"
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "legend" : {
       "enabled" : "false"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
    }
 }
