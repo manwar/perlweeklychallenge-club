@@ -9,5 +9,4 @@ sub prefix:<x̄>(@list) { @list.sum / @list.elems }
 sub max-avg(@ints, $n)
 {
     @ints.rotor($n => 1-$n).map(x̄ *).max
-
 }
