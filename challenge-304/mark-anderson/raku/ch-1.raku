@@ -16,7 +16,7 @@ sub arrange-binary(@ints, $n)
 {
     my $str = [~] @ints;
 
-    return False if $str ~~ m:g/11/;
+    return False if $str ~~ /11/;
 
     return .elems >= $n given do loop
     {
