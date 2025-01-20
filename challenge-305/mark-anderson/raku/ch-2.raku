@@ -11,6 +11,5 @@ is-deeply alien-dictionary(<the weekly challenge>,
 
 sub alien-dictionary(@words, @alien)
 {
-    @words.map({ $_, .trans('a'..'z' => @alien) })
-          .sort({ .[1] }).map({ .[0] })
+    @words.sort({ .trans('a'..'z' => @alien) })
 }
