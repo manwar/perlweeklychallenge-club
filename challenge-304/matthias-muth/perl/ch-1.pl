@@ -10,8 +10,6 @@
 
 use v5.36;
 
-use Dsay;
-
 sub arrange_binary( $digits, $n ) {
     my $string = join "", $digits->@*;
     while ( $string =~ s/ (?<!1) 0 (?!1) /1/x ) {
