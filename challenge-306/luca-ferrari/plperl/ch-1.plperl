@@ -1,0 +1,35 @@
+--
+-- Perl Weekly Challenge 306
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-306>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc306;
+
+CREATE OR REPLACE FUNCTION
+pwc306.task1_plperl( bit[] )
+RETURNS SETOF bool
+AS $CODE$
+
+   my ( $bits ) = @_;
+
+   my $is_prime = sub {
+      my ( $number ) = @_;
+      return 0 if ( $number <= 1 );
+
+      for ( 2 .. $number - 1  ) {
+      	  return 0 if ( $number % $_ == 0 );
+      }
+
+      return 1;
+   };
+
+   for ( 0 .. $bits->@* - 1 ) {
+       my $int = oct( '0b' .  join( '', $bits->@[ 0 .. $_ ] ) );
+       return_next( $is_prime->( $int ) );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;
