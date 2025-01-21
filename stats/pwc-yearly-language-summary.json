@@ -1,59 +1,4 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : "true",
-         "name" : "The Weekly Challenge Languages",
-         "data" : [
-            {
-               "y" : 140,
-               "name" : "2025",
-               "drilldown" : "2025"
-            },
-            {
-               "name" : "2024",
-               "y" : 5455,
-               "drilldown" : "2024"
-            },
-            {
-               "y" : 5702,
-               "name" : "2023",
-               "drilldown" : "2023"
-            },
-            {
-               "drilldown" : "2022",
-               "y" : 5375,
-               "name" : "2022"
-            },
-            {
-               "name" : "2021",
-               "y" : 4976,
-               "drilldown" : "2021"
-            },
-            {
-               "drilldown" : "2020",
-               "y" : 5187,
-               "name" : "2020"
-            },
-            {
-               "y" : 3511,
-               "name" : "2019",
-               "drilldown" : "2019"
-            }
-         ]
-      }
-   ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-20 14:39:07 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -63,34 +8,31 @@
          "borderWidth" : 0
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true"
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "2025",
             "data" : [
                [
                   "Perl",
-                  76
+                  90
                ],
                [
                   "Raku",
-                  39
+                  47
                ],
                [
                   "Blog",
-                  25
+                  38
                ]
             ],
+            "id" : "2025",
             "name" : "2025"
          },
          {
             "id" : "2024",
-            "name" : "2024",
             "data" : [
                [
                   "Perl",
@@ -104,7 +46,8 @@
                   "Blog",
                   1213
                ]
-            ]
+            ],
+            "name" : "2024"
          },
          {
             "id" : "2023",
@@ -125,8 +68,6 @@
             "name" : "2023"
          },
          {
-            "id" : "2022",
-            "name" : "2022",
             "data" : [
                [
                   "Perl",
@@ -140,10 +81,12 @@
                   "Blog",
                   1010
                ]
-            ]
+            ],
+            "id" : "2022",
+            "name" : "2022"
          },
          {
-            "name" : "2021",
+            "id" : "2021",
             "data" : [
                [
                   "Perl",
@@ -158,10 +101,9 @@
                   921
                ]
             ],
-            "id" : "2021"
+            "name" : "2021"
          },
          {
-            "id" : "2020",
             "name" : "2020",
             "data" : [
                [
@@ -176,11 +118,11 @@
                   "Blog",
                   780
                ]
-            ]
+            ],
+            "id" : "2020"
          },
          {
             "id" : "2019",
-            "name" : "2019",
             "data" : [
                [
                   "Perl",
@@ -194,16 +136,74 @@
                   "Blog",
                   452
                ]
-            ]
+            ],
+            "name" : "2019"
          }
       ]
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge Languages",
+         "colorByPoint" : "true",
+         "data" : [
+            {
+               "drilldown" : "2025",
+               "name" : "2025",
+               "y" : 175
+            },
+            {
+               "name" : "2024",
+               "drilldown" : "2024",
+               "y" : 5455
+            },
+            {
+               "name" : "2023",
+               "drilldown" : "2023",
+               "y" : 5702
+            },
+            {
+               "drilldown" : "2022",
+               "name" : "2022",
+               "y" : 5375
+            },
+            {
+               "drilldown" : "2021",
+               "name" : "2021",
+               "y" : 4976
+            },
+            {
+               "drilldown" : "2020",
+               "name" : "2020",
+               "y" : 5187
+            },
+            {
+               "name" : "2019",
+               "drilldown" : "2019",
+               "y" : 3511
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-21 17:59:49 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
