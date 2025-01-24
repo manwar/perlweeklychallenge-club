@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
 
 =begin comment
