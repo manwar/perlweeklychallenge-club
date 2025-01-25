@@ -1,15 +1,15 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "legend" : {
       "enabled" : "false"
@@ -17,25 +17,15 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2025]"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2025-01-25 17:31:47 GMT"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "rotation" : -90,
-            "y" : 10
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Perl",
-               15871
+               15875
             ],
             [
                "Raku",
@@ -45,19 +35,29 @@
                "Blog",
                5615
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "enabled" : "true",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions"
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2025-01-24 19:59:09 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    }
 }
