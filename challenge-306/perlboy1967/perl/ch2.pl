@@ -28,8 +28,6 @@ use v5.32;
 use common::sense;
 use feature qw(signatures);
 
-use Data::Printer;
-
 use Test2::V0 qw(-no_srand);
 
 no warnings qw(experimental::signatures);
