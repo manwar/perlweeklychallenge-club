@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use feature 'signatures';
 use Test::More 'no_plan';
 
