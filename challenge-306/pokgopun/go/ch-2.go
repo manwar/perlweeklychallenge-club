@@ -65,8 +65,10 @@ func (is ints) lstelm() int {
 			return 0
 		case 1:
 			return is[0]
+		case 2:
+		default:
+			slices.Sort(is)
 		}
-		slices.Sort(is)
 		d := is[l-2] - is[l-1]
 		if d == 0 {
 			is = is[:l-2]

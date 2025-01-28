@@ -51,11 +51,15 @@ def lstelm(ints: Tuple[int]) -> int:
     lst = list(ints)
     while True:
         l = len(lst)
-        if l == 0:
-            return 0
-        if l == 1:
-            return lst[0]
-        lst.sort()
+        match l:
+            case 0:
+                return 0
+            case 1:
+                return lst[0]
+            case 2:
+                pass
+            case _:
+                lst.sort()
         d = lst[-2] - lst[-1]
         if d == 0:
             lst = lst[:-2]
