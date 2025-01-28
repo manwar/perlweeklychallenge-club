@@ -1,6 +1,7 @@
 game([], 0).
 game([Last_Remaining], Last_Remaining).
 game(List, Result) :-
+        length(List, N), N > 1,
         max_list(List, Max1),
         once(select(Max1, List, Rest)),
         max_list(Rest, Max2),
