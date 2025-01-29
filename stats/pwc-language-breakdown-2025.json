@@ -1,13 +1,70 @@
 {
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-29 21:01:18 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "306",
+               "y" : 31,
+               "name" : "306"
+            },
+            {
+               "name" : "305",
+               "y" : 84,
+               "drilldown" : "305"
+            },
+            {
+               "y" : 72,
+               "name" : "304",
+               "drilldown" : "304"
+            },
+            {
+               "name" : "303",
+               "y" : 70,
+               "drilldown" : "303"
+            }
+         ],
+         "colorByPoint" : "true",
+         "name" : "The Weekly Challenge Languages"
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "306",
-            "name" : "306",
             "data" : [
                [
                   "Perl",
-                  20
+                  22
                ],
                [
                   "Raku",
@@ -15,11 +72,15 @@
                ],
                [
                   "Blog",
-                  2
+                  3
                ]
-            ]
+            ],
+            "name" : "306",
+            "id" : "306"
          },
          {
+            "name" : "305",
+            "id" : "305",
             "data" : [
                [
                   "Perl",
@@ -33,11 +94,11 @@
                   "Blog",
                   21
                ]
-            ],
-            "name" : "305",
-            "id" : "305"
+            ]
          },
          {
+            "name" : "304",
+            "id" : "304",
             "data" : [
                [
                   "Perl",
@@ -51,11 +112,11 @@
                   "Blog",
                   13
                ]
-            ],
-            "id" : "304",
-            "name" : "304"
+            ]
          },
          {
+            "id" : "303",
+            "name" : "303",
             "data" : [
                [
                   "Perl",
@@ -69,72 +130,11 @@
                   "Blog",
                   12
                ]
-            ],
-            "id" : "303",
-            "name" : "303"
+            ]
          }
       ]
    },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-01-28 12:28:43 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "chart" : {
       "type" : "column"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge Languages",
-         "colorByPoint" : "true",
-         "data" : [
-            {
-               "y" : 28,
-               "drilldown" : "306",
-               "name" : "306"
-            },
-            {
-               "name" : "305",
-               "drilldown" : "305",
-               "y" : 84
-            },
-            {
-               "name" : "304",
-               "drilldown" : "304",
-               "y" : 72
-            },
-            {
-               "name" : "303",
-               "y" : 70,
-               "drilldown" : "303"
-            }
-         ]
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    }
 }
