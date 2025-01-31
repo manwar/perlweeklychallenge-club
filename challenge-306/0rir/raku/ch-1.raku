@@ -40,8 +40,8 @@ plan @Test ÷ 2;
 
 multi task( [] ) { 0 }
 multi task( @a --> Int) {
-    sum do for 1, *+2  …  @a % 2 ?? +@a !! @a -1  {
-                @a.rotor($_ => -$_ +1 ).flat.sum;
+    sum do for 1, *+2  …  $ = @a % 2 ?? +@a !! @a -1  {
+                sum @a.rotor($_ => -$_ +1 ).flat;
            }
 }
 

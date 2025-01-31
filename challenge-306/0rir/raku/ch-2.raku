@@ -62,22 +62,23 @@ only task( @a --> Int) {
     my Int $max-jr;
 
     loop {
-        return Int if not $h;                   # ().BagHash
+        return Int if not $h;                   # Done if empty.
 
                  # Handle the max level.
         $max = $h.keys.max;
-        next if $h{$max} :delete  %% 2;         # Just delete it.
+        next if $h{$max} :delete  %% 2;
 
         return $max if not $h;                  # No next level.
 
-        $max-jr = $h.keys.max;                  # Calc & store difference.
+                # Grab next max, delete it, and store the differ𝑒nce.
+        $max-jr = $h.keys.max;
         -- $h{ $max-jr};
-        $h.add( $max - $max-jr );
+        $h.add( $max - $max-jr);
     }
 }
 
 for @Test -> $exp, @in {
-    is task( @in), $exp, "{$exp // $exp.^name()} <- @in.raku()"
+    is task( @in), $exp, "{$exp // $exp.^name()}\t<- @in.raku()"
 }
 done-testing;
 
