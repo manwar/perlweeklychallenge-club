@@ -1,51 +1,7 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : "true",
-         "data" : [
-            {
-               "name" : "306",
-               "drilldown" : "306",
-               "y" : 53
-            },
-            {
-               "drilldown" : "305",
-               "y" : 84,
-               "name" : "305"
-            },
-            {
-               "name" : "304",
-               "drilldown" : "304",
-               "y" : 72
-            },
-            {
-               "name" : "303",
-               "y" : 70,
-               "drilldown" : "303"
-            }
-         ],
-         "name" : "The Weekly Challenge Languages"
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-02 20:37:33 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "306",
-            "name" : "306",
             "data" : [
                [
                   "Perl",
@@ -53,15 +9,18 @@
                ],
                [
                   "Raku",
-                  12
+                  14
                ],
                [
                   "Blog",
                   9
                ]
-            ]
+            ],
+            "id" : "306",
+            "name" : "306"
          },
          {
+            "name" : "305",
             "data" : [
                [
                   "Perl",
@@ -76,10 +35,11 @@
                   21
                ]
             ],
-            "name" : "305",
             "id" : "305"
          },
          {
+            "name" : "304",
+            "id" : "304",
             "data" : [
                [
                   "Perl",
@@ -93,11 +53,10 @@
                   "Blog",
                   13
                ]
-            ],
-            "name" : "304",
-            "id" : "304"
+            ]
          },
          {
+            "id" : "303",
             "data" : [
                [
                   "Perl",
@@ -112,29 +71,70 @@
                   12
                ]
             ],
-            "id" : "303",
             "name" : "303"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-02 20:53:05 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "306",
+               "y" : 55,
+               "drilldown" : "306"
+            },
+            {
+               "name" : "305",
+               "y" : 84,
+               "drilldown" : "305"
+            },
+            {
+               "y" : 72,
+               "drilldown" : "304",
+               "name" : "304"
+            },
+            {
+               "name" : "303",
+               "y" : 70,
+               "drilldown" : "303"
+            }
+         ],
+         "name" : "The Weekly Challenge Languages",
+         "colorByPoint" : "true"
+      }
+   ],
+   "legend" : {
+      "enabled" : "false"
    }
 }
