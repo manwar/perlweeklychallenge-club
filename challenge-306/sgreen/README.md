@@ -1,3 +1,3 @@
-# The Weekly Challenge 303
+# The Weekly Challenge 306
 
-Blog: [Earn with 3 digits](https://dev.to/simongreennet/earn-with-3-digits-45b6)
+Blog: [The last odd](https://dev.to/simongreennet/the-last-odd-kib)
