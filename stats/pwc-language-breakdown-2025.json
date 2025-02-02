@@ -1,11 +1,57 @@
 {
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "series" : [
+      {
+         "colorByPoint" : "true",
+         "name" : "The Weekly Challenge Languages",
+         "data" : [
+            {
+               "name" : "306",
+               "drilldown" : "306",
+               "y" : 56
+            },
+            {
+               "y" : 84,
+               "drilldown" : "305",
+               "name" : "305"
+            },
+            {
+               "name" : "304",
+               "drilldown" : "304",
+               "y" : 72
+            },
+            {
+               "name" : "303",
+               "drilldown" : "303",
+               "y" : 70
+            }
+         ]
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "306",
+            "id" : "306",
             "data" : [
                [
                   "Perl",
-                  32
+                  33
                ],
                [
                   "Raku",
@@ -15,12 +61,9 @@
                   "Blog",
                   9
                ]
-            ],
-            "id" : "306",
-            "name" : "306"
+            ]
          },
          {
-            "name" : "305",
             "data" : [
                [
                   "Perl",
@@ -35,11 +78,10 @@
                   21
                ]
             ],
+            "name" : "305",
             "id" : "305"
          },
          {
-            "name" : "304",
-            "id" : "304",
             "data" : [
                [
                   "Perl",
@@ -53,10 +95,13 @@
                   "Blog",
                   13
                ]
-            ]
+            ],
+            "name" : "304",
+            "id" : "304"
          },
          {
             "id" : "303",
+            "name" : "303",
             "data" : [
                [
                   "Perl",
@@ -70,71 +115,26 @@
                   "Blog",
                   12
                ]
-            ],
-            "name" : "303"
+            ]
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-02 20:53:05 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "legend" : {
+      "enabled" : "false"
    },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-02 20:56:54 GMT"
    },
-   "tooltip" : {
-      "followPointer" : "true",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "306",
-               "y" : 55,
-               "drilldown" : "306"
-            },
-            {
-               "name" : "305",
-               "y" : 84,
-               "drilldown" : "305"
-            },
-            {
-               "y" : 72,
-               "drilldown" : "304",
-               "name" : "304"
-            },
-            {
-               "name" : "303",
-               "y" : 70,
-               "drilldown" : "303"
-            }
-         ],
-         "name" : "The Weekly Challenge Languages",
-         "colorByPoint" : "true"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
-   ],
-   "legend" : {
-      "enabled" : "false"
    }
 }
