@@ -1,4 +1,4 @@
-FindAnagrams ← +1/+¬⧈≍∵⍚⍆
+FindAnagrams ← +1/+¬⧈≍⍚⍆
 
 # Tests
 FindAnagrams {"acca" "dog" "god" "perl" "repl"} # 3
