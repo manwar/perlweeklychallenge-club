@@ -1,21 +1,39 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
+         "colorByPoint" : "true",
          "data" : [
             {
-               "drilldown" : "307",
-               "y" : 18,
-               "name" : "307"
+               "name" : "307",
+               "y" : 33,
+               "drilldown" : "307"
             },
             {
                "name" : "306",
-               "drilldown" : "306",
-               "y" : 61
+               "y" : 61,
+               "drilldown" : "306"
             },
             {
-               "name" : "305",
+               "y" : 84,
                "drilldown" : "305",
-               "y" : 84
+               "name" : "305"
             },
             {
                "name" : "304",
@@ -28,40 +46,19 @@
                "y" : 70
             }
          ],
-         "name" : "The Weekly Challenge Languages",
-         "colorByPoint" : "true"
+         "name" : "The Weekly Challenge Languages"
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "tooltip" : {
       "headerFormat" : "<span style=\"font-size:11px\"></span>",
       "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : "true"
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : "false"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-04 17:57:58 GMT"
    },
    "drilldown" : {
       "series" : [
@@ -70,20 +67,21 @@
             "data" : [
                [
                   "Perl",
-                  12
+                  22
                ],
                [
                   "Raku",
-                  4
+                  6
                ],
                [
                   "Blog",
-                  2
+                  5
                ]
             ],
             "name" : "307"
          },
          {
+            "id" : "306",
             "data" : [
                [
                   "Perl",
@@ -98,8 +96,7 @@
                   10
                ]
             ],
-            "name" : "306",
-            "id" : "306"
+            "name" : "306"
          },
          {
             "id" : "305",
@@ -120,7 +117,6 @@
             "name" : "305"
          },
          {
-            "id" : "304",
             "data" : [
                [
                   "Perl",
@@ -135,9 +131,12 @@
                   13
                ]
             ],
-            "name" : "304"
+            "name" : "304",
+            "id" : "304"
          },
          {
+            "id" : "303",
+            "name" : "303",
             "data" : [
                [
                   "Perl",
@@ -151,13 +150,14 @@
                   "Blog",
                   12
                ]
-            ],
-            "id" : "303",
-            "name" : "303"
+            ]
          }
       ]
    },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-03 17:29:14 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
