@@ -1,39 +1,35 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+         }
       }
    },
    "series" : [
       {
          "colorByPoint" : "true",
+         "name" : "The Weekly Challenge Languages",
          "data" : [
             {
+               "drilldown" : "307",
                "name" : "307",
-               "y" : 33,
-               "drilldown" : "307"
+               "y" : 42
             },
             {
                "name" : "306",
-               "y" : 61,
-               "drilldown" : "306"
+               "drilldown" : "306",
+               "y" : 63
             },
             {
-               "y" : 84,
                "drilldown" : "305",
-               "name" : "305"
+               "name" : "305",
+               "y" : 84
             },
             {
                "name" : "304",
@@ -41,51 +37,38 @@
                "y" : 72
             },
             {
+               "y" : 70,
                "name" : "303",
-               "drilldown" : "303",
-               "y" : 70
+               "drilldown" : "303"
             }
-         ],
-         "name" : "The Weekly Challenge Languages"
+         ]
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-04 17:57:58 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
             "id" : "307",
+            "name" : "307",
             "data" : [
                [
                   "Perl",
-                  22
+                  28
                ],
                [
                   "Raku",
-                  6
+                  8
                ],
                [
                   "Blog",
-                  5
+                  6
                ]
-            ],
-            "name" : "307"
+            ]
          },
          {
-            "id" : "306",
             "data" : [
                [
                   "Perl",
-                  35
+                  37
                ],
                [
                   "Raku",
@@ -96,7 +79,8 @@
                   10
                ]
             ],
-            "name" : "306"
+            "name" : "306",
+            "id" : "306"
          },
          {
             "id" : "305",
@@ -117,6 +101,8 @@
             "name" : "305"
          },
          {
+            "id" : "304",
+            "name" : "304",
             "data" : [
                [
                   "Perl",
@@ -130,12 +116,9 @@
                   "Blog",
                   13
                ]
-            ],
-            "name" : "304",
-            "id" : "304"
+            ]
          },
          {
-            "id" : "303",
             "name" : "303",
             "data" : [
                [
@@ -150,12 +133,29 @@
                   "Blog",
                   12
                ]
-            ]
+            ],
+            "id" : "303"
          }
       ]
    },
    "title" : {
       "text" : "The Weekly Challenge Language"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-07 13:20:09 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "chart" : {
       "type" : "column"
