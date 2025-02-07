@@ -1,0 +1,12 @@
+ CheckOrder←{
+⍝ Return indices of major cells in ⍵ that differ from ⍵ sorted ascending
+     ⎕IO←0   ⍝ Set index origin to 0 to match examples
+⍝ Simple vector (list) case, return indicies of elements in ⍵
+     sorted←⍵[⍋⍵]
+     ⍸⍵≠sorted
+⍝ General array case
+⍝ https://aplwiki.com/wiki/Total_array_ordering
+⍝ https://aplwiki.com/wiki/Leading_axis_theory
+     sorted←(⍋⊂⍛⌷⊢)⍵
+     ⍸⍵(≢⍤¯1)sorted
+ }
