@@ -8,13 +8,14 @@ die <<~"FIN" unless @ARGV;
     Usage: $0 W0 W1 W2
     to count anagram equivalence classes among the words Wi.
     FIN
-use List::Util qw(uniq);
-say "@ARGV -> ",
-    0 + uniq
-    map {
+my $last;
+my $count=0;
+(!defined $last || $_ ne $last)&&++$count, $last = $_
+    for map {
         my %hash;
         $hash{lc $_}++ for split "";
         join "", map {
             $_, $hash{$_}
         }sort keys %hash
     } @ARGV;
+say "@ARGV -> $count";
