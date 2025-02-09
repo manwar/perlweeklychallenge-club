@@ -6,15 +6,15 @@
 use v5.36;
 die <<~"FIN" unless @ARGV;
     Usage: $0 W0 W1 W2
-    to count anagram equivalence classes mong the words Wi.
+    to count anagram equivalence classes among the words Wi.
     FIN
 use List::Util qw(uniq);
 say "@ARGV -> ",
     0 + uniq
     map {
-	my %hash;
-	$hash{lc $_}++ for split "";
-	join "", map {
-	    $_, $hash{$_}
-	}sort keys %hash
+        my %hash;
+        $hash{lc $_}++ for split "";
+        join "", map {
+            $_, $hash{$_}
+        }sort keys %hash
     } @ARGV;
