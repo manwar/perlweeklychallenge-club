@@ -1,3 +1,3 @@
-# The Weekly Challenge 306
+# The Weekly Challenge 307
 
-Blog: [The last odd](https://dev.to/simongreennet/the-last-odd-kib)
+Blog: [Sorting and counting](https://dev.to/simongreennet/weekly-challenge-sorting-and-counting-2on)
