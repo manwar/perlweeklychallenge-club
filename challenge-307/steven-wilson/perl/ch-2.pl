@@ -1,8 +1,9 @@
 #!/usr/bin/env perl
 
-use strict;
 use v5.35;
 use Test2::Bundle::More;
+use Memoize;
+memoize('sortString');
 
 sub findAnagrams {
     my @words = @_;

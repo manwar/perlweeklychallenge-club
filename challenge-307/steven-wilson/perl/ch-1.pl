@@ -1,12 +1,11 @@
 #!/usr/bin/env perl
 
-use strict;
 use v5.35;
 use Test2::Bundle::More;
 
 sub checkOrder {
     my @ints = @_;
-    my @sorted_ints = sort @ints;
+    my @sorted_ints = sort { $a <=> $b } @ints;
     return grep {  $ints[$_] != $sorted_ints[$_]  } 0..scalar @ints - 1;
 }
 
