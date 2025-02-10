@@ -1,34 +1,26 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+   "legend" : {
+      "enabled" : "false"
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-10 02:41:45 GMT"
    },
    "series" : [
       {
-         "colorByPoint" : "true",
+         "name" : "The Weekly Challenge Languages",
          "data" : [
             {
-               "name" : "307",
-               "y" : 33,
-               "drilldown" : "307"
+               "y" : 67,
+               "drilldown" : "307",
+               "name" : "307"
             },
             {
-               "name" : "306",
-               "y" : 61,
-               "drilldown" : "306"
+               "y" : 63,
+               "drilldown" : "306",
+               "name" : "306"
             },
             {
                "y" : 84,
@@ -36,48 +28,37 @@
                "name" : "305"
             },
             {
-               "name" : "304",
+               "y" : 72,
                "drilldown" : "304",
-               "y" : 72
+               "name" : "304"
             },
             {
-               "name" : "303",
+               "y" : 70,
                "drilldown" : "303",
-               "y" : 70
+               "name" : "303"
             }
          ],
-         "name" : "The Weekly Challenge Languages"
+         "colorByPoint" : "true"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-02-04 17:57:58 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "307",
             "data" : [
                [
                   "Perl",
-                  22
+                  40
                ],
                [
                   "Raku",
-                  6
+                  16
                ],
                [
                   "Blog",
-                  5
+                  11
                ]
             ],
+            "id" : "307",
             "name" : "307"
          },
          {
@@ -85,7 +66,7 @@
             "data" : [
                [
                   "Perl",
-                  35
+                  37
                ],
                [
                   "Raku",
@@ -99,6 +80,7 @@
             "name" : "306"
          },
          {
+            "name" : "305",
             "id" : "305",
             "data" : [
                [
@@ -113,8 +95,7 @@
                   "Blog",
                   21
                ]
-            ],
-            "name" : "305"
+            ]
          },
          {
             "data" : [
@@ -131,12 +112,12 @@
                   13
                ]
             ],
-            "name" : "304",
-            "id" : "304"
+            "id" : "304",
+            "name" : "304"
          },
          {
-            "id" : "303",
             "name" : "303",
+            "id" : "303",
             "data" : [
                [
                   "Perl",
@@ -154,10 +135,29 @@
          }
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge Language"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
