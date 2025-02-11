@@ -1,0 +1,78 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/set.intersection {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+
+% end included library code
+
+/countcommon {
+    toset exch toset set.intersection length
+} bind def
+
+(countcommon) test.start
+[(perl) (weekly) (challenge)] [(raku) (weekly) (challenge)] countcommon 2 eq test
+[(perl) (raku) (python)] [(python) (java)] countcommon 1 eq test
+[(guest) (contribution)] [(fun) (weekly) (challenge)] countcommon 0 eq test
+test.end
