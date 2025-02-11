@@ -37,27 +37,26 @@ SO WHAT DO YOU THINK ?
 ### solution by pokgopun@gmail.com
 
 def decodeXOR(enc: tuple[int], init: int) -> tuple[int]:
-    org = [init]
-    for i in range(len(enc)):
-        o = 0
-        if enc[i] == org[i]: ### a ^ o = a --> o = 0
-            pass
-        elif enc[i] == 0: ### a ^ o = 0 --> o = a
-            o = org[i]
-        elif org[i] == 0: ### 0 ^ o = a --> o = a
-            o = enc[i]
-        else:
-            #print(i)
-            dst, src = enc[i], org[i] 
-            if dst < src:
-                dst, src = src, dst
-            b = 1
-            while dst > 0:
-                o += b * abs(dst%2 - src%2)
-                b *= 2
-                dst //= 2
-                src //= 2
-        org.append(o)
+    l = len(enc)
+    org = [0 for i in range(l+1)]
+    org[0] = init
+    for i in range(l):
+        dst, src = enc[i], org[i] 
+        if dst == src: ### a ^ o = a --> o = 0
+            continue
+        #print(i)
+        if dst > src:
+            dst, src = src, dst
+        orgn = 0
+        b = 1
+        while dst > 0:
+            orgn += b * abs(dst%2 - src%2)
+            b *= 2
+            dst //= 2
+            src //= 2
+        if src > 0:
+            orgn += b * src
+        org[i+1] = orgn
     return tuple(org)
 
 import unittest
