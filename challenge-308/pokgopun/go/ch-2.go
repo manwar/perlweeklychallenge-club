@@ -58,29 +58,27 @@ func (in input) process() ints {
 	org := make(ints, l+1)
 	org[0] = in.init
 	for i := range l {
+		dst, src := enc[i], org[i]
+		if dst == src {
+			continue
+		}
+		if dst > src {
+			dst, src = src, dst
+		}
 		orgn := 0
-		switch {
-		case enc[i] == org[i]:
-		case enc[i] == 0:
-			orgn = org[i]
-		case org[i] == 0:
-			orgn = enc[i]
-		default:
-			b := 1
-			dst, src := enc[i], org[i]
-			if dst < src {
-				dst, src = src, dst
+		b := 1
+		for dst > 0 {
+			o := dst%2 - src%2
+			if o < 0 {
+				o = 1
 			}
-			for dst > 0 {
-				o := dst%2 - src%2
-				if o < 0 {
-					o = 1
-				}
-				orgn += b * o
-				b *= 2
-				dst /= 2
-				src /= 2
-			}
+			orgn += b * o
+			b *= 2
+			dst /= 2
+			src /= 2
+		}
+		if src > 0 {
+			orgn += b * src
 		}
 		org[i+1] = orgn
 	}
