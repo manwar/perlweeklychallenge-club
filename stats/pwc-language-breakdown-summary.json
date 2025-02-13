@@ -1,15 +1,18 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2025]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2025-02-13 09:18:23 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -17,24 +20,17 @@
       },
       "min" : 0
    },
-   "subtitle" : {
-      "text" : "Last updated at 2025-02-12 18:34:46 GMT"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         },
          "data" : [
             [
                "Perl",
@@ -42,22 +38,26 @@
             ],
             [
                "Raku",
-               8967
+               8973
             ],
             [
                "Blog",
                5650
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions"
       }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2025]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   }
+   ]
 }
