@@ -51,7 +51,6 @@ Output is to STDOUT and will be each pair of string sets followed by the corresp
    use v5.36;
    use utf8;
    use List::Util qw( uniq );
-   no warnings "uninitialized";
    # What strings do a pair of string sets have in-common?
    sub common ($aref1, $aref2) {
       my %occurrences1; for (@$aref1) {++$occurrences1{$_}}
@@ -59,7 +58,8 @@ Output is to STDOUT and will be each pair of string sets followed by the corresp
       my @combined = uniq sort (@$aref1, @$aref2);
       my @common = ();
       for (@combined) {
-         if ($occurrences1{$_} > 0 && $occurrences2{$_} > 0) {
+         if (defined $occurrences1{$_}
+          && defined $occurrences2{$_}) {
             push @common, $_;
          }
       }
