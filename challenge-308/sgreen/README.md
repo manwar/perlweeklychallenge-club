@@ -1,3 +1,3 @@
-# The Weekly Challenge 307
+# The Weekly Challenge 308
 
-Blog: [Sorting and counting](https://dev.to/simongreennet/weekly-challenge-sorting-and-counting-2on)
+Blog: [Counting the XOR](https://dev.to/simongreennet/weekly-challenge-counting-the-xor-4hhc)
