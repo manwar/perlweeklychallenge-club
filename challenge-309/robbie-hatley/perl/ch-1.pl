@@ -44,9 +44,8 @@ Output: 28
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-I'll use a pair of nested ranged loops to subtract from each-element-but-the-first the previous element
-and keep track of the element before-which was the smallest gap.
-return the minimum of those gaps.
+I'll use a ranged loop to subtract from each-element-but-the-first the previous element and keep track of the
+element before-which was the smallest gap.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
