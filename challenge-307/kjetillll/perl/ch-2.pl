@@ -5,8 +5,8 @@ sub caar { #count after anagram removals
     0 + split / /, $words;    
 }
 
+
 use Test::More tests => 2;
 is caar(@{$$_{words}}), $$_{output} for
-{words=>["acca", "dog", "god", "perl", "repl"],output=>3},
-{words=>["abba", "baba", "aabb", "ab", "ab"],output=>2}
-    
+  {words=>["acca", "dog", "god", "perl", "repl"],output=>3},
+  {words=>["abba", "baba", "aabb", "ab", "ab"],output=>2};
