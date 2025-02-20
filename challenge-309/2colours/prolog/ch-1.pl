@@ -10,9 +10,3 @@ task1(Ints, Result) :-
         pairs_values(Pairs, Gaps),
         min_list(Gaps, Min_Gap),
         member(Result-Min_Gap, Pairs). % explicitly chooses ALL possible minimums, could be restricted with eg. calling once(...)
-
-task2(Ints, Result) :-
-        msort(Ints, Ints_Sorted),
-        find_spans(Ints_Sorted, 2, Neighbors),
-        maplist([[Left, Right], Diff]>>(Diff is Right - Left), Neighbors, Diffs),
-        min_list(Diffs, Result).
