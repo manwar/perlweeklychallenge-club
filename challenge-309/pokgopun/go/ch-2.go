@@ -53,13 +53,24 @@ import (
 )
 
 func diff(a, b int) int {
-	return max(a, b) - min(a, b)
+	if a < b {
+		a, b = b, a
+	}
+	return a - b
+}
+
+type output struct {
+	Err bool
+	Val int
 }
 
 type ints []int
 
-func (is ints) minDiff() int {
+func (is ints) minDiff() output {
 	l := len(is) - 1 // last index
+	if l < 1 {
+		return output{Err: true}
+	}
 	mn := diff(is[l], is[l-1])
 	for i := range l - 2 {
 		j := i + 1
@@ -71,16 +82,18 @@ func (is ints) minDiff() int {
 			j++
 		}
 	}
-	return mn
+	return output{Val: mn}
 }
 
 func main() {
 	for _, data := range []struct {
 		input  ints
-		output int
+		output output
 	}{
-		{ints{1, 5, 8, 9}, 1},
-		{ints{9, 4, 1, 7}, 2},
+		{ints{1, 5, 8, 9}, output{Val: 1}},
+		{ints{9, 4, 1, 7}, output{Val: 2}},
+		{ints{9}, output{Err: true}},
+		{ints{}, output{Err: true}},
 	} {
 		io.WriteString(os.Stdout, cmp.Diff(data.input.minDiff(), data.output)) // blank if ok, otherwise show the difference
 	}

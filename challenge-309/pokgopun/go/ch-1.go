@@ -67,10 +67,18 @@ func newKeep(a, b int) keep {
 	return keep{b - a, b}
 }
 
+type output struct {
+	Err bool
+	Val int
+}
+
 type ints []int
 
-func (is ints) minGap() int {
+func (is ints) minGap() output {
 	l := len(is)
+	if l < 2 {
+		return output{Err: true}
+	}
 	k := newKeep(is[0], is[1])
 	i := 1
 	for i < l-1 {
@@ -80,17 +88,19 @@ func (is ints) minGap() int {
 		}
 		i++
 	}
-	return k.n
+	return output{Val: k.n}
 }
 
 func main() {
 	for _, data := range []struct {
 		input  ints
-		output int
+		output output
 	}{
-		{ints{2, 8, 10, 11, 15}, 11},
-		{ints{1, 5, 6, 7, 14}, 6},
-		{ints{8, 20, 25, 28}, 28},
+		{ints{2, 8, 10, 11, 15}, output{Val: 11}},
+		{ints{1, 5, 6, 7, 14}, output{Val: 6}},
+		{ints{8, 20, 25, 28}, output{Val: 28}},
+		{ints{8}, output{Err: true}},
+		{ints{}, output{Err: true}},
 	} {
 		io.WriteString(os.Stdout, cmp.Diff(data.input.minGap(), data.output)) // blank if ok, otherwise show the difference
 	}
