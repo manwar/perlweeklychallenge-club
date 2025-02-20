@@ -1,0 +1,79 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/mingap {
+    0 dict begin
+    /a exch def
+    /mg a dup length 1 sub get a 0 get sub def
+    /mv 0 def
+    a 2 -1 rotor {
+        /p exch def
+        /delta p 1 get p 0 get sub def
+        delta mg lt {
+            /mg delta def
+            /mv p 1 get def
+        } if
+    } forall
+    mv
+    end
+} bind def
+
+(mingap) test.start
+[2 8 10 11 15] mingap 11 eq test
+[1 5 6 7 14] mingap 6 eq test
+[8 20 25 28] mingap 28 eq test
+test.end
