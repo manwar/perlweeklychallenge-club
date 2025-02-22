@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
 
 if (!defined $ARGV[0]){
     usage();
@@ -33,7 +32,7 @@ Description:
     The script expects a list of elements / array.
     
 Example:
-    perl $0 "2 8 10 11 15 16"
+    perl $0 "9 4 1 7"
 END
 }
 
