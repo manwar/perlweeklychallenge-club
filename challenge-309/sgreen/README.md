@@ -1,3 +1,3 @@
-# The Weekly Challenge 308
+# The Weekly Challenge 309
 
-Blog: [Counting the XOR](https://dev.to/simongreennet/weekly-challenge-counting-the-xor-4hhc)
+Sorry, no blog this week.
