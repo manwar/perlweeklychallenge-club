@@ -1,183 +1,169 @@
-# Avoid Common Traps, and Reduce the XOR
+# Mini Mini
 
-**Challenge 308 solutions in Perl by Matthias Muth**
+**Challenge 309 solutions in Perl by Matthias Muth**
 
-## Task 1: Count Common
+## Task 1: Min Gap
 
-> You are given two array of strings, `@str1` and `@str2`.<br/>
-> Write a script to return the count of common strings in both arrays.
+> You are given an array of integers, @ints, increasing order.<br/>
+> Write a script to return the element before which you find the smallest gap.
 >
 > **Example 1**
 >
 > ```text
-> Input: @str1 = ("perl", "weekly", "challenge")
->        @str2 = ("raku", "weekly", "challenge")
-> Output: 2
+> Input: @ints = (2, 8, 10, 11, 15)
+> Output: 11
+>
+>  8 - 2  => 6
+> 10 - 8  => 2
+> 11 - 10 => 1
+> 15 - 11 => 4
+>
+> 11 is where we found the min gap.
 > ```
+>
 > **Example 2**
 >
 > ```text
-> Input: @str1 = ("perl", "raku", "python")
->        @str2 = ("python", "java")
-> Output: 1
+> Input: @ints = (1, 5, 6, 7, 14)
+> Output: 6
+>
+>  5 - 1 => 4
+>  6 - 5 => 1
+>  7 - 6 => 1
+> 14 - 7 => 7
+>
+> 6 and 7 where we found the min gap, so we pick the first instance.
 > ```
+>
 > **Example 3**
 >
 > ```text
-> Input: @str1 = ("guest", "contribution")
->        @str2 = ("fun", "weekly", "challenge")
-> Output: 0
-> ```
-
-**First try**
-
-The first idea could be to make it short and count all same words,
-no matter whether they are in `@str1` or `@str2`.
-Then return the number of words that appear exactly twice. `grep` in scalar context delivering the number of matches is very helpful:
-
-```perl
-use v5.36;
-sub count_common( $str1, $str2 ) {
-    my %word_counts;
-    ++$word_counts{$_}
-        for $str1->@*, $str2->@*;
-    return scalar grep $_ == 2, values %word_counts;
-}
-```
-(Passing in the two arrays as array-refs.)
-
-This simple solution works well for both examples.
-
-**Avoid the trap (again!)**
-
-BUT! What happens if a word is contained *twice* in the same array,
-like `"weekly"` in this extra example:
-
-> **Extra example 1**
+> Input: @ints = (8, 20, 25, 28)
+> Output: 28
 >
-> ```text
-> Input: @str1 = ("perl", "weekly", "challenge", "weekly")
->     @str2 = ("raku", "weekly", "challenge")
-> Output: 2
-> "weekly" and "challenge" appear in both arrays.
+>  8 - 20 => 14
+> 25 - 20 => 5
+> 28 - 25 => 3
+>
+> 28 is where we found the min gap.
 > ```
 
-It will be counted three times, and our result will be wrong.<br/>
-So actually we have to count each word in array exactly once,
-even if it appears several times.<br/>
-We can use `uniq` on each word list to reduce multiple appearances into single ones:
+I translated each step of finding the result into one line of Perl code.<br/>
+I make use of the `min` function from `List::Util`,
+and of the `slide` and `first_index` functions from `List::MoreUtils`.<br/>
+These are the steps:
 
+* Create an array containing the gaps between the numbers in `@ints`.<br/>
+I use the `slide` function for that.
+It takes a code block and a list as parameters.
+It walks through the list of numbers, assigning each number and its next neighbor to `$a` and `$b`,
+and puts the result of the code block into the resulting list.<br/>
+For us, the code block determines the 'gap' between `$b` and `$a`:
+  ```perl
+      my @gaps = slide { $b - $a } @ints;
+  ```
+  
+* Find the smallest gap.<br/>Using `min` to get the minimum 'gap' value:
+  ```perl
+      my $smallest_gap = min( @gaps );
+  ```
+  
+* Find the *index* of the smallest gap in the `@gap` array,
+  so that we can later look up the element before which that gap was found.<br/>
+  The `first_index` function does this perfectly:
+
+  ```perl
+      my $index = first_index { $_ == $smallest_gap } @gaps;
+  ```
+
+* Now we only need to return the value from the original array.<br/>
+  The first entry in the `@gaps` array corresponds to the second entry in the original `@ints` array,
+  so we need to add one to the index that we found:
+  ```perl
+      return $ints[ $index + 1 ];
+  ```
+
+The whole implementation is this:
 ```perl
 use v5.36;
-use List::Util qw( uniq );
-sub count_common( $str1, $str2 ) {
-    my %word_counts;
-    ++$word_counts{$_}
-        for uniq( $str1->@* ), uniq( $str2->@* );
-    return scalar grep $_ == 2, values %word_counts;
+
+use List::Util qw( min );
+use List::MoreUtils qw( slide first_index );
+
+sub min_gap( @ints ) {
+    my @gaps = slide { $b - $a } @ints;
+    my $smallest_gap = min( @gaps );
+    my $index = first_index { $_ == $smallest_gap } @gaps;
+    return $ints[ $index + 1 ];
 }
 ```
 
-That's better.
+Maybe one could gain some efficiency by avoiding to walk through the `@gaps` array twice,
+once for finding the minimum,
+then once again to find the position where it was found.<br/>
+But I like the clearness of the solution.
 
-**Make it simple**
+## Task 2: Min Diff
 
-But instead of importing and using a module,
-we might as well avoid that overhead
-and create simple 'existence lookups' for the two lists ourselves.
-Actually we are implementing `uniq` ourselves, by a simple hash assignment.
-
-Then we check for all keys of the first lookup hash
-whether they also exist in the second one,
-and let `grep` do the counting again.
-
-This is the solution that I like best:
-
-```perl
-sub count_common( $str1, $str2 ) {
-    my %words_1 = map { $_ => 1 } $str1->@*;
-    my %words_2 = map { $_ => 1 } $str2->@*;
-    return scalar grep $words_2{$_}, keys %words_1;
-}
-```
-
-## Task 2: Decode XOR
-
-> You are given an encoded array and an initial integer.<br/>
-> Write a script to find the original array that produced the given encoded array.<br/>
-> It was encoded such that `encoded[i] = orig[i] XOR orig[i + 1]`.
+> You are given an array of integers, @ints.<br/>
+> Write a script to find the minimum difference between any two elements.
 >
 > **Example 1**
 >
 > ```text
-> Input: @encoded = (1, 2, 3), $initial = 1
-> Output: (1, 0, 2, 1)
-> Encoded array created like below, if the original array was (1, 0, 2, 1)
-> $encoded[0] = (1 xor 0) = 1
-> $encoded[1] = (0 xor 2) = 2
-> $encoded[2] = (2 xor 1) = 3
+> Input: @ints = (1, 5, 8, 9)
+> Output: 1
+>
+> 1, 5 => 5 - 1 => 4
+> 1, 8 => 8 - 1 => 7
+> 1, 9 => 9 - 1 => 8
+> 5, 8 => 8 - 5 => 3
+> 5, 9 => 9 - 5 => 4
+> 8, 9 => 9 - 8 => 1
 > ```
+>
 > **Example 2**
 >
 > ```text
-> Input: @encoded = (6, 2, 7, 3), $initial = 4
-> Output: (4, 2, 0, 7, 4)
+> Input: @ints = (9, 4, 1, 7)
+> Output: 2
+>
+> 9, 4 => 9 - 4 => 5
+> 9, 1 => 9 - 1 => 8
+> 9, 7 => 9 - 7 => 2
+> 4, 1 => 4 - 1 => 3
+> 4, 7 => 7 - 4 => 3
+> 1, 7 => 7 - 1 => 6
 > ```
 
-The good thing about the XOR operation is that it is reversible.
-When we XOR any binary value with itself, we get zero.
-Also, when we XOR a given value with another one,
-and then we do that once again, we get the original value back.
+Very similar to the first task, but here, we need a different strategy.<br/>
+Actually, we need to compare every number to every other number,
+so in theory the complexity is quadratic.
 
-This helps a lot for this solution. What we know is this:
-```math
-encoded_i = orig_i \text{ XOR } orig_{i + 1}
-```
-But we can turn this around and say that:
-```math
-orig_{i+1} = orig_i \text{ XOR } encoded_i
-```
-We get $orig_0$ from our `$initial` value.<br/>
-Then we compute the next $orig$ values from the previous ones,
-XORing them with the matching $encoded$ value, in a loop:<br/>
+But we can avoid that!
+
+**The smallest difference between two numbers will always be
+between two numbers that are next to each other when all the numbers are sorted.**
+
+That means that when we first sort the numbers,
+we can then simply 'find the smallest gap', just like in the first task.
+Even easier than there, because here,
+we don't even need to look up any position of where we found the smallest gap.
+
+This way, the second task's implementation is even shorter that the first one's:
+
 ```perl
-sub decode_xor_1( $encoded, $initial ) {
-    my @orig;
-    $orig[0] = $initial;
-    $orig[ $_ + 1 ] = $orig[$_] ^ $encoded->[$_]
-        for keys $encoded->@*;
-    return @orig;
+use v5.36;
+
+use List::Util qw( min );
+use List::MoreUtils qw( slide );
+
+sub min_diff( @ints ) {
+    @ints = sort { $a <=> $b } @ints;
+    my @gaps = slide { $b - $a } @ints;
+    return min( @gaps );
 }
 ```
 
-**Use `reductions` to reduce the code**
-
-Thinking about how to generate the whole array in one statement,
-I remembered how the `reduce` function (from the `List::Util` core module) goes through a list
-and builds up the final result by combining each intermediate result
-with the next list element, in a way that we can specify in a code block.
-
-The `reductions` function (also from `List::Util`) does the same thing,
-but instead of returning the end result only,
-it returns all intermediate results, too.
-
-And this is exactly what we need.
-
-We need to combine the previous result ($orig_i$)
-with the next list element ($encoded_i$).
-We combine them doing an XOR of the two values.<br/>
-We start with $orig_0$ = `$initial`,
-the rest of the list is the array referenced by the `$encoded` array-ref.
-
-This gives us a very concise and 'elegant' solution:
-
-```perl
-sub decode_xor( $encoded, $initial ) {
-    return reductions { $a ^ $b } $initial, $encoded->@*;
-}
-```
-
-Yes, I know.<br/>
-*Elegance is in the eye of the beholder*. But ... :-)
 
 #### **Thank you for the challenge!**
