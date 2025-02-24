@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 309
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-309>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc309;
+
+CREATE OR REPLACE FUNCTION
+pwc309.task2_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my $min;
+
+   for my $current ( $nums->@* ) {
+
+       my $current_min = ( 
+       				sort
+       				map { $_ > $current ? $_ - $current : $current - $_ }
+       				grep { $_ != $current }
+       				$nums->@* )[ 0 ];
+
+      if ( ! $min || $current_min < $min ) {
+      	 $min = $current_min;
+      }
+   }
+
+   return $min;
+   
+$CODE$
+LANGUAGE plperl;
