@@ -1,13 +1,15 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2025-02-24 02:05:05 GMT"
+      "text" : "[Champions: 30] Last updated at 2025-02-24 20:08:00 GMT"
    },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -43,19 +45,8 @@
          "Olivier Delouya"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2025]"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -83,7 +74,7 @@
             88,
             8,
             1,
-            360,
+            364,
             2,
             0,
             52,
@@ -129,7 +120,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -161,7 +151,17 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ]
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2025]"
+   }
 }
