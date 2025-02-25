@@ -1,3 +1,5 @@
+find . -name "*.kap" -delete
+find . -name "*.zon" -delete
 find . -name "*.k" -delete
 find . -name "*.pro" -delete
 find . -name "*.lhs" -delete

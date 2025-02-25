@@ -1,0 +1,19 @@
+ FindAnagrams←{
+⍝ Return count of words in list after removing neighbouring words that are anagrams
+⍝ Anagrams are identical after sorting: ≡⍥∆
+     ∆←{⍵[⍋⍵]}
+     +/2≢⍥∆/(⊂''),⍵
+⍝ Above computes the count as simply as possible.
+⍝ To drop leading consecutive anagrams as described, we rotate our selection mask
+     ⍵⌿⍨1⌽2≢⍥∆/(⊂''),⍵
+⍝       (⊂''),words                 ⍝ Prepend with empty so windowed-reduction (2F/⍵) marks initial group
+⍝ ┌┬────┬────┬────┬──┬──┐
+⍝ ││abba│baba│aabb│ab│ab│
+⍝ └┴────┴────┴────┴──┴──┘
+⍝       2≢⍥∆/(⊂''),words            ⍝ Mark boundaries of groups of consecutive anagrams
+⍝ 1 0 0 1 0
+⍝       words⌿⍨1⌽2≢⍥∆/(⊂''),words   ⍝ Rotate (with wrapping) to find the ends of groups (words to keep)
+⍝ ┌────┬──┐
+⍝ │aabb│ab│
+⍝ └────┴──┘
+ }

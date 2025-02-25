@@ -1,0 +1,48 @@
+--
+-- Perl Weekly Challenge 298
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-298>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc298;
+
+CREATE OR REPLACE FUNCTION
+pwc298.task1_plperl( int[][] )
+RETURNS int
+AS $CODE$
+
+   my ( $matrix ) = @_;
+
+   my @sizes;
+
+   for my $row ( 0 .. $matrix->@* - 1 ) {
+       for my $col ( 0 .. $matrix->[ $row ]->@* - 1 ) {
+       	   next if ( $matrix->[ $row ][ $col ] != 1 );
+
+	   my ( $size, $found ) = ( 2, 1 );
+	   while ( $found ) {
+	   	 if ( $col + $size >= $matrix->[ $row ]->@* || $row + $size >= $matrix->@* ) {
+		    $found = 0;
+		    $size--;
+		    last;
+		 }
+
+		 if ( grep( { $_ != 1 } $matrix->@[ $row .. $row + $size ]->@[ $col .. $col + $size ] ) ) {
+		    $found = 0;
+		    $size--;
+		    last;		    
+		 }
+		 else {
+		      $size++;
+		 }
+
+	   }
+
+	   push @sizes, $size;
+       }
+   }
+
+   return ( sort( @sizes ) )[ -1 ];
+   
+$CODE$
+LANGUAGE plperl;

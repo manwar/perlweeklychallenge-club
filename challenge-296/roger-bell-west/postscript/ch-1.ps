@@ -1,0 +1,146 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+
+% end included library code
+
+/compressedunit {
+    0 dict begin
+    /letter exch def
+    /ct exch def
+    [
+      ct 1 gt {
+          ct alloccvs s2a aload pop
+      } if
+      letter
+    ]
+    end
+} bind def
+
+/stringcompression {
+    0 dict begin
+    /a exch def
+    [
+        /lastchar 64 def
+        /ct 0 def
+        a s2a {
+            /c exch def
+            ct 0 eq c lastchar ne or {
+                ct 0 gt {
+                    ct lastchar compressedunit aload pop
+                } if
+                /lastchar c def
+                /ct 0 def
+            } if
+            /ct ct 1 add def
+        } forall
+        ct 0 gt {
+            ct lastchar compressedunit aload pop
+        } if
+    ] a2s
+    end
+} bind def
+
+/stringdecompression {
+    0 dict begin
+    /a exch def
+    [
+        /ct 0 def
+        a a2s {
+            /c exch def
+            c c.isdigit {
+                /ct ct 10 mul c 48 sub add def
+            } {
+                ct 0 eq {
+                    /ct 1 def
+                } if
+                ct {
+                    c
+                } repeat
+                /ct 0 def
+            } ifelse
+        } forall
+    ] a2s
+    end
+} bind def
+
+(stringcompression) test.start
+(abbc) stringcompression (a2bc) eq test
+(aaabccc) stringcompression (3ab3c) eq test
+(abcc) stringcompression (ab2c) eq test
+(a2bc) stringdecompression (abbc) eq test
+(3ab3c) stringdecompression (aaabccc) eq test
+(ab2c) stringdecompression (abcc) eq test
+test.end

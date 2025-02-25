@@ -1,0 +1,106 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/all { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    true exch
+    {
+        p not {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+
+% end included library code
+
+/boomerang {
+    0 dict begin
+    /a exch def
+    /done false def
+    false
+    % coincident points
+    /delta [
+        0 1 1 {
+            /ij exch def
+            ij 1 add 1 2 {
+                /ik exch def
+                a ij get 0 get a ik get 0 get eq
+                a ij get 1 get a ik get 1 get eq and {
+                    pop false
+                    /done true def
+                } if
+            } for
+            [
+                a ij 1 add get 0 get a 0 get 0 get sub
+                a ij 1 add get 1 get a 0 get 1 get sub
+            ]
+        } for
+    ] def
+    % all on the same vertical line
+    done not {
+        delta 0 get 0 get 0 eq
+        delta 1 get 0 get 0 eq and {
+            pop false
+            /done true def
+        } if
+    } if
+    % just one vertical line
+    done not {
+        delta 0 get 0 get 0 eq
+        delta 1 get 0 get 0 eq or {
+            pop true
+            /done true def
+        } if
+    } if
+    done not {
+        /m delta 0 get 1 get cvr delta 0 get 0 get cvr div def
+        /c a 0 get 1 get cvr a 0 get 0 get cvr m mul sub def
+        pop a 2 get 1 get cvr a 2 get 0 get cvr m mul c add ne
+    } if
+    end
+} bind def
+
+(boomerang) test.start
+[[1 1] [2 3] [3 2]] boomerang test
+[[1 1] [2 2] [3 3]] boomerang not test
+[[1 1] [1 2] [2 3]] boomerang test
+[[1 1] [1 2] [1 3]] boomerang not test
+[[1 1] [2 1] [3 1]] boomerang not test
+[[0 0] [2 3] [4 5]] boomerang test
+test.end

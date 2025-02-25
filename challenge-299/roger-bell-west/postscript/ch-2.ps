@@ -1,0 +1,158 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/encode {
+    exch 64 mul add
+} bind def
+
+/decode {
+    [ exch
+      dup 64 idiv
+      exch
+      64 mod
+    ]
+} bind def
+
+/wordsearch {
+    0 dict begin
+    /word exch s2a def
+    /grid 0 dict def
+    enumerate.array {
+        aload pop
+        exch /y exch def
+        enumerate.array {
+            aload pop
+            /c exch def
+            /x exch def
+            grid x y encode c s2a 0 get put
+        } forall
+    } forall
+    false
+    grid keys {
+        /start exch def
+        grid start get word 0 get eq {
+            /queue [ [ start ] ] def
+            {
+                queue length 0 eq {
+                    exit
+                } if
+                queue apop.left /pos exch def /queue exch def
+                pos length word length eq {
+                    pop true
+                    exit
+                } {
+                    [
+                        [ -1 0 ]
+                        [ 1 0 ]
+                        [ 0 -1 ]
+                        [ 0 1 ]
+                    ] {
+                        /dir exch def
+                        /lpos pos dup length 1 sub get decode def
+                        lpos 0 get dir 0 get add
+                        lpos 1 get dir 1 get add
+                        encode /np exch def
+                        /posmap pos toset def
+                        grid np known
+                        posmap np known not and {
+                            grid np get word pos length get eq {
+                                queue
+                                [
+                                    pos aload pop
+                                    np
+                                ]
+                                apush.right /queue exch def
+                            } if
+                        } if
+                    } forall
+                } ifelse
+            } loop
+        } if
+        dup {
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+(wordsearch) test.start
+[[(A) (B) (D) (E)] [(C) (B) (C) (A)] [(B) (A) (A) (D)] [(D) (B) (B) (C)]] (BDCA) wordsearch test
+[[(A) (A) (B) (B)] [(C) (C) (B) (A)] [(C) (A) (A) (A)] [(B) (B) (B) (B)]] (ABAC) wordsearch not test
+[[(B) (A) (B) (A)] [(C) (C) (C) (C)] [(A) (B) (A) (B)] [(B) (B) (A) (A)]] (CCCAA) wordsearch test
+test.end

@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * > 0;
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ PosInt,
+               :v(:$verbose));
+
+my $n = @ints.elems;
+
+say ": n:$n" if $verbose;
+
+die "Duplicates"   unless [<] @ints.sort;
+die "Missing zero" unless @ints.min == 1;
+die "Missing n"    unless @ints.max == $n;
+
+my $one-index = @ints.first(1, :k);
+my $n-index   = @ints.first($n, :k);
+
+my $one-moves = $one-index;
+my $n-moves   = $n - $n-index - 1;
+
+say ": 1 at index $one-index requires $one-moves moves" if $verbose;
+say ": $n at index $n-index requires $n-moves moves" if $verbose;
+
+say $one-moves + $n-moves;

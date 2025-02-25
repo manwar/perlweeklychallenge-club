@@ -1,0 +1,35 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ PosInt,
+               :v(:$verbose));
+
+my %freq = @ints.Bag;
+
+say ": Initial Status:\n", %freq.keys.sort.map({ ": - value $_ -> count " ~ %freq{$_} }).join("\n") if $verbose;
+
+my $points = 0;
+
+for %freq.keys.sort({ %freq{$_} * $_ }).reverse -> $current
+{
+  next unless %freq{$current};  ## As :delete can do away with it.
+
+  my $prev = $current -1;
+  my $next = $current +1;
+
+  $points += $current * %freq{$current};
+
+  if $verbose
+  {
+    say ": Deleted value $current (count %freq{$current}) -> Points: $points";
+    say ": - Deleted neighbour $prev" if %freq{$prev};
+    say ": - Deleted neighbour $next" if %freq{$prev};
+  }
+
+  %freq{$current} :delete;
+  %freq{$prev}    :delete if defined %freq{$prev};
+  %freq{$next}    :delete if defined %freq{$next};
+}
+
+say $points;

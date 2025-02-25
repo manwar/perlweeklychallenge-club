@@ -1,0 +1,32 @@
+--
+-- Perl Weekly Challenge 297
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-297>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc297;
+
+CREATE OR REPLACE FUNCTION
+pwc297.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $bits ) = @_;
+   my $max_length = 0;
+
+   die "Only bits are allowed!" if ( grep( { $_ != 0 && $_ != 1 } $bits->@* ) );
+
+   for my $start ( 0 .. $bits->@* - 2 ) {
+       for my $end ( $start + 1 .. $bits->@* - 1 ) {
+       	   my $zeros = grep { $_ == 0 } $bits->@[ $start .. $end ];
+	   my $ones  = grep { $_ == 1 } $bits->@[ $start .. $end ];
+	   next if ( $ones != $zeros );
+	   
+	   my $length = $end - $start + 1;
+	   $max_length = $length if ( $length > $max_length );
+       }
+   }
+
+   return $max_length;
+$CODE$
+LANGUAGE plperl;

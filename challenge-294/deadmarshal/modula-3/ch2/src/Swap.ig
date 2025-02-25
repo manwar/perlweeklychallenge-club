@@ -1,0 +1,6 @@
+GENERIC INTERFACE Swap(Elem);
+
+PROCEDURE Swap(VAR A,B:Elem.T);
+  
+END Swap.
+

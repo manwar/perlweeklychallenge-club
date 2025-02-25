@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * > 0;
+
+unit sub MAIN (*@ints is copy where @ints.elems > 0 && all(@ints) ~~ PosInt,
+               :v(:$verbose));
+
+my $n = @ints.elems;
+
+say ": n:$n" if $verbose;
+
+die "Duplicates"   unless [<] @ints.sort;
+die "Missing zero" unless @ints.min == 1;
+die "Missing n"    unless @ints.max == $n;
+
+my $swaps = 0;
+
+while @ints[0] != 1
+{
+  my $one-index = @ints.first(1, :k);
+
+  $swaps++;
+  @ints[$one-index -1, $one-index] = @ints[$one-index, $one-index -1];
+
+  say ": swap 1 #$swaps: index { $one-index - 1 } and $one-index -> ({@ints.join(",")})" if $verbose;
+}
+
+while @ints[$n -1] != $n
+{
+  my $n-index = @ints.first($n, :k);
+
+  $swaps++;
+  @ints[$n-index +1, $n-index] = @ints[$n-index, $n-index +1];
+
+  say ": swap $n #$swaps: index { $n-index - 1 } and $n-index -> ({@ints.join(",")})" if $verbose;
+}
+
+say $swaps;

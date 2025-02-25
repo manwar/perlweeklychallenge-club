@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/popcount32 {
+    0 dict begin
+    /M1  16#55555555 def
+    /M2  16#33333333 def
+    /M4  16#0f0f0f0f def
+    /H01 16#01010101 def
+    /x exch def
+    /x x x -1 bitshift M1 and sub def
+    /x x M2 and x -2 bitshift M2 and add def
+    /x x x -4 bitshift add M4 and def
+    x H01 mul -24 bitshift
+    end
+} bind def
+
+/hammingdistance {
+    0 dict begin
+    /a exch def
+    0
+    0 1 a length 2 sub {
+        /i exch def
+        i 1 add 1 a length 1 sub {
+            /j exch def
+            a i get a j get xor popcount32 add
+        } for
+    } for
+    end
+} bind def
+
+(hammingdistance) test.start
+[4 14 2] hammingdistance 6 eq test
+[4 14 4] hammingdistance 4 eq test
+test.end

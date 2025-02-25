@@ -1,0 +1,79 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 0;
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ PosInt,
+               :v(:$verbose));
+
+my %freq = @ints.BagHash;
+
+say ": Initial Status:\n", %freq.keys.sort.map({ ": - value $_ -> count " ~ %freq{$_} }).join("\n") if $verbose;
+
+my $base-points = 0;
+
+for %freq.keys.sort -> $current
+{
+  my $prev = $current -1;
+  my $next = $current +1;
+
+  next if %freq{$prev};
+  next if %freq{$next};
+
+  $base-points += $current * %freq{$current};
+
+  say ": Deleted neighbourless value $current (count %freq{$current}) -> Points: $base-points" if $verbose;
+
+  %freq{$current} :delete;
+}
+
+say ": ------------------------------------------\n: Status after removing neighbourless values:\n", %freq.keys.sort.map({ ": - value $_ -> count " ~ %freq{$_} }).join("\n") if $verbose;
+
+my $max = 0;
+
+for %freq.keys.permutations -> @perm
+{
+  say ": ------------------------------------------\n: Trying order @perm[]" if $verbose;
+
+  my $points = resolve(%freq, @perm);
+
+  if $points > $max
+  {
+    $max = $points;
+
+    say ": + New max: { $base-points + $max }" if $verbose;
+  }
+  elsif $verbose
+  {
+    say ": - Not a new max: $points (max: { $base-points + $max })";
+  }
+}
+
+say $base-points + $max;
+
+sub resolve (%freq is copy, @perm)
+{
+  my $points = 0;
+
+  for @perm -> $current
+  {
+    next unless %freq{$current};  ## As :delete can do away with it.
+
+    my $prev = $current -1;
+    my $next = $current +1;
+
+    $points += $current * %freq{$current};
+
+    if $verbose
+    {
+      say ": Deleted value $current (count %freq{$current}) -> Points: $points";
+      say ":   Deleted neighbour $prev" if %freq{$prev};
+      say ":   Deleted neighbour $next" if %freq{$prev};
+    }
+
+    %freq{$current} :delete;
+    %freq{$prev}    :delete if defined %freq{$prev};
+    %freq{$next}    :delete if defined %freq{$next};
+  }
+
+  return $points;
+}
