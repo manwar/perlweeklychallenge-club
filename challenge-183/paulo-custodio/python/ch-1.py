@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 183
 #
@@ -18,15 +18,13 @@
 # Input: @list = ([9,1], [3,7], [2,5], [2,5])
 # Output: ([9, 1], [3,7], [2,5])
 
-use Modern::Perl;
+def remove_dups(a):
+    seen = set()
+    a = [x for x in a if tuple(x) not in seen and not seen.add(tuple(x))]
+    return a
 
-sub remove_dups {
-    my(@a) = @_;
-    my %seen;
-    @a = grep {!$seen{"@$_"}++} @a;
-    return @a;
-}
+import sys
 
-my @in = map {[split /,/, $_]} @ARGV;
-my @out = remove_dups(@in);
-say "(",(join ", ", map {"[".join(",", @$_)."]"} @out),")";
+in_data = [list(map(int, item.split(','))) for item in sys.argv[1:]]
+out_data = remove_dups(in_data)
+print("(", ", ".join([f"[{','.join(map(str, item))}]" for item in out_data]), ")", sep="")
