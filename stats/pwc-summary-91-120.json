@@ -2,17 +2,18 @@
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2025]"
-   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2025]"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             3,
             2,
@@ -44,11 +45,9 @@
             0,
             26,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -80,9 +79,11 @@
             4,
             0,
             14
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -114,10 +115,16 @@
             0,
             12,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2025-02-27 20:53:47 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Freddie B",
@@ -151,13 +158,6 @@
          "Jared Martin",
          "Jason Messer"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2025-02-25 18:47:36 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "plotOptions" : {
       "column" : {
