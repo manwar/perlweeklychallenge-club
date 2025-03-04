@@ -7,7 +7,7 @@ use List::Util qw/ sum /;
 sub groupDigitSum{
     my ($digits, $integer) = @_;
     while( $integer < length($digits)){
-        $digits = join '', map {sum(split //)} $digits =~ m/(\w{1,$integer})/g;
+        $digits = join '', map {sum(split //)} $digits =~ m/(\d{1,$integer})/g;
     }
     return $digits;
 }

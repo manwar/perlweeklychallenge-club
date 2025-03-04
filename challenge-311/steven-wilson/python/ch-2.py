@@ -20,7 +20,7 @@ def group_digit_sum(digits, integer):
     """
     while (len(digits) > integer):
         digits = "".join(sum_group(g) for g in
-                         re.findall(rf"(\w{{1,{integer}}})", digits))
+                         re.findall(rf"(\d{{1,{integer}}})", digits))
     return digits
 
 
