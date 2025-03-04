@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+severity = 1
+verbose = 11
+theme = core
+
+# We still need those for type checking
+[-Subroutines::ProhibitSubroutinePrototypes]
+
+# No need to declare version strings for our trivial test modules
+[-Modules::RequireVersionVar]
+
+[Documentation::PodSpelling]
+spell_command = aspell --lang=en_US list
