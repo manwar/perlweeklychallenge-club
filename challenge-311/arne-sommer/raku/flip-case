@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str where $str.chars > 0);
+
+sub flc ($str)
+{
+  return $str.comb.map({ if /<lower>/ { .uc } elsif /<upper>/ { .lc } else { $_ } }).join;
+}
+
+say $str.&flc;
