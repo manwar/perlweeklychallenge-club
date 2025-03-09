@@ -1,203 +1,141 @@
-# Make it even.
+# Up and Down and Round and Round
 
-**Challenge 310 solutions in Perl by Matthias Muth**
+**Challenge 311 solutions in Perl by Matthias Muth**
 
-## Task 1: Arrays Intersection
+## Task 1: Upper Lower
 
-> You are given a list of array of integers.<br/>
-> Write a script to return the common elements in all the arrays.
+> You are given a string consists of english letters only.<br/>
+> Write a script to convert lower case to upper and upper case to lower in the given string.
 >
 > **Example 1**
 >
 > ```text
-> Input: $list = ( [1, 2, 3, 4], [4, 5, 6, 1], [4, 2, 1, 3] )
-> Output: (1, 4)
+> Input: $str = "pERl"
+> Output: "PerL"
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $list = ( [1, 0, 2, 3], [2, 4, 5] )
-> Output: (2)
+> Input: $str = "rakU"
+> Output: "RAKu"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $list = ( [1, 2, 3], [4, 5], [6] )
-> Output: ()
+> Input: $str = "PyThOn"
+> Output: "pYtHoN"
 > ```
 
-**CPAN makes it a one-liner**
-
-This is a one-liner if we use the `Set::Intersection` CPAN module. Its `get_intersection` function takes a list of array-refs, which we have, and returns the list of elements that appear in all of those arrays. Bingo.
-
-The only thing we need to add is to sort the result, so that the order of element matches what is expected in the examples. This is because `get_intersection` returns the common elements 'uniqued and unordered': 
+Was this challenge task written to highlight Perl's regular expressions power?<br/>
+I would think so, because using regular expressions, the solution is a one-liner:
 
 ```perl
 use v5.36;
 
-use Set::Intersection;
-
-sub arrays_intersection( $list ) {
-    return sort { $a <=> $b } get_intersection( $list->@* );
+sub upper_lower( $str ) {
+    return $str =~ s< ([a-z]) | [A-Z] >{ $1 ? uc( $& ) : lc( $& ) }xegr;
 }
 ```
 
-**And what about 'core-only'?**
+As every regex substitution operation, this one, too, consists of two parts. The first one is a pattern, but in this case the second one is an expression to be evaluated and its *result* used as the substitution.
 
-My  'core-only' version is only a few lines of code, too.<br/>
-First, every list of numbers is turned into an 'existence hash'
-(which basically implement the notion of a 'set').<br/>
-Then, `grep` checks for each number in the first set whether it exists in all others,
-using `all` from `List::Utils`.
-The result is returned after sorting it numerically.<br/>
-Voilà!
+The pattern looks for either a lower case letter `[a-z]` or an upper case letter [A-Z].<br/>
+If it's a lower case letter, it is captured: `([a-z])`.
 
+In the second part, the evaluated expression decides what the substitution for the match that was found will be.<br/>
+If the capture `$1` is non-empty,
+we have found a lower case letter. We transform it into uppercase.<br/>
+If `$1` is empty, it was an uppercase letter that we found,
+and we transform it into lowercase:
 ```perl
-use v5.36;
-
-use List::Util qw( all );
-
-sub arrays_intersection( $list ) {
-    my @sets = map {
-        { map { ( $_ => 1 ) } $_->@* }
-    } $list->@*;
-    return sort { $a <=> $b }
-        grep {
-            my $candidate = $_;
-            all { $sets[$_]{$candidate} } 1..$#sets;
-        } keys $sets[0]->%*;
-}
+        $1 ? uc( $& ) : lc( $& )
 ```
+I have made it a habit to use curly braces as delimiters when I use an evaluated expression as the replacement part. That means that the first part (the pattern), too, needs to be enclosed in a pair of bracketing quotes. I'm using `<`and `>`  as brackets there.
 
-## Task 2: Sort Odd Even
 
-> You are given an array of integers.<br/>
-> Write a script to sort odd index elements in decreasing order and even index elements in increasing order in the given array.
+The substitution uses these modifiers:<br/>
+
+* `/x` allows for using whitespace within the pattern, to make it more readable,
+* `/e` says to *evaluate* the second part as an *expression*, using the result as the substitution,
+* `/g` asks for a *global* substitution, doing the substitution as often as possible,
+* `/r` *returns* the end result of the substitution as a string, instead of applying it to the original variable.
+
+Good to have that power in the Perl toolbox!
+
+
+
+## Task 2: Group Digit Sum
+
+> You are given a string, `$str`, made up of digits, and an integer, `$int`, which is less than the length of the given string.<br/>
+> Write a script to divide the given string into consecutive groups of size `$int` (plus one for leftovers if any). Then sum the digits of each group, and concatenate all group sums to create a new string. If the length of the new string is less than or equal to the given integer then return the new string, otherwise continue the process.
 >
 > **Example 1**
 >
 > ```text
-> Input: @ints = (4, 1, 2, 3)
-> Output: (2, 3, 4, 1)
+> Input: $str = "111122333", $int = 3
+> Output: "359"
 >
-> Even index elements: 4, 2 => 2, 4 (increasing order)
-> Odd index elements : 1, 3 => 3, 1 (decreasing order)
+> Step 1: "111", "122", "333" => "359"
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @ints = (3, 1)
-> Output: (3, 1)
+> Input: $str = "1222312", $int = 2
+> Output: "76"
+>
+> Step 1: "12", "22", "31", "2" => "3442"
+> Step 2: "34", "42" => "76"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @ints = (5, 3, 2, 1, 4)
-> Output: (2, 3, 4, 1, 5)
+> Input: $str = "100012121001", $int = 4
+> Output: "162"
 >
-> Even index elements: 5, 2, 4 => 2, 4, 5 (increasing order)
-> Odd index elements : 3, 1 => 3, 1 (decreasing order)
+> Step 1: "1000", "1212", "1001" => "162"
 > ```
 
-I think it would be quite difficult to sort the even and odd elements
-separately 'in place' in the same array.
-It will be best to separate the evens and the odds, sort them separately,
-and then reassemble the sorted arrays for the result.<br/>
-Let's do that.
+This challenge requires a loop. In each iteration, the string is split into pieces of `$int` length, then the pieces are summed up as described, and the string is replaced by the concatenation of those sums.
 
-**It's nice to slice**
+Regular expressions are the tool of choice, again.
 
-First step, separating the even and odd elements.<br/>
-In Perl, we can use 'slices' to access selected parts of a list, an array or a hash.
-We can use that to give the list of even indexes or odd indexes
-to extract the numbers we need.
-I use `grep` to select only the even, or only the odd indexes.
-We can do the sorting right away. 
-```perl
-    my @even = sort { $a <=> $b } @ints[ grep $_ % 2 == 0,  keys @ints ];
-    my @odd  = sort { $b <=> $a } @ints[ grep $_ % 2 != 0,  keys @ints ];
-```
-I'm using `keys @ints` instead of the more traditional `0..$#ints`,
-because I find it easier to type. &#x1F609;
-
-**Let's get together again**
-
-For reassembling the `@even` and `@odd` arrays,
-I immediately thought of the `zip` function from `List::Util`.
-But actually, it produces a list of array references
-with elements from the arrays given as parameter.
-That's not exactly what we need.
-But it's sibling `mesh` returns the combined elements as a flat list.
-Very good, so let's do that:
+We use a regex pattern that splits up the string into pieces., using a `/g` *global* match.<br/>
+The pattern matches sequences of digits of length 1 to `$int`, repeatedly.<br/>The global match returns everything that was captured, as a list, which we can assign to an array:
 
 ```perl
-    return mesh \@even, \@odd;
+        my @groups = $str =~ /(\d{1,$int})/g;
 ```
+As the pattern matches 'greedily', only the last group may be shorter than `$int`.
 
-Very nice, but Oops!, it doesn't work for the third example.
-
-When we have an odd number of elements in the `@ints` array,
-the `@even` and `@odd` arrays will not have the same size.
-There will be one additional element in the `@even` array—the last element from `@ints`. 
-
-In that case, `mesh` returns us an additional `undef` in the last pair of elements, which ends up in our result where it shouldn't.
-
-What we can do is to limit the result to the needed number of elements,
-which is the same as in the original `@ints` array.
-We can use a 'slice' again for that, easily:
-
+When we have the groups , we need to `map` each group into the sum of its digits.<br/>
+Each group is `split` up into single characters, which we then `sum` up:
 ```perl
-    return ( mesh \@even, \@odd )[ keys @ints ];
+        map sum( split "", $_ ), @groups
 ```
-
-This works for all examples now.
-
-The only thing that I don't like about it is that probably,
-to get rid of that additional `undef`,
-internally the whole array has to be copied again for the result.
-Choosing between 'programming effort' and 'computing effort',
-I tend to try to avoid that computing overhead.
-(Also, it's not really elegant to produce something,
-only to throw it away immediately afterwards.)   
-
-So looking for an alternative to the `mesh` solution.<br/>
-Let's do the 'meshing' ourselves!
-
-We can use `map` to create the list of even and odd index elements
-from the two arrays, very easily:
-
+Now we have the list of sums of the groups.<br/>
+We `join` them together and assign the result to `$str` for the next round:
 ```perl
-        map { ( $even[$_], $odd[$_] ) } keys @odd
+        $str = join "", map sum( split "", $_ ), @groups;
 ```
 
-And for the 'dangling' element we get when `@int` contains an odd number of elements?<br/>
-That last element will always be in the `@even` array,
-because all index pairs are '(even, odd)'.<br/>
-So we simple can add the last element of the `@even` array
-in case it is longer than the `@odd` array:
-
-```perl
-    return
-        map( { ( $even[$_], $odd[$_] ) } keys @odd ),
-        @even > @odd ? $even[-1] : ();
-```
-That gives me a better feeling, efficiency-wise.
-
-The complete solution then is this:
+We loop as long as the length of the remaining string is bigger than `$int`. Then we return that last group left.<br/>
+So everything together:
 ```perl
 use v5.36;
-
-sub sort_odd_even( @ints ) {
-    my @even = sort { $a <=> $b } @ints[ grep $_ % 2 == 0,  keys @ints ];
-    my @odd  = sort { $b <=> $a } @ints[ grep $_ % 2 != 0,  keys @ints ];
-    return
-        map( { $even[$_], $odd[$_] } keys @odd ),
-        @even > @odd ? $even[-1] : ();
+use List::Util qw( sum );
+sub group_digit_sum( $str, $int ) {
+    while ( length( $str ) > $int ) {
+        my @groups = $str =~ /(\d{1,$int})/g;
+        $str = join "", map sum( split "", $_ ), @groups;
+    }
+    return $str;
 }
 ```
+
+
 
 #### **Thank you for the challenge!**
