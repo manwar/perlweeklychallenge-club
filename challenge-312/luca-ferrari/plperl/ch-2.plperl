@@ -1,0 +1,32 @@
+--
+-- Perl Weekly Challenge 312
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-312>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc312;
+
+CREATE OR REPLACE FUNCTION
+pwc312.task2_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $boxes ) = @_;
+
+   my @data = split //, uc( $boxes );
+   my $result = {};
+   my $full = 0;
+
+   while ( @data ) {
+   	 my ( $box, $color ) = ( pop @data, pop @data );
+	 push $result->{ $box }->@*, $color;
+   }
+
+   for my $colors ( values $result->%* ) {
+       $full++ if ( scalar( grep { $_ =~ /G|B|R/ } $colors->@* ) >= 3 );
+   }
+
+   return $full;
+   
+$CODE$
+LANGUAGE plperl;

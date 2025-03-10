@@ -1,6 +1,3 @@
 # SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
 # SPDX-License-Identifier: BSD-2-Clause
-
-shell=dash
-enable=all
-disable=SC2250
+"""Peter Pentchev's solutions to Perl Weekly Challenge 312."""
