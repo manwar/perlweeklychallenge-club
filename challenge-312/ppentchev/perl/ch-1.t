@@ -62,32 +62,51 @@ subtest correct_offsets => sub {
 
 sub test_distance_clockwise($ $) {
 	my ( $from, $to ) = @_;
-	return ord($to) - ord $from;
+	if ( $from le $to ) {
+		return ord($to) - ord $from;
+	}
+	else {
+		return $LETTERS - ( ord($from) - ord $to );
+	}
 }
 
 sub test_distance_counterclockwise($ $) {
 	my ( $from, $to ) = @_;
-	return $LETTERS - test_distance_clockwise $from, $to;
+	return $from eq $to ? 0 : $LETTERS - test_distance_clockwise $from, $to;
 }
 
 subtest correct_distance => sub {
-	plan tests => 7;
+	plan tests => 14;
 
 	is distance( 'a', 'a' ), test_distance_clockwise( 'a', 'a' ),
+		'here I am, here I remain';
+	is distance( 'a', 'a' ), test_distance_counterclockwise( 'a', 'a' ),
 		'here I am, here I remain';
 
 	is distance( 'a', 'b' ), test_distance_clockwise( 'a', 'b' ),
 		'well hello, neighbor';
-	is distance( 'b', 'a' ), test_distance_clockwise( 'a', 'b' ),
+	isnt distance( 'a', 'b' ), test_distance_counterclockwise( 'a', 'b' ),
+		'well hello, neighbor';
+	is distance( 'b', 'a' ), test_distance_counterclockwise( 'b', 'a' ),
+		'hello yourself, neighbor';
+	isnt distance( 'b', 'a' ), test_distance_clockwise( 'b', 'a' ),
 		'hello yourself, neighbor';
 
 	is distance( 'a', 'm' ), test_distance_clockwise( 'a', 'm' ), 'so far away';
-	is distance( 'm', 'a' ), test_distance_clockwise( 'a', 'm' ),
+	isnt distance( 'a', 'm' ), test_distance_counterclockwise( 'a', 'm' ),
+		'so far away';
+	is distance( 'm', 'a' ), test_distance_counterclockwise( 'm', 'a' ),
+		'might as well be on Mars';
+	isnt distance( 'm', 'a' ), test_distance_clockwise( 'm', 'a' ),
 		'might as well be on Mars';
 
+	is distance( 'a', 'n' ), test_distance_clockwise( 'a', 'n' ),
+		'to the left, to the right';
 	is distance( 'a', 'n' ), test_distance_counterclockwise( 'a', 'n' ),
 		'to the left, to the right';
-	is distance( 'n', 'a' ), test_distance_counterclockwise( 'a', 'n' ),
+	is distance( 'n', 'a' ), test_distance_clockwise( 'n', 'a' ),
+		'step it up, step it up';
+	is distance( 'n', 'a' ), test_distance_counterclockwise( 'n', 'a' ),
 		'step it up, step it up';
 };
 
