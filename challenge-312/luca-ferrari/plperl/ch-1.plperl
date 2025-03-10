@@ -1,0 +1,34 @@
+--
+-- Perl Weekly Challenge 312
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-312>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc312;
+
+CREATE OR REPLACE FUNCTION
+pwc312.task1_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $typing ) = @_;
+   my %letters;  
+   my $position = 0;
+   my $count = 0;
+
+   $letters{ $_ } = $count++ for ( 'a' .. 'z' );
+   $count = 0;
+
+   for my $current_letter ( split //, lc( $typing ) ) {
+       my $next_position = $letters{ $current_letter };
+       my ( $clock, $anti_clock ) = ( $next_position - $position, 25 - $next_position - $position + 1 );
+       $clock *= $clock < 0 ? -1 : 1;
+       $anti_clock *= $anti_clock < 0 ? -1 : 1;
+       $position = $next_position;
+       $count += 1 + ( $clock < $anti_clock ? $clock : $anti_clock );
+   }
+
+   return $count;
+   
+$CODE$
+LANGUAGE plperl;
