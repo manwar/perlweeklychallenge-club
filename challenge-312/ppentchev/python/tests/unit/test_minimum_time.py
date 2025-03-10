@@ -36,14 +36,15 @@ def test_correct_offsets(*, letter: str, expected: int | type[Exception]) -> Non
 
 def calc_distance_clockwise(lfrom: str, lto: str) -> int:
     """Calculate the distance between two letters if going clockwise."""
-    first: Final = min(lfrom, lto)
-    second: Final = max(lfrom, lto)
-    return min_time.offset(second) - min_time.offset(first)
+    if lfrom <= lto:
+        return min_time.offset(lto) - min_time.offset(lfrom)
+
+    return min_time.LETTERS - (min_time.offset(lfrom) - min_time.offset(lto))
 
 
 def calc_distance_counterclockwise(lfrom: str, lto: str) -> int:
     """Calculate the distance between two letters if going counterclockwise."""
-    return min_time.LETTERS - calc_distance_clockwise(lfrom, lto)
+    return 0 if lfrom == lto else min_time.LETTERS - calc_distance_clockwise(lfrom, lto)
 
 
 @pytest.mark.parametrize(
@@ -51,9 +52,9 @@ def calc_distance_counterclockwise(lfrom: str, lto: str) -> int:
     [
         ("a", "a", False),
         ("a", "b", False),
-        ("b", "a", False),
+        ("b", "a", True),
         ("a", "m", False),
-        ("m", "a", False),
+        ("m", "a", True),
         ("a", "n", True),
         ("n", "a", True),
     ],
