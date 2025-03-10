@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+target-version = "py312"
+line-length = 100
+
+[lint]
+select = []
+ignore = [
+  # No blank lines before the class docstring, TYVM
+  "D203",
+
+  # The multi-line docstring summary starts on the same line
+  "D213",
+
+  # We do not document everything in the docstrings
+  "DOC201",
+  "DOC501",
+]
+
+[lint.flake8-copyright]
+notice-rgx = "(?x) SPDX-FileCopyrightText: \\s \\S"
+
+[lint.isort]
+force-single-line = true
+known-first-party = ["pwc_312"]
+lines-after-imports = 2
+single-line-exclusions = ["typing"]
+
+[lint.per-file-ignores]
+# This is a test suite
+"tests/unit/**.py" = ["S101"]
