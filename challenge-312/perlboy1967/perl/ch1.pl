@@ -29,14 +29,13 @@ no warnings qw(experimental::signatures);
 use List::Util qw(min);
 
 sub minimumTime ($str) {
-  my ($dt,$cur) = (0,'a');
+  my ($dt,$cur) = (length($str),'a');
   for (split(//,lc($str))) {
     if ($cur ne $_) {
-      my $d = ord($_) - ord($cur);
-      $dt += min(abs($d),26-abs($d));
+      my $d = abs(ord($_)-ord($cur));
+      $dt += min($d,26-$d);
       $cur = $_;
     }
-    $dt++;
   }
   return $dt; 
 }
@@ -44,5 +43,6 @@ sub minimumTime ($str) {
 is(minimumTime('abc'),5,'Example 1');
 is(minimumTime('bza'),7,'Example 2');
 is(minimumTime('zjpc'),34,'Example 3');
+is(minimumTime('bzza'),8,'Own Example');
 
 done_testing;
