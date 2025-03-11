@@ -1,0 +1,71 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/transfer {
+    48 sub
+    exch
+    48 sub
+    2 copy
+    exch
+    sub 26 add 26 mod
+    3 1 roll
+    sub 26 add 26 mod
+    min
+} bind def
+
+/minimumtime {
+    0 dict begin
+    /prev (a) s2a 0 get def
+    dup length exch
+    s2a {
+        /c exch def
+        prev c transfer add
+        /prev c def
+    } forall
+    end
+} bind def
+
+(minimumtime) test.start
+(abc) minimumtime 5 eq test
+(bza) minimumtime 7 eq test
+(zjpc) minimumtime 34 eq test
+test.end
