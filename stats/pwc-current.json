@@ -1,26 +1,237 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Ali Moradi",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Ali Moradi"
+         },
+         {
+            "name" : "David Ferrone",
+            "id" : "David Ferrone",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
+         },
+         {
+            "name" : "Feng Chang",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Feng Chang"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  10
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
+            "name" : "Peter Campbell Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Peter Campbell Smith"
+         },
+         {
+            "name" : "Peter Meszaros",
+            "id" : "Peter Meszaros",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Peter Pentchev",
+            "id" : "Peter Pentchev",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Robbie Hatley",
+            "id" : "Robbie Hatley",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West"
+         },
+         {
+            "name" : "Thomas Kohler",
+            "id" : "Thomas Kohler",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke"
+         },
+         {
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "W. Luis Mochan"
+         },
+         {
+            "data" : [
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Wanderdoc",
+            "name" : "Wanderdoc"
+         }
+      ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 312",
          "data" : [
             {
-               "drilldown" : "Ali Moradi",
+               "name" : "Ali Moradi",
                "y" : 3,
-               "name" : "Ali Moradi"
+               "drilldown" : "Ali Moradi"
             },
             {
                "drilldown" : "David Ferrone",
@@ -33,49 +244,54 @@
                "name" : "E. Choroba"
             },
             {
-               "y" : 2,
                "name" : "Feng Chang",
+               "y" : 2,
                "drilldown" : "Feng Chang"
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 12,
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "y" : 2,
                "name" : "Mark Anderson",
+               "y" : 2,
                "drilldown" : "Mark Anderson"
             },
             {
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
+               "y" : 2,
+               "name" : "Niels van Dijke"
             },
             {
-               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
                "y" : 3,
-               "name" : "Peter Campbell Smith"
+               "drilldown" : "Peter Campbell Smith"
             },
             {
-               "drilldown" : "Peter Meszaros",
+               "y" : 2,
                "name" : "Peter Meszaros",
-               "y" : 2
+               "drilldown" : "Peter Meszaros"
             },
             {
-               "drilldown" : "Peter Pentchev",
                "name" : "Peter Pentchev",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Peter Pentchev"
             },
             {
-               "y" : 3,
                "name" : "Robbie Hatley",
+               "y" : 3,
                "drilldown" : "Robbie Hatley"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
+            },
+            {
+               "y" : 4,
+               "name" : "Thomas Kohler",
+               "drilldown" : "Thomas Kohler"
             },
             {
                "y" : 4,
@@ -83,217 +299,20 @@
                "drilldown" : "Ulrich Rieke"
             },
             {
+               "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "y" : 3
             },
             {
-               "drilldown" : "Wanderdoc",
                "name" : "Wanderdoc",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Wanderdoc"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "subtitle" : {
-      "text" : "[Champions: 15] Last updated at 2025-03-11 19:22:55 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Ali Moradi",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "Ali Moradi"
-         },
-         {
-            "id" : "David Ferrone",
-            "name" : "David Ferrone",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "E. Choroba",
-            "name" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Feng Chang",
-            "id" : "Feng Chang"
-         },
-         {
-            "id" : "Luca Ferrari",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ],
-               [
-                  "Blog",
-                  10
-               ]
-            ],
-            "name" : "Luca Ferrari"
-         },
-         {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
-         },
-         {
-            "id" : "Peter Campbell Smith",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "Peter Campbell Smith"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Peter Meszaros",
-            "id" : "Peter Meszaros"
-         },
-         {
-            "name" : "Peter Pentchev",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Peter Pentchev"
-         },
-         {
-            "id" : "Robbie Hatley",
-            "name" : "Robbie Hatley",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Ulrich Rieke"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan"
-         },
-         {
-            "id" : "Wanderdoc",
-            "name" : "Wanderdoc",
-            "data" : [
-               [
-                  "Blog",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "[Champions: 16] Last updated at 2025-03-11 20:10:23 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge - 312"
