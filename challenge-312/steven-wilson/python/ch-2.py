@@ -17,10 +17,10 @@ def balls_and_boxes(locations):
     >>> balls_and_boxes("B3B2G1B3")
     0
     """
-    d = defaultdict(set)
-    for b in re.findall(r"\w\d", locations):
-        d[b[1]].add(b[0])
-    return sum(1 for item in d.items() if len(item[1]) == 3)
+    boxes = defaultdict(set)
+    for ball in re.findall(r"\w\d", locations):
+        boxes[ball[1]].add(ball[0])
+    return sum(1 for v in boxes.values() if len(v) == 3)
 
 
 if __name__ == "__main__":
