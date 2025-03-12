@@ -16,9 +16,6 @@ def minimum_time(string):
     """
     pointer = 'a'
     time = 0
-    if pointer == string[0]:
-        time += 1
-        string = string[1:]
 
     for c in string:
         time += letters_delta(pointer, c)
@@ -39,6 +36,8 @@ def letters_delta(start, end):
     1
     >>> letters_delta('w', 'c')
     6
+    >>> letters_delta('a', 'a')
+    0
     """
     delta = abs(ord(start) - ord(end))
     return delta if delta <= 13 else 26 - delta
