@@ -1,16 +1,4 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
@@ -20,22 +8,24 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2025-03-13 08:54:19 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2025]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "enabled" : "true",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10
+         },
          "data" : [
             [
                "Perl",
-               16184
+               16186
             ],
             [
                "Raku",
@@ -43,21 +33,31 @@
             ],
             [
                "Blog",
-               5724
+               5725
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90,
-            "enabled" : "true"
-         }
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2025-03-14 19:02:58 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2025]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   }
 }
