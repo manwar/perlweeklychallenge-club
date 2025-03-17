@@ -9,6 +9,6 @@ sub reverse-letters($str)
 {
     my @s = $str.comb;
     my @k = @s.grep(/:i <[a..z]>/, :k);
-    @s[@k] = @s[@k].reverse;
+    @s[@k] .= reverse;
     [~] @s
 }
