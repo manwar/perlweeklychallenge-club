@@ -8,7 +8,7 @@ is reverse-letters("_c-!h_all-en!g_e"), "_e-!g_nel-la!h_c";
 sub reverse-letters($str)
 {
     my @s = $str.comb;
-    my @p = @s.grep(/:i <[a..z]>/, :p);
-    @s[@p>>.key] = @p>>.value.reverse;
+    my @k = @s.grep(/:i <[a..z]>/, :k);
+    @s[@k] = @s[@k].reverse;
     [~] @s
 }
