@@ -1,0 +1,121 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/c.isalpha {
+    dup c.islower exch c.isupper or
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/reverseletters {
+    0 dict begin
+    s2a /a exch def
+    /vout [
+        a length {
+            32
+        } repeat
+    ] def
+    /letterslots 0 array def
+    /letters 0 array def
+    a enumerate.array {
+        aload pop
+        /c exch def
+        /i exch def
+        c c.isalpha {
+            /letterslots letterslots i apush.right def
+            /letters letters c apush.right def
+        } {
+            vout i c put
+        } ifelse
+    } forall
+    letterslots {
+        /i exch def
+        letters apop.right
+        vout exch i exch put
+        /letters exch def
+    } forall
+    vout a2s
+    end
+} bind def
+
+(reverseletters) test.start
+(p-er?l) reverseletters (l-re?p) eq test
+(wee-k!L-y) reverseletters (yLk-e!e-w) eq test
+(_c-!h_all-en!g_e) reverseletters (_e-!g_nel-la!h_c) eq test
+test.end
