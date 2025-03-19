@@ -1,0 +1,89 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/brokenkeys {
+    0 dict begin
+    /tt exch s2a def
+    /nt exch s2a def
+    /ni 0 def
+    /ti 0 def
+    true
+    {
+        nt ni get tt ti get ne {
+            pop false
+            exit
+        } if
+        ti tt length 1 sub eq {
+            exit
+        } if
+        /flag true def
+        ni nt length 1 sub lt {
+            nt ni 1 add get nt ni get eq {
+                /ni ni 1 add def
+                /flag false def
+            } if
+        } if
+        flag {
+            {
+                ti tt length ge {
+                    exit
+                } if
+                tt ti get nt ni get ne {
+                    exit
+                } if
+                /ti ti 1 add def
+            } loop
+            ti tt length eq {
+                exit
+            } if
+            /ni ni 1 add def
+        } if
+    } loop
+    end
+} bind def
+
+(brokenkeys) test.start
+(perl) (perrrl) brokenkeys test
+(raku) (rrakuuuu) brokenkeys test
+(python) (perl) brokenkeys not test
+(coffeescript) (cofffeescccript) brokenkeys test
+test.end
