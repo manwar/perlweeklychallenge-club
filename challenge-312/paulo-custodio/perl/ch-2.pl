@@ -48,7 +48,7 @@ say box_with_3_colors(shift // "");
 sub box_with_3_colors {
     my($spec) = @_;
     my %boxes;
-    while ($spec =~ /([RGB])(\d)/gc) {
+    while ($spec =~ /([RGB])(\d)/g) {
         $boxes{$2}{$1}++;
     }
 

@@ -37,4 +37,3 @@ sub reverse_letters {
     }
     return join '', @output;
 }
-
