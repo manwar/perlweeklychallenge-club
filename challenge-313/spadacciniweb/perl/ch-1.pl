@@ -54,13 +54,11 @@ sub broken_keyboard {
         $cnt{$_}--
             if defined $cnt{$_};
     }
-    my $broken = 0;
-    foreach (keys %cnt) {
-        if ($cnt{$_} < 0) {
-            $broken = 1;
-            last;
-        }
-    }
+
     printf "name '%s' typed '%s' -> %s\n",
-        $name, $typed, $broken ? 'true' : 'false';
+        $name, $typed, 
+        ( scalar map { $_ < 0 ? $_ : () }
+                   values %cnt
+        ) ? 'true'
+          : 'false';
 }
