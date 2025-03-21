@@ -39,26 +39,22 @@ package main
 import (
 	"io"
 	"os"
-	"slices"
 
 	"github.com/google/go-cmp/cmp"
 )
 
 func rl(str string) string {
 	chrs := []rune(str)
-	var (
-		ltrPos []int
-		ltrs   []rune
-	)
+	var ltrPos []int
 	for i, v := range chrs {
 		if (v >= 'a' && v <= 'z') || (v >= 'A' && v <= 'Z') || (v >= 'ก' && v <= 'ฮ') {
 			ltrPos = append(ltrPos, i)
-			ltrs = append(ltrs, v)
 		}
 	}
-	slices.Reverse(ltrs)
-	for i, v := range ltrs {
-		chrs[ltrPos[i]] = v
+	l := len(ltrPos)
+	for i := range l / 2 {
+		a, b := ltrPos[i], ltrPos[l-1-i]
+		chrs[a], chrs[b] = chrs[b], chrs[a]
 	}
 	return string(chrs)
 }

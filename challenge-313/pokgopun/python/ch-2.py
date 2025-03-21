@@ -36,11 +36,11 @@ SO WHAT DO YOU THINK ?
 
 def rl(string: str) -> str:
     ltrPos = tuple(i for i in range(len(string)) if string[i].isalpha()) ### positions of letters
+    chars = list(string) ### convert string to list so its letters can be reversed
     l = len(ltrPos)
-    rltrs = tuple(string[ltrPos[i]] for i in range(l-1,-1,-1)) ### letters in reversed order
-    chars = list(string) ### convert string to list so it can have the letters replaced with their reversed version
-    for i in range(l): ### do the replacement
-        chars[ltrPos[i]] = rltrs[i]
+    for i in range(l//2): ### do the reverse by swap a letter at start and end of the list unitl reaching the mid
+        a, b = ltrPos[i], ltrPos[l-1-i]
+        chars[a], chars[b] = chars[b], chars[a]
     return "".join(chars) ### compose the string back
 
 import unittest
