@@ -1,3 +1,3 @@
-# The Weekly Challenge 312
+# The Weekly Challenge 313
 
-Blog: [Time to see what is in the boxes](https://dev.to/simongreennet/time-to-see-what-is-in-the-boxes-3d55)
+Blog: [Broken letters](https://dev.to/simongreennet/broken-letters-462e)
