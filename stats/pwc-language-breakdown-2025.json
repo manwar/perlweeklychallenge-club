@@ -1,48 +1,29 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-03-23 18:47:51 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "313",
             "name" : "313",
             "data" : [
                [
                   "Perl",
-                  47
+                  51
                ],
                [
                   "Raku",
-                  16
+                  19
                ],
                [
                   "Blog",
-                  11
+                  13
                ]
-            ],
-            "id" : "313"
+            ]
          },
          {
+            "id" : "312",
             "name" : "312",
             "data" : [
                [
@@ -57,8 +38,7 @@
                   "Blog",
                   26
                ]
-            ],
-            "id" : "312"
+            ]
          },
          {
             "id" : "311",
@@ -79,6 +59,7 @@
             "name" : "311"
          },
          {
+            "id" : "310",
             "name" : "310",
             "data" : [
                [
@@ -93,11 +74,11 @@
                   "Blog",
                   13
                ]
-            ],
-            "id" : "310"
+            ]
          },
          {
             "id" : "309",
+            "name" : "309",
             "data" : [
                [
                   "Perl",
@@ -111,12 +92,10 @@
                   "Blog",
                   19
                ]
-            ],
-            "name" : "309"
+            ]
          },
          {
             "id" : "308",
-            "name" : "308",
             "data" : [
                [
                   "Perl",
@@ -130,9 +109,12 @@
                   "Blog",
                   16
                ]
-            ]
+            ],
+            "name" : "308"
          },
          {
+            "id" : "307",
+            "name" : "307",
             "data" : [
                [
                   "Perl",
@@ -146,12 +128,11 @@
                   "Blog",
                   12
                ]
-            ],
-            "name" : "307",
-            "id" : "307"
+            ]
          },
          {
             "id" : "306",
+            "name" : "306",
             "data" : [
                [
                   "Perl",
@@ -165,11 +146,11 @@
                   "Blog",
                   10
                ]
-            ],
-            "name" : "306"
+            ]
          },
          {
             "id" : "305",
+            "name" : "305",
             "data" : [
                [
                   "Perl",
@@ -183,11 +164,10 @@
                   "Blog",
                   21
                ]
-            ],
-            "name" : "305"
+            ]
          },
          {
-            "id" : "304",
+            "name" : "304",
             "data" : [
                [
                   "Perl",
@@ -202,7 +182,7 @@
                   14
                ]
             ],
-            "name" : "304"
+            "id" : "304"
          },
          {
             "name" : "303",
@@ -224,31 +204,34 @@
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
+   "tooltip" : {
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
-         "colorByPoint" : "true",
-         "name" : "The Weekly Challenge Languages",
          "data" : [
             {
-               "y" : 74,
+               "y" : 83,
                "drilldown" : "313",
                "name" : "313"
             },
             {
+               "name" : "312",
                "drilldown" : "312",
-               "y" : 93,
-               "name" : "312"
+               "y" : 93
             },
             {
                "drilldown" : "311",
@@ -257,8 +240,8 @@
             },
             {
                "name" : "310",
-               "y" : 76,
-               "drilldown" : "310"
+               "drilldown" : "310",
+               "y" : 76
             },
             {
                "y" : 90,
@@ -266,36 +249,53 @@
                "name" : "309"
             },
             {
-               "name" : "308",
                "drilldown" : "308",
-               "y" : 84
+               "y" : 84,
+               "name" : "308"
             },
             {
-               "name" : "307",
                "drilldown" : "307",
-               "y" : 76
+               "y" : 76,
+               "name" : "307"
             },
             {
-               "drilldown" : "306",
+               "name" : "306",
                "y" : 67,
-               "name" : "306"
+               "drilldown" : "306"
             },
             {
-               "name" : "305",
                "drilldown" : "305",
-               "y" : 86
+               "y" : 86,
+               "name" : "305"
             },
             {
-               "y" : 75,
                "drilldown" : "304",
+               "y" : 75,
                "name" : "304"
             },
             {
-               "y" : 70,
                "drilldown" : "303",
+               "y" : 70,
                "name" : "303"
             }
-         ]
+         ],
+         "name" : "The Weekly Challenge Languages",
+         "colorByPoint" : "true"
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-03-24 04:14:20 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   }
 }
