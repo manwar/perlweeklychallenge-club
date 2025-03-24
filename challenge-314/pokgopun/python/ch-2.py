@@ -49,23 +49,23 @@ SO WHAT DO YOU THINK ?
 ### solution by pokgopun@gmail.com
 
 def sc(strings: tuple[str]) -> int:
-    t = tuple(len(e) for e in strings)
-    if len(set(t)) != 1:
-        return -1
-    l = t[0]
     c = len(strings)
-    if c == 1:
+    if c < 2: ### no deletion required if less than two strings
         return 0
-    count = 0
-    string = strings[0]
-    for i in range(l):
-        p = string[i]
-        for j in range(1,c):
-            n = strings[j][i]
-            if p > n:
+    string = strings[0] ### 1st string
+    l = len(string) ### length of 1st string
+    for s in strings[1:]:
+        if len(s) != l: ### error if length of all the strings are not the same 
+            return -1 
+    count = 0 ### deletion count start with 0
+    for i in range(l): ### for individual column of string
+        p = string[i] ### inital previous value from 1st string
+        for j in range(1,c): ### for the rest of strings
+            n = strings[j][i] ### next value to compare with previous
+            if p > n:  ### increase the deletion count if not lexicographically sorted, and skip to next column
                 count += 1
                 break
-            p = n
+            p = n ### store previous value for comparison with next value on the same column
     return count
 
 import unittest

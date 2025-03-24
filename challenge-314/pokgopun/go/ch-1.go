@@ -52,14 +52,12 @@ func (in input) process() int {
 	if s1 == s2 && s2 == s3 {
 		return 0
 	}
-	sls := [3]int{len(s1), len(s2), len(s3)}
-	mn := min(sls[0], sls[1], sls[2])
-	sm := 0
-	for _, v := range sls {
-		sm += v
-	}
-	if mn == 0 {
-		return -1
+	l := len(in[0])
+	mn, sm := l, l
+	for _, v := range in[1:] {
+		l = len(v)
+		mn = min(mn, l)
+		sm += l
 	}
 	if s1[:mn] == s2[:mn] && s2[:mn] == s3[:mn] {
 		return sm - 3*mn
@@ -86,7 +84,7 @@ func main() {
 		{input{"ayz", "cyz", "xyz"}, -1},
 		{input{"yza", "yzb", "yzc"}, 3},
 		{input{"abc", "abb", "a"}, 4},
-		{input{"", "abb", "a"}, -1},
+		{input{"", "abb", "a"}, 4},
 		{input{"", "", ""}, 0},
 		{input{"abcd", "abcd", "abcd"}, 0},
 	} {
