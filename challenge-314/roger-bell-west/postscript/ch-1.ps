@@ -1,0 +1,121 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/listmin {
+    { min } reduce
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/equalstrings {
+    0 dict begin
+    /a exch def
+    a toset keys { dup length string cvs s2a } map /ca exch def
+    /mmlen ca { length } map listmin def
+    /si 0 def
+    0
+    0 1 mmlen 1 sub {
+        /i exch def
+        /si i def
+        1 1 ca length 1 sub {
+            /s exch def
+            ca 0 get i get ca s get i get ne {
+                i 0 eq {
+                    pop -1
+                    exit
+                } if
+                /si si 1 sub def
+                exit
+            } if
+        } for
+    } for
+    -1 eq {
+        -1
+    } {
+        a { length } map { add } reduce a length si 1 add mul sub
+    } ifelse
+    end
+} bind def
+
+(equalstrings) test.start
+[(abc) (abb) (ab)] equalstrings 2 eq test
+[(ayz) (cyz) (xyz)] equalstrings -1 eq test
+[(yza) (yzb) (yzc)] equalstrings 3 eq test
+test.end
