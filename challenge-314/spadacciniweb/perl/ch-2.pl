@@ -32,7 +32,6 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
 
 my @list = ("swpc", "tyad", "azbe");
 sorted_by_deleting(\@list);
@@ -50,8 +49,8 @@ sub sorted_by_deleting {
 
     my @columns;
     foreach my $word (@$list) {
-        my @word = split //, $word;
-        while (my ($i, $value) = each @word) {
+        my @chars = split //, $word;
+        while (my ($i, $value) = each @chars) {
             push @{ $columns[$i] }, $value;
         }
     }

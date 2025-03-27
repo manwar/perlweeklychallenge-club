@@ -46,9 +46,9 @@ sub remove_rightmost_to_make_equals {
             if $s1 eq $s2 and $s2 eq $s3
                or
                length($s1) == 0;
+        chop $s1;
         ($s1, $s2, $s3) = sort { length($b) <=> length($a) }
                           ($s1, $s2, $s3);
-        chop $s1;
         $i++;
     }
 
