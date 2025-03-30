@@ -1,3 +1,3 @@
-# The Weekly Challenge 313
+# The Weekly Challenge 314
 
-Blog: [Broken letters](https://dev.to/simongreennet/broken-letters-462e)
+Blog: [Sorted equally](https://dev.to/simongreennet/weekly-challenge-sorted-equally-4o5)
