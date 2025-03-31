@@ -43,3 +43,28 @@ pwc-test './ch-2.raku',
                  $first = "we"
                  $second = "will"
               => "we rock"';
+
+pwc-test './ch-2a.raku',
+    'Perl is a my favourite language but Python is my favourite too',
+    <my favourite>,
+    'language too',
+    'Find Third: $sentence = "Perl is a my favourite language but Python is my favourite too"
+                 $first = "my"
+                 $second = "favourite"
+              => "language too"';
+pwc-test './ch-2a.raku',
+    'Barbie is a beautiful doll also also a beautiful princess',
+    <a beautiful>,
+    'doll princess',
+    'Find Third: $sentence = "Barbie is a beautiful doll also also a beautiful princess"
+                 $first = "a"
+                 $second = "beautiful"
+              => "doll princess"';
+pwc-test './ch-2a.raku',
+    'we will we will rock you rock you',
+    <we will>,
+    'we rock',
+    'Find Third: $sentence = "we will we will rock you rock you"
+                 $first = "we"
+                 $second = "will"
+              => "we rock"';
