@@ -1,0 +1,232 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+[build-system]
+requires = [
+  "hatchling >= 1.26, < 2",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "pwc315"
+description = "Weekly challenge 315 task 1 - find words"
+license = "BSD-2-Clause"
+license-files = ["LICENSES/BSD-2-Clause.txt"]
+requires-python = ">= 3.11"
+dynamic = ["version"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Testing :: Unit",
+  "Typing :: Typed",
+]
+
+[[project.authors]]
+name = "Peter Pentchev"
+email = "roam@ringlet.net"
+
+[dependency-groups]
+# Build a WebAssembly component
+wasm-component = [
+  "componentize-py >= 0.16, < 0.17",
+]
+
+# Test environments
+testenv-mypy = [
+  {include-group = "testenv-unit-tests"},
+  "mypy >= 1, < 2",
+]
+testenv-pyupgrade = [
+  "pyupgrade >= 3, < 4",
+]
+testenv-ruff = [
+  "ruff == 0.11.0",
+]
+testenv-unit-tests = [
+  "pygments >= 2.7, < 3",
+  "pytest >= 8, < 9",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+  "src/pwc315",
+  "src/wasm_find_words",
+  "src/wasm_find_third",
+]
+
+[tool.hatch.version]
+path = "src/pwc315/defs.py"
+pattern = '(?x) ^ VERSION \s* (?: : \s* Final \s* )? = \s* " (?P<version> [^\s"]+ ) " \s* $'
+
+[tool.mypy]
+strict = true
+
+[tool.ruff]
+extend = "ruff-base.toml"
+output-format = "concise"
+preview = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+[tool.test-stages]
+stages = [
+  "(@check or @docs) and @quick and not @manual",
+  "(@check or @docs) and not @manual",
+  "@tests and not @manual",
+]
+
+[tool.uvoxen]
+envlist = [
+  "ruff",
+  "format",
+  "mypy",
+  "unit-tests",
+]
+
+[tool.uvoxen.format.version]
+major = 0
+minor = 1
+
+[tool.uvoxen.defs]
+pyfiles = [
+  "src/pwc315",
+  "tests/unit",
+]
+
+[tool.uvoxen.tox]
+env-order = [
+  "ruff",
+  "format",
+  "reformat",
+]
+
+header = """
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+"""
+
+[tool.uvoxen.env.format]
+tags = [
+  "check",
+  "quick",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check --config ruff-base.toml --select=D,I --diff -- {[defs]pyfiles}",
+  "ruff format --check --config ruff-base.toml --diff -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.reformat]
+tags = [
+  "format",
+  "manual",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check --config ruff-base.toml --select=D,I --fix -- {[defs]pyfiles}",
+  "ruff format --config ruff-base.toml -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.ruff]
+tags = [
+  "check",
+  "ruff",
+  "quick",
+]
+dependency-groups = [
+  "testenv-ruff",
+]
+commands = [
+  "ruff check -- {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.mypy]
+tags = [
+  "check",
+]
+dependency-groups = [
+  "testenv-mypy",
+]
+install-dependencies = true
+commands = [
+  "mypy {[defs]pyfiles}",
+]
+
+[tool.uvoxen.env.unit-tests]
+tags = [
+  "tests",
+]
+dependency-groups = [
+  "testenv-unit-tests",
+]
+install-project = true
+commands = [
+  "pytest {posargs} tests/unit",
+]
+
+[tool.uvoxen.env.pyupgrade]
+tags = [
+  "check",
+  "manual",
+]
+dependency-groups = [
+  "testenv-pyupgrade",
+]
+allowlist-externals = [
+  "sh",
+]
+commands = [
+  "sh -c 'pyupgrade --py311-plus src/pwc315/*.py tests/unit/*.py'",
+]
+
+[tool.uvoxen.env.docs]
+tags = [
+  "docs",
+]
+dependency-groups = [
+  "docs",
+]
+commands = [
+  "mkdocs build",
+]
+
+[tool.uvoxen.env.wasm-bindings]
+tags = [
+  "manual",
+]
+dependency-groups = [
+  "wasm-component",
+]
+commands = [
+  "componentize-py -d ../wasi/wit/find-words.wit -w pwc315-t1-find-words bindings --world-module wasm_find_words_bindings src",
+  "componentize-py -d ../wasi/wit/find-third.wit -w pwc315-t2-find-third bindings --world-module wasm_find_third_bindings src",
+]
+
+[tool.uvoxen.env.wasm-componentize]
+tags = [
+  "manual",
+]
+dependency-groups = [
+  "wasm-component",
+]
+commands = [
+  "componentize-py -d ../wasi/wit/find-words.wit -w pwc315-t1-find-words componentize -p src -o wasm/wasm_find_words.wasm wasm_find_words",
+  "componentize-py -d ../wasi/wit/find-third.wit -w pwc315-t2-find-third componentize -p src -o wasm/wasm_find_third.wasm wasm_find_third",
+]
