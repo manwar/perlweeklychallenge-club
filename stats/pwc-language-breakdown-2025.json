@@ -1,19 +1,25 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "series" : [
       {
          "data" : [
             {
-               "y" : 45,
+               "name" : "315",
                "drilldown" : "315",
-               "name" : "315"
+               "y" : 48
             },
             {
-               "name" : "314",
+               "drilldown" : "314",
                "y" : 72,
-               "drilldown" : "314"
+               "name" : "314"
             },
             {
                "name" : "313",
@@ -21,8 +27,8 @@
                "drilldown" : "313"
             },
             {
-               "drilldown" : "312",
                "y" : 93,
+               "drilldown" : "312",
                "name" : "312"
             },
             {
@@ -31,24 +37,24 @@
                "y" : 84
             },
             {
-               "drilldown" : "310",
                "y" : 76,
+               "drilldown" : "310",
                "name" : "310"
             },
             {
-               "name" : "309",
                "drilldown" : "309",
-               "y" : 90
+               "y" : 90,
+               "name" : "309"
             },
             {
-               "drilldown" : "308",
                "y" : 84,
+               "drilldown" : "308",
                "name" : "308"
             },
             {
                "name" : "307",
-               "y" : 76,
-               "drilldown" : "307"
+               "drilldown" : "307",
+               "y" : 76
             },
             {
                "y" : 67,
@@ -56,13 +62,13 @@
                "name" : "306"
             },
             {
-               "y" : 86,
+               "name" : "305",
                "drilldown" : "305",
-               "name" : "305"
+               "y" : 86
             },
             {
-               "drilldown" : "304",
                "y" : 75,
+               "drilldown" : "304",
                "name" : "304"
             },
             {
@@ -75,35 +81,20 @@
          "colorByPoint" : "true"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-04-04 11:40:18 GMT"
-   },
    "legend" : {
       "enabled" : "false"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "315",
-            "name" : "315",
             "data" : [
                [
                   "Perl",
-                  30
+                  32
                ],
                [
                   "Raku",
@@ -111,12 +102,12 @@
                ],
                [
                   "Blog",
-                  7
+                  8
                ]
-            ]
+            ],
+            "name" : "315"
          },
          {
-            "name" : "314",
             "data" : [
                [
                   "Perl",
@@ -131,10 +122,10 @@
                   13
                ]
             ],
-            "id" : "314"
+            "id" : "314",
+            "name" : "314"
          },
          {
-            "name" : "313",
             "data" : [
                [
                   "Perl",
@@ -149,11 +140,11 @@
                   13
                ]
             ],
-            "id" : "313"
+            "id" : "313",
+            "name" : "313"
          },
          {
             "id" : "312",
-            "name" : "312",
             "data" : [
                [
                   "Perl",
@@ -167,7 +158,8 @@
                   "Blog",
                   26
                ]
-            ]
+            ],
+            "name" : "312"
          },
          {
             "name" : "311",
@@ -188,6 +180,7 @@
             "id" : "311"
          },
          {
+            "name" : "310",
             "data" : [
                [
                   "Perl",
@@ -202,7 +195,6 @@
                   13
                ]
             ],
-            "name" : "310",
             "id" : "310"
          },
          {
@@ -224,7 +216,6 @@
             "id" : "309"
          },
          {
-            "id" : "308",
             "data" : [
                [
                   "Perl",
@@ -239,11 +230,10 @@
                   16
                ]
             ],
+            "id" : "308",
             "name" : "308"
          },
          {
-            "id" : "307",
-            "name" : "307",
             "data" : [
                [
                   "Perl",
@@ -257,10 +247,11 @@
                   "Blog",
                   12
                ]
-            ]
+            ],
+            "id" : "307",
+            "name" : "307"
          },
          {
-            "id" : "306",
             "name" : "306",
             "data" : [
                [
@@ -275,11 +266,11 @@
                   "Blog",
                   10
                ]
-            ]
+            ],
+            "id" : "306"
          },
          {
             "id" : "305",
-            "name" : "305",
             "data" : [
                [
                   "Perl",
@@ -293,10 +284,11 @@
                   "Blog",
                   21
                ]
-            ]
+            ],
+            "name" : "305"
          },
          {
-            "name" : "304",
+            "id" : "304",
             "data" : [
                [
                   "Perl",
@@ -311,11 +303,11 @@
                   14
                ]
             ],
-            "id" : "304"
+            "name" : "304"
          },
          {
-            "id" : "303",
             "name" : "303",
+            "id" : "303",
             "data" : [
                [
                   "Perl",
@@ -333,15 +325,23 @@
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge Language"
-   },
    "xAxis" : {
       "type" : "category"
    },
    "tooltip" : {
       "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2025-04-04 11:44:14 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Language"
    }
 }
