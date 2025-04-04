@@ -1,0 +1,20 @@
+[package]
+name = "wasm_find_words"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Weekly challenge 315 task 1 - find words containing a character"
+authors = ["Peter Pentchev <roam@ringlet.net>"]
+license = "BSD-2-Clause"
+
+[dependencies]
+find_words = { path = "../find_words" }
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
+
+[lib]
+crate-type = ["cdylib"]
+
+[package.metadata.component]
+package = "component:find-words"
+
+[package.metadata.component.dependencies]

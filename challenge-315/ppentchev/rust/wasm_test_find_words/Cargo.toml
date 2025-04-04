@@ -1,0 +1,22 @@
+[package]
+name = "wasm_test_find_words"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Weekly challenge 315 task 1 - find words containing a character - test suite"
+authors = ["Peter Pentchev <roam@ringlet.net>"]
+license = "BSD-2-Clause"
+
+[package.metadata.component]
+package = "ringlet:pwc315-t1-test-find-words"
+
+[package.metadata.component.target]
+path = "wit"
+world = "test-find-words"
+
+[package.metadata.component.target.dependencies]
+"ringlet:pwc315-t1-find-words" = { path = "../../wasi/wit/find-words.wit" }
+
+[dependencies]
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
+wasm_find_words = { path = "../wasm_find_words" }

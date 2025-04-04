@@ -1,0 +1,19 @@
+[package]
+name = "wasm_test_find_third"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+
+[package.metadata.component]
+package = "ringlet:pwc315-t2-test-find-third"
+
+[package.metadata.component.target]
+path = "wit"
+world = "test-find-third"
+
+[package.metadata.component.target.dependencies]
+"ringlet:pwc315-t2-find-third" = { path = "../../wasi/wit/find-third.wit" }
+
+[dependencies]
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
+wasm_find_third = { path = "../wasm_find_third" }
