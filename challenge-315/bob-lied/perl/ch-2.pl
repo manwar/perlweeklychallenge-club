@@ -51,7 +51,7 @@ say '(', join(',', findThird(@ARGV)), ')';
 #=============================================================================
 sub findThird($sentence, $first, $second)
 {
-    my @third = ( $sentence =~ m/$first $second (?=(\w+))/g );
+    my @third = ( $sentence =~ m/$first (?=$second (\w+))/g );
     return \@third;
 }
 
@@ -71,21 +71,23 @@ sub runTest
 {
     use Test2::V0;
 
-    is( find2('Perl is a my favourite language but Python is my favourite too.',
+    is( findThird('Perl is a my favourite language but Python is my favourite too.',
                    "my", "favourite"),
                 [qw/language too/], "Example 1");
 
-    is( find2('Barbie is a beautiful doll also also a beautiful princess.',
+    is( findThird('Barbie is a beautiful doll also also a beautiful princess.',
                    "a", "beautiful"),
                 [qw/doll princess/], "Example 2");
 
-    is( find2('we will we will rock you rock you',
+    is( findThird('we will we will rock you rock you',
                    "we", "will"),
                 [qw/we rock/], "Example 3");
 
-    is ( find2('abc def ghi jkl', 'xyz', 'mno'), [], "No match on first");
-    is ( find2('abc def ghi jkl', 'def', 'mno'), [], "No match on second");
-    is ( find2('plover xyzzy', 'plover', 'xyzzy'), [], "Not enough words");
+    is ( findThird('abc def ghi jkl', 'xyz', 'mno'), [], "No match on first");
+    is ( findThird('abc def ghi jkl', 'def', 'mno'), [], "No match on second");
+    is ( findThird('plover xyzzy', 'plover', 'xyzzy'), [], "Not enough words");
+
+    is ( findThird('ab ab ab ab ab', 'ab', 'ab'), [qw/ab ab ab/], "All words same");
 
     done_testing;
 }

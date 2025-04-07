@@ -43,7 +43,7 @@ exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 my $CHAR = pop @ARGV;
-say '(', join(',', findWords($CHAR, @ARGV)), ')';
+say '(', join(',', findWords($CHAR, @ARGV)->@*), ')';
 
 #=============================================================================
 sub findWords($char, @list)
