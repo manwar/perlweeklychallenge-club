@@ -50,6 +50,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
    use v5.38;
    use utf8;
+   use utf8::all;
    # Is a list of strings "linked" (adjacent characters equal)?
    sub linked ($aref) {
       foreach my $i (0..$#$aref-2) {
