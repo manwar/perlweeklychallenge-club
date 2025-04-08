@@ -1,0 +1,72 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/subsequence {
+    0 dict begin
+    /s exch def
+    /l exch def
+    l length s length lt {
+        l
+        s
+        /l exch def
+        /s exch def
+    } if
+    /st s s2a def
+    /si 0 def
+    false
+    l s2a {
+        st si get eq {
+            /si si 1 add def
+            si st length ge {
+                pop true
+                exit
+            } if
+        } if
+    } forall
+    end
+} bind def
+
+(subsequence) test.start
+(uvw) (bcudvew) subsequence test
+(aec) (abcde) subsequence not test
+(sip) (javascript) subsequence test
+test.end
