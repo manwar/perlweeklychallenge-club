@@ -61,6 +61,8 @@ sub runTest
     is( subseq("aec", "abcde"     ), false, "Example 2");
     is( subseq("sip", "javascript"),  true, "Example 3");
 
+    is( subseq("aaaaa", "xyza"),  false, "Longer than string with a match");
+
     done_testing;
 }
 
