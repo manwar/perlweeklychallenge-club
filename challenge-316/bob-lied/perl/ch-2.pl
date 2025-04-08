@@ -48,7 +48,7 @@ sub subseq($str1, $str2)
     my $where = index($str2, shift @seq);
     while ( @seq && $where >= 0 )
     {
-        $where = index($str2, shift @seq, $where)
+        $where = index($str2, shift @seq, $where+1)
     }
     return $where >= 0;
 }
