@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Compression and Matchsticks](https://packy.dardan.com/b/TB)
+[Perl Weekly Challenge: The Sequence Goes Round and Round...](https://packy.dardan.com/b/TW)
