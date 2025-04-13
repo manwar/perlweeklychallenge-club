@@ -1,3 +1,3 @@
-# The Weekly Challenge 314
+# The Weekly Challenge 316
 
-Blog: [Sorted equally](https://dev.to/simongreennet/weekly-challenge-sorted-equally-4o5)
+Blog: [Sub circular](https://dev.to/simongreennet/weekly-challenge-sub-circular-hno)
