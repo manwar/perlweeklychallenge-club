@@ -11,7 +11,7 @@ nok friendly-strings("four", "ofru");
 
 multi friendly-strings($str1, $str2 where $str1 eq $str2)
 {
-    $str1 ~~ / (\w) .* $0 /
+    $str1 ~~ / (<alpha>) .* $0 /
 }
 
 multi friendly-strings($str1, $str2)
