@@ -1,0 +1,20 @@
+[package]
+name = "wasm-test-frings"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+authors = ["Peter Pentchev <roam@ringlet.net>"]
+
+[package.metadata.component]
+package = "ringlet:pwc317-t2-test-frings"
+
+[package.metadata.component.target]
+path = "wit"
+world = "test-frings"
+
+[package.metadata.component.target.dependencies]
+"ringlet:pwc317-t2-frings" = { path = "../../wasi/wit/frings.wit" }
+
+[dependencies]
+anyhow = "1.0.98"
+wit-bindgen-rt = { version = "0.41.0", features = ["bitflags"] }
