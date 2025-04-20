@@ -1,3 +1,3 @@
-# The Weekly Challenge 316
+# The Weekly Challenge 317
 
-Blog: [Sub circular](https://dev.to/simongreennet/weekly-challenge-sub-circular-hno)
+Blog: [Short and friendly](https://dev.to/simongreennet/weekly-challenge-short-and-friendly-jf)
