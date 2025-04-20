@@ -18,9 +18,8 @@ sub friendly-strings($str1, $str2)
 
     given (@str1 Zne @str2).grep(*.so, :k)
     {
-        when    .elems == 0 { return $str1 ~~ / (<alpha>) .* $0 /  } 
-        when    .elems == 1 { return False                         } 
-        when    .elems  > 2 { return False                         }
-        default             { return @str1[$_] eqv @str2[.reverse] }
+        when    .elems == 0 { $str1 ~~ / (<alpha>) .* $0 /  } 
+        when    .elems == 2 { @str1[$_] eqv @str2[.reverse] }
+        default             { False                         }
     }
 }
