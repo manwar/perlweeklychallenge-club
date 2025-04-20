@@ -19,8 +19,6 @@
 
 use v5.40;
 
-use List::MoreUtils qw/zip6 duplicates/;
-
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
@@ -44,7 +42,6 @@ say isFriend(@ARGV) ? "true" : "false";
 #=============================================================================
 sub isFriend($str1, $str2)
 {
-    my @char1 = split(//, $str1);
     if ( length($str1) != length($str2) )
     {
         return false;
@@ -52,20 +49,19 @@ sub isFriend($str1, $str2)
     elsif ( $str1 eq $str2 )
     {
         # There must be a repeated letter that can be swapped for itself
-        return duplicates(@char1) > 0;
+        use List::MoreUtils qw/duplicates/;
+        return duplicates(split(//, $str1)) > 0;
     }
     else
     {
-        my @char2 = split(//, $str2);
-
         # Make pairs of characters and check for differences.
-        my @diff = grep { $_->[0] ne $_->[1] } zip6(@char1, @char2);
+        use List::Util qw/zip/;
+        my @diff = grep { $_->[0] ne $_->[1] }
+                        zip( [split(//, $str1)], [split(//, $str2)] );
 
-        # There must be exactly two differences.
-        return false if @diff != 2;
-
-        # Check that the two differences are matched pairs.
-        return $diff[0][0] eq $diff[1][1] && $diff[0][1] eq $diff[1][0];
+        # There must be exactly two differences that can be swapped.
+        return @diff == 2
+            && $diff[0][0] eq $diff[1][1] && $diff[0][1] eq $diff[1][0];
     }
 }
 
