@@ -7,5 +7,5 @@ is group-position("abcdd"), ("");
 
 sub group-position($str)
 {
-    $str ~~ m:g/ (\w) $0 ** 2..* /
+    $str ~~ m:g/ (<lower>) $0 ** 2..* /
 }
