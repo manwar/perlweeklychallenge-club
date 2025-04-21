@@ -1,140 +1,155 @@
-# Ring-a-ring-a-roses or a sack race?
+# Friendly Acronyms
 
-**Challenge 316 solutions in Perl by Matthias Muth**
+**Challenge 317 solutions in Perl by Matthias Muth**
 
-## Task 1: Circular
+## Task 1: Acronyms
 
-> You are given a list of words.<br/>
-> Write a script to find out whether the last character of each word is the first character of the following word.
+> You are given an array of words and a word.<br/>
+> Write a script to return true if concatenating the first letter of each word in the given array matches the given word, return false otherwise.
 >
 > **Example 1**
 >
 > ```text
-> Input: @list = ("perl", "loves", "scala")
+> Input: @array = ("Perl", "Weekly", "Challenge")
+>        $word  = "PWC"
 > Output: true
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @list = ("love", "the", "programming")
-> Output: false
+> Input: @array = ("Bob", "Charlie", "Joe")
+>     $word  = "BCJ"
+>    Output: true
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @list = ("java", "awk", "kotlin", "node.js")
-> Output: true
-> ```
+>Input: @array = ("Morning", "Good")
+>     $word  = "MM"
+> Output: false
+>    ```
 
-I chose a more or less classical solution, using `all` from `List::Util` for brevity
-instead of writing a loop.<br/>
-Within `all`'s comparison code block,
-I compare the first character of the current string to the last one of the previous string,
-with indices running from `1` to the end of the list of words.
+Oh. No regexes this week? Maybe just a small one...
 
-So, nothing special here: 
+Getting the first characters of the strings in the array can be done with getting `substr( $_, 0, 1 )` of each of them. Then we `join` them together to get the acronym for those words. All there's left to do is to compare whether that is equal to `$word`.
+
+But I can't really live without regexes. That's why I prefer using `/^(.)/` to get the first character of each string.<br/>
+Isn't that nicer?<br/>And easier to read and understand than the three-parameter `substr`?
+
+So here it is:  
 
 ```perl
 use v5.36;
 
-use List::Util qw( all );
-
-sub circular( @list ) {
-    return all { substr( $list[ $_ - 1 ], -1 ) eq substr( $list[$_], 0, 1 ) }
-        1..$#list;
+sub acronyms( $array, $word ) {
+    return join( "", map /^(.)/, $array->@* ) eq $word
 }
 ```
 
-## Task 2: Subsequence
+## Task 2: Friendly Strings
 
-> You are given two string.<br/>
-> Write a script to find out if one string is a subsequence of another.<br/>
-> A subsequence of a string is a new string that is formed from the original string<br/>
-> by deleting some (can be none)  of the characters without disturbing the relative<br/>
-> positions of the remaining characters.
+> You are given two strings.<br/>
+> Write a script to return true if swapping any two letters in one string match the other string, return false otherwise.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str1 = "uvw", $str2 = "bcudvew"
+> Input: $str1 = "desc", $str2 = "dsec"
 > Output: true
->```
-> 
->**Example 2**
-> 
->```text
-> Input: $str1 = "aec", $str2 = "abcde"
-> Output: false
+> ```
+>
+> **Example 2**
+>
+> ```text
+> Input: $str1 = "fuck", $str2 = "fcuk"
+> Output: true
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: $str1 = "sip", $str2 = "javascript"
+> Input: $str1 = "poo", $str2 = "eop"
+> Output: false
+> ```
+>
+> **Example 4**
+>
+> ```text
+> Input: $str1 = "stripe", $str2 = "sprite"
 > Output: true
 > ```
 
-I think I have been a Perl programmer for too long.<br/>
-There's no way I can avoid thinking
-'How can I best use Regular Expressions for this?'
-whenever I read a task description,
-especially when it deals with strings, of course...
+The two strings are 'friendly' when they are equal on all positions but two.<br/>
+And for those two remaining 'unequal' positions, the two characters from the first string must be the same as the characters from the second string, but reversed. I'll explain that in more detail further below.
 
-So what would be a regular expression that matches
-if `$str1` is a 'subsequence' of `$str2`,
-and doesn't match otherwise?
-
-We know that there were characters deleted from `$str2`,
-resulting in `$str1`.
-We can therefore construct a regular expression
-that accepts the characters from `$str1`,
-and in between accepts any characters that are now deleted.
-
-For Example 3, we could use something like this:
+Let's first deal with comparing the strings at corresponding positions.<br/>
+To do that, we `split` up each string into an array of characters, then we use `zip` (from `List::Util` in core) to get the characters at corresponding positions together:
 
 ```perl
-    "javascript" =~ qr/s.*i.*p/;
+    zip [ split "", $str1 ], [ split "", $str2 ];
 ```
 
-This will work nicely. But if we have longer strings, for example:
+`zip` returns a list of two-element anonymous arrays that each contain the characters from `$str1` and `$str2` at the same position.
+
+Now we only need to compare the two characters in each of the small anonymous arrays.
+
+Actually we will completely ignore all 'equal' characters. Neither do we care about what characters there are, nor about how many of them there are. We are only interested in the *unequal* ones. So let's `grep` these:
 
 ```perl
-    "javascriptjavascriptjavascriptjavascriptjavascript" =~ qr/s.*i.*p/;
+    my @unequals =
+        grep $_->[0] ne $_->[1],
+            zip [ split "", $str1 ], [ split "", $str2 ];
 ```
-this will not only match the first `'scrip'`,
-but it will 'greedily' try to grab as many characters as possible
-for the `.*` patterns, and only stop after finding
-`'scriptjavascriptjavascriptjavascriptjavascrip'`.
-There will be a lot of trying and re-trying
-to find the longest string possible.<br/>
-(I recommend the fantastic regular expression debugger
-on https://regex101.com/ if you want to see this yourself!)
 
-Let's avoid that. Let's make it 'non-greedy':
+Now that we have the unequal characters separated out, we can check whether they are from exactly two positions:
 
 ```perl
-      "javascriptjavascriptjavascriptjavascriptjavascript" =~ qr/s.*?i.*?p/;
+    @unequals == 2
 ```
+If we passed this test, we still need to check that the characters are 'swapped'.
 
-Much better!<br/>
-Not that it would be too important for our examples, but it 'scales' better.
+In Example 4 (`$str1 = "stripe", $str2 = "sprite"`), the unequal pairs are these:
 
-To construct the regular expression from `$str1`,
-we `split` that one up into single characters,
-and `join` them back together with `.*?` in between them.
+```perl
+    #        from $str1 $str2
+    $unequal[0] = [ "t", "p" ];
+    $unequal[1] = [ "p", "t" ];
+```
+We can 'swap' them back into place:
+```perl
+    #        from $str1 $str2
+    $unequal[0] = [ "t", "t" ];
+    $unequal[1] = [ "p", "p" ];
+```
+and then compare whether all pairs are now equal. That's the 'official' way.
 
-The whole solution then looks like this:
+But in that 2x2 matrix it doesn't matter whether we swap one column, as we have just done, and then compare whether each row has two equal values, or whether we reverse one of the rows, and then compare whether the two rows are the same. Like this:
+```perl
+    [ "t", "p" ];    # original $unequal[0]
+    [ "t", "p" ];    # *reversed* $unequal[1] 
+```
+But actually, this second option is much easier and shorter to implement.<br/>
+Comparing the rows, after swapping one of them, is just:
+```perl
+    "$unequals[0]->@[0,1]" eq "$unequals[1]->@[1,0]"
+```
+Shamelessly using the double quotes to concatenate the two values, so that we then can do a simple string comparison instead of looping through the arrays or replicating the condition.
+
+Maybe it's not bad to have some of these explanations, but I think the whole solution looks quite 'perlish':
 
 ```perl
 use v5.36;
 
-sub subsequence( $str1, $str2 ) {
-    my $re = join ".*?", split "", $str1;
-    return $str2 =~ /$re/;
+use List::Util qw( zip );
+
+sub friendly_strings( $str1, $str2 ) {
+    my @unequals =
+        grep $_->[0] ne $_->[1],
+            zip [ split "", $str1 ], [ split "", $str2 ];
+    return @unequals == 2 && "$unequals[0]->@[0,1]" eq "$unequals[1]->@[1,0]";
 }
 ```
-I guess I will always be a Perl programmer... 
 
 #### **Thank you for the challenge!**
