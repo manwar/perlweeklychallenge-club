@@ -42,11 +42,7 @@ say isFriend(@ARGV) ? "true" : "false";
 #=============================================================================
 sub isFriend($str1, $str2)
 {
-    if ( length($str1) != length($str2) )
-    {
-        return false;
-    }
-    elsif ( $str1 eq $str2 )
+    if ( $str1 eq $str2 )
     {
         # There must be a repeated letter that can be swapped for itself
         use List::MoreUtils qw/duplicates/;
@@ -60,6 +56,9 @@ sub isFriend($str1, $str2)
                         zip( [split(//, $str1)], [split(//, $str2)] );
 
         # There must be exactly two differences that can be swapped.
+        # If one string is longer than the other, there will be undef
+        # values in the difference pairs, so let's quiet those warnings.
+        no warnings "uninitialized";
         return @diff == 2
             && $diff[0][0] eq $diff[1][1] && $diff[0][1] eq $diff[1][0];
     }
