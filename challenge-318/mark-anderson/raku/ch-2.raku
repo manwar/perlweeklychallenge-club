@@ -8,7 +8,7 @@ ok  reverse-equals((1,8,429,3,68,47,5), (1,68,3,429,8,47,5));
 
 sub reverse-equals(@a, @b)
 {
-    my @e = @a Z== @b;
+    my @e = @a >>==<< @b;
 
     my $first = @e.first(*.not, :k) // return True;
     my $last  = @e.first(*.not, :k:end);
