@@ -1,3 +1,3 @@
-# The Weekly Challenge 317
+# The Weekly Challenge 318
 
-Blog: [Short and friendly](https://dev.to/simongreennet/weekly-challenge-short-and-friendly-jf)
+Blog: [Reverse Positions](https://dev.to/simongreennet/weekly-challenge-reverse-positions-3om3)
