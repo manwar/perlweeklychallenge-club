@@ -1,155 +1,216 @@
-# Friendly Acronyms
+# Find Twice and Reverse Once
 
-**Challenge 317 solutions in Perl by Matthias Muth**
+**Challenge 318 solutions in Perl by Matthias Muth**
 
-## Task 1: Acronyms
+## Task 1: Group Position
 
-> You are given an array of words and a word.<br/>
-> Write a script to return true if concatenating the first letter of each word in the given array matches the given word, return false otherwise.
+> You are given a string of lowercase letters.<br/>
+> Write a script to find the position of all groups in the given string. Three or more consecutive letters form a group. Return "” if none found.
 >
 > **Example 1**
 >
 > ```text
-> Input: @array = ("Perl", "Weekly", "Challenge")
->        $word  = "PWC"
-> Output: true
+> Input: $str = "abccccd"
+> Output: "cccc"
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @array = ("Bob", "Charlie", "Joe")
->     $word  = "BCJ"
->    Output: true
+> Input: $str = "aaabcddddeefff"
+> Output: "aaa", "dddd", "fff"
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @array = ("Morning", "Good")
->     $word  = "MM"
-> Output: false
->    ```
+>Input: $str = "abcdd"
+> Output: ""
+> ```
 
-Oh. No regexes this week? Maybe just a small one...
-
-Getting the first characters of the strings in the array can be done with getting `substr( $_, 0, 1 )` of each of them. Then we `join` them together to get the acronym for those words. All there's left to do is to compare whether that is equal to `$word`.
-
-But I can't really live without regexes. That's why I prefer using `/^(.)/` to get the first character of each string.<br/>
-Isn't that nicer?<br/>And easier to read and understand than the three-parameter `substr`?
-
-So here it is:  
+This is a very interesting task.
+Recognizing sequences of same characters is almost a standard idiom in regular expressions,
+using 'backreferences' to capture groups.
+A regular expression that matches three or more *same* characters might look like this:
 
 ```perl
-use v5.36;
+    m/(.)\g{-1}{2,}/
+```
 
-sub acronyms( $array, $word ) {
-    return join( "", map /^(.)/, $array->@* ) eq $word
+The `(.)` captures the first character.
+Then we look for two or more occurrences of what was captured.
+To reference the capture buffer, `\g{-1}` is used,
+which is a *relative* reference to the immediately preceding capture group.
+The `{2,}` defines how many of what precedes are accepted:
+at least two, with no restriction to the maximum number.
+
+The easiest way to match all wanted patterns in only one statement
+is to use the `/g` *global* modifier for the regular expression.
+In list context (which is what we want), if there are any parentheses,
+it will return everything that was captured in parentheses.
+We actually *do* have parentheses,
+at least for the single character that we the backreference.
+This means that for capturing the whole sequence,
+we need to put another set of parentheses around everything
+to get the complete match into the resulting list.<br/>
+Let's do that:
+
+```perl
+    my @groups = $str =~ /( (.)\g{-1}{2,} )/xg;
+```
+
+But wait.
+We are getting back *every* capture,
+and we already captured the first letter of the sequence,
+for backreferencing it.
+Which is why for Example 2 (`"aaabcddddeefff"`),
+we get this list as a result:
+
+```perl
+    ("aaa", "a", "dddd", "d", "fff", "f")
+```
+
+So we actually have to filter away the single characters that we captured.
+For example, like this:
+
+```perl
+    my @groups = grep ! /^.$/, $str =~ /( (.)\g{-1}{2,} )/xg;
+```
+
+Or we can filter and keep only 'real' sequences of multiple characters, like this:
+
+```perl
+    my @groups = grep length > 1, $str =~ /( (.)\g{-1}{2,} )/xg;
+```
+
+We can also capture the sequences it in a more 'traditional' way, in case we want to avoid the overhead of capturing something that we don't need later and then need to remove again:
+
+```perl
+    my @groups;
+    push @groups, $&
+        while $str =~ /(.)\g{-1}{2,}/g;
+```
+
+This still uses the `/g` *global* modifier, but in a loop (using scalar return values). It collects the matches (`$&`), not the captures, so only what we really need.
+
+But I actually prefer the previous solution, because if possible, I like to stay away from the more 'technical' tasks like pushing elements onto an array (or from writing loops for that matter), delegating those tasks to the inner workings of the language.<br/>
+More efficient? I don't know.<br/>
+More elegant? Maybe!
+
+For the return value, we need to do something special when we did not find any matches. We need to return an empty string then, not just an empty list. No problem:
+
+```perl
+    return @groups ? @groups : "";
+```
+
+So here is my personal favorite solution for this task:   
+
+```perl
+sub group_position( $str ) {
+    my @groups = grep length > 1, $str =~ /( (.)\g{-1}{2,} )/xg;
+    return @groups ? @groups : "";
 }
 ```
 
-## Task 2: Friendly Strings
 
-> You are given two strings.<br/>
-> Write a script to return true if swapping any two letters in one string match the other string, return false otherwise.
+## Task 2: Reverse Equals
+
+> You are given two arrays of integers, each containing the same elements as the other.<br/>
+> Write a script to return true if one array can be made to equal the other by reversing exactly one contiguous subarray.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str1 = "desc", $str2 = "dsec"
+> Input: @source = (3, 2, 1, 4)
+>        @target = (1, 2, 3, 4)
 > Output: true
-> ```
 >
-> **Example 2**
->
-> ```text
-> Input: $str1 = "fuck", $str2 = "fcuk"
-> Output: true
+> Reverse elements: 0-2
+>```
+> 
+>**Example 2**
+> 
+>```text
+> Input: @source = (1, 3, 4)
+>     @target = (4, 1, 3)
+>    Output: false
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str1 = "poo", $str2 = "eop"
-> Output: false
-> ```
->
-> **Example 4**
->
-> ```text
-> Input: $str1 = "stripe", $str2 = "sprite"
+>Input: @source = (2)
+>     @target = (2)
 > Output: true
-> ```
+>    ```
 
-The two strings are 'friendly' when they are equal on all positions but two.<br/>
-And for those two remaining 'unequal' positions, the two characters from the first string must be the same as the characters from the second string, but reversed. I'll explain that in more detail further below.
+This task is not so trivial. I split it up into two parts:
 
-Let's first deal with comparing the strings at corresponding positions.<br/>
-To do that, we `split` up each string into an array of characters, then we use `zip` (from `List::Util` in core) to get the characters at corresponding positions together:
+* Determine where the 'contiguous subarray' starts and ends that needs to be reversed to match the same part in the other array.
+* Check whether that subarray *correctly matches* the other part once it is reversed.
 
-```perl
-    zip [ split "", $str1 ], [ split "", $str2 ];
-```
+For the first part, this means to find the first entry that is not the same in both arrays. Then, we need the the *last* entry that differs.
 
-`zip` returns a list of two-element anonymous arrays that each contain the characters from `$str1` and `$str2` at the same position.
+We need to look for that one starting from the end, because if we just continued walking through the array after finding the first difference until we found an entry that's the same, we might miss differing entries further on. We really need the last one.
 
-Now we only need to compare the two characters in each of the small anonymous arrays.
-
-Actually we will completely ignore all 'equal' characters. Neither do we care about what characters there are, nor about how many of them there are. We are only interested in the *unequal* ones. So let's `grep` these:
+Using `first` from `List::Util` for both searches (instead of a loop), that can look like this:
 
 ```perl
-    my @unequals =
-        grep $_->[0] ne $_->[1],
-            zip [ split "", $str1 ], [ split "", $str2 ];
+    my ( $start, end ) = (
+        ( first { $source->[$_] != $target->[$_] } keys $source->@* ),
+        ( first { $source->[$_] != $target->[$_] } reverse keys $source->@* ),
+    );
 ```
 
-Now that we have the unequal characters separated out, we can check whether they are from exactly two positions:
+For the second part, comparing the two subarrays, I use the `all` function (also from `List::Util`) to go through elements from the first array in forward direction, and from the second array in reverse. They all need to be the same.
 
-```perl
-    @unequals == 2
-```
-If we passed this test, we still need to check that the characters are 'swapped'.
+Of course we can do that only when we really found a difference. Interesting twist: What if we didn't find any differences?
 
-In Example 4 (`$str1 = "stripe", $str2 = "sprite"`), the unequal pairs are these:
+It then depends on whether the arrays contain any entries at all.<br/>
+If the arrays are not empty, we can choose any element and declare it a one-element sub-array. Of course reversing that single element results in the same, so we might say that we 'make the two arrays equal' by 'reversing' any single letter, even if they were equal before already. So we can return 'true'.<br/>If the arrays are both empty, we do not have anything to reverse, and we need to output 'false'.
 
-```perl
-    #        from $str1 $str2
-    $unequal[0] = [ "t", "p" ];
-    $unequal[1] = [ "p", "t" ];
-```
-We can 'swap' them back into place:
-```perl
-    #        from $str1 $str2
-    $unequal[0] = [ "t", "t" ];
-    $unequal[1] = [ "p", "p" ];
-```
-and then compare whether all pairs are now equal. That's the 'official' way.
-
-But in that 2x2 matrix it doesn't matter whether we swap one column, as we have just done, and then compare whether each row has two equal values, or whether we reverse one of the rows, and then compare whether the two rows are the same. Like this:
-```perl
-    [ "t", "p" ];    # original $unequal[0]
-    [ "t", "p" ];    # *reversed* $unequal[1] 
-```
-But actually, this second option is much easier and shorter to implement.<br/>
-Comparing the rows, after swapping one of them, is just:
-```perl
-    "$unequals[0]->@[0,1]" eq "$unequals[1]->@[1,0]"
-```
-Shamelessly using the double quotes to concatenate the two values, so that we then can do a simple string comparison instead of looping through the arrays or replicating the condition.
-
-Maybe it's not bad to have some of these explanations, but I think the whole solution looks quite 'perlish':
+Putting it all together, I get this: 
 
 ```perl
 use v5.36;
 
-use List::Util qw( zip );
+use List::Util qw( all first );
 
-sub friendly_strings( $str1, $str2 ) {
-    my @unequals =
-        grep $_->[0] ne $_->[1],
-            zip [ split "", $str1 ], [ split "", $str2 ];
-    return @unequals == 2 && "$unequals[0]->@[0,1]" eq "$unequals[1]->@[1,0]";
+sub reverse_equals( $source, $target ) {
+    my ( $start, $end ) = (
+        ( first { $source->[$_] != $target->[$_] } keys $source->@* ),
+        ( first { $source->[$_] != $target->[$_] } reverse keys $source->@* ),
+    );
+    return defined $start
+        ? all { $source->[ $start + $_ ] == $target->[ $end - $_ ] }
+            0 .. ( $end - $start )
+        : $source->@* > 0;
 }
 ```
+
+For testing the edge cases, I added some extra tests to the examples from the task description.
+
+I can't say it often enough how great it is that `Test2::V0` is now a core module, no need for CPAN!
+
+```perl
+use Test2::V0 qw( -no_srand );
+
+is reverse_equals( [3, 2, 1, 4], [1 .. 4] ),T,
+    'Example 1: reverse_equals( [3, 2, 1, 4], [1 .. 4] ) is true';
+is reverse_equals( [1, 3, 4], [4, 1, 3] ), F,
+    'Example 2: reverse_equals( [1, 3, 4], [4, 1, 3] ) is false';
+is reverse_equals( [2], [2] ), T,
+    'Example 3: reverse_equals( [2], [2] ) is true';
+is reverse_equals( [], [] ), F,
+    'Test 1: reverse_equals( [], [] ) is false';
+is reverse_equals( [], [] ), F,
+    'Test 2: reverse_equals( [2], [] ) is false';
+is reverse_equals( [], [] ), F,
+    'Test 3: reverse_equals( [], [3] ) is false';
+
+done_testing;
+```
+
+
 
 #### **Thank you for the challenge!**
