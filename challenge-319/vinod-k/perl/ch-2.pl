@@ -2,9 +2,6 @@
 
 use strict;
 use warnings;
-use List::Util qw/min/;
-
-use Data::Dumper;
 
 my @array_1 = (1, 2, 3, 4);
 my @array_2 = (1, 5, 7, 8);
