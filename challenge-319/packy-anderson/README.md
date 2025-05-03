@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Group the Reverse Position](https://packy.dardan.com/b/Tp)
+[Perl Weekly Challenge: Count the Minimum Common Word](https://packy.dardan.com/b/UD)
