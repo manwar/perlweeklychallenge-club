@@ -1,3 +1,3 @@
-# The Weekly Challenge 318
+# The Weekly Challenge 319
 
-Blog: [Reverse Positions](https://dev.to/simongreennet/weekly-challenge-reverse-positions-3om3)
+Blog: [Words and numbers](https://dev.to/simongreennet/words-and-numbers-54k6)
