@@ -1,4 +1,6 @@
+find . -name "*.typ" -delete
 find . -name "*.kap" -delete
+find . -name "*.gleam" -delete
 find . -name "*.zon" -delete
 find . -name "*.k" -delete
 find . -name "*.pro" -delete
