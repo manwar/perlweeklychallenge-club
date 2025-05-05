@@ -7,5 +7,5 @@ is sum-diff(1,2,34), 27;
 
 sub sum-diff(+@ints)
 {
-    abs @ints.sum - @ints.comb(/<digit>/).sum
+    @ints.sum - @ints.comb(/<digit>/).sum
 }
