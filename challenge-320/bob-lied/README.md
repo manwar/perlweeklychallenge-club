@@ -1,4 +1,4 @@
-# Solutions to weekly challenge 319 by Bob Lied
+# Solutions to weekly challenge 320 by Bob Lied
 
-## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-319/)
-## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-319/bob-lied)
+## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-320/)
+## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-320/bob-lied)
