@@ -8,5 +8,5 @@ is max-count(1,2,3,4), 4;
 sub max-count(+@ints)
 {
     my  %h = classify { .sign }, @ints;    
-    max %h{1}.elems, %h{-1}.elems
+    max %h<1>.elems, %h<-1>.elems
 }
