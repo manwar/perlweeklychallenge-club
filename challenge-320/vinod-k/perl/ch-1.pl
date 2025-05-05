@@ -51,5 +51,5 @@ foreach (@array){
 print "There are ".scalar(@positive_nums)." positive integers.";
 print "\nThere are ".scalar(@negative_nums)." negative integers.";
 
-my $max = (scalar(@positive_nums), scalar(@negative_nums));
+my $max = max(scalar(@positive_nums), scalar(@negative_nums));
 print "\nThe maximum between ".scalar(@positive_nums)." and ".scalar(@negative_nums)." is ".$max."\n";

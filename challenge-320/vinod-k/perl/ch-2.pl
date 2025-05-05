@@ -41,14 +41,8 @@ my $digit_sum = 0;
 foreach (@array){
 	$sum += $_;
 	
-	my @inside_arr;
-	my $val = 0;
-	if ($_ > 9){
-		@inside_arr = split('', $_);
-		foreach my $element (@inside_arr){ $digit_sum += $element; }
-	} else {
-		$digit_sum += $_;
-	}
+	my @digits = split('', $_);
+	$digit_sum += $_ for @digits;
 }
 print "Sum: $sum\n";
 print "Digit Sum: $digit_sum\n";
