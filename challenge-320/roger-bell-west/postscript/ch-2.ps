@@ -1,0 +1,64 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/sumdifference {
+    0 dict begin
+    0 exch
+    {
+        /x exch def
+        x 10 ge {
+            /digitsum 0 def
+            /xa x def
+            {
+                xa 0 eq {
+                    exit
+                } if
+                /digitsum digitsum xa 10 mod add def
+                /xa xa 10 idiv def
+            } loop
+            x add digitsum sub
+        } if
+    } forall
+    end
+} bind def
+
+(sumdifference) test.start
+[1 23 4 5] sumdifference 18 eq test
+[1 2 3 4 5] sumdifference 0 eq test
+[1 2 34] sumdifference 27 eq test
+test.end
