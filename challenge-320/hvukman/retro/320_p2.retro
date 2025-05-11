@@ -1,0 +1,20 @@
+Part 2
+make number to strings, and then chars to numbers
+put in array and then reduce
+~~~
+'Part_2 s:put nl
+
+:inp1 (-a) { #1 #23 #4 #5 } ;
+:inp2 (-a) { #1 #2 #3 #4 #5 } ;
+:inp3 (-a) { #1 #2 #34 } ;
+:stringtonum (-q) [ [ c:to-number ] s:for-each ] ;
+
+
+:sum (a-n) #0 [ + ] a:reduce ;
+inp1 sum
+{ inp1 [ n:to-string ] a:map stringtonum a:for-each } sum - n:abs n:put nl
+inp2 sum
+{ inp2 [ n:to-string ] a:map stringtonum a:for-each } sum - n:abs n:put nl
+inp3 sum
+{ inp3 [ n:to-string ] a:map stringtonum a:for-each } sum - n:abs n:put nl
+~~~
