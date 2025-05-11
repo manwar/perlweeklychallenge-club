@@ -9,10 +9,10 @@
 
   
   digit_sum(Numbers, DigitSum):-
-  maplist(number_chars, Numbers, Characters),
-  flatten(Characters, CharactersFlattened),
-  maplist(char_number, CharactersFlattened, Digits),
-  sum_list(Digits, DigitSum).
+      maplist(number_chars, Numbers, Characters),
+      flatten(Characters, CharactersFlattened),
+      maplist(char_number, CharactersFlattened, Digits),
+      sum_list(Digits, DigitSum).
 
   
   sum_differences(Numbers, Differences):-
