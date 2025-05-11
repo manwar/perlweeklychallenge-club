@@ -1,3 +1,3 @@
-# The Weekly Challenge 319
+# The Weekly Challenge 320
 
-Blog: [Words and numbers](https://dev.to/simongreennet/words-and-numbers-54k6)
+Blog: [Words and numbers](https://dev.to/simongreennet/weekly-challenge-the-maximum-difference-2bnm)
