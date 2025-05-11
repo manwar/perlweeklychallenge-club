@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Count the Minimum Common Word](https://packy.dardan.com/b/UD)
+[Perl Weekly Challenge: Happy Mother's Day](https://packy.dardan.com/b/UZ)
