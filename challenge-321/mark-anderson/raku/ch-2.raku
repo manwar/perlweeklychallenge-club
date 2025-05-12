@@ -11,7 +11,7 @@ sub backspace-compare($str1, $str2)
     {
         loop
         {
-            last unless $s ~~ s/(<lower>+)('#'+) <?{ $0.chars <= $1.chars }>//
+            last unless $s ~~ s/(<lower>*)('#'+) <?{ $0.chars <= $1.chars }>//
         }
 
         $s 
