@@ -1,0 +1,22 @@
+--
+-- Perl Weekly Challenge 321
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-321>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc321;
+
+CREATE OR REPLACE FUNCTION
+pwc321.task2_plperl( text, text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+
+   $left  =~ s/ . [#]//xg;
+   $right =~ s/ . [#]//xg;
+
+   return $left eq $right ? 1 : 0;
+   
+$CODE$
+LANGUAGE plperl;

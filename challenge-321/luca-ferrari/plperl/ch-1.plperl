@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 321
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-321>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc321;
+
+CREATE OR REPLACE FUNCTION
+pwc321.task1_plperl( int[] )
+RETURNS numeric
+AS $CODE$
+
+   my ( $numbers ) = @_;
+   die "Must be even in size!" if ( $numbers->@* % 2 != 0 );
+
+   $numbers = [ sort $numbers->@* ];
+
+   my $min_average = undef;
+   
+   for ( 0 .. $numbers->@* - 1 ) {
+       my $current = ( $numbers->@[ $_ ] + $numbers->@[ $numbers->@* - $_ - 1 ] ) / 2;
+       $min_average = $current if ( ! $min_average || $min_average > $current );
+   }
+
+   return $min_average;
+   
+$CODE$
+LANGUAGE plperl;
