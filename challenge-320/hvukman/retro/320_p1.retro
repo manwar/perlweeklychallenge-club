@@ -1,0 +1,12 @@
+Part 1
+bi to get two arrays bigger than zero and less
+than count the length and print the bigger one
+~~~
+'Part_1 s:put nl
+:choosemax (a-n) [ [ #0 lt? ] a:filter a:length ] [ [ #0 gt? ] a:filter a:length ] bi dup-pair gt? [ drop n:put nl ] [ n:put nl ] choose ;
+
+{ #-3 #-2 #-1 #1 #2 #3 } choosemax
+{ #-2 #-1 #0 #0 #1  } choosemax
+{ #1 #2 #3 #4 } choosemax
+
+~~~
