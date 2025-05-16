@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Happy Mother's Day](https://packy.dardan.com/b/UZ)
+[Perl Weekly Challenge: Comparatively Distinct, but Great^H^H^H^H^HAverage](https://packy.dardan.com/b/Up)
