@@ -66,7 +66,7 @@ sub distAvg(@ints)
 
         $average{ (shift @ints)+(pop @ints) } = true;
     }
-    return scalar keys %average;
+    return scalar %average;
 }
 
 sub runTest

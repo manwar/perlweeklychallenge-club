@@ -70,15 +70,15 @@ sub bsp($str)
 sub bspSTR($str)
 {
     my $out = '';
-    for ( split(//, $str) )
+    while ( (my $c = substr($str, 0, 1, '')) ne '' )
     {
-        if ( $_ eq '#' )
+        if ( $c eq '#' )
         {
             substr($out, -1, 1, '');
         }
         else
         {
-            $out .= $_;
+            $out .= $c;
         }
     }
     return $out;
