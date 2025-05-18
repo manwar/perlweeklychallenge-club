@@ -1,3 +1,3 @@
-# The Weekly Challenge 320
+# The Weekly Challenge 321
 
-Blog: [Words and numbers](https://dev.to/simongreennet/weekly-challenge-the-maximum-difference-2bnm)
+Blog: [Compare the Average](https://dev.to/simongreennet/weekly-challenge-compare-the-average-1907)
