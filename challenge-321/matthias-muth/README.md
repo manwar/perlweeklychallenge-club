@@ -1,221 +1,154 @@
-# Elegance Makes the Maximum Difference
-**Challenge 320 solutions in Perl by Matthias Muth**
+# Distinctive Overlaps
 
-## Task 1: Maximum Count
+**Challenge 321 solutions in Perl by Matthias Muth**
 
-> You are given an array of integers.<br/>
-> Write a script to return the maximum between the number of positive and negative integers. Zero is neither positive nor negative.
+## Task 1: Distinct Average
+
+> You are given an array of numbers with even length.<br/>
+> Write a script to return the count of distinct average. The average is calculate by removing the minimum and the maximum, then average of the two.
 >
 > **Example 1**
 >
 > ```text
-> Input: @ints = (-3, -2, -1, 1, 2, 3)
-> Output: 3
+> Input: @nums = (1, 2, 4, 3, 5, 6)
+> Output: 1
 >
-> There are 3 positive integers.
-> There are 3 negative integers.
-> The maximum between 3 and 3 is 3.
+> Step 1: Min = 1, Max = 6, Avg = 3.5
+> Step 2: Min = 2, Max = 5, Avg = 3.5
+> Step 3: Min = 3, Max = 4, Avg = 3.5
+>
+> The count of distinct average is 1.
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @ints = (-2, -1, 0, 0, 1)
+> Input: @nums = (0, 2, 4, 8, 3, 5)
 > Output: 2
 > 
->There are 1 positive integers.
-> There are 2 negative integers.
-> The maximum between 2 and 1 is 2.
+>Step 1: Min = 0, Max = 8, Avg = 4
+> Step 2: Min = 2, Max = 5, Avg = 3.5
+> Step 3: Min = 3, Max = 4, Avg = 3.5
+> 
+>The count of distinct average is 2.
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @ints = (1, 2, 3, 4)
-> Output: 4
+>Input: @nums = (7, 3, 1, 0, 5, 9)
+> Output: 2
 > 
-> There are 4 positive integers.
->There are 0 negative integers.
-> The maximum between 4 and 0 is 4.
-> ```
+> Step 1: Min = 0, Max = 9, Avg = 4.5
+>Step 2: Min = 1, Max = 7, Avg = 4
+> Step 3: Min = 3, Max = 5, Avg = 4
+> 
+> The count of distinct average is 2.
+>```
 
-It's a matter of taste:
+We need to get the minimum and the maximum of the entries in the `@nums` array, and we have to do that repeatedly.
 
-* <u>Single pass</u>:<br/>
-  Go through the list of integers in a loop,
-  increment one of two counters depending on the number's sign.
-  Then return the maximum of the two counts.
-
-* <u>Two-pass</u>:<br/>
-  Count the negative and positive numbers separately,
-  then return the maximum.
-
-Clearly, from an algorithm point of view, and regarding performance,
-the single pass alternative is to be preferred.
-No waste of resources going through the data twice
-only to ignore half of the data in each pass.
-So let's write it out:
+I think that the easiest way to do this is to first sort the array numerically:
 
 ```perl
-#  Single pass solution.
-sub maximum_count( @ints ) {
-    my ( $count_pos, $count_neg ) = ( 0, 0 );
-    for ( @ints ) {
-        if ( $_ > 0 ) {
-            ++$count_pos
-        }
-        elsif ( $_ < 0 ) {
-            ++$count_neg
-        }
-    }
-    return $count_pos > $count_neg ? $count_pos : $count_neg;
-}
+    @nums = sort { $a <=> $b } @nums;
 ```
 
-But even if this probably is high-performance, it has a problem:<br/>
-I don't really like it.<br/>
-Too much programming!
+Then, we have the minimum in the first entry, and the maximum in the last one.<br/>
+It's easy to get and remove those two from the array at the same time: we can use `shift` to get and remove the first one (the minimum) , and `pop` to do the same for the last one (the maximum).<br/>
+So the average is this: 
 
-For a two-pass solution, with a little bit of Perl magic and a functional touch,
-we can avoid the `for` loop,
-and we can avoid using variables at all.
+```perl
+    ( shift( @nums ) + pop( @nums ) ) / 2
+```
 
-For me, this is a much clearer and nicer solution:
+We will be doing this in a loop, as long as we still have at least two numbers (for the average) in the array.
+
+But how do we count the *distinct* averages?
+
+Someone [said](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?) 'When you think the words "unique" or "duplicated", think "hash keys"'.<br/>"Unique" and "distinct" are very often used interchangeably, even though they don't mean exactly the same.<br/>
+But in any case, a hash helps us to find the number of *distinct* values of averages:<br/>Whenever we have computed an average value, we create a hash entry with that value as a key, for example by assigning a value of `1` to it:
+
+```perl
+    my %distinct_values;
+    while ( @nums >= 2 ) {
+        $distinct_values{ ( shift( @nums ) + pop @nums ) / 2 } = 1;
+    }
+```
+
+When we are done, the number of keys in the hash is the number of distinct values we are looking for. We can get the number of keys by using the hash in scalar context.
+
+Then this is a possible solution:
 
 ```perl
 use v5.36;
 
-use List::Util qw( max );
-
-# Two-pass, preferred solution.
-sub maximum_count( @ints ) {
-    return max( scalar grep( $_ > 0, @ints ), scalar grep( $_ < 0, @ints ) );
+sub distinct_average( @nums ) {
+    @nums = sort { $a <=> $b } @nums;
+    my %distinct_values;
+    while ( @nums >= 2 ) {
+        $distinct_values{ ( shift( @nums ) + pop @nums ) / 2 } = 1;
+    }
+    return scalar %distinct_values;
 }
 ```
 
-I will reconsider only once I really need that one little bit of higher performance.<br/>
-Until then, I am very happy with less programming and less typos!
+## Task 2: Backspace Compare
 
-## Task 2: Sum Difference
-
-> You are given an array of positive integers.<br/>
-> Write a script to return the absolute difference between digit sum and element sum of the given array.
+> You are given two strings containing zero or more #.<br/>
+> Write a script to return true if the two given strings are same by treating # as backspace.
 >
 > **Example 1**
 >
 > ```text
-> Input: @ints = (1, 23, 4, 5)
-> Output: 18
+> Input: $str1 = "ab#c"
+>        $str2 = "ad#c"
+> Output: true
 >
-> Element sum: 1 + 23 + 4 + 5 => 33
-> Digit sum: 1 + 2 + 3 + 4 + 5 => 15
-> Absolute difference: | 33 - 15 | => 18
+> For first string,  we remove "b" as it is followed by "#".
+> For second string, we remove "d" as it is followed by "#".
+> In the end both strings became the same.
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @ints = (1, 2, 3, 4, 5)
-> Output: 0
-> 
->Element sum: 1 + 2 + 3 + 4 + 5 => 15
-> Digit sum: 1 + 2 + 3 + 4 + 5 => 15
-> Absolute difference: | 15 - 15 | => 0
+> Input: $str1 = "ab##"
+>     $str2 = "a#b#"
+>    Output: true
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @ints = (1, 2, 34)
-> Output: 27
-> 
-> Element sum: 1 + 2 + 34 => 37
->Digit sum: 1 + 2 + 3 + 4 => 10
-> Absolute difference: | 37 - 10 | => 27
-> ```
+>Input: $str1 = "a#b"
+>     $str2 = "c"
+> Output: false
+>    ```
 
-We need to compare two sums:
+Tricky!
 
-* the sum of the integers in `@ints`,
-* the digit sum of the integers in `@ints`.
+Treating the `#` character as 'backspace' means that the character preceding the `#` as well as the `#` itself can be removed from the string.
 
-The first part is very simple. Using `sum` from `List::Util`:
+My first solution, just doing a global regex substitution (`s/.\#//g`) for both strings, did not work.<br/>The reason is in Example 2 (`"ab##"`):<br/>
+The `b#` will be found and removed, and what is left is `"a#"`, so we should expect to remove that `a#` as well.<br/>
+But the position at which the regex looks for the next occurrence of the `/.\#/` pattern is where the `b#` was found, which is _behind_ the `a`.<br/>That's why the `a#` will *not* be removed.
 
-```perl
-    sum( @ints )
-```
+The solution is to *repeat* the substitution, until we don't find any  `/.\#/` anymore.
 
-For the second part, the digit sum, we have several options:
+We can use the substitution itself as the controlling expression of a `while` loop. The loop body remains empty, because everything we need is done in the loop condition already.
 
-* Map each integer in `@ints` into its <u>individual digit sum</u>,
-  then sum up those digit sums:
+We apply that substitution loop to both strings, then we return the result  of the comparison of the processed strings.
 
-  ```perl
-      sum( map sum( split "", $_ ), @ints )
-  ```
-
-* Map each integer in `@ints` into the <u>list of its digits</u>,
-  then sum up all the digits in one go:
-
-  ```perl
-      sum( map split( "", $_ ), @ints )
-  ```
-
-  This avoids the repeated calls to `sum` for the individual digit sums. 
-
-* Concatenate all the integers in `@ints` into <u>one string</u>,
-  then split it up into single digits,
-  and sum them up:
-
-  ```perl
-      sum( split "", join "", @ints )
-  ```
-
-So here we are again:
-There's more than one way to do it...<br/>
-And choosing my favorite is not easy here.
-
-I would probably not use the first one.<br/>
-It simply isn't necessary to have every individual element's digit sum.
-We can easily avoid all those function calls.
-
-The second one for me is the 'correct' one. <br/>
-Nothing done that is not necessary, very efficient.
-
-But my heart beats for the third solution.
-
-Even if it needs that additional step of generating an intermediate string,
-I like how concise and simple it is.
-And apart from the additional memory needed for that string
-I'm not even sure whether it's not just as efficient as the 'correct' second solution.<br/>
-Only a benchmark could tell.
-
-So here we go.<br/>
-If in doubt, I choose elegance! 
+In the end it looks like this:  
 
 ```perl
-use v5.36;
-
-use List::Util qw( sum );
-
-sub sum_difference( @ints ) {
-    return abs( sum( split "", join "", @ints ) - sum( @ints ) ); 
+sub backspace_compare( $str1, $str2 ) {
+    for ( $str1, $str2 ) {
+        do {} while s/.\#//g;
+    }
+    return $str1 eq $str2;
 }
 ```
-
-**Addendum:**
-
-I couldn't refrain myself from running that benchmark:
-
-```text
-                     Rate sum_difference_1 sum_difference_2 sum_difference_3
-sum_difference_1 136455/s               --             -12%             -24%
-sum_difference_2 155121/s              14%               --             -14%
-sum_difference_3 180004/s              32%              16%               --
-```
-
-My preferred one-string solution is the fastest!<br/>
-What can I say?
-
 
 #### **Thank you for the challenge!**
