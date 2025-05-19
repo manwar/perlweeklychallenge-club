@@ -2,4 +2,4 @@
 
 unit sub MAIN(Str:D $s, UInt:D $size);
 
-put $s.comb.grep(* ne '-').reverse.rotor($size, :partial).map(*.reverse.join).reverse.join('-');
+put $s.comb(/<-[-]>/).reverse.rotor($size, :partial).map(*.reverse.join).reverse.join('-');
