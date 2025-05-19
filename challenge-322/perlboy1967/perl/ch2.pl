@@ -28,7 +28,7 @@ use List::MoreUtils qw(uniq);
 
 sub rankArray (@ints) {
   my ($i,%idx) = (1);
-  $idx{$_} = $i++ for uniq sort @ints;
+  $idx{$_} = $i++ for uniq sort { $a <=> $b } @ints;
   return map { $idx{$_} } @ints;
 }
 
