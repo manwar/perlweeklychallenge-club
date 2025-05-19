@@ -13,13 +13,10 @@ def rank_array(integers):
     >>> rank_array([5, 1, 1, 4, 3])
     (4, 1, 1, 3, 2)
     """
-    integers_sorted = sorted(integers)
+    integers_sorted = sorted(set(integers))
     rank_dict = {}
-    rank = 1
-    for i in integers_sorted:
-        if i not in rank_dict:
-            rank_dict[i] = rank
-            rank += 1
+    for n, i in enumerate(integers_sorted, start=1):
+        rank_dict[i] = n
     return tuple(rank_dict[i] for i in integers)
 
 
