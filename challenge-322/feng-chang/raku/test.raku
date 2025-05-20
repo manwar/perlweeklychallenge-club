@@ -22,3 +22,7 @@ pwc-test './ch-1.raku', '--', '-A-B-CD-E', 4, 'A-BCDE',  'String Format: $str="-
 pwc-test './ch-2.raku', <55 22 44 33>, '4 1 3 2',   'Rank Array: (55,22,44,33) => (4,1,3,2)';
 pwc-test './ch-2.raku', <10 10 10>,    '1 1 1',     'Rank Array: (10,10,10)    => (1,1,1)';
 pwc-test './ch-2.raku', <5 1 1 4 3>,   '4 1 1 3 2', 'Rank Array: (5,1,1,4,3)   => (4,1,1,3,2)';
+
+pwc-test './ch-2a.raku', <55 22 44 33>, '4 1 3 2',   'Rank Array: (55,22,44,33) => (4,1,3,2)';
+pwc-test './ch-2a.raku', <10 10 10>,    '1 1 1',     'Rank Array: (10,10,10)    => (1,1,1)';
+pwc-test './ch-2a.raku', <5 1 1 4 3>,   '4 1 1 3 2', 'Rank Array: (5,1,1,4,3)   => (4,1,1,3,2)';
