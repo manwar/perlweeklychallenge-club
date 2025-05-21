@@ -48,23 +48,37 @@ sub strFmtRE($str, $i)
     return $str =~ s/^-//r;
 }
 
-sub strFmtSubstr($str, $i)
-{
-    $str = reverse $str =~ s/-+//gr;
-    my $d = int( (length($str) - 0.5) / $i);
-
-    for my $p ( map { $_ * $i } reverse 1 .. $d )
-    {
-        substr($str, $p, 0, '-');
-        $logger->debug("i=$i p=$p str=$str");
-    }
-    return reverse $str;
-}
-
 sub strFmtUnpack($str, $i)
 {
     return scalar reverse join("-", unpack("(A$i)*", reverse $str =~ s/-//gr));
 }
+
+sub strFmtShift($str, $i)
+{
+    my @in = split(//, $str =~ s/-//gr);
+    my $out;
+    
+    my $d = 0;
+    while ( @in )
+    {
+        $out .= pop @in;
+        $out .= '-' if ( ++$d % $i == 0 && @in );
+    }
+    return scalar reverse $out;
+}
+
+sub strFmtSubstr($str, $i)
+{
+    $str =~ s/-//g;
+    my $out = substr($str, 0, length($str) % $i, '');
+    while ( $str ne '' )
+    {
+        $out .= '-' if ( $out ne '' );
+        $out .= substr($str, 0, $i, '');
+    }
+    return $out;
+}
+
 
 sub runTest
 {
@@ -82,14 +96,13 @@ sub runTest
     is( strFmtUnpack("A-BC-D-E" , 2), "A-BC-DE", "Example 2");
     is( strFmtUnpack("-A-B-CD-E", 4), "A-BCDE",  "Example 3");
 
+    is( strFmtShift("ABC-D-E-F", 3), "ABC-DEF", "Example 1");
+    is( strFmtShift("A-BC-D-E" , 2), "A-BC-DE", "Example 2");
+    is( strFmtShift("-A-B-CD-E", 4), "A-BCDE",  "Example 3");
+
     done_testing;
 }
 
-# $ perl ch-1.pl -b 200000
-#            Rate substr  regex unpack
-# substr  54054/s     --   -54%   -81%
-# regex  117647/s   118%     --   -58%
-# unpack 281690/s   421%   139%     --
 sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
@@ -101,5 +114,6 @@ sub runBenchmark($repeat)
             regex  => sub { strFmtRE($str, $i) },
             substr => sub { strFmtSubstr($str, $i) },
             unpack => sub { strFmtUnpack($str, $i) },
+            shift  => sub { strFmtShift($str, $i) },
         });
 }
