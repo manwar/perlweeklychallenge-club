@@ -1,0 +1,33 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str is copy where $str.chars > 0,
+               Int $i where $i > 0,
+               :v(:$verbose));
+
+$str ~~ s:g/"-"//;
+
+say ": Dash free: $str" if $verbose;
+
+my @new;
+
+my $size = $str.chars % $i;
+
+if $size
+{
+  my $add = $str.substr(0, $size);
+  $str = $str.substr($size);
+
+  @new.push: $add;
+  say ": Short part: $add" if $verbose;
+}
+
+while $str.chars
+{
+  my $add = $str.substr(0, $i);
+  $str = $str.substr($i);
+
+  @new.push: $add;
+  say ": Full size part: $add" if $verbose;
+}
+
+say @new.join("-");
