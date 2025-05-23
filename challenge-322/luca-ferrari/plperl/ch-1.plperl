@@ -1,0 +1,27 @@
+--
+-- Perl Weekly Challenge 322
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-322>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc322;
+
+CREATE OR REPLACE FUNCTION
+pwc322.task1_plperl( text, int)
+RETURNS text
+AS $CODE$
+
+   my ( $string, $size ) = @_;
+   die "Size should be less then the length of the string" if ( length( $string ) < $size );
+
+   my @chars = split //, reverse join( '', split( '-', $string ) );
+   my $string;
+   while ( @chars ) {
+   	 $string .= shift @chars for 1 .. $size;
+	 $string .= '-' if ( @chars );
+   }
+
+   return reverse $string;
+   
+$CODE$
+LANGUAGE plperl;

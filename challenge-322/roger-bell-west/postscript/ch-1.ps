@@ -1,0 +1,107 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/formatstring {
+    0 dict begin
+    /n exch def
+    s2a { 16#2D ne } filter /p exch def
+    /r p length n mod def
+    r 0 eq {
+        /r r n add def
+    } if
+    [
+        p enumerate.array {
+            aload pop
+            /c exch def
+            /i exch def
+            r i eq {
+                16#2D
+                /r r n add def
+            } if
+            c
+        } forall
+    ]
+    a2s
+    end
+} bind def
+
+(formatstring) test.start
+(ABC-D-E-F) 3 formatstring (ABC-DEF) eq test
+(A-BC-D-E) 2 formatstring (A-BC-DE) eq test
+(-A-B-CD-E) 4 formatstring (A-BCDE) eq test
+test.end

@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 322
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-322>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc322;
+
+CREATE OR REPLACE FUNCTION
+pwc322.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   my @result;
+
+   for my $current ( $numbers->@* ) {
+       my $index = 1;
+       for ( sort { $a <=> $b } $numbers->@* ) {
+       	   if ( $_ == $current ) {
+	      push @result, $index;
+	      last;
+	   }
+
+	   $index++;
+       }
+   }
+
+   return [ @result ];
+   
+$CODE$
+LANGUAGE plperl;

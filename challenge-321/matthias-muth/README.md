@@ -54,20 +54,33 @@ I think that the easiest way to do this is to first sort the array numerically:
     @nums = sort { $a <=> $b } @nums;
 ```
 
-Then, we have the minimum in the first entry, and the maximum in the last one.<br/>
-It's easy to get and remove those two from the array at the same time: we can use `shift` to get and remove the first one (the minimum) , and `pop` to do the same for the last one (the maximum).<br/>
+Then, we have the minimum in the first entry
+and the maximum in the last one.<br/>
+It's easy to get and remove those two from the array at the same time:
+we can use `shift` to get and remove the first one (the minimum),
+and `pop` to do the same for the last one (the maximum).<br/>
 So the average is this: 
 
 ```perl
     ( shift( @nums ) + pop( @nums ) ) / 2
 ```
 
-We will be doing this in a loop, as long as we still have at least two numbers (for the average) in the array.
+We will be doing this in a loop,
+as long as we still have at least two numbers
+(for calculating their average) in the array.
 
 But how do we count the *distinct* averages?
 
-Someone [said](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?) 'When you think the words "unique" or "duplicated", think "hash keys"'.<br/>"Unique" and "distinct" are very often used interchangeably, even though they don't mean exactly the same.<br/>
-But in any case, a hash helps us to find the number of *distinct* values of averages:<br/>Whenever we have computed an average value, we create a hash entry with that value as a key, for example by assigning a value of `1` to it:
+Someone
+[said](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?)
+'When you think the words "unique" or "duplicated", think "hash keys"'.<br/>
+"Unique" and "distinct" are very often used interchangeably,
+even though they don't mean exactly the same thing.<br/>
+But no matter what,
+a hash helps us to find the number of *distinct* values of averages:<br/>
+Whenever we have computed an average value,
+we create a hash entry with that value as a key,
+for example by assigning a value of `1` to it:
 
 ```perl
     my %distinct_values;
@@ -76,9 +89,11 @@ But in any case, a hash helps us to find the number of *distinct* values of aver
     }
 ```
 
-When we are done, the number of keys in the hash is the number of distinct values we are looking for. We can get the number of keys by using the hash in scalar context.
+When we are done,
+the number of keys in the hash is the number of distinct values we are looking for.
+We can get the number of keys by using the hash in scalar context.
 
-Then this is a possible solution:
+Which makes this my solution:
 
 ```perl
 use v5.36;
@@ -128,11 +143,19 @@ sub distinct_average( @nums ) {
 
 Tricky!
 
-Treating the `#` character as 'backspace' means that the character preceding the `#` as well as the `#` itself can be removed from the string.
+Treating the `#` character as 'backspace' means that the character preceding the `#` as well as the `#` itself can be removed from the string.
 
-My first solution, just doing a global regex substitution (`s/.\#//g`) for both strings, did not work.<br/>The reason is in Example 2 (`"ab##"`):<br/>
-The `b#` will be found and removed, and what is left is `"a#"`, so we should expect to remove that `a#` as well.<br/>
-But the position at which the regex looks for the next occurrence of the `/.\#/` pattern is where the `b#` was found, which is _behind_ the `a`.<br/>That's why the `a#` will *not* be removed.
+My first solution,
+just doing a global regex substitution (`s/.\#//g`) for both strings,
+did not work.<br/>
+The reason is in Example 2 (`"ab##"`):<br/>
+The `b#` will be found and removed,
+and what is left is `"a#"`,
+so we should expect to remove that `a#` as well.<br/>
+But the position at which the regex looks for the next
+occurrence of the `/.\#/` pattern is where the `b#` was found,
+which is _behind_ the `a`.<br/>
+That's why the `a#` will *not* be removed.
 
 The solution is to *repeat* the substitution, until we don't find any  `/.\#/` anymore.
 
@@ -140,12 +163,48 @@ We can use the substitution itself as the controlling expression of a `while` lo
 
 We apply that substitution loop to both strings, then we return the result  of the comparison of the processed strings.
 
-In the end it looks like this:  
+In the end it looks like this:
 
 ```perl
 sub backspace_compare( $str1, $str2 ) {
     for ( $str1, $str2 ) {
         do {} while s/.\#//g;
+    }
+    return $str1 eq $str2;
+}
+```
+
+**UPDATE:**
+
+Niels van Dijke's
+[posted solution](https://www.facebook.com/groups/theweeklychallengegroup/permalink/1357372518846815/),
+using `s/[^#]#//` for the substitution,
+made me think what can happen with the more simple `s/.#//g` in my solution
+(still using it repeatedly).<br/>
+And in fact my solution failed for an example like `"abc###"`:
+it would remove the `c#` and then the `##` in the first go,
+leaving `"ab"`, and ending the loop.
+
+I also learned that it's not necessary to escape the `#` in a regular expression
+(at least as long as we don't use `/x`).
+
+So it has to be either this:
+```perl
+        do {} while s/.#//;		# No '/g'.
+```
+which restarts the search from the beginning after everysubstitution,
+or this, using Niels' pattern:
+```perl
+        do {} while s/[^#]#//g;
+```
+to keep the 'mini-optimization' of using `/g`
+to at least replace all possible non-overlapping sequences before restarting.<br/>
+And that's my updated solution:
+
+```perl
+sub backspace_compare( $str1, $str2 ) {
+    for ( $str1, $str2 ) {
+        do {} while s/[^#]#//g;
     }
     return $str1 eq $str2;
 }
