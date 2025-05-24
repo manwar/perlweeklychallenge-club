@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Comparatively Distinct, but Great^H^H^H^H^HAverage](https://packy.dardan.com/b/Up)
+[Perl Weekly Challenge: The array is rank, but the string is formatted](https://packy.dardan.com/b/VE)
