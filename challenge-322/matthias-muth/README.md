@@ -1,154 +1,198 @@
-# Distinctive Overlaps
+# Ranking Code, Ranking Numbers
 
-**Challenge 321 solutions in Perl by Matthias Muth**
+**Challenge 322 solutions in Perl by Matthias Muth**
 
-## Task 1: Distinct Average
+## Task 1: String Format
 
-> You are given an array of numbers with even length.<br/>
-> Write a script to return the count of distinct average. The average is calculate by removing the minimum and the maximum, then average of the two.
+> You are given a string and a positive integer.<br/>
+> Write a script to format the string, removing any dashes, in groups of size given by the integer. The first group can be smaller than the integer but should have at least one character. Groups should be separated by dashes.
 >
 > **Example 1**
 >
 > ```text
-> Input: @nums = (1, 2, 4, 3, 5, 6)
-> Output: 1
->
-> Step 1: Min = 1, Max = 6, Avg = 3.5
-> Step 2: Min = 2, Max = 5, Avg = 3.5
-> Step 3: Min = 3, Max = 4, Avg = 3.5
->
-> The count of distinct average is 1.
+> Input: $str = "ABC-D-E-F", $i = 3
+> Output: "ABC-DEF"
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @nums = (0, 2, 4, 8, 3, 5)
-> Output: 2
-> 
->Step 1: Min = 0, Max = 8, Avg = 4
-> Step 2: Min = 2, Max = 5, Avg = 3.5
-> Step 3: Min = 3, Max = 4, Avg = 3.5
-> 
->The count of distinct average is 2.
+> Input: $str = "A-BC-D-E", $i = 2
+> Output: "A-BC-DE"
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @nums = (7, 3, 1, 0, 5, 9)
-> Output: 2
-> 
-> Step 1: Min = 0, Max = 9, Avg = 4.5
->Step 2: Min = 1, Max = 7, Avg = 4
-> Step 3: Min = 3, Max = 5, Avg = 4
-> 
-> The count of distinct average is 2.
->```
+>Input: $str = "-A-B-CD-E", $i = 4
+> Output: "A-BCDE"
+> ```
 
-We need to get the minimum and the maximum of the entries in the `@nums` array, and we have to do that repeatedly.
-
-I think that the easiest way to do this is to first sort the array numerically:
+The first thing to observe is that the `'-'` dash signs in the input strings have absolutely nothing to do with the end result, so we best get rid of them first. Like this:
 
 ```perl
-    @nums = sort { $a <=> $b } @nums;
+    $str =~ s/-//g;
 ```
 
-Then, we have the minimum in the first entry, and the maximum in the last one.<br/>
-It's easy to get and remove those two from the array at the same time: we can use `shift` to get and remove the first one (the minimum) , and `pop` to do the same for the last one (the maximum).<br/>
-So the average is this: 
+Now we have a string that consists of non-dash characters only.<br/>
 
-```perl
-    ( shift( @nums ) + pop( @nums ) ) / 2
-```
+For putting dashes back in at the right spots, we need to split up that string into chunks of `$i` characters.<br/>
+The only chunk that can have less than `$i` characters is at the start of the string.
 
-We will be doing this in a loop, as long as we still have at least two numbers (for the average) in the array.
+I tried several approaches:
 
-But how do we count the *distinct* averages?
+- Using a regular expression to "chip away" chunks of at most `$i` characters at the end of the string, in a loop.<br/>Then `join` them together with dashes, in reverse order:
 
-Someone [said](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?) 'When you think the words "unique" or "duplicated", think "hash keys"'.<br/>"Unique" and "distinct" are very often used interchangeably, even though they don't mean exactly the same.<br/>
-But in any case, a hash helps us to find the number of *distinct* values of averages:<br/>Whenever we have computed an average value, we create a hash entry with that value as a key, for example by assigning a value of `1` to it:
+  ```perl
+      my @chunks;
+      while ( $str =~ s/(.{1,$i})$// ) {
+          push @chunks, $1;
+      }
+      return join "-", reverse @chunks;
+  ```
 
-```perl
-    my %distinct_values;
-    while ( @nums >= 2 ) {
-        $distinct_values{ ( shift( @nums ) + pop @nums ) / 2 } = 1;
-    }
-```
+  I call this a 'destructive' solution, because the string in `$str` is modified, and completely destroyed in the end.
 
-When we are done, the number of keys in the hash is the number of distinct values we are looking for. We can get the number of keys by using the hash in scalar context.
+  I ran a lot of benchmarks for my several solutions (it's so easy with `use Benchmark` and `cmpthese`!).<br/>This solution, on my server, ran a maximum of 18,963 executions/s (using a string of 102 characters) .
 
-Then this is a possible solution:
+- Maybe it's faster when it's 'non-destructive', and using the `/g` global flag instead of a restarting the regular expression in a loop.<br/>
+  For working left to right, and still producing the chunks in the same order, I simply reversed the string first. Each chunk will be a reversed string then, and as the chunks have to be reversed anyway, we can just reverse the complete result in the end.<br/>
+  Like this:
+  
+  ```perl
+      $str = reverse $str =~ s/-//gr;
+      my @chunks;
+      push @chunks, $&
+          while $str =~ /.{1,$i}/g;
+      return scalar reverse join "-", @chunks;
+  ```
+  
+  Ok, quite a bit better: 28,183 executions/s. Roughly 50% more.
+
+* But what if we don't use regular expressions, but just extract the chunks using `substr`?<br/>The first solution using a regex above translates to this, using a `$index` variable as a pointer into the string.
+
+  ```perl
+      my ( @chunks, $index );
+      for ( $index = length( $str ) - $i; $index >= 0; $index -= $i ) {
+          push @chunks, substr $str, $index, $i;
+      }
+      if ( $index > -$i ) {
+          push @chunks, substr $str, 0, length( $str ) % $i;
+      }
+      return join "-", reverse @chunks;
+  ```
+
+  The loop catches *all* chunks of size `$i`. We then need to check whether there is any smaller chunk left at the end, which looks a bit complicated, and clumsy, calculating the number of characters in the last chunk, between `1` and `$i` (inclusively).
+
+  But we are at 102,037 execution/s!
+
+At this point, we can only expect very small benefits when we try to optimize further.<br/>
+But maybe we can do some 'cosmetic' changes:
+
+* To avoid that clumsy check at the end, we can make sure that there is at least one character left in the string at the end of the loop. That's easily done by just changing the `$index >= 0` condition to `$index > 0`.  Then we don't need the condition anymore, because we will always have a last chunk outside the loop.
+
+  ```perl
+      my ( @chunks, $index );
+      for ( $index = length( $str ) - $i; $index > 0; $index -= $i ) {
+          push @chunks, substr $str, $index, $i;
+      }
+      push @chunks, substr( $str, 0, ( length( $str ) - 1 ) % $i + 1 );
+      return join "-", reverse @chunks;
+  ```
+
+  A minimal gain of speed even: 103,186 executions/s (I ran *a lot* of benchmarks to get reliable maximum numbers).
+
+* Some changes to do 'micro-optimizations'. But actually they reduce the code, too, and can make things more clear:
+
+  * Use a `while` loop instead of the `for` loop. The effect is that the `$index` variable keeps its last value upon exiting the loop, and we can use the last value to determine the size of the last chunk.
+
+  * Having only one statement left inside the loop, we can flip around the loop (syntactically speaking, using a `while`  'statement modifier' instead of a `while` loop).
+  
+  * Start with the `$index` one chunk size too high, and 'inline' the decrementing (also adapt the end condition).<br/>
+    This leaves the size of the last chunk in `$index`, which is very convenient: it eliminates the length calculation.
+    
+  * We don't need to `push` the last chunk onto the chunk stack, we can use it directly in the return statement. 
+  
+  ```perl
+      my @chunks;
+      my $index = length( $str );
+      push @chunks, substr $str, $index -= $i, $i
+          while $index > $i;
+      return join "-", reverse @chunks, substr( $str, 0, $index )
+  ```
+  
+
+With all of these, we reach an amazing speed of 106,803 executions/s.<br/>
+I think it was worth it to go through several iterations of the code.
+
+This is my "best" solution:
 
 ```perl
 use v5.36;
 
-sub distinct_average( @nums ) {
-    @nums = sort { $a <=> $b } @nums;
-    my %distinct_values;
-    while ( @nums >= 2 ) {
-        $distinct_values{ ( shift( @nums ) + pop @nums ) / 2 } = 1;
-    }
-    return scalar %distinct_values;
+sub string_format( $str, $i ) {
+    $str =~ s/-//g;
+    my @chunks;
+    my $index = length( $str );
+    push @chunks, substr $str, $index -= $i, $i
+        while $index > $i;
+    return join "-", reverse @chunks, substr( $str, 0, $index );
 }
 ```
 
-## Task 2: Backspace Compare
 
-> You are given two strings containing zero or more #.<br/>
-> Write a script to return true if the two given strings are same by treating # as backspace.
+
+## Task 2: Rank Array
+
+> You are given an array of integers.<br/>
+> Write a script to return an array of the ranks of each element: the lowest value has rank 1, next lowest rank 2, etc. If two elements are the same then they share the same rank.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str1 = "ab#c"
->        $str2 = "ad#c"
-> Output: true
+> Input: @ints = (55, 22, 44, 33)
+> Output: (4, 1, 3, 2)
+> ```
 >
-> For first string,  we remove "b" as it is followed by "#".
-> For second string, we remove "d" as it is followed by "#".
-> In the end both strings became the same.
->```
-> 
->**Example 2**
-> 
->```text
-> Input: $str1 = "ab##"
->     $str2 = "a#b#"
->    Output: true
+> **Example 2**
+>
+> ```text
+> Input: @ints = (10, 10, 10)
+> Output: (1, 1, 1)
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: $str1 = "a#b"
->     $str2 = "c"
-> Output: false
->    ```
+> Input: @ints = (5, 1, 1, 4, 3)
+> Output: (4, 1, 1, 3, 2)
+> ```
 
-Tricky!
+In sports events, when two or more participants share the same result, there are different strategies for handling these ties. Most often, the ['1224' standard competition ranking system ](https://en.wikipedia.org/wiki/Ranking#Standard_competition_ranking_(%221224%22_ranking)) is used. If two participants share the same result, their ranking is the same,  and the next rank after them is not assigned.
 
-Treating the `#` character as 'backspace' means that the character preceding the `#` as well as the `#` itself can be removed from the string.
+From the examples I understand that in this task, another ranking system is used: the ['1223', or 'dense' ranking system](https://en.wikipedia.org/wiki/Ranking#Dense_ranking_(%221223%22_ranking)). If there are equal results, they share the same rank, but the next result in the order is assigned the next rank, without gaps.<br/>
+This makes the task easier, I think.
 
-My first solution, just doing a global regex substitution (`s/.\#//g`) for both strings, did not work.<br/>The reason is in Example 2 (`"ab##"`):<br/>
-The `b#` will be found and removed, and what is left is `"a#"`, so we should expect to remove that `a#` as well.<br/>
-But the position at which the regex looks for the next occurrence of the `/.\#/` pattern is where the `b#` was found, which is _behind_ the `a`.<br/>That's why the `a#` will *not* be removed.
+After removing all double entries (using `uniq` from `List::Util`), we sort the numbers.<br/>
+The index of each element in the sorted array then corresponds to the rank of that element. We just need to add 1 to the index, because the rank is 1-based.
 
-The solution is to *repeat* the substitution, until we don't find any  `/.\#/` anymore.
+We can build a rank lookup from that, of course using a hash.
 
-We can use the substitution itself as the controlling expression of a `while` loop. The loop body remains empty, because everything we need is done in the loop condition already.
+The last step is to map every number of the input array to its rank, using that lookup hash.
 
-We apply that substitution loop to both strings, then we return the result  of the comparison of the processed strings.
-
-In the end it looks like this:  
+So this is all:
 
 ```perl
-sub backspace_compare( $str1, $str2 ) {
-    for ( $str1, $str2 ) {
-        do {} while s/.\#//g;
-    }
-    return $str1 eq $str2;
+use v5.36;
+use List::Util qw( uniq );
+
+sub rank_array( @ints ) {
+    my @uniq_sorted = sort { $a <=> $b } uniq @ints;
+    my %ranks = map { ( $uniq_sorted[$_] => $_ + 1 ) } 0..$#uniq_sorted; 
+    return map $ranks{$_}, @ints;
 }
 ```
+
+No fighting for performance this time. ;-)
 
 #### **Thank you for the challenge!**
