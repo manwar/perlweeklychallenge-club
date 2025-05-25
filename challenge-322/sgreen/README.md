@@ -1,3 +1,3 @@
-# The Weekly Challenge 321
+# The Weekly Challenge 322
 
-Blog: [Compare the Average](https://dev.to/simongreennet/weekly-challenge-compare-the-average-1907)
+Blog: [Strings and Arrays](https://dev.to/simongreennet/weekly-challenge-strings-and-arrays-4a8h)
