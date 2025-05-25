@@ -10,9 +10,6 @@
 
 use v5.36;
 
-use Dsay;
-$debug{ALL} = 1;
-
 sub string_format_re_d_btof( $str, $i ) {
     $str =~ s/-//g;
     my @chunks;
@@ -134,15 +131,14 @@ sub string_format_nd_nomy_tail_push_rev_inline_w_nopush( $str, $i ) {
     return join "-", reverse @chunks, substr( $str, 0, $index );
 }
 
-# *string_format = \&string_format_re_nd_rev_ftob;
-
-=for testing
-
-use Test2::V0 qw( -no_srand );
+*string_format = \&string_format_nd_nomy_tail_push_rev_inline_w_nopush;
 
 #
 #   Flexible testing.
 #
+
+use Test2::V0 qw( -no_srand );
+use Data::Dump qw( pp );
 
 my $sub_name = "string_format";
 my @tests = (
@@ -168,7 +164,7 @@ for my $sub ( sort grep /^${sub_name}/, keys %:: ) {
 
 done_testing;
 
-=cut
+__END__
 
 
 use Benchmark qw( :all :hireswallclock );
@@ -176,6 +172,16 @@ use Benchmark qw( :all :hireswallclock );
 my $str = join "", 1..102;
 
 cmpthese( -5, {
+    re_d_btof =>
+        sub { string_format_re_d_btof( $str, 4 ) },
+    re_nd_rev_ftob =>
+        sub { string_format_re_nd_rev_ftob( $str, 4 ) },
+
+    d_btof_unshift =>
+        sub { string_format_d_btof_unshift( $str, 4 ) },
+    d_btof_push_rev =>
+        sub { string_format_d_btof_push_rev( $str, 4 ) },
+
     nd_ftob =>
         sub { string_format_nd_ftob( $str, 4 ) },
     nd_btof_push_rev =>
@@ -193,15 +199,3 @@ cmpthese( -5, {
     nd_nomy_tail_push_rev_inline_w_nopush =>
         sub { string_format_nd_nomy_tail_push_rev_inline_w_nopush( $str, 4 ) },
 } );
-
-__END__
-    re_d_btof =>
-        sub { string_format_re_d_btof( $str, 4 ) },
-    re_nd_rev_ftob =>
-        sub { string_format_re_nd_rev_ftob( $str, 4 ) },
-
-    d_btof_unshift =>
-        sub { string_format_d_btof_unshift( $str, 4 ) },
-    d_btof_push_rev =>
-        sub { string_format_d_btof_push_rev( $str, 4 ) },
-
