@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 323
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-323>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc323;
+
+CREATE OR REPLACE FUNCTION
+pwc323.task1_plperl( text[] )
+RETURNS int
+AS $CODE$
+
+   my ( $operations ) = @_;
+   my $value = 0;
+
+   for ( $operations->@* ) {
+       $value++ and next if ( $_ =~ / \+ \+ /x );
+       $value-- and next if ( $_ =~ / \- \- /x );
+   }
+
+   return $value;
+   
+$CODE$
+LANGUAGE plperl;
