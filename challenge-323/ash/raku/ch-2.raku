@@ -24,7 +24,9 @@ sub income-tax($income, @levels) {
         else {
             $taxable = $remainder;
             $remainder = 0;
-        }        
+        }
+
+        last unless $taxable;
 
         $tax += $taxable * $rate / 100;
 
