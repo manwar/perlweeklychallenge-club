@@ -1,0 +1,54 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/incrementdecrement {
+    0 exch
+    {
+        1 get 43 eq {
+            1 add
+        } {
+            1 sub
+        } ifelse
+    } forall
+} bind def
+
+(incrementdecrement) test.start
+[(--x) (x++) (x++)] incrementdecrement 1 eq test
+[(x++) (++x) (x++)] incrementdecrement 3 eq test
+[(x++) (++x) (--x) (x--)] incrementdecrement 0 eq test
+test.end
