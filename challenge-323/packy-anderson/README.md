@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: The array is rank, but the string is formatted](https://packy.dardan.com/b/VE)
+[Perl Weekly Challenge: Should five percent appear too small...](https://packy.dardan.com/b/Ve)
