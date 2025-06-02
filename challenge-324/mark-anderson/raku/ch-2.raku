@@ -7,5 +7,5 @@ is total-xor(3..8),  480;
 
 sub total-xor(+@ints)
 {
-    [+] flat @ints, @ints.combinations(2..*).race.map({ [+^] $_ })
+    [+] @ints.combinations.race.map({ [+^] $_ })
 }
