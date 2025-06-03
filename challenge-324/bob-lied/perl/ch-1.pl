@@ -72,6 +72,16 @@ sub makeArray($r, $c, @ints)
     return \@array;
 }
 
+sub ma2($r, $c, @ints)
+{
+    use List::MoreUtils qw/natatime/;
+    my @array;
+    my @row;
+    my $iterator = natatime $c, @ints;
+    push @array, [ @row ] while ( @row = $iterator->() );
+    return \@array;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -81,6 +91,10 @@ sub runTest
     is( makeArray(4,1, 1,2,3,4), [[1],[2],[3],[4]], "Example 3");
 
     like( dies { makeArray(7,3, 2,4,6) }, qr/Size error/, "Wrong dimensions");
+
+    is( ma2(2,2, 1,2,3,4), [[1,2],[3,4]    ], "Example 1");
+    is( ma2(1,3, 1,2,3  ), [[1,2,3]        ], "Example 2");
+    is( ma2(4,1, 1,2,3,4), [[1],[2],[3],[4]], "Example 3");
 
     done_testing;
 }
