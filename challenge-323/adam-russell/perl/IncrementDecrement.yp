@@ -1,0 +1,89 @@
+
+    
+  
+  %token INCREMENT 
+  %token DECREMENT 
+  %token LETTER
+  %expect 2
+
+  
+  %{
+      my $variable_state = {};  
+  %}
+
+
+    
+    %%
+    
+    
+  program:      statement                    {$variable_state}
+  | program statement
+  ;
+  
+  statement:  variable_declaration       #{$variable_state}  
+  | increment_decrement
+  ;
+
+  variable_declaration: LETTER           {$variable_state->{$_[1]} = 0}    
+  ;
+
+  increment_decrement: increment_variable
+  | decrement_variable
+  ;
+
+  increment_variable:   INCREMENT LETTER {$variable_state->{$_[2]}++}
+  | LETTER INCREMENT                     {$variable_state->{$_[1]}++}
+  ;
+
+  decrement_variable: DECREMENT LETTER   {$variable_state->{$_[2]}--}      
+  | LETTER DECREMENT                     {$variable_state->{$_[1]}--}
+  ;
+  
+
+    
+    %%
+    
+    
+  
+  sub lexer{
+    my($parser) = @_;
+    $parser->YYData->{INPUT} or return(q//, undef);
+    $parser->YYData->{INPUT} =~ s/^[ \t]//g;
+    ##
+    # send tokens to parser
+    ##
+    for($parser->YYData->{INPUT}){
+        s/^(\s+)// and return (q/SPACE/, $1);
+        s/^([a-z]{1})// and return (q/LETTER/, $1);
+        s/^(\+\+)// and return (q/INCREMENT/, $1);
+        s/^(--)// and return (q/DECREMENT/, $1);
+    }  
+  }
+
+  
+  sub parse{
+    my($self, $input) = @_;
+    $input =~ tr/\t/ /s;
+    $input =~ tr/\n/ /s;
+    $self->YYData->{INPUT} = $input;
+    my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+    return $result;  
+  }
+
+  
+  sub error{
+    exists $_[0]->YYData->{ERRMSG}
+    and do{
+        print $_[0]->YYData->{ERRMSG};
+            return;
+    };
+    print "syntax error\n"; 
+  }
+
+  
+    sub clear{
+        my($self) = @_;
+        $variable_state = {};  
+    }
+
+
