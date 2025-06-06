@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Should five percent appear too small...](https://packy.dardan.com/b/Ve)
+[Perl Weekly Challenge: Totally 2bular!](https://packy.dardan.com/b/W3)
