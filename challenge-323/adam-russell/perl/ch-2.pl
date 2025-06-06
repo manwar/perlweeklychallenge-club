@@ -5,7 +5,6 @@
       my($income, $tax_brackets) = @_;
       
   $tax_brackets = [sort {$a->[0] <=> $b->[0]} @{$tax_brackets}];
-  use Data::Dump q/pp/;
 
       my $tax = 0;
       my $taxed = 0;
