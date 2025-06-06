@@ -21,15 +21,16 @@
   ;
   
   statement:  variable_declaration       
-  | increment_decrement
+  | increment_variable
+  | decrement_variable
   ;
 
   variable_declaration: LETTER           {$variable_state->{$_[1]} = 0}    
   ;
 
-  increment_decrement: increment_variable
-  | decrement_variable
-  ;
+  #increment_decrement: increment_variable
+  #| decrement_variable
+  #;
 
   increment_variable:   INCREMENT LETTER {$variable_state->{$_[2]}++}
   | LETTER INCREMENT                     {$variable_state->{$_[1]}++}
