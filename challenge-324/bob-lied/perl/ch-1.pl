@@ -45,6 +45,12 @@ unless ( $Row && $Col && @ARGV )
     exit(1);
 }
 
+sub show($array)
+{
+    my $s = join(',', map { '['.join(',', $_->@*).']' } $array->@*);
+    return "($s)";
+}
+
 my $Array;
 try {
     $Array = makeArray($Row, $Col, @ARGV);
@@ -54,8 +60,9 @@ catch ( $err )
     say $logger->error($err);
     exit 1;
 }
-use Data::Dumper; $Data::Dumper::Indent = 0; $Data::Dumper::Terse = 1;
-say Dumper($Array);
+#use Data::Dumper; $Data::Dumper::Indent = 0; $Data::Dumper::Terse = 1;
+#say Dumper($Array);
+say show($Array);
 
 #=============================================================================
 sub makeArray($r, $c, @ints)
