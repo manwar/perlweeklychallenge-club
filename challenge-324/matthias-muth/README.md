@@ -1,223 +1,283 @@
-# Decrement Your Tax Amount.
+# Reduce and Reduce, and Reduce!
 
-**Challenge 323 solutions in Perl by Matthias Muth**
+**Challenge 324 solutions in Perl by Matthias Muth**
 
-## Task 1: Increment Decrement
+## Task 1: 2D Array
 
-> You are given a list of operations.<br/>
-> Write a script to return the final value after performing the given operations in order. The initial value is always 0.<br/>
-> ```text
-> Possible Operations:
-> ++x or x++: increment by 1
-> --x or x--: decrement by 1
->```
-> 
+> You are given an array of integers and two integers \$r and \$c.<br/>
+> Write a script to create two dimension array having \$r rows and \$c columns using the given array.
+>
 > **Example 1**
 >
 > ```text
-> Input: @operations = ("--x", "x++", "x++")
-> Output: 1
->
-> Operation "--x" =>  0 - 1 => -1
-> Operation "x++" => -1 + 1 =>  0
-> Operation "x++" =>  0 + 1 =>  1
+> Input: @ints = (1, 2, 3, 4), $r = 2, $c = 2
+> Output: ([1, 2], [3, 4])
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: @operations = ("x++", "++x", "x++")
-> Output: 3
+> Input: @ints = (1, 2, 3), $r = 1, $c = 3
+> Output: ([1, 2, 3])
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @operations = ("x++", "++x", "--x", "x--")
-> Output: 0
-> 
-> Operation "x++" => 0 + 1 => 1
->Operation "++x" => 1 + 1 => 2
-> Operation "--x" => 2 - 1 => 1
-> Operation "x--" => 1 - 1 => 0
+>Input: @ints = (1, 2, 3, 4), $r = 4, $c = 1
+> Output: ([1], [2], [3], [4])
 > ```
 
+We have to walk through the input array steps of size `$c`,
+copying row after row to an output array.<br/>
 
-I simplify the task specification by saying that
-'anything containing `++`' increments the result value,
-and 'anything containing `--`' decrements the result value.
-Using regular expressions, of course,
-and a combination of `sum0` and `map`,
-this makes my solution even shorter:  
+I started with a solution that is easy to implement.
+Then I tried to **reduce the code**
+(with the intention to keep it easy to understand),
+and to **reduce the runtime**. 
+
+My first solution uses the `natatime` function from `List::MoreUtils`,
+which is built for just that:
+walking through an array or a list
+and extracting multiple entries in every iteration (hence the name, '$n$ at a time') .
+The function creates an iterator, which we then use in a loop.<br/>
+Quite simple:
 
 ```perl
 use v5.36;
+use List::MoreUtils qw( natatime );
 
-use List::Util qw( sum0 );
-
-sub increment_decrement( @operations ) {
-    return sum0( map /\Q++/ ? +1 : /--/ ? -1 : 0, @operations );
+sub two_d_array_natatime( $ints, $r, $c ) {
+    my @matrix;
+    my $iterator = natatime $c, $ints->@*;
+    while ( my @row = $iterator->() ) {
+        push @matrix, [ @row ];
+    }
+    return @matrix;
 }
 ```
-`sum0` returns a value of `0` when there are no values to sum up at all,
-which should be the correct behaviour for our little solution
-when the list of operations is empty.
 
-The `\Q` in the `/\Q++/` pattern serves to quote everything
-from that point onward,
-which removes the special meaning of the `+` signs
-within the regular expression, and makes it nicer to read.
+Then I started to think:<br/>
+Calling the iterator function might be quite an overhead
+over just keeping an index ourselves
+and locating and returning a number of elements.
+We still can use Perl's nice array slice operator
+to extract a whole row of elements 'at a time'.
 
-And that's it! 
+If we loop over the row indexes using `$_`,
+each row's data start at index `$_ * $c`,
+and it will end just before the next row,
+which is at `( $_ + 1 ) * $c - 1` .<br/>
+We also can use `map` instead of a `for` loop and `push`,
+effectively eliminating the need of a result variable.
+The row indexes run from `0` to `$r - 1 `.
 
-## Task 2: Tax Amount
+That looks like this:
 
-> You are given an income amount and tax brackets.<br/>
-> Write a script to calculate the total tax amount.
+```perl
+sub two_d_array_map( $ints, $r, $c ) {
+    return map [ $ints->@[ $_ * $c .. ( $_  + 1 ) * $c - 1 ] ], 0 .. $r - 1;
+}
+```
+
+This **reduces our code** a lot,
+and I think it has not turned into anything unreadable.
+
+At the same time, as very often, this also **reduces the runtime**
+by avoiding several overheads.<br/>
+I have run some small benchmarks,
+for matrix sizes of 2x2, 4x4, 10x10, 100x100, and even 1000x1000:
+
+```text
+array size: 2 x 2
+              Rate natatime      map
+natatime  635496/s       --     -47%
+map      1205315/s      90%       --
+array size: 4 x 4
+             Rate natatime      map
+natatime 395930/s       --     -37%
+map      631484/s      59%       --
+array size: 10 x 10
+             Rate natatime      map
+natatime 127245/s       --     -32%
+map      188504/s      48%       --
+array size: 100 x 100
+           Rate natatime      map
+natatime 2045/s       --     -39%
+map      3329/s      63%       --
+array size: 1000 x 1000
+           Rate natatime      map
+natatime 21.0/s       --     -43%
+map      37.0/s      76%       --
+```
+
+It shows that our Perlish home-brewed one-line-of-code solution
+beats `natatime` at any array size.<br/>
+I find it interesting that for medium sizes, the two solutions approach each other with respect to performance, but then with larger sizes, `map` performs better again.<br/>
+I cannot really explain this effect. 
+I would have guessed that for bigger matrices, most time is spent for really copying the data, so the way of controlling it becomes less important in general.
+
+A quite simple task, yet a lot to learn.  
+
+
+
+## Task 2: Total XOR
+
+> You are given an array of integers.<br/>
+> Write a script to return the sum of total XOR for every subset of given array.
 >
 > **Example 1**
 >
 > ```text
-> Input: $income = 10, @tax = ([3, 50], [7, 10], [12,25])
-> Output: 2.65
+> Input: @ints = (1, 3)
+> Output: 6
 >
-> 1st tax bracket upto  3, tax is 50%.
-> 2nd tax bracket upto  7, tax is 10%.
-> 3rd tax bracket upto 12, tax is 25%.
+> Subset [1],    total XOR = 1
+> Subset [3],    total XOR = 3
+> Subset [1, 3], total XOR => 1 XOR 3 => 2
 >
-> Total Tax => (3 * 50/100) + (4 * 10/100) + (3 * 25/100)
->           => 1.50 + 0.40 + 0.75
->           => 2.65
+> Sum of total XOR => 1 + 3 + 2 => 6
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: $income = 2, @tax = ([1, 0], [4, 25], [5,50])
-> Output: 0.25
+> Input: @ints = (5, 1, 6)
+> Output: 28
 > 
->Total Tax => (1 * 0/100) + (1 * 25/100)
->        => 0 + 0.25
->           => 0.25
->    ```
+>Subset [5],       total XOR = 5
+> Subset [1],       total XOR = 1
+> Subset [6],       total XOR = 6
+> Subset [5, 1],    total XOR => 5 XOR 1 => 4
+> Subset [5, 6],    total XOR => 5 XOR 6 => 3
+> Subset [1, 6],    total XOR => 1 XOR 6 => 7
+> Subset [5, 1, 6], total XOR => 5 XOR 1 XOR 6 => 2
+> 
+>Sum of total XOR => 5 + 1 + 6 + 4 + 3 + 7 + 2 => 28
+> ```
 >
 > **Example 3**
 >
 > ```text
->Input: $income = 0, @tax = ([2, 50])
-> Output: 0
+>Input: @ints = (3, 4, 5, 6, 7, 8)
+> Output: 480
 > ```
 
-I think my solution this week is less 'elegant' than I would wish for.<br/>
-What I hope, though, is that it is still readable and comprehensible
-even without a lot of comments.<br/>
-I put in some effort to choose good variable names,
-and to avoid overloaded or too long statements.
+There are these things we need to implement:
 
-So let's calculate taxes!
+* get all possible subsets of the input data,
+* compute the XOR sum of each subset,
+* sum up and return the XOR sums.
 
-We loop over the tax brackets in order,
-and cumulate the partial amounts from each bracket in a variable `$tax_amount`.
+For the first part, getting all subsets of a given set of elements,
+it is easiest to use an existing and well tested piece of software from CPAN.
+I used the `subsets` function from `Algorithm::Combinatorics`
+for my first solution.
+It returns an iterator that delivers the next subset with every call,
+with the empty subset being the last.
+The empty subset can then be used as an end criteria for the loop.
 
-In each iteration, we need to decide what part of the income
-falls into the current bracket.
-We always need the lower limit of the bracket for this,
-which happens to be the upper limit of the previous bracket.
-So we use a variable `$prev_bracket`
-to transport that limit from iteration to iteration.<br/>
-Both variables are initialized to zero:
-
-```perl
-    my ( $tax_amount, $prev_bracket ) = ( 0, 0 );
-```
-
-Within the loop, if the bracket's lower limit
-(which we have in `$prev_bracket`) is higher than the income,
-we are done, and we can exit the loop right away.<br/>
-If not, we assign the two values of the current tax bracket to variables,
-to be clear about what they mean:
-
-```perl
-    for ( $tax->@* ) {
-        last if $income <= $prev_bracket;
-        my ( $bracket, $percentage ) = $_->@*;
-```
-
-Now we can determine the amount that will be taxed
-using the current bracket and percentage.<br/>
-If the income is higher than the bracket's upper limit,
-the complete bracket interval is taxed,
-from the lower limit all the way up to the upper limit.<br/>
-If the income is lower than the upper limit,
-we only tax the amount up to there.<br/>
-To make it easy,
-we first determine the amount up to which we apply the tax:
-
-```perl
-        my $bracketed_amount = $income < $bracket ? $income : $bracket;
-```
-
-Based on that, we can add the partial tax amount to the cumulated sum:
-
-```perl
-        $tax_amount += ( $bracketed_amount - $prev_bracket ) * $percentage;
-```
-
-In fact, we should divide by 100 to get the correct amount.
-But we will postpone that division
-until all the partial amounts have been summed up.
-
-At the end of the loop definition,
-we store the bracket limit for the next round:
-
-```perl
-        $prev_bracket = $bracket;
-    }
-```
-
-Once the loop is done, we return the cumulated tax amount,
-not forgetting the division by 100:
-
-```perl
-    return $tax_amount / 100;
-```
-
-This concludes the solution:
+Simple as this:
 
 ```perl
 use v5.36;
+use Algorithm::Combinatorics qw( subsets );
 
-sub tax_amount( $income, $tax ) {
-    my ( $tax_amount, $prev_bracket ) = ( 0, 0 );
-    for ( $tax->@* ) {
-        last if $income <= $prev_bracket;
-        my ( $bracket, $percentage ) = $_->@*;
-        my $bracketed_amount = $income < $bracket ? $income : $bracket;
-        $tax_amount += ( $bracketed_amount - $prev_bracket ) * $percentage;
-        $prev_bracket = $bracket;
+sub total_xor( @ints ) {
+    my $sum = 0;
+    my $iterator = subsets( \@ints );
+    while ( my $subset = $iterator->next ) {
+        $sum += ...;	# Add XOR sum of the current subset.
     }
-    return $tax_amount / 100;
+    return $sum;
 }
 ```
 
-In the real world, I would probably consider
-doing correct rounding of the result.<br/>
-But correct rounding in financial applications? That is a Pandora's Box ...
+**Reduce to the XOR sum** 
 
-I would probably also wonder what happens
-when the income is higher than the last bracket.<br/>
-Can we specify an upper limit of 'infinity'?
+But how do we compute the XOR sum of a list of numbers?
 
-I think that 'in the real world',
-the tax brackets would not be defined like
-'*up to this amount*, this percentage is applied',
-but like like
-'*from this amount onward*, this percentage is applied'.
-The first bracket would always start from zero,
-and the last bracket would be valid for any income
-that is larger than that bracket's limit,
-no matter how high the income is.
+Traditional thinking would use a loop for this.<br/>
+But let's think a bit more 'functional' today.<br/>
+The **`reduce`** function is the perfect choice
+for walking through a list and building up a final result
+by combining elements one by one.<br/>
+Its code block combines the current partial result
+(in the `$a` special variable) with the next element (in `$b`).
+In the end, all the elements will have been combined.
 
-But hey! Nice challenge! 
+We start with a `0` as the first element,
+to not get an `undef` result for the empty subset.<br/>
+Our implementation of an 'XOR sum' function is simply this:
+
+```perl
+    reduce { $a ^ $b } 0, @elements
+```
+
+So here is the complete (first) solution:
+
+```perl
+use v5.36;
+use Algorithm::Combinatorics qw( subsets );
+use List::Util qw( reduce );
+
+sub total_xor( @ints ) {
+    my $sum = 0;
+    my $iterator = subsets( \@ints );
+    while ( my $subset = $iterator->next ) {
+        $sum += reduce { $a ^ $b } 0, $subset->@*;
+    }
+    return $sum;
+}
+```
+
+**BONUS: Roll your own subset iterator:**
+
+I was wondering how difficult it would be to implement the `subsets` iterator myself.<br/>Actually it isn't!
+
+The theory behind creating all possible subsets is this:
+
+Every possible subset of a set with $n$ elements is determined
+by which of the elements are contained or not.<br/>
+If we use one bit $b_i$ to represent whether element $i$ is contained or not,
+the bits form a number between $0$ (for the empty set) and $2^n - 1$
+(all bits set, all elements contained in that subset, which is the set itself).<br/>
+We can enumerate the subsets using that number, calling it a 'subset id'<br/>
+The overall number of possible subsets is $2^n$.
+
+For the creation of our iterator,
+we initialize a `$subset_id` variable with $2^n$.<br/>
+I know, that's one too high,
+but it's actually easier to pre-decrement this variable within the iterator:<br/>
+This way, we can at the same time determine whether we have
+reached the end of the possible subsets, return `undef` if so,
+and continue to directly return the result if not.<br/>
+If the `$subset_id` already is zero upon entry,
+we have returned the last subset (the empty one) in the previous call.
+We then set the `$subset_id` to `undef`,
+and return that value from this and all following calls to this iterator.
+
+If we are still good, we determine the elements of the subset,
+based on the bits set or not set in `$subset_id`.<br/>
+This is done by `map`ping the element indexes to a one-bit
+shifted into the corresponding position,
+and doing a bitwise And with the subset_id.
+If the bit is set,
+we include the element into the anonymous array that will be returned. 
+
+So, here is my bonus subset iterator. 
+
+```perl
+sub subset_iterator( $ints ) {
+    my $subset_id = 1 << $ints->@*;
+    return sub() {
+        return defined ( $subset_id ? --$subset_id : undef )
+            && [ map $subset_id & 1 << $_ ? $ints->[$_] : (), keys $ints->@* ];
+    };
+}
+```
+
+Just make sure that your set doesn't contain more than 63 elements... ;-)
+
 
 #### **Thank you for the challenge!**
