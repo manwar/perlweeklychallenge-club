@@ -1,3 +1,3 @@
-# The Weekly Challenge 323
+# The Weekly Challenge 324
 
-Blog: [Counting the tax](https://dev.to/simongreennet/weekly-challenge-counting-the-tax-53fh)
+Blog: [The total array](https://dev.to/simongreennet/weekly-challenge-the-total-array-2h8k)
