@@ -45,10 +45,6 @@ sub two_d_array_2_incr( $ints, $r, $c ) {
     return @matrix;
 }
 
-sub two_d_array_map( $ints, $r, $c ) {
-    return map [ $ints->@[ $_ * $c .. $_ * $c + $c - 1 ] ], 0 .. $r - 1;
-}
-
 sub two_d_array_4_map_add( $ints, $r, $c ) {
     my $i = 0;
     return map { $i += $c; [ $ints->@[ $i - $c .. $i - 1 ] ] } 1..$r;
@@ -56,9 +52,14 @@ sub two_d_array_4_map_add( $ints, $r, $c ) {
 
 sub two_d_array_5_dyn_range( $ints, $r, $c ) {
     my $i = 0;
+    # Could be a Perl bug!
+    # Just '$i' as the starting point doesn't work!
+    # It has to be an expression!
     return map [ $ints->@[ 0+$i .. ( $i += $c ) - 1 ] ], 1..$r;
 }
 
+# Most interesting!
+# And performing very well for anything but real large arrays!
 sub two_d_array_6_splice( $ints, $r, $c ) {
     my @copy = $ints->@*;
     return map [ splice @copy, 0, $c ], 1..$r;
@@ -94,7 +95,7 @@ for my $sub ( sort grep /^${sub_name}/, keys %:: ) {
 
 done_testing;
 
-__END__
+# __END__
 
 use Benchmark qw( :all :hireswallclock );
 
@@ -110,12 +111,12 @@ for my $args ( @benchmark_data ) {
     say "array size: $args->[1] x $args->[2]";
     cmpthese( -5, {
         "natatime" => sub { two_d_array_natatime( $args->@* ) },
-        # "1_for" => sub { two_d_array_1_for( $args->@* ) },
-        # "2_incr" => sub { two_d_array_2_incr( $args->@* ) },
+        "1_for" => sub { two_d_array_1_for( $args->@* ) },
+        "2_incr" => sub { two_d_array_2_incr( $args->@* ) },
         "map" => sub { two_d_array_map( $args->@* ) },
-        # "4_map_add" => sub { two_d_array_4_map_add( $args->@* ) },
-        # "5_dyn_range" => sub { two_d_array_5_dyn_range( $args->@* ) },
-        # "6_splice" => sub { two_d_array_6_splice( $args->@* ) },
+        "4_map_add" => sub { two_d_array_4_map_add( $args->@* ) },
+        "5_dyn_range" => sub { two_d_array_5_dyn_range( $args->@* ) },
+        "6_splice" => sub { two_d_array_6_splice( $args->@* ) },
     } );
 }
 
