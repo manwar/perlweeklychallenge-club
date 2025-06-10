@@ -46,7 +46,7 @@ plan +@Test;
 enum Bracket< LOWER UPPER RATE TX-BASE TX-IN TX-MAX>;
 
 # Cache and stack the brackets so only one bracket need be in tax calculation.
-sub create-brackets( @sch -->Tax-schedule) {
+sub create-brackets( @sch ) {
     my $idx = ^@sch;
     my @ret = @sch.Array.deepmap({$_});
 
