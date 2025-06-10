@@ -1,0 +1,105 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/consecutiveone {
+    0 dict begin
+    /a exch def
+    /h 0 dict def
+    h 0 0 put
+    /latch 0 def
+    /latched false def
+    a enumerate.array {
+        aload pop
+        /n exch def
+        /i exch def
+        n 1 eq latched not and {
+            /latched true def
+            /latch i def
+        } if
+        n 0 eq latched and {
+            /latched false def
+            h latch i latch sub put
+        } if
+    } forall
+    latched {
+        h latch a length latch sub put
+    } if
+    h values listmax
+    end
+} bind def
+
+(consecutiveone) test.start
+[0 1 1 0 1 1 1] consecutiveone 3 eq test
+[0 0 0 0] consecutiveone 0 eq test
+[1 0 1 0 1 1] consecutiveone 2 eq test
+test.end
