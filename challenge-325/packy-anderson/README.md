@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Totally 2bular!](https://packy.dardan.com/b/W3)
+[Perl Weekly Challenge: The Final Count One!](https://packy.dardan.com/b/WY)
