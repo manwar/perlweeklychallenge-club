@@ -1,41 +1,71 @@
 Solutions by Walt Mankowski.
 
-# Perl Weekly Challenge #176: Permuted Multiples and Reversible Numbers
+# Perl Weekly Challenge #325: Consecutive One and Final Price
 
-I did this week's challenge in Perl. Each of my solutions this week
-has a 1-line helper function. I'm going to focus on those this week
-since the rest of the programs are quite straightforward.
+I'm home convalescing from some minor surgery, and to pass the time I
+thought I'd work on this week's Weekly Challenge for the first time in
+ages.
 
-## Task #1: Permuted Multiples
+I did the challenge in Perl. I found each challenge pretty easy this
+week so I don't have much to say about either of them.
 
-For this task we're asked to find the smallest positive integer _x_
-such that x, 2x, 3x, 4x, 5x, and 6x all have exactly have the same set
-of digits, only in a different order.
+## Task #1: Consecutive One
 
-My trick here was to sort the digits of x and each of its
-multiples. Here's the function I wrote to do that:
+For this task we're given an array of 0's and 1's and we're asked to
+find the maximum number of consecutive 1's.
+
+I didn't use any tricks here, since a single pass through the array is
+all that's necessary. If we see a 1 we increase the length of the
+current run, and if we see a 0 we reset the run back to 0. That's it.
 
 ```perl
-sub sorted_digits($x) {
-    return join '', sort split //, $x;
-}
+sub consecutive_one($ar) {
+    my $best = 0;
+    my $run = 0;
+
+    for my $d ($ar->@*) {
+        if ($d == 1) {
+            $run++;
+            $best = $run if $run > $best;
+        } else {
+            $run = 0;
+        }
+    }
+
+    return $best;
+}        
 ```
 
-I call that once for each multiple, then just compare the sorted
-digits with `==`.
+## Task #2 Final Price
 
-## Task 2: Reversible Numbers
+For this task we given a list of prices and we have to output a new
+list with the "final price" of each item in the array. There's a
+special sale going on -- if an item with an equal or lower price
+occurs later in the list, then the price of the current item is
+discounted by the amount of that later item. Only the first such item
+is used.
 
-For this task we're asked to find all the Reversible Numbers
-below 100. A number is **Reversible** if the sum of the number and its
-reverse has only odd digits. For example, 36 is reversible because
-36 + 63 = 99, but 17 is not reversible because 17 + 71 = 88.
-
-My helper function here adds the number and its reverse, then uses a
-regex to check if the sum contains any even digits:
+Again, this is simple and doesn't require any special tricks. For each
+item in the list, we initialize the discount to 0 and look at all the
+following items. If we find one of equal or lesser value, we set the
+discount to that value and break out of the loop. At the end of the
+loop we subtract the discount (which could still be 0) from the
+current item and push it onto the output list.
 
 ```perl
-sub is_reversible($i) {
-    return ($i + scalar reverse $i) !~ /[02468]/;
+sub final_price($ar) {
+    my @output;
+
+    for my $i (0..$#$ar) {
+        my $discount = 0;
+        for my $j ($i+1..$#$ar) {
+            if ($ar->[$j] <= $ar->[$i]) {
+                $discount = $ar->[$j];
+                last;
+            }
+        }
+        push @output, $ar->[$i] - $discount;
+    }
+    return @output;
 }
 ```
