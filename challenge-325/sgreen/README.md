@@ -1,3 +1,3 @@
-# The Weekly Challenge 324
+# The Weekly Challenge 325
 
-Blog: [The total array](https://dev.to/simongreennet/weekly-challenge-the-total-array-2h8k)
+Blog: [Counting the discounts](https://dev.to/simongreennet/weekly-challenge-counting-the-discounts-313f)
