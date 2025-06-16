@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 325
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-325>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc325;
+
+CREATE OR REPLACE FUNCTION
+pwc325.task2_plperl( int[] )
+RETURNS int[]
+AS $CODE$
+
+   my ( $prices ) = @_;
+   my @final_prices;
+
+   for my $index ( 0 .. $prices->@* - 1 ) {
+       push @final_prices, $prices->@[ $index ]
+                           - ( ( grep { $_ < $prices->@[ $index ] } $prices->@[ $index + 1 .. $prices->@* - 1 ] )[ 0 ] // 0 );
+			     
+   }
+
+   return [ @final_prices ];
+   
+$CODE$
+LANGUAGE plperl;

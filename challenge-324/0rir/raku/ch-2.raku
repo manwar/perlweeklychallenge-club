@@ -51,7 +51,7 @@ my @Test =
 plan +@Test ÷ 2;
 
 sub task( @a where { **.are(Int) or ** ~~ Empty } -->Int:D) {
-    sum do for @a.combinations  { sum [+^] $_ }
+sum do for @a.combinations  { [+^] $_ }
 }
 
 for @Test -> @in, $exp {

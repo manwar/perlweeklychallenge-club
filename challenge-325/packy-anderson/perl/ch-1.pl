@@ -1,0 +1,37 @@
+#!/usr/bin/env perl
+use v5.40;
+
+sub consecutiveOne(@binary) {
+  my $max = 0;
+  my $consecutive = 0;
+  for my $bit (@binary) {
+    if ($bit) {
+      $consecutive++;
+      $max = $consecutive if $consecutive > $max;
+    }
+    else {
+      $consecutive = 0;
+    }
+  }
+  return $max;
+}
+
+sub solution($binary) {
+  say 'Input: @binary = (' . join(', ', @$binary) . ')';
+  say 'Output: ' . consecutiveOne(@$binary);
+}
+
+say "Example 1:";
+solution([0, 1, 1, 0, 1, 1, 1]);
+
+say "\nExample 2:";
+solution([0, 0, 0, 0]);
+
+say "\nExample 3:";
+solution([1, 0, 1, 0, 1, 1]);
+
+say "\nExample 4:";
+solution([1, 1, 1, 0, 1, 1, 0]);
+
+say "\nExample 5:";
+solution([1, 0, 1, 1, 0, 1, 0]);

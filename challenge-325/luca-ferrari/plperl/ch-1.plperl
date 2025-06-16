@@ -1,0 +1,21 @@
+--
+-- Perl Weekly Challenge 325
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-325>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc325;
+
+CREATE OR REPLACE FUNCTION
+pwc325.task1_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $bits ) = @_;
+
+   my @found = ( $bits =~ / 1+ /xg );
+   return ( sort
+           map { length( $_ ) } @found )[ -1 ];
+   
+$CODE$
+LANGUAGE plperl;

@@ -4,6 +4,7 @@ find . -name "*.kap" -delete
 find . -name "*.gleam" -delete
 find . -name "*.zon" -delete
 find . -name "*.k" -delete
+find . -name "*.p" -delete
 find . -name "*.pro" -delete
 find . -name "*.lhs" -delete
 find . -name "*.i3" -delete
