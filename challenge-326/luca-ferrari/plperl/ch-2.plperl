@@ -1,0 +1,27 @@
+--
+-- Perl Weekly Challenge 326
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-326>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc326;
+
+CREATE OR REPLACE FUNCTION
+pwc326.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my @result;
+
+   for my $index ( 0 .. $nums->@* - 2 ) {
+       next unless ( $index % 2 == 0 );
+      my ( $base, $times ) = $nums->@[ $index .. $index + 1 ];
+      push @result, $base for ( 0 .. $times );
+
+   }
+
+   return [ @result ];
+   
+$CODE$
+LANGUAGE plperl;
