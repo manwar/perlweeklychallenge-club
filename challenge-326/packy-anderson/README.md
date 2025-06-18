@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: The Final Count One!](https://packy.dardan.com/b/WY)
+[Perl Weekly Challenge: Got a date with compression!](https://packy.dardan.com/b/Wn)
