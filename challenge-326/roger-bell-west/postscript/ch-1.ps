@@ -1,0 +1,77 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/ymd2jd {
+    4 dict begin
+    aload pop
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+    end
+} bind def
+
+
+% end included library code
+
+/dayoftheyear {
+    0 dict begin
+    /a exch def
+    [
+        a 0 4 getinterval cvi
+        a 5 2 getinterval cvi
+        a 8 2 getinterval cvi
+    ]
+    ymd2jd
+    [
+        a 0 4 getinterval cvi
+        1
+        1
+    ]
+    ymd2jd
+    sub 1 add
+    end
+} bind def
+
+(dayoftheyear) test.start
+(2025-02-02) dayoftheyear 33 eq test
+(2025-04-10) dayoftheyear 100 eq test
+(2025-09-07) dayoftheyear 250 eq test
+test.end
