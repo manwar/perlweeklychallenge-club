@@ -1,71 +1,78 @@
 Solutions by Walt Mankowski.
 
-# Perl Weekly Challenge #325: Consecutive One and Final Price
+# Perl Weekly Challenge #326: Day of the Year and Decompressed List
 
-I'm home convalescing from some minor surgery, and to pass the time I
-thought I'd work on this week's Weekly Challenge for the first time in
-ages.
+I did this week's challenges in Perl and Python. A combination of
+language features and modules allowed me to solve them in just a few
+lines of code.
 
-I did the challenge in Perl. I found each challenge pretty easy this
-week so I don't have much to say about either of them.
+Just a note that for each problem, I read the input via command line
+arguments, and I don't do any error checking. Of course I wouldn't do
+that in the real world, but here I just wanted to focus on the
+algorithms and language features.
 
-## Task #1: Consecutive One
+## Task #1: Day of the Year
 
-For this task we're given an array of 0's and 1's and we're asked to
-find the maximum number of consecutive 1's.
+For this task we're given a date in YYYY-MM-DD format and we're asked
+to output the day of the year that date represents.
 
-I didn't use any tricks here, since a single pass through the array is
-all that's necessary. If we see a 1 we increase the length of the
-current run, and if we see a 0 we reset the run back to 0. That's it.
+The standard way of solving this problem is the make an array with the
+number of days in each month, then just add them up. The only tricky
+thing is that you've got to account for leap years.
 
-```perl
-sub consecutive_one($ar) {
-    my $best = 0;
-    my $run = 0;
+Perl and Python each have standard date/time modules that include this
+logic, so rather than reinvent the wheel I just used those instead.
 
-    for my $d ($ar->@*) {
-        if ($d == 1) {
-            $run++;
-            $best = $run if $run > $best;
-        } else {
-            $run = 0;
-        }
-    }
-
-    return $best;
-}        
-```
-
-## Task #2 Final Price
-
-For this task we given a list of prices and we have to output a new
-list with the "final price" of each item in the array. There's a
-special sale going on -- if an item with an equal or lower price
-occurs later in the list, then the price of the current item is
-discounted by the amount of that later item. Only the first such item
-is used.
-
-Again, this is simple and doesn't require any special tricks. For each
-item in the list, we initialize the discount to 0 and look at all the
-following items. If we find one of equal or lesser value, we set the
-discount to that value and break out of the loop. At the end of the
-loop we subtract the discount (which could still be 0) from the
-current item and push it onto the output list.
+The Perl code is quite straightforward:
 
 ```perl
-sub final_price($ar) {
-    my @output;
+use v5.40;
+use DateTime;
 
-    for my $i (0..$#$ar) {
-        my $discount = 0;
-        for my $j ($i+1..$#$ar) {
-            if ($ar->[$j] <= $ar->[$i]) {
-                $discount = $ar->[$j];
-                last;
-            }
-        }
-        push @output, $ar->[$i] - $discount;
-    }
-    return @output;
-}
+my ($year, $month, $day) = split '-', shift @ARGV;
+
+my $dt = DateTime->new(
+                       year  => $year,
+                       month => $month,
+                       day   => $day,
+                      );
+
+say $dt->day_of_year;
 ```
+
+My Python code is shorter but more cryptic. This is because Python is
+more of a stickler for types than Perl is. First I need to explicitly
+convert the numeric strings into integers, then split the `map`
+iterator into three separate values to pass into the `date`
+constructor using the `*` operator.
+
+```python
+from sys import argv
+from datetime import date
+
+dt = date(*map(int, argv[1].split('-')))
+print(dt.timetuple().tm_yday)
+```
+
+## Task #2 Decompressed List
+
+For this task we're given a list of positive integers having an even
+number of elements. We're to construct a new list by looking at the
+original list as pairs: The first number is a count and the second is
+a value. For example, if the pair is (2,3), then we repeat the number
+3 two times.
+
+My code is basically the same in both languages. The only difference
+is the operator each language uses to repeat values, and how we append
+those values to a list. Perl uses the `x` operator and `push`
+
+```perl
+    push @output, ($val) x $cnt;
+```
+
+while Python uses the `*` operator and `+=`:
+
+```python
+    output += [val] * cnt
+```
+
