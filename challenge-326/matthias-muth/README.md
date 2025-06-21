@@ -1,149 +1,176 @@
-# Consecutive, but Maybe Not Final
+# Modern Perl's Victory
 
-**Challenge 325 solutions in Perl by Matthias Muth**
+**Challenge 326 solutions in Perl by Matthias Muth**
 
-## Task 1: Consecutive One
+## Task 1: Day of the Year
 
-> You are given a binary array containing only 0 or/and 1.<br/>
-> Write a script to find out the maximum consecutive 1 in the given array.
+> You are given a date in the format YYYY-MM-DD.<br/>
+> Write a script to find day number of the year that the given date represent.
 >
 > **Example 1**
 >
 > ```text
-> Input: @binary = (0, 1, 1, 0, 1, 1, 1)
-> Output: 3
->```
+> Input: $date = '2025-02-02'
+> Output: 33
+>The 2nd Feb, 2025 is the 33rd day of the year.
+> ```
+>
+> **Example 2**
+>
+> ```text
+>Input: $date = '2025-04-10'
+> Output: 100
+> ```
 > 
->**Example 2**
+>**Example 3**
 > 
 >```text
-> Input: @binary = (0, 0, 0, 0)
-> Output: 0
-> ```
->
-> **Example 3**
->
-> ```text
->Input: @binary = (1, 0, 1, 0, 1, 1)
-> Output: 2
+> Input: $date = '2025-09-07'
+>Output: 250
 > ```
 
-For this task, first thing I do is to walk through the array and assign to each element the number of `1`s that have been seen since the last `0`. Like this:
+It's good to have our superb set of on-board tools — the core modules. For this task, `Time::Piece` helps us to create a one-line solution.
 
-```text
-@binary:        0       1       1       0       1       1       1
-                |       |       |       |       |       |       |
-# of ones:      0       1       2       0       1       2       3
-```
+The dates we receive as input are ISO date strings. The `strptime` function can easily convert that into a `Time::Piece` object using the `'%F'` format. We can then use the `day_of_year` method (or `yday` for short) to return the day of the year. We just need to add 1 because the result is zero-based, and we want the day numbered from 1 for January 1st.
 
-To do that, I need to carry over the current number of `1`s from position to position. This makes it a perfect use case for the `reductions` function (from `List::Util`). In its code block, the `$a` variable is the result for the previous element, and `$b` is the current element. That makes this type of 'conditional counting' very easy:
-
- ```perl
-     reductions { $b ? ++$a : 0 } @binary
- ```
-
-Now it's very simple to find the maximum number of consecutive `1`s: just apply the `max` function on the result.
-
-Which makes this tasks solution a very nice and simple one-line-of-code function:  
-
-```perl
-sub consecutive_one( @binary ) {
-    return max( reductions { $b ? ++$a : 0 } @binary );
-}
-```
-
-## Task 2: Final Price
-
-> You are given an array of item prices.<br/>
-> Write a script to find out the final price of each items in the given array.<br/>
-> There is a special discount scheme going on. If there’s an item with a lower or equal price later in the list, you get a discount equal to that later price (the first one you find in order).
->
-> **Example 1**
->
-> ```text
-> Input: @prices = (8, 4, 6, 2, 3)
-> Output: (4, 2, 4, 2, 3)
->
-> Item 0:
-> The item price is 8.
-> The first time that has price <= current item price is 4.
-> Final price = 8 - 4 => 4
->
-> Item 1:
-> The item price is 4.
-> The first time that has price <= current item price is 2.
-> Final price = 4 - 2 => 2
->
-> Item 2:
-> The item price is 6.
-> The first time that has price <= current item price is 2.
-> Final price = 6 - 2 => 4
->
-> Item 3:
-> The item price is 2.
-> No item has price <= current item price, no discount.
-> Final price = 2
->
-> Item 4:
-> The item price is 3.
-> Since it is the last item, so no discount.
-> Final price = 3
->```
-> 
->**Example 2**
-> 
->```text
-> Input: @prices = (1, 2, 3, 4, 5)
-> Output: (1, 2, 3, 4, 5)
-> ```
->
-> **Example 3**
->
-> ```text
->Input: @prices = (7, 1, 1, 5)
-> Output: (6, 0, 1, 5)
-> 
-> Item 0:
->The item price is 7.
-> The first time that has price <= current item price is 1.
-> Final price = 7 - 1 => 6
-> 
-> Item 1:
->The item price is 1.
-> The first time that has price <= current item price is 1.
-> Final price = 1 - 1 => 0
-> 
-> Item 2:
->The item price is 1.
-> No item has price <= current item price, so no discount.
-> Final price = 1
-> 
-> Item 3:
->The item price is 5.
-> Since it is the last item, so no discount.
-> Final price = 5
-> ```
-
-My solution for this task is short , and simple enough, but I don't really like it.<br/>
-I couldn't come up with a way to avoid the 'almost quadratic' behavior of walking through the whole rest of the list to find a discount for *every* entry in the list, that's why I am not really happy.
-
-But this is what I have:
-
-I use `map` to map the item prices from the `@prices` array to the final prices to be returned. The final price is the item price minus a possible discount, and for getting that discount, I use `first` to walk through the rest of the array to find the next item price that is lower than or equal to the current one.
+As simple as this:
 
 ```perl
 use v5.36;
-use List::Util qw( first );
+use Time::Piece;
 
-sub final_price( @prices ) {
-    return map {
-        my $price = $prices[$_];
-        my $discount = first { $_ <= $price } @prices[ $_ + 1 .. $#prices ];
-        $price - ( $discount // 0 );
-    } keys @prices;
+sub day_of_the_year( $date ) {
+    return Time::Piece->strptime( $date, "%F" )->day_of_year + 1;
 }
 ```
 
-As I said, simple enough, but I guess there must be a better algorithmic solution ...
+## Task 2: Decompressed List
+
+> You are given an array of positive integers having even elements.<br/>
+> Write a script to to return the decompress list. To decompress, pick adjacent pair (i, j) and replace it with j, i times.
+>
+> **Example 1**
+>
+> ```text
+> Input: @ints = (1, 3, 2, 4)
+> Output: (3, 4, 4)
+>
+> Pair 1: (1, 3) => 3 one time  => (3)
+> Pair 2: (2, 4) => 4 two times => (4, 4)
+>```
+> 
+>**Example 2**
+> 
+>```text
+> Input: @ints = (1, 1, 2, 2)
+> Output: (1, 2, 2)
+> 
+>Pair 1: (1, 1) => 1 one time  => (1)
+> Pair 2: (2, 2) => 2 two times => (2, 2)
+> ```
+>
+> **Example 3**
+>
+> ```text
+>Input: @ints = (3, 1, 3, 2)
+> Output: (1, 1, 1, 2, 2, 2)
+> 
+> Pair 1: (3, 1) => 1 three times => (1, 1, 1)
+>Pair 2: (3, 2) => 2 three times => (2, 2, 2)
+> ```
+
+This task is about walking through an array in steps of 2 elements.<br/>
+I will compare three different implementations:
+
+* 'Conventional' :<br/>
+  Using a C-style `for(;;)` loop to increment the index by 2 for each iteration.<br/>A bit old-style, maybe, and for sure a bit cumbersome that we then need to use the index itself *and* (index + 1) for the pair of elements.
+* 'Elegant':<br/>Using `pairmap` to walk through the elements in pairs makes it a very elegant one-liner.
+* 'Modern':<br/>Since Perl 5.36 you can use a *list* of lexical variables as loop variables.<br/>
+  This makes the loop very intuitive to write (and to read and understand).<br/>And wait to see the benchmark results!
+
+All my solutions are based on
+```perl
+use v5.36;
+```
+to get all kinds of good things, like `use strict`,  `use warnings`,  and subroutine signatures, which I love.<br/>
+And all solutions use the Perl `x` operator to repeat each element the given number of  times, like `( <element> ) x <times>`.
+
+##### Conventional (C-style `for` loop)
+
+This is my solution using the C-style, three-statement `for` loop.<br/>
+As we loop over the index, we need to do the index dereferencing ourselves.
+
+```perl
+sub decompressed_list_c_style_for( @ints ) {
+    my @decompressed;
+    for ( my $i = 0; $i <= $#ints; $i += 2 ) {
+        push @decompressed, ( $ints[ $i + 1 ] ) x $ints[ $i ];
+    }
+    return @decompressed;
+}
+```
+
+It works, but it's a bit clumsy.
+
+##### Elegant (`pairmap`)
+
+Using `pairmap`from the `List::Util` core module results in what probably is the shortest and clearest solution:
+
+```perl
+use List::Util qw( pairmap );
+
+sub decompressed_list_pairmap( @ints ) {
+    return pairmap { ( $b ) x $a } @ints;
+}
+```
+
+It assigns each pair of values to the `$a` and `$b` special variables and calls its code block. It then returns the combined list of all code block results.<br/>Very nice!
+
+##### Modern (multi-value `for` loop)
+
+A multi-value `for` loop walks through several elements at once, assigning them to a list of lexical variables (doing aliasing, actually).<br/>We can use those variables directly to build the result. As we use the elements themselves, not the indexes, there's no need to do any dereferencing.
+
+```perl
+sub decompressed_list_multi_value_for( @ints ) {
+    my @decompressed;
+    for my ( $n, $i ) ( @ints ) {
+        push @decompressed, ( $i ) x $n;
+    }
+    return @decompressed;
+}
+```
+
+Compared to the C-style `for` loop, this saves a lot of writing and can avoid typical typo errors.<br/>And compared to the `pairmap` solution, it does a lot of things efficiently 'under the hood': It avoids the subroutine call with its need to copy parameters, and I guess that error checking and the assignments to the `$a` and `$b` variables are more expensive than aliasing the lexical variables.
+
+Let's see what the benchmark says:
+
+##### Benchmark
+
+I ran a little benchmark:
+
+```perl
+cmpthese -3, {
+    c_style_for     => sub { decompressed_list_c_style_for( 3, 1, 3, 2 ); },
+    pairmap         => sub { decompressed_list_pairmap( 3, 1, 3, 2 ); },
+    multi_value_for => sub { decompressed_list_multi_value_for( 3, 1, 3, 2 ); },
+};
+```
+
+with results that astonished me:
+
+```text
+                     Rate         pairmap     c_style_for multi_value_for
+pairmap          999261/s              --            -22%            -41%
+c_style_for     1288603/s             29%              --            -23%
+multi_value_for 1679823/s             68%             30%              --
+```
+
+The 'modern' solution with the multi-value `for` loop beats all the others!
+
+The `pairmap` solution may be the most beautiful, but it definitely isn't the best performing one.
+
+And there's no good reason at all to use the more complicated conventional C-style `for` loop.
+
+Lessons learned!
 
 #### **Thank you for the challenge!**
