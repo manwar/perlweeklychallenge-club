@@ -27,6 +27,6 @@ int main(int argc, char *argv[]) {
     time_t t = mktime(&tm);
 
     /* get the yday for that time */
-    struct tm *new_tm = gmtime(&t);
-    printf("%d\n", new_tm->tm_yday + 1);
+    gmtime_r(&t, &tm);
+    printf("%d\n", tm.tm_yday + 1);
 }
