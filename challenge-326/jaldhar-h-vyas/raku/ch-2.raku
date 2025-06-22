@@ -7,7 +7,7 @@ sub MAIN(
 
     while @ints.elems {
         my ($i, $j) = @ints.splice(0, 2);
-        @decompressed.push(| ($j x $i).comb);
+        @decompressed.push(| ($j xx $i));
     }
 
     say q{(}, @decompressed.join(q{, }), q{)};
