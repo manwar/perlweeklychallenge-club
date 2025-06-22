@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
     size_t output_size = 0;
     for (int i = 1; i < argc; i += 2)
         output_size += atoi(argv[i]);
-    int *output = malloc(output_size * sizeof(int));
+    unsigned int *output = malloc(output_size * sizeof(unsigned int));
 
     /* add things to the output array */
     int k = 0;
@@ -25,6 +25,6 @@ int main (int argc, char *argv[]) {
     /* print out the array */
     printf("(");
     for (int i = 0; i < output_size-1; i++)
-        printf("%d, ", output[i]);
-    printf("%d)\n", output[output_size-1]);        
+        printf("%u, ", output[i]);
+    printf("%u)\n", output[output_size-1]);
 }
