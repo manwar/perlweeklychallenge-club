@@ -1,3 +1,3 @@
-# The Weekly Challenge 325
+# The Weekly Challenge 326
 
-Blog: [Counting the discounts](https://dev.to/simongreennet/weekly-challenge-counting-the-discounts-313f)
+Blog: [Blog](https://dev.to/simongreennet/weekly-challenge-3ngd)
