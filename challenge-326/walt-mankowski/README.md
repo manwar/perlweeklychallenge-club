@@ -11,6 +11,9 @@ arguments, and I don't do any error checking. Of course I wouldn't do
 that in the real world, but here I just wanted to focus on the
 algorithms and language features.
 
+Update: Several days later I added C versions of my solutions to the
+challenges. See my notes at the bottom.
+
 ## Task #1: Day of the Year
 
 For this task we're given a date in YYYY-MM-DD format and we're asked
@@ -76,3 +79,95 @@ while Python uses the `*` operator and `+=`:
     output += [val] * cnt
 ```
 
+## Bonus C Implementations
+
+It's Sunday morning and thunderstorming outside, so I decided to do C
+versions of the challenges this week.
+
+### Day of the Week in C
+
+There are two steps to solving this challenge: parsing the date into
+year, month, and day, and then computing the day of the year for that
+date. C doesn't have a handy `split()` function, so instead I used
+`strtok(3)`. `strtok()` works by modifying its input string, changing
+instances of the token to NULL. We can't modify `argv` so first I make
+a copy of it:
+
+```c
+    /* Make a copy of argv[1] so we can call strtok() on it */
+    char *yyyymmdd = malloc(strlen(argv[1]) + 1);
+    strcpy(yyyymmdd, argv[1]);
+```
+
+Then I used `strtok()` to find the tokens between instances of `'c'`
+and store them in a `struct tm`. This structure requires year 0 to be
+1900 and numbers the months starting at 0, so we need to account for
+that.
+
+```c
+    /* parse the date and construct a struct tm with the year, month, and day */
+    memset(&tm, 0, sizeof(tm));
+    tm.tm_year = atoi(strtok(yyyymmdd, "-")) - 1900;
+    tm.tm_mon = atoi(strtok(NULL, "-")) - 1;
+    tm.tm_mday = atoi(strtok(NULL, "-"));
+```
+
+Finally we use `mktime(3)` to convert the `struct tm` to an epoch
+time and use `gmtime_r(3)` to convert it back into a `struct tm`. But
+that struct has all the other information about that date populated,
+and so we can just print `tm.tm_yday`. Except it's not quite that
+easy, since it considers January 1 to be day 0 instead of day 1. So we
+need to add 1 to it when we output it.
+
+```c
+    /* get the epoch time for midnight on that date */
+    time_t t = mktime(&tm);
+
+    /* get the yday for that time */
+    gmtime_r(&t, &tm);
+    printf("%d\n", tm.tm_yday + 1);
+```
+
+### Decompressed List in C
+
+C doesn't have dynamically sized arrays like Perl and Python, so the
+first thing we need to do is make a pass through `argv` to compute how
+big the output array will be:
+
+```c
+size_t compute_output_len(int argc, char *argv[]) {
+    size_t output_len = 0;
+    for (int i = 1; i < argc; i += 2)
+        output_len += atoi(argv[i]);
+
+    return output_len;
+}
+```
+
+We use that to `malloc` an array of `unsigned int`s:
+
+```c
+    /* compute how big the output array should be */
+    size_t output_len = compute_output_len(argc, argv);
+    unsigned int *output = malloc(output_len * sizeof(unsigned int));
+```
+
+After that, building the array and printing it out are pretty much the
+same as they are in the other languages, just a bit more verbose:
+
+```c
+    /* add things to the output array */
+    int k = 0;
+    for (int i = 1; i < argc; i += 2) {
+        int cnt = atoi(argv[i]);
+        int val = atoi(argv[i+1]);
+        for (int j = 0; j < cnt; j++)
+            output[k++] = val;
+    }
+
+    /* print out the array */
+    printf("(");
+    for (int i = 0; i < output_len-1; i++)
+        printf("%u, ", output[i]);
+    printf("%u)\n", output[output_len-1]);
+```
