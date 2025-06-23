@@ -26,8 +26,8 @@ use List::Util qw(min);
 sub getMad (@ints) {
   my %ad;
   for my $pair (combinations(\@ints,2)) {
-    $pair = [sort { $a <=> $b } @$pair];
-    push(@{$ad{$pair->[1] - $pair->[0]}},$pair);
+    my ($lo,$hi) = sort { $a <=> $b } @$pair;
+    push(@{$ad{$hi - $lo}},[$lo,$hi]);
   }
   sort {$$a[0] <=> $$b[0]} @{$ad{min keys %ad}};
 }
