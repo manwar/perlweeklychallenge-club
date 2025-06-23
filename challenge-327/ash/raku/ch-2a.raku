@@ -7,7 +7,6 @@ say mad(1, 5, 3, 8);      # [(1 3) (5 3)]
 
 sub mad(*@data) {
     my $classification = @data.combinations(2).classify: {abs(.[0] - .[1])};
-    my $min_diff = $classification.keys.min;
 
-    return ($classification.first: *.key == $min_diff).value;
+    return ($classification.first: *.key == $classification.keys.min).value;
 }
