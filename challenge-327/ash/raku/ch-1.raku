@@ -6,5 +6,5 @@ say missing-numbers(1, 1, 1); # 2, 3
 say missing-numbers(2, 2, 1); # 3
 
 sub missing-numbers(*@data) {
-    (1 .. @data.elems) (-) @data;
+    (1 .. @data.elems) (-) @data
 }

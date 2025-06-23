@@ -8,5 +8,6 @@ say mad(1, 5, 3, 8);      # ((1 3) (5 3))
 sub mad(*@data) {
     my @pairs = @data.combinations(2);
     my $min_diff = min(@pairs.map: {abs(.[0] - .[1])});
-    return @pairs.grep: {abs(.[0] - .[1]) == $min_diff}
+
+    return @pairs.grep: {abs(.[0] - .[1]) == $min_diff};
 }
