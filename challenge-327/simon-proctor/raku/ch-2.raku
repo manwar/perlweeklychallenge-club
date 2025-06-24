@@ -4,7 +4,7 @@
 a list of pairs which share the minimum absolute
 difference found in the list)
 sub MAIN (
-    *@a where @a.all ~~ Int && @a.unique.elems == @a.elems # A list of distinct integers
+    *@a where @a.all ~~ Int && @a.unique.elems == @a.elems #= A list of distinct integers
 ) {
     my @ret = [];
     my $mad = Inf;
