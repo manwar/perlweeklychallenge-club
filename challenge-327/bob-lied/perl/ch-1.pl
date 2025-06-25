@@ -41,20 +41,32 @@ exit( runBenchmark($Benchmark) ) if $Benchmark;
 say '(', join(', ', missing(@ARGV)), ')';
 
 #=============================================================================
-sub missing(@ints)
+sub missing($ints)
 {
-    my @present = (true, (false) x @ints);
-    $present[$_] = true for @ints;
+    my @present = (true, (false) x @$ints);
+    $present[$_] = true for @$ints;
     return grep { not $present[$_] } 1 .. $#present;
 }
+
+sub missing_bv($ints)
+{
+    my $present = "";
+    vec($present, $_, 1) = 1 for 0, @$ints;
+    return grep { vec($present, $_, 1) == 0 } 1 .. @$ints;
+}
+
 
 sub runTest
 {
     use Test2::V0;
 
-    is( [ missing(1,2,1,3,2,5) ], [4,6], "Example 1");
-    is( [ missing(1,1,1)       ], [2,3], "Example 2");
-    is( [ missing(2,2,1)       ], [3  ], "Example 3");
+    is( [ missing([1,2,1,3,2,5]) ], [4,6], "Example 1");
+    is( [ missing([1,1,1])       ], [2,3], "Example 2");
+    is( [ missing([2,2,1])       ], [3  ], "Example 3");
+
+    is( [ missing_bv([1,2,1,3,2,5]) ], [4,6], "Example 1");
+    is( [ missing_bv([1,1,1])       ], [2,3], "Example 2");
+    is( [ missing_bv([2,2,1])       ], [3  ], "Example 3");
 
     done_testing;
 }
@@ -63,7 +75,10 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my @ints = 1 .. 1000;
+    $ints[$_] = 1 for ( map { int(rand(1000)) } 1 .. 25 );
     cmpthese($repeat, {
-            label => sub { },
+            array => sub { missing(\@ints) },
+            bitvec => sub { missing_bv(\@ints) },
         });
 }
