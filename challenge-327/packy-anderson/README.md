@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Got a date with compression!](https://packy.dardan.com/b/Wn)
+[Perl Weekly Challenge: Missing Absolute Distance](https://packy.dardan.com/b/Wy)
