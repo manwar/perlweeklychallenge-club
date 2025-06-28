@@ -14,4 +14,3 @@ for i,j in combinations(range(len(elements)), 2):
         pairs.append([elements[i], elements[j]])
 
 print(pairs)
-
