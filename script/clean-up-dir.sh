@@ -1,5 +1,6 @@
 find . -name "*.retro" -delete
 find . -name "*.typ" -delete
+find . -name "*.l" -delete
 find . -name "*.kap" -delete
 find . -name "*.gleam" -delete
 find . -name "*.zon" -delete
