@@ -1,173 +1,114 @@
 Solutions by Walt Mankowski.
 
-# Perl Weekly Challenge #326: Day of the Year and Decompressed List
+# Perl Weekly Challenge #327: MAD About Missing Integers
 
-I did this week's challenges in Perl and Python. A combination of
-language features and modules allowed me to solve them in just a few
-lines of code.
+I did this week's challenges in Perl and Python.
 
 Just a note that for each problem, I read the input via command line
 arguments, and I don't do any error checking. Of course I wouldn't do
 that in the real world, but here I just wanted to focus on the
 algorithms and language features.
 
-Update: Several days later I added C versions of my solutions to the
-challenges. See my notes at the bottom.
+## Task #1: Missing Integers
 
-## Task #1: Day of the Year
+For this task we're given an array of `n` integers, and we need to
+report on any integers in the range `1..n` that are missing.
 
-For this task we're given a date in YYYY-MM-DD format and we're asked
-to output the day of the year that date represents.
-
-The standard way of solving this problem is the make an array with the
-number of days in each month, then just add them up. The only tricky
-thing is that you've got to account for leap years.
-
-Perl and Python each have standard date/time modules that include this
-logic, so rather than reinvent the wheel I just used those instead.
-
-The Perl code is quite straightforward:
+In Perl I start by making a hash where the keys are all the values
+from 1 to the length of the array, which is `@ARGV`. I don't care
+about the values so I set them all to 1. I delete any elements that
+are given in the list, and finally I print out all the keys that
+remain in the hash.
 
 ```perl
-use v5.40;
-use DateTime;
+# make a hash of all the possible values from 1 to @ARGV
+my %missing = map { $_ => 1 } 1..@ARGV;
 
-my ($year, $month, $day) = split '-', shift @ARGV;
+# delete any elements in @ARGV
+delete $missing{$_} for @ARGV;
 
-my $dt = DateTime->new(
-                       year  => $year,
-                       month => $month,
-                       day   => $day,
-                      );
-
-say $dt->day_of_year;
+# print out any remaining keys
+printf "(%s)\n", join ", ", sort { $a <=> $b } keys %missing;
 ```
 
-My Python code is shorter but more cryptic. This is because Python is
-more of a stickler for types than Perl is. First I need to explicitly
-convert the numeric strings into integers, then split the `map`
-iterator into three separate values to pass into the `date`
-constructor using the `*` operator.
+In Python this is easier since we can use the set type and do
+everything in a one-liner. Just make one set with all the possible
+values, another with the elements in the array, and find the set
+difference.
 
 ```python
 from sys import argv
-from datetime import date
 
-dt = date(*map(int, argv[1].split('-')))
-print(dt.timetuple().tm_yday)
+missing = set(range(1, len(argv))) - set(map(int, argv[1:]))
+print(missing)
 ```
 
-## Task #2 Decompressed List
+## Task #2: MAD
 
-For this task we're given a list of positive integers having an even
-number of elements. We're to construct a new list by looking at the
-original list as pairs: The first number is a count and the second is
-a value. For example, if the pair is (2,3), then we repeat the number
-3 two times.
+For this task we're given an array of distinct integers. We need to
+consider all the possible pairs in the array, compute the absolute
+value of their differences, then print all the pairs which have a
+Minimum Absolute Difference (MAD).
 
-My code is basically the same in both languages. The only difference
-is the operator each language uses to repeat values, and how we append
-those values to a list. Perl uses the `x` operator and `push`
+To solve this I use two variables: the smallest difference I've
+already seen (which I initialize to a huge number) and a list of all
+the pairs with that difference. I also sort the list. This isn't
+strictly necessary, but it ensures that when I print out the pairs the
+smaller number will always be first.
 
 ```perl
-    push @output, ($val) x $cnt;
+my $min_dist = 1e300;
+my @pairs;
+my @elements = sort { $a <=> $b } @ARGV;
 ```
 
-while Python uses the `*` operator and `+=`:
+Then I have two nested for loops that do all the bookkeeping:
 
-```python
-    output += [val] * cnt
-```
-
-## Bonus C Implementations
-
-It's Sunday morning and thunderstorming outside, so I decided to do C
-versions of the challenges this week.
-
-### Day of the Week in C
-
-There are two steps to solving this challenge: parsing the date into
-year, month, and day, and then computing the day of the year for that
-date. C doesn't have a handy `split()` function, so instead I used
-`strtok(3)`. `strtok()` works by modifying its input string, changing
-instances of the token to NULL. We can't modify `argv` so first I make
-a copy of it:
-
-```c
-    /* Make a copy of argv[1] so we can call strtok() on it */
-    char *yyyymmdd = malloc(strlen(argv[1]) + 1);
-    strcpy(yyyymmdd, argv[1]);
-```
-
-Then I used `strtok()` to find the tokens between instances of `'c'`
-and store them in a `struct tm`. This structure requires year 0 to be
-1900 and numbers the months starting at 0, so we need to account for
-that.
-
-```c
-    /* parse the date and construct a struct tm with the year, month, and day */
-    memset(&tm, 0, sizeof(tm));
-    tm.tm_year = atoi(strtok(yyyymmdd, "-")) - 1900;
-    tm.tm_mon = atoi(strtok(NULL, "-")) - 1;
-    tm.tm_mday = atoi(strtok(NULL, "-"));
-```
-
-Finally we use `mktime(3)` to convert the `struct tm` to an epoch
-time and use `gmtime_r(3)` to convert it back into a `struct tm`. But
-that struct has all the other information about that date populated,
-and so we can just print `tm.tm_yday`. Except it's not quite that
-easy, since it considers January 1 to be day 0 instead of day 1. So we
-need to add 1 to it when we output it.
-
-```c
-    /* get the epoch time for midnight on that date */
-    time_t t = mktime(&tm);
-
-    /* get the yday for that time */
-    gmtime_r(&t, &tm);
-    printf("%d\n", tm.tm_yday + 1);
-```
-
-### Decompressed List in C
-
-C doesn't have dynamically sized arrays like Perl and Python, so the
-first thing we need to do is make a pass through `argv` to compute how
-big the output array will be:
-
-```c
-size_t compute_output_len(int argc, char *argv[]) {
-    size_t output_len = 0;
-    for (int i = 1; i < argc; i += 2)
-        output_len += atoi(argv[i]);
-
-    return output_len;
+```perl
+for my $i (0..$#elements-1) {
+    for my $j ($i+1..$#elements) {
+        my $delta = abs($elements[$i] - $elements[$j]);
+        if ($delta < $min_dist) {
+            @pairs = ([$elements[$i], $elements[$j]]);
+            $min_dist = $delta;
+        } elsif ($delta == $min_dist) {
+            push @pairs, [$elements[$i], $elements[$j]];
+        }
+    }
 }
 ```
 
-We use that to `malloc` an array of `unsigned int`s:
+Finally I print them out nicely:
 
-```c
-    /* compute how big the output array should be */
-    size_t output_len = compute_output_len(argc, argv);
-    unsigned int *output = malloc(output_len * sizeof(unsigned int));
+```perl
+for my $i (0..$#pairs) {
+    printf "[%d,%d]", $pairs[$i][0], $pairs[$i][1];
+    print ", " if $i < $#pairs;
+}
+say "";
 ```
 
-After that, building the array and printing it out are pretty much the
-same as they are in the other languages, just a bit more verbose:
+There are two main differences in my Python code:
+* I saved one level of nested loops by using `itertools.combinations`.
+* Python does a better job of printing out nested lists than Perl
+  does, so I can just say `print(pairs)` instead of doing all the work
+  myself.
 
-```c
-    /* add things to the output array */
-    int k = 0;
-    for (int i = 1; i < argc; i += 2) {
-        int cnt = atoi(argv[i]);
-        int val = atoi(argv[i+1]);
-        for (int j = 0; j < cnt; j++)
-            output[k++] = val;
-    }
+```python
+from sys import argv
+from itertools import combinations
 
-    /* print out the array */
-    printf("(");
-    for (int i = 0; i < output_len-1; i++)
-        printf("%u, ", output[i]);
-    printf("%u)\n", output[output_len-1]);
+min_dist = 1e300
+pairs = []
+elements = sorted(map(int, argv[1:]))
+
+for i,j in combinations(range(len(elements)), 2):
+    delta = abs(elements[i] - elements[j])
+    if delta < min_dist:
+        pairs = [[elements[i], elements[j]]]
+        min_dist = delta
+    elif delta == min_dist:
+        pairs.append([elements[i], elements[j]])
+
+print(pairs)
 ```
