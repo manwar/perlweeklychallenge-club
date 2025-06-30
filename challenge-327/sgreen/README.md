@@ -1,3 +1,3 @@
-# The Weekly Challenge 326
+# The Weekly Challenge 327
 
-Blog: [Blog](https://dev.to/simongreennet/weekly-challenge-3ngd)
+No blog this week.
