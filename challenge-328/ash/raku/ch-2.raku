@@ -10,7 +10,7 @@ sub good-string($str) {
     $s ~~ s:g/(<:Ll>)(<:Lu>)/{ $0 eq $1.lc ?? '' !! "$0$1" }/;
     $s ~~ s:g/(<:Lu>)(<:Ll>)/{ $0.lc eq $1 ?? '' !! "$0$1"  }/;
 
-    return "[$s]" if $s eq $str;
+    return $s if $s eq $str;
     return good-string($s) if $s.lc ~~ /(.) $0/;
     return $s;
 }
