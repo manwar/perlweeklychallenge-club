@@ -21,19 +21,14 @@ multi sub MAIN(1) is hidden-from-USAGE {
     done-testing;
 }
 
-subset AlphaLCAndQM of Str  where * ~~ /^ <[a..z ?]>+ $/;
+subset AlphaLCAndQM of Str where * ~~ /^ <[a..z ?]>+ $/;
 subset ValidInput of AlphaLCAndQM where {
     $_.comb('').rotor(2=>-1).grep({ @_[0] !~~ '?' }).grep( { @_[0] ~~ @_[1] }).elems == 0;
 }
+subset ValidResult of ValidInput where * ~~ /^ <[a..z]>+ $/;
 
 multi sub test-is-valid-input( ValidInput $str ) { True }
 multi sub test-is-valid-input( $_ ) { False }
-
-subset AlphaLCOnly of Str where * ~~ /^ <[a..z]>+ $/;
-subset ValidResult of AlphaLCOnly where {
-    $_.comb('').rotor(2=>-1).grep( { @_[0] ~~ @_[1] }).elems == 0;
-};
-
 multi sub test-is-valid-result( ValidResult $str ) { True }
 multi sub test-is-valid-result( $_ ) { False }
 
