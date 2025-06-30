@@ -31,6 +31,8 @@ sub process(Str $str is copy) {
 #|(Given a string of upper and lowercase letter
 remove all pairs of upper and lower case letters next
 to each other recursively)
-multi sub MAIN(ValidInput $str) {
+multi sub MAIN(
+    ValidInput $str #= String made of upper and lowercase letters only
+) {
     good-string($str).say;
 }
