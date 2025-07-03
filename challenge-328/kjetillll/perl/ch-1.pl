@@ -9,11 +9,11 @@ sub f {
   $_
 }
 
-print f("a?z")     eq "abz"      ? "ok" : "err $f", "\n";
-print f("pe?k")    eq "peak"     ? "ok" : "err $f", "\n";
-print f("gra?te")  eq "grabte"   ? "ok" : "err $f", "\n";
-print f("a?????b") eq "ababacb"  ? "ok" : "err $f", "\n";
-print f("?a?")     eq "bab"      ? "ok" : "err $f", "\n";
-print f("?b")      eq "ab"       ? "ok" : "err $f", "\n";
-print f("b???a?")  eq "babcab"   ? "ok" : "err $f", "\n";
-print f("?")       eq "a"        ? "ok" : "err $f", "\n";
+print f("a?z")     eq "abz"      ? "ok\n" : "err\n";
+print f("pe?k")    eq "peak"     ? "ok\n" : "err\n";
+print f("gra?te")  eq "grabte"   ? "ok\n" : "err\n";
+print f("a?????b") eq "ababacb"  ? "ok\n" : "err\n";
+print f("?a?")     eq "bab"      ? "ok\n" : "err\n";
+print f("?b")      eq "ab"       ? "ok\n" : "err\n";
+print f("b???a?")  eq "babcab"   ? "ok\n" : "err\n";
+print f("?")       eq "a"        ? "ok\n" : "err\n";
