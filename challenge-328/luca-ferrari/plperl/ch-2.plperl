@@ -1,0 +1,34 @@
+--
+-- Perl Weekly Challenge 328
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-328>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc328;
+
+CREATE OR REPLACE FUNCTION
+pwc328.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   $string = lc $string;
+   my @chars = split //, $string;
+   my @result;
+
+   my $index = 0;
+   for ( 0 .. $#chars ) {
+       if ( $chars[ $index ] eq $chars[ $index + 1 ] ) {
+       	  $index += 2;
+       }
+       else {
+       	    push @result, $chars[ $index ];
+	    $index++;
+       }
+   }
+
+   return join( '', @result );
+   
+$CODE$
+LANGUAGE plperl;
