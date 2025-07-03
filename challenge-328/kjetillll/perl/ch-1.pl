@@ -1,49 +1,19 @@
+
 sub f {
-    local $_ = pop;
-    1 while s{
-               (.?)
-               \?
-               (.?)
-             }
-             {
-               $1
-               .
-               ( grep /[^$1$2 ]/, 'a' .. 'z' )[0]
-               .
-               $2
-             }ex;
-    $_;
+  local $_ = shift;
+  #idea: using negative lookbehind and negative lookahead replace ? one at a time with a, b or c until no more ? is replaced:
+  1 while
+    s/ (?<!a) \? (?!a) /a/x  or #if ? neighter has a behind nor ahead, then replace it with a
+    s/ (?<!b) \? (?!b) /b/x  or #if ? neighter has b behind nor ahead, then replace it with b
+    s/ (?<!c) \? (?!c) /c/x;    #if ? neighter has c behind nor ahead, then replace it with c
+  $_
 }
 
-
-print f("a?z")     eq "abz"      ? "ok" : "err", "\n";
-print f("pe?k")    eq "peak"     ? "ok" : "err", "\n";
-print f("gra?te")  eq "grabte"   ? "ok" : "err", "\n";
-print f("a?????b") eq "ababacb"  ? "ok" : "err", "\n";
-print f("?a?")     eq "bab"      ? "ok" : "err", "\n";
-print f("?")       eq "a"        ? "ok" : "err", "\n";
-
-__END__
-
-For speedup, should it be needed, on very long inputs with many '?' chars
-and/or very many inputs, initialize once an @array or a %hash and replace
-this construct:
-
-( grep /[^$1$2 ]/, 'a' .. 'z' )[0]
-
-with either this:
-
-$array[ ord($1||'a') ][ ord($2||'a') ]
-
-or this:
-
-$array[ ord($1||'a') * 128 + ord($2||'a') ]
-
-or this if you prefer hashes and accept a little slower lookup than arrays:
-
-$hash{ $1 || 'a', $2 || 'a' }
-
-where the array/hash contains a possible pre-calculated letter for all
-26*26=676 possible combinations of the two a-z chars before and after the '?'
-and default to 'a' if the '?' are at the beginning or end of the string.
-
+print f("a?z")     eq "abz"      ? "ok" : "err $f", "\n";
+print f("pe?k")    eq "peak"     ? "ok" : "err $f", "\n";
+print f("gra?te")  eq "grabte"   ? "ok" : "err $f", "\n";
+print f("a?????b") eq "ababacb"  ? "ok" : "err $f", "\n";
+print f("?a?")     eq "bab"      ? "ok" : "err $f", "\n";
+print f("?b")      eq "ab"       ? "ok" : "err $f", "\n";
+print f("b???a?")  eq "babcab"   ? "ok" : "err $f", "\n";
+print f("?")       eq "a"        ? "ok" : "err $f", "\n";
