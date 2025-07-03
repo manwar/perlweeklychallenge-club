@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 328
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-328>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc328;
+
+CREATE OR REPLACE FUNCTION
+pwc328.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   while ( $string =~ / ([a-z]) [?] ([a-z])? /x ) {
+   	 my $question_mark = ( grep { $_ ne $1 && $_ ne $2 }  ( 'a' .. 'z' ) )[ 0 ];
+	 my $replacement = $1 . $question_mark . $2;
+   	 $string =~ s/([a-z]) [?] ([a-z])?/$replacement/x;
+   }
+
+   return $string;
+   
+$CODE$
+LANGUAGE plperl;
