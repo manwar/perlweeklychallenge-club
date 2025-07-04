@@ -37,6 +37,13 @@ sub usage {
     -tests
         run some tests
 
+    -1
+        run the "delete pairs" implementation.
+        Default unless -2 is specified.
+
+    -2
+        run the "make good" implementation.
+
     STR
         a string
 
