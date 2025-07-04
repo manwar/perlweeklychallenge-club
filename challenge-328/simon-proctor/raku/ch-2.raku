@@ -2,7 +2,7 @@
 
 subset ValidInput of Str where * ~~ /^ <[a..z A..Z]> + $/;
 
-multi sub MAIN(1) {
+multi sub MAIN(1) is hidden-from-USAGE {
     use Test;
     ok "WeEekly" ~~ ValidInput, 'Valid Input works';
     ok "1234" !~~ ValidInput, 'Valid input fails for invalid value'; 
