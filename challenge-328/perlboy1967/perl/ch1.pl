@@ -22,8 +22,7 @@ use exact 'v5.32', -signatures;
 sub replaceAllQuestionMarks ($str) {
   sub _rep {
     my @c = map { $_ // '' } @_;
-    my @r = grep !/[$c[0]$c[1]]/, 'a' .. 'c';
-    return $c[0].$r[0].$c[1];
+    $c[0].(grep !/[$c[0]$c[1]]/,'a'..'c')[0].$c[1];
   }
   1 while ($str =~ s/(.)?\?(.)?/_rep($1,$2,$3)/e);
   return $str;
