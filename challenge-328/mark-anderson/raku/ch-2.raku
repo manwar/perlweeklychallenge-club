@@ -16,7 +16,7 @@ sub good-string($str is copy)
 
     loop 
     {
-        $str .= subst(/@a/);
+        $str .= subst(/@a/, :g);
         last unless $/
     }
 
