@@ -16,9 +16,8 @@ sub good-string($str is copy)
 
     loop 
     {
-        my @s = $str.split(/@a/);
-        last if @s == 1;
-        $str = [~] @s
+        $str .= subst(/@a/);
+        last unless $/
     }
 
     return $str
