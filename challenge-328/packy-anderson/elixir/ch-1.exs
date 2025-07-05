@@ -1,7 +1,7 @@
 #!/usr/bin/env elixir
 
 defmodule PWC do
-  def replaceAllQuestion(str) do
+  def replace_all_question(str) do
     match = Regex.named_captures(
       ~r/(?<before>.)\?+(?<after>.)/,
       str
@@ -13,7 +13,7 @@ defmodule PWC do
       replace = ?a..?z |> Enum.take_random(1) |> List.to_string
       str = Regex.replace(~r/\?/, str, replace, global: false)
       # recursively call this function to replace any remaining ?s
-      replaceAllQuestion(str)
+      replace_all_question(str)
     else
       # return the unmodified string if there are no ? characters
       str
@@ -22,7 +22,7 @@ defmodule PWC do
 
   def solution(str) do
     IO.puts("Input: $str = \"#{str}\"")
-    IO.puts("Output: \"#{replaceAllQuestion(str)}\"")
+    IO.puts("Output: \"#{replace_all_question(str)}\"")
   end
 end
 
