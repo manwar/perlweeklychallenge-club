@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Missing Absolute Distance](https://packy.dardan.com/b/Wy)
+[Perl Weekly Challenge: Good Old-Fashioned Replacement Boy?](https://packy.dardan.com/b/XE)
