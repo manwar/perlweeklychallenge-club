@@ -40,5 +40,12 @@ is longest_nice_substring( "cC" ), "cC",
     'Example 2: longest_nice_substring( "cC" ) == "cC"';
 is longest_nice_substring( "A" ), "",
     'Example 3: longest_nice_substring( "A" ) == ""';
+is longest_nice_substring( "XabcABCX" ), "abcABC",
+    'Test 1: longest_nice_substring( "XabcABCX" ) == "abcABC"';
+is longest_nice_substring( "XaAbBcCX" ), "aAbBcC",
+    'Test 2: longest_nice_substring( "XaAbBcCX" ) == "aAbBcC"';
+is longest_nice_substring( "notniceANOTNICEXniceNICEXaA" ), "niceNICE",
+    'Test 3: longest_nice_substring( "notniceANOTNICEXniceNICEXaA" )'
+        . ' == "niceNICE"';
 
 done_testing;
