@@ -6,7 +6,7 @@ sub nice-string ($str) {
         andthen .comb(/<:Lu>/)».lc ∩ .comb(/<:Ll>/)
         andthen .keys
     );
-    #note @nice;
+
     $str
     andthen .comb: rx:i/<@nice>+/
     andthen .elems <= 1 ?? |$_ // '' !! .map: &nice-string
