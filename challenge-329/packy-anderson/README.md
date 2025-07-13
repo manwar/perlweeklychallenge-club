@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Good Old-Fashioned Replacement Boy?](https://packy.dardan.com/b/XE)
+[Perl Weekly Challenge: It MUST be nice!](https://packy.dardan.com/b/Xd)
