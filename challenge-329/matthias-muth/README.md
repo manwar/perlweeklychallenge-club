@@ -1,222 +1,164 @@
-# Regexes Replacing All Good Strings?
+# Counter-Nice
 
-**Challenge 328 solutions in Perl by Matthias Muth**
+**Challenge 329 solutions in Perl by Matthias Muth**
 
-## Task 1: Replace all ?
+## Task 1: Counter Integers
 
-> You are given a string containing only lower case English letters and ?.<br/>
-> Write a script to replace all ? in the given string so that the string doesn’t contain consecutive repeating characters.
+> You are given a string containing only lower case English letters and digits.<br/>
+> Write a script to replace every non-digit character with a space and then return all the distinct integers left.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "a?z"
-> Output: "abz"
+> Input: $str = "the1weekly2challenge2"
+> Output: 1, 2
+>
+> 2 is appeared twice, so we count it one only.
+>```
 > 
-> There can be many strings, one of them is "abz".
-> The choices are 'a' to 'z' but we can't use either 'a' or 'z' to replace the '?'.
-> ```
->
-> **Example 2**
->
-> ```text
-> Input: $str = "pe?k"
-> Output: "peak"
+>**Example 2**
+> 
+>```text
+> Input: $str = "go21od1lu5c7k"
+> Output: 21, 1, 5, 7
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "gra?te"
-> Output: "grabte"
+>Input: $str = "4p3e2r1l"
+> Output: 4, 3, 2, 1
 > ```
 
-It would be strange *not* to think of regular expressions
-when a task is to replace parts of a string
-with something else.<br/>
-So regex it is!
+Instead of *removing all non-digits* from the string, I will *extract all digits* instead, which will produce the same result.<br/>Using a regular expression like `/(\d+)/g` even helps to turn the sequences of digits into a list of numbers.
 
-Let's first have a look at the replacement character.<br/>
-I will replace all question marks with the letter `'a'`,
-except if one of the letters to the left or right of the question mark
-already is an `'a'`.<br/>
-In that case, I will use `'b'` as the replacement.<br/>
-If the question mark's neighbors are
-both an `'a'` and a `'b'` (or a `'b'` and an `'a'`),
-I will use a `'c'`.<br/>
-This should avoid all possible cases of 'consecutive repeating characters'.<br/>
-With `$left` and `$right` being the left and right neighbors, respectively,
-a possible formula to determine the correct replacement is as follows.
-It minimizes the number of comparisons that need to be done: 
+The examples suggest that the found numbers need to be returned in their original order, which is what we already have. We only need to remove duplicate entries, which a call to `uniq` does without changing the order.
+
+So with the help of `util`, the solution is a one-liner:
 
 ```perl
-            $left eq "a"    ? ( $right eq "b" ? "c" : "b" )
-            : $right eq "a" ? ( $left eq "b" ? "c" : "b" ) : "a";
-```
+use v5.36;
+use List::Util qw( uniq );
 
-The plan is to use the `s///` substitution operator
-to find each question mark
-and replace it with the correct replacement character.
-Since we have a formula,
-it is best to use a `/e` *execute* option for the substitution,
-which allows us to use a piece of code
-(containing the above formula) to compute the replacement.
-I like to put code pieces into curly brackets when I use the `/e` option,
-so it will be more like a `s[...]{...}/e` substitution.
-The `[` and `]` are not for starting a character class,
-but the most practical way to to delimit the matching pattern
-with delimiter pairs. 
-
-Now let's construct the regular expression for that 'matching' part.<br/>
-We need to find a question mark, plus its neighbors on the left and right.
-I will therefore use `\?` as the pattern,
-and a *look-behind* for the left neighbor
-and a *look-ahead* for the right neighbor.
-Both shall match *any* single character,
-but I will *capture* them for use in the formula.
-
-I then add some `|` alternatives.
-One for getting an empty match for the left neighbor
-when the question mark appears directly at the beginning of the string,
-and similarly one for getting an empty match for the right neighbor
-when the question mark is at the end.
-
-I add the `/x` option to allow for visually structuring of the matching pattern,
-and the `/g` option to perform all substitutions at once.
-
-Since all work  is completed after that statement is executed,
-I also add the `/r` option to directly return the resulting string.
-
-This is the complete substitution statement:
-
-``` perl
-    $str =~
-        s[ (?<=(^|.)) \? (?=(.|$)) ] {
-            my ( $left, $right ) = ( $1, $2 );
-            $left eq "a"    ? ( $right eq "b" ? "c" : "b" )
-            : $right eq "a" ? ( $left eq "b"  ? "c" : "b" ) : "a";
-        }xegr;
-```
-
-The only small problem with that is that that look-behind pattern
-`(?<=(^|.))` causes a warning:
-
-```text
-Variable length positive lookbehind with capturing is experimental in regex: [...]
-```
-
-But it works perfectly for all tests and examples,
-so when your have at least Perl 5.30
-(in which variable length look-behinds were first implemented),
-just switching off that warning should be OK.<br/>
-That's what I do for my complete solution:
-
-```perl
-use v5.30;
-use feature 'signatures';
-no warnings 'experimental::signatures';
-
-sub replace_all_questionmarks( $str ) {
-    no warnings 'experimental::vlb';
-    $str =~
-        s[ (?<=(^|.)) \? (?=(.|$)) ] {
-            my ( $left, $right ) = ( $1, $2 );
-            $left eq "a"    ? ( $right eq "b" ? "c" : "b" )
-            : $right eq "a" ? ( $left eq "b"  ? "c" : "b" ) : "a";
-        }xegr;
+sub counter_integers( $str ) {
+    return uniq $str =~ /(\d+)/g;
 }
 ```
 
-
-## Task 2: Good String
+## Task 2: Nice String
 
 > You are given a string made up of lower and upper case English letters only.<br/>
-> Write a script to return the good string of the given string. A string is called good string if it doesn’t have two adjacent same characters, one in upper case and other is lower case.
+> Write a script to return the longest substring of the give string which is nice. A string is nice if, for every letter of the alphabet that the string contains, it appears both in uppercase and lowercase.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "WeEeekly"
-> Output: "Weekly"
+> Input: $str = "YaaAho"
+> Output: "aaA"
+>```
 > 
-> We can remove either, "eE" or "Ee" to make it good.
-> ```
->
-> **Example 2**
->
-> ```text
-> Input: $str = "abBAdD"
-> Output: ""
+>**Example 2**
 > 
-> We remove "bB" first: "aAdD"
-> Then we remove "aA": "dD"
-> Finally remove "dD".
+>```text
+> Input: $str = "cC"
+> Output: "cC"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "abc"
-> Output: "abc"
-> ```
+>Input: $str = "A"
+> Output: ""
+> 
+> No nice string found.
+>```
 
-Using regular expressions *again*!
+This one is a little bit more tricky.<br/>Let's 'divide and conquer':
 
-For this task, as we may have overlapping patterns,
-we can not just do all substitutions at once using the `/g` option.
-Instead, we need a 'real' loop.
+1. We need to walk through all possible substrings of at least length 2.<br/>This means using a double loop, one for all possible starting positions, and the second one for all possible strings starting there, with varying lengths.<br/>
+   I could not find any way to shortcut this, so I will use it even though its runtime behavior is more or less quadratic, which I dislike.
+2. We need to find a maximum length substring.<br/>I will use a variable `$longest_nice` for that, initialized with the empty string (`""`) and updated from every substring that is longer *and* is a 'nice' string.
+3. We need to decide whether a substring is a 'nice' string.<br/>For clarity, I will put this into a separate function `is_nice_string`.
 
-But the loop body can be empty,
-because the substitution itself does the job *and* delivers
-the ending condition for the loop.
+Let's first concentrate on the implementation of that `is_nice_string` functon.
 
-How do we construct the regular expression here?<br/>
-We need something that fulfills both criteria:
-The *same character*, but in *different case*.
+The task description says that a string is nice if '*for every letter of the alphabet that the string contains, it appears both in uppercase and lowercase*'. This does not require that any upper and lower case versions of the same character are next to each other, they can be anywhere in the string. For example: `"abcABC"` is as 'nice' a string as is `"aAbBcCa"`.
 
-For the *same character* criteria,
-we can use the idiomatic *backreference* technique,
-capturing a character,
-then referencing what we captured using `\g{-1}` for example.
-But I do not know any way of using a backreference and saying that it has to be in a different case at the same time.
+My solution is to create two strings:
 
-But what we can do is to make sure that the *different case* criteria
-is already fulfilled  when we capture the first letter.
-We can use a *lookahead* to make sure that the following letter is in different case
-*without knowing what the letter actually is*.
-For any lower case letter that we capture,
-we can use a *lookahead* to ascertain that the next letter is in uppercase,
-and vice versa for uppercase letters.<br/>
-Like this, for example:
+* Extract all lowercase letters,
+* remove duplicates,
+* sort them alphabetically,
+* and concatenate them into a 'normalized' string of the lowercase letters.
 
-```perl
-    / ( [a-z](?=[A-Z]) | [A-Z](?=[a-z]) ) /x
-```
+* Then do the same for the uppercase letters.
 
-Now we have captured a lower case letter
-of which we know that that is followed by an uppercase letter,
-or an uppercase letter
-of which we know that it is followed by a lowercase letter.<br/>
-Note that for sure we *must not* give a `/i` (*ignore case*) option for this to work.
 
-Now we need to make sure that the two letters are the same
-*when case is ignored*.<br/>
-But didn't we just said we *cannot* ignore case, for the capture to work?<br/>
-Yes, we did, but we can do it anyway:
-the magic spell is  `(?i)`.<br/>
-It switches on the *ignore case* option for the rest of the pattern,
-so in our case, for matching the backreference.
+I put these two strings into `$lower` and `$upper`.
 
-So here we go, with a nice short regex solution:
+For example, the string `"YaaAho"` turns into the strings `"aho"` (lowercase) and `"AY"` (uppercase).<br/>`"aaAbBa"` turns into `"ab"` and `"AB"`.
+
+Now, a string is a 'nice string' if the two resulting strings are the same, just in opposite case.<br/>
+This can be checked with a simple comparison of `uc( $lower ) eq $upper`, which results in this implementation of `is_nice_string`:<br/>
 
 ```perl
-sub good_string( $str ) {
-    while ( $str =~ s/( [a-z](?=[A-Z]) | [A-Z](?=[a-z]) ) (?i)\1 //x ) {
-        # Everything is in the loop condition.
-    }
-    return $str;
+use v5.36;
+use List::Util qw( uniq );
+
+sub is_nice_string( $str ) {
+    my $lower = join "", sort +( uniq $str =~ /([a-z])/g );
+    my $upper = join "", sort +( uniq $str =~ /([A-Z])/g );
+    return uc( $lower ) eq $upper;
 }
 ```
 
+Note that I put those parentheses with a plus sign `+( ... )` around the `uniq` calls. This is a Perl language construct that is not needed very often, but which is very useful *when* it's needed.
+
+If I just wrote `sort uniq $str =~ ...`, it would lead to a misinterpretation of `uniq` as being the comparison function for `sort`.  That won't work at all.
+
+Putting the result of the  `uniq` call into `+(...)` parentheses shows the parser that the parentheses are used as the start of an expression (a *list* expression in that case), and not the start of the `sort` parameter list. The parser thus knows that the first parameter to `sort` is this list, and not a code block or a subroutine reference. No confusion anymore.
+
+Apparently, the parser also doesn't get confused if *both* parameter sets, of `sort` and of `uniq`, are put in parentheses, like `sort( uniq( $str =~ ... ) )`. I actually cannot explain exactly why this doesn't work without the `sort` parameter list parentheses.
+
+Both cases rely on the fact that the implicit (default) sorting order is using an alphanumeric comparison. So maybe it's also a good idea to just make this explicit: `sort { $a cmp $b } uniq $str =~ ...`.
+
+To summarize (no, I'm not ChatGPT!):
+
+```perl
+    sort uniq $str =~ /([a-z])/g        # doesn't work!
+    sort +( uniq $str =~ /([a-z])/g )   # ok.
+    sort( uniq( $str =~ /([a-z])/g ) )  # ok.  
+    sort { $a cmp $b } uniq $str =~ /([a-z])/g    # maybe the best, fully explicit.
+```
+
+The main subroutine then is rather straightforward. It contains an 'outer' loop for the starting position of possible substrings, and the 'inner' loop for checking all substrings of increasing length that start at that position, and remembering the longest 'nice' string found.
+
+Yet, I have built in some shortcuts to avoid checking any substrings that are shorter than our current `$longest_nice` string and thus cannot at all be candidates for the longest nice string:
+
+* Add a `$min_length` variable to hold the minimum length for any future substring to possibly become a `$longest_nice` string,
+* end the outer loop when no substrings with a minimum length of `$min_length` can be extracted anymore,
+* only extract substrings starting with a minimum length of `$min_length` in the inner loop,
+* don't forget to update `$min_length` whenever a longer `$longest_nice` string is found.
+
+The main subroutine then looks like this, concluding my solution:
+
+```perl
+sub longest_nice_substring( $str ) {
+    my ( $start, $longest_nice, $min_length ) = ( 0, "", 2 );
+    while ( $start + $min_length <= length( $str ) ) {
+        for my $len ( $min_length .. length( $str ) - $start ) {
+            my $substr = substr( $str, $start, $len );
+            if ( is_nice_string( $substr )  {
+                $longest_nice = $substr;
+                $min_length = length( $longest_nice ) + 1;
+            }
+        }
+        ++$start;
+    }
+    return $longest_nice;
+}
+```
+
+Exercise done, lessons learned!
 
 #### **Thank you for the challenge!**
