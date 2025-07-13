@@ -1,3 +1,3 @@
-# The Weekly Challenge 328
+# The Weekly Challenge 329
 
-Blog: [A good question](https://dev.to/simongreennet/weekly-challenge-a-good-question-3e3p)
+No blog this week, sorry.
