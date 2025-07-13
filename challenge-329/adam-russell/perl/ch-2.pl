@@ -21,12 +21,12 @@
 
   
   sub nice_substring{
-      my ($str) = @_;
-      my $n = length($str);
+      my ($s) = @_;
+      my $n = length($s);
       my $longest = q//;
       for my $i (0 .. $n - 1) {
           for my $j ($i + 1 .. $n) {
-              my $substring = substr($str, $i, $j - $i);
+              my $substring = substr($s, $i, $j - $i);
               if (is_nice($substring) && 
                   length($substring) > length($longest)){
                   $longest = $substring;
