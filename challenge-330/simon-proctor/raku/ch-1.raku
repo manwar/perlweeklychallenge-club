@@ -13,8 +13,7 @@ multi sub MAIN(:t(:$test)) is hidden-from-USAGE {
 }
 
 sub clear-digits(ValidInput $str is copy) {
-    $str = loop-strip( $str, / \D?\d / );
-    return $str;
+    loop-strip( $str, / \D?\d / );
 }
 
 sub loop-strip( $str is copy, $regex ) {
