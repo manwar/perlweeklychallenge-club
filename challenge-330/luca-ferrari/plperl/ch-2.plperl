@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 330
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-330>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc330;
+
+CREATE OR REPLACE FUNCTION
+pwc330.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $text ) = @_;
+   die "Invalid argument" unless( length( $text ) > 2 );
+
+   my @parts;
+
+   for ( split( ' ', $text ) ) {
+       push @parts, length( $_ ) >= 3 ? ucfirst( $_ ) : lc( $_ );
+   }
+
+   return join( ' ', @parts );
+
+$CODE$
+LANGUAGE plperl;

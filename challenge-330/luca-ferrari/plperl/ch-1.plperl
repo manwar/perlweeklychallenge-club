@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 330
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-330>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc330;
+
+CREATE OR REPLACE FUNCTION
+pwc330.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+   die "Invalid string" unless( $string =~ / ^ [a-z0-9]+ $ /x );
+
+   while ( $string =~ / [a-z] [0-9] /x ) {
+   	 $string =~ s/ ([a-z]) ([0-9]) //x;
+   }
+   return $string;
+   
+$CODE$
+LANGUAGE plperl;
