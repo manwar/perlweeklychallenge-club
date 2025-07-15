@@ -32,7 +32,7 @@
       my $image = write_image($s);
       my $ocrspace = OCR::OcrSpace->new(); 
       my $ocrspace_parameters = {  file      => qq/$image/,  
-                                   apikey    => q/K89345674088957/,
+                                   apikey    => q/XXXXXXX/,
                                    filetype  => q/PNG/,
                                    scale     => q/True/,
                                    isOverlayRequired => q/True/,
