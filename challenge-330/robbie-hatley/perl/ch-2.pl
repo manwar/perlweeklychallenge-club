@@ -59,7 +59,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
       my $n = scalar(@words);
       for ( my $idx = 0 ; $idx < $n ; ++$idx ) {
          if ( 0 == $idx || $n-1 == $idx || length($words[$idx]) >= 3 ) {
-            $words[$idx] =~ s/^(.)(.*)$/uc($1).lc($2)/e}
+            $words[$idx] =~ s/^(.)(.*)$/ucfirst($1).lc($2)/e}
          else {
             $words[$idx] = lc $words[$idx]}}
       return join ' ', @words}
