@@ -33,15 +33,15 @@ Output: "You Are a Star"
 PROBLEM NOTES:
 I'll split the input on whitespace to an array, then I'll use a 3-part index loop to process each array
 element, Title-Casing each array element with size >=3 and lower-casing the remainder. Exception: This
-problem's description doesn't mention it, but the convention in English is to also Title-Case the first word
-of every title, so I'll also do that.
+problem's description doesn't mention it, but the convention in English is to also Title-Case the first
+and last words of every title, so I'll also do that.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of double-quoted strings, in proper Perl syntax, like so:
 
-./ch-2.pl '("tHe silMARillion", "a TAle oF TwO cItIes", "proGRAMming pErL")'
+./ch-2.pl '("tHe silMARillion", "a TAle oF TwO cItIes", "proGRAMming pErL", "a pLanE tO rOam in")'
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
@@ -58,7 +58,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
       my @words = split /\s+/, $t;
       my $n = scalar(@words);
       for ( my $idx = 0 ; $idx < $n ; ++$idx ) {
-         if ( 0 == $idx || length($words[$idx]) >= 3 ) {
+         if ( 0 == $idx || $n-1 == $idx || length($words[$idx]) >= 3 ) {
             $words[$idx] =~ s/^(.)(.*)$/uc($1).lc($2)/e}
          else {
             $words[$idx] = lc $words[$idx]}}
