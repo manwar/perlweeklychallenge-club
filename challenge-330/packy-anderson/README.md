@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: It MUST be nice!](https://packy.dardan.com/b/Xd)
+[Perl Weekly Challenge: [TITLE OF THE POST]](https://packy.dardan.com/b/Yf)
