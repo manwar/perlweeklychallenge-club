@@ -1,3 +1,3 @@
-# The Weekly Challenge 329
+# The Weekly Challenge 330
 
-No blog this week, sorry.
+Blog: [Clearly the Title](https://dev.to/simongreennet/weekly-challenge-clearly-the-title-4bom)
