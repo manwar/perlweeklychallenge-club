@@ -29,6 +29,7 @@ my @Test =
     "cC",       "cC",
     "A",        "",
     "",         "",
+    "AIaHAiaGAIahAiaFAIaHAiagAIahAiaEAIaHAiaGAIahAiafAIaHAiagAIahAiaDAIaHAiaGAIahAiaFAIaHAiagAIahAiaeAIaHAiaGAIahAiafAIaHAiagAIahAiaCAIaHAiaGAIahAiaFAIaHAiagAIahAiaEAIaHAiaGAIahAiafAIaHAiagAIahAiadAIaHAiaGAIahAiaFAIaHAiagAIahAiaeAIaHAiaGAIahAiafAIaHAiagAIahAiabAIaHAiaGAIahAiaFAIaHAiagAIahAiaEAIaHAiaGAIahAiafAIaHAiagAIahAiaDAIaHAiaGAIahAiaFAIaHAiagAIahAiaeAIaHAiaGAIahAiafAIaHAiagAIahAiacAIaHAiaGAIahAiaFAIaHAiagAIahAiaEAIaHAiaGAIahAiafAIaHAiagAIahAiadAIaHAiaGAIahAiaFAIaHAiagAIahAiaeAIaHAiaGAIahAiafAIaHAiagAIahAia", "",
 ;
 plan 2 +@Test ÷ 2;
 
@@ -44,7 +45,7 @@ sub oc( Str:D $char --> Str:D) {
     $char eq $char.uc ?? $char.lc !! $char.uc
 }
 
-
+#### XXX task solves a different problem! XXX
 # Is it an empty Str or an empty Str of Letters?
 #multi task( '') { die 'empty string' }
 
