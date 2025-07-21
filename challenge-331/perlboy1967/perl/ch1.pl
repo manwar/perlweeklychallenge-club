@@ -19,12 +19,12 @@ use Test2::V0 qw(-no_srand);
 use exact 'v5.32', -signatures;
 
 sub lastWord ($str) {
-  ($str =~ m#(\S+)\b[\W]*$#)[0];
+  length(($str =~ m#(\S+)\b[\W]*$#)[0]);
 }
 
-is(lastWord(q{The Weekly Challenge}),'Challenge','Example 1');
-is(lastWord(q{   Hello   World   }),'World','Example 2');
-is(lastWord(q{Let's begin the fun}),'fun','Example 3');
-is(lastWord(q{Hello TWC!}),'TWC','Own example');
+is(lastWord(q{The Weekly Challenge}),9,'Example 1');
+is(lastWord(q{   Hello   World   }),5,'Example 2');
+is(lastWord(q{Let's begin the fun}),3,'Example 3');
+is(lastWord(q{Hello TWC!}),3,'Own example');
 
 done_testing;
