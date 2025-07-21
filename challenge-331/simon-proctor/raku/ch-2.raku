@@ -11,8 +11,9 @@ multi sub infix:<buds> (Str() $source,
 multi sub infix:<buds> (Str() $source, Str() $target) {
     my @target = $target.comb.Array;
     my @check = $source.comb.Array;
-    for 0..^$target.codes -> $first {
-        for $first+1..^$target.codes -> $second {
+    my $last = $target.codes;
+    for 0..^$last -> $first {
+        for $first^..^$last -> $second {
             @check[$first,$second] = @check[$second,$first];
             return True if @check ~~ @target;
             @check[$first,$second] = @check[$second,$first];
