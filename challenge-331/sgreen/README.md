@@ -1,3 +1,3 @@
-# The Weekly Challenge 330
+# The Weekly Challenge 331
 
-Blog: [Clearly the Title](https://dev.to/simongreennet/weekly-challenge-clearly-the-title-4bom)
+Blog: [The last word is my buddy](https://dev.to/simongreennet/weekly-challenge-the-last-word-is-my-buddy-13pm)
