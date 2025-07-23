@@ -48,7 +48,7 @@ my $cases = [
     [["fuck", "fcuk"], 1, "Example 1"],
     [["love", "love"], 0, "Example 2"],
     [["fodo", "food"], 1, "Example 3"],
-    [["feed", "feed"], 0, "Example 4"],
+    [["feed", "feed"], 1, "Example 4"],
 ];
 
 sub buddy_strings
@@ -57,17 +57,15 @@ sub buddy_strings
     my $target = $_[0]->[1];
 
     my $buddy = 0;
-    if (length($source) == length($target) and $source ne $target) {
+    if (length($source) == length($target)) {
         for my $i (0 .. length($source) - 1) {
-            if (substr($source, $i, 1) ne substr($target, $i, 1)) {
-                my $j = index($target, substr($source, $i, 1), $i + 1);
-                if ($j != -1 and substr($source, $j, 1) eq substr($target, $i, 1)) {
-                    if ($buddy) {
-                        $buddy = 0;
-                        last;
-                    }
-                    $buddy = 1;
+            my $j = index($target, substr($source, $i, 1), $i + 1);
+            if ($j != -1 and substr($source, $j, 1) eq substr($target, $i, 1)) {
+                if ($buddy) {
+                    $buddy = 0;
+                    last;
                 }
+                $buddy = 1;
             }
         }
     }

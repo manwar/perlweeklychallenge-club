@@ -44,7 +44,7 @@ set cases {
     {{"fuck" "fcuk"} 1 "Example 1"}
     {{"love" "love"} 0 "Example 2"}
     {{"fodo" "food"} 1 "Example 3"}
-    {{"feed" "feed"} 0 "Example 4"}
+    {{"feed" "feed"} 1 "Example 4"}
 }
 
 proc buddy_strings {strs} {
@@ -52,17 +52,15 @@ proc buddy_strings {strs} {
     set target [lindex $strs 1]
 
     set buddy 0
-    if {[string length $source] == [string length $target] && $source ne $target} {
+    if {[string length $source] == [string length $target]} {
         for {set i 0} {$i < [string length $source]} {incr i} {
-            if {[string index $source $i] ne [string index $target $i]} {
-                set j [string first [string index $source $i] $target [expr $i + 1]]
-                if {$j != -1 && [string index $source $j] eq [string index $target $i]} {
-                    if {$buddy} {
-                        set buddy 0
-                        break
-                    }
-                    set buddy 1
+            set j [string first [string index $source $i] $target [expr $i + 1]]
+            if {$j != -1 && [string index $source $j] eq [string index $target $i]} {
+                if {$buddy} {
+                    set buddy 0
+                    break
                 }
+                set buddy 1
             }
         }
     }
