@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: You have the last word, Buddy...](https://packy.dardan.com/b/Z6)
+[Perl Weekly Challenge: You have the last word, Buddy...](https://packy.dardan.com/b/Yw)
