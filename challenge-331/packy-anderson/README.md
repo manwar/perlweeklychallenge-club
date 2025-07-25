@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: [TITLE OF THE POST]](https://packy.dardan.com/b/Yf)
+[Perl Weekly Challenge: You have the last word, Buddy...](https://packy.dardan.com/b/Yw)
