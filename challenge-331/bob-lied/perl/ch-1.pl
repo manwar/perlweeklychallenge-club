@@ -58,8 +58,8 @@ sub runTest
     is( lastWord(""), 0, "Empty string");
     is( lastWord("word"), 4, "One word");
 
-    is( lastWord("Is this a ('word)'?"), 4, "Surrounded by punctation");
-    is( lastWord("What about the dog's"), 5, "Possessive/contraction");
+    is( lastWord("The ('dogs)'?"), 4, "Surrounded by punctation");
+    is( lastWord("What abous the dog's"), 5, "Possessive/contraction");
 
     done_testing;
 }
