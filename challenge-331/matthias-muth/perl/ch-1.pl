@@ -10,11 +10,6 @@
 
 use v5.36;
 
-use Dsay;
-$debug{ALL} = 1;
-say pp split "", "";
-say pp scalar( ()[-1] );
-
 sub last_word_length( $str ) {
     return length( ( split " ", $str )[-1] // "" );
 }
