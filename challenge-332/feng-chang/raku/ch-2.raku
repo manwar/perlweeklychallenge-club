@@ -2,4 +2,4 @@
 
 unit sub MAIN(Str:D $s);
 
-put so $s.comb.Bag.values.map(* % 2 == 1).all;
+put so $s.comb.Bag.values.map(*%%2).none;
