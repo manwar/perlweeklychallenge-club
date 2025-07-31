@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 332
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-332>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc332;
+
+CREATE OR REPLACE FUNCTION
+pwc332.task2_plperl( text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $string ) = @_;
+   my $bag = {};
+
+   for ( split //, $string ) {
+       $bag->{ $_ }++;
+   }
+
+   return 0 if ( grep { $_ > 1 } values $bag->%* );
+   return 1;
+   
+$CODE$
+LANGUAGE plperl;
