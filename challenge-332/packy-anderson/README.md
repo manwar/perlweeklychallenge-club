@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: You have the last word, Buddy...](https://packy.dardan.com/b/Yw)
+[Perl Weekly Challenge: Oddly Binary](https://packy.dardan.com/b/ZQ)
