@@ -1,112 +1,147 @@
-# Capitalizing on Regular Expressions 
+# Binary + Odd = XOR
 
-**Challenge 330 solutions in Perl by Matthias Muth**
+**Challenge 332 solutions in Perl by Matthias Muth**
 
-## Task 1: Clear Digits
+## Task 1: Binary Date
 
-> You are given a string containing only lower case English letters and digits.<br/>
-> Write a script to remove all digits by removing the first digit and the closest non-digit character to its left.
+> You are given a date in the format YYYY-MM-DD.<br/>
+> Write a script to convert it into binary date.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "cab12"
-> Output: "c"
->
-> Round 1: remove "1" then "b" => "ca2"
-> Round 2: remove "2" then "a" => "c"
+> Input: $date = "2025-07-26"
+> Output: "11111101001-111-11010"
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: $str = "xy99"
-> Output: ""
-> 
->Round 1: remove "9" then "y" => "x9"
-> Round 2: remove "9" then "x" => ""
+> Input: $date = "2000-02-02"
+> Output: "11111010000-10-10"
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: $str = "pa1erl"
-> Output: "perl"
+>Input: $date = "2024-12-31"
+> Output: "11111101000-1100-11111"
 > ```
 
-Seems we need to remove pairs of non-digit and digit characters, repeatedly.
+Let's take our Perl toolbox and find the right tools:
 
-Not a big deal for regular expressions.<br/>
-A substitution operator will do the removing, and as the result of that substitution indicates whether a replacement was found or not, it can serve as a loop condition, too.
+* Extracting numbers from a string:<br/>
+  Regular expressions, of course. Don't forget to use the `/g` *global* flag...<br/>
+  (Even though `split` would work nicely here, too, and maybe even a bit faster.)
+* Convert a number to binary:<br/>`sprintf` is all we need, and simple to use.
 
-As there is nothing else to be done, the loop will consist of the loop condition only, with an empty body. I like to put a comment into empty loops to make it obvious for the reader.
-
-That
+Et voilà:
 
 ```perl
 use v5.36;
 
-sub clear_digits( $str ) {
-    while ( $str =~ s/[a-z]\d// ) {
-        # Everything is in the loop condition.
-    }
-    return $str;
+sub binary_date( $date ) {
+    return sprintf "%b-%b-%b", $date =~ /\d+/g;
 }
-
 ```
 
-## Task 2: Title Capital
+## Task 2: Odd Letters
 
-> You are given a string made up of one or more words separated by a single space.<br/>
-> Write a script to capitalise the given title. If the word length is 1 or 2 then convert the word to lowercase otherwise make the first character uppercase and remaining lowercase.
+> You are given a string.<br/>
+> Write a script to find out if each letter in the given string appeared odd number of times.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "PERL IS gREAT"
-> Output: "Perl is Great"
-> ```
+> Input: $str = "weekly"
+> Output: false
 >
-> **Example 2**
+> w: 1 time
+> e: 2 times
+> k: 1 time
+> l: 1 time
+> y: 1 time
 >
-> ```text
-> Input: $str = "THE weekly challenge"
-> Output: "The Weekly Challenge"
+> The letter 'e' appeared 2 times i.e. even.
+>```
+> 
+>**Example 2**
+> 
+>```text
+> Input: $str = "perl"
+> Output: true
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "YoU ARE A stAR"
-> Output: "You Are a Star"
+>Input: $source = "challenge"
+> Output: false
 > ```
 
-The second task, too, is easily solved with a regular expression.
+The first thought is that we need to count how many times each letter appears.<br/>Using a hash is the standard and proven way to do this.
 
-Here, I use three capture buffers:
-
-* one for the first letter, which might have to be put into lower or uppercase  depending on the length of the word: `(\w)`
-* one for a possible second character: `(\w?)`
-* and one for the (possibly empty) rest of the word, from the third character to the end: `(\w*)`.
-
-The third capture has a special role:<br/>
-If it is empty, the whole word is only one or two characters long, and the first letter needs to be lowercase.<br/>
-If it is non-empty, we need to uppercase the first letter.
-
-The second and third captures will always be lowercased for the result.
-
-My whole solution consists of a single substitution, with a `/e` option to evaluate the substitution part as an expression, a `/g` option to repeat the substitution as often as possible, and a `/r`  option to return the resulting final string instead of the number of substitutions done.<br/>
-When I use the `/e` option, I put the expression into a pair of curly brackets, to give an optical hint that this is 'code' to be evaluated. I then use angle brackets for the pattern part.
-
-So here we go: 
+Maybe the `frequency` function from `List::MoreUtils` could be used to create that hash, because it's as simple as this:
 
 ```perl
-use v5.36;
+use List::MoreUtils qw( frequency );
+my $freq = frequency split //, $str;
+```
 
-sub title_capital( $str ) {
-    return $str =~ s<(\w)(\w?)(\w*)>{
-        ( $3 ? uc $1 : lc $1 ) . lc "$2$3"
-    }egr;
+Except experience shows that doing the counting ourselves in a loop usually is much faster, and not too complicated either.
+
+But actually we don't really need to know the number of occurrences, we only to know whether the number is even or odd. The last bit of the count is all we need. So instead of counting, and then checking if the count is divisible by two, we can instead use just one bit that flips between 'even' and 'odd' .
+
+The operation that does this 'flip-flop' for us is a binary XOR with a value of 1, in its assignment form, like this:
+
+```perl
+    $even_or_odd ^= 1;
+```
+
+Every `^= 1` operation flips the bit, perfectly indicating whether we've done an even or an odd number of operations so far.
+
+```perl
+    my %is_odd;
+    $is_odd{$_} ^= 1
+        for split //, $str;
+```
+
+It comes in very handy that in Perl we don't even need to initialize the variable, because an `undef` value is considered as a `0` when we use it in a numerical operation like this one. So when a character is encountered for the first time, the corresponding hash value is created implicitly.
+
+Once we have run through all the characters, all existing hash entries are `1` if and only if all characters have appeared an odd number of times.
+
+To get the final result, we can `grep` through the hash's values to find all non-`1` value, then check whether the count returned is zero.<br/>But we can already stop the search once we find a non-`1` value. The `any` and `all` functions from `List::Util` do exactly that, more 'elegant' than a loop:
+
+```perl
+use List::Util qw( all );
+...
+    return all { $_ } values %is_odd;
+```
+
+`any` and `all` have been available from `List::Util` since virtually forever (actually since 2002, Perl version 5.7.3), so not a problem with availability.
+
+But in the latest version of Perl (Perl 5.42), `any` and `all` have been made available as core operators, just like `grep`. Now there's no need to load a module, and there's no overhead of any function calls or parameter handling.<br/>
+For now, we need to add these two lines instead of the `use List::Util` statement (until this feature is declared non-experimental and added to a future Perl's 'feature bundle'):
+
+```perl
+use feature 'keyword_all';
+no warnings 'experimental::keyword_all';
+```
+
+In my mind, this new feature makes creation of a loop completely unnecessary (same as it's probably very rare that a loop is programmed out where `grep` could be used). It combines performance and expressiveness of code.
+
+So this is my preferred solution, making use of the most current evolutions of the Perl language and interpreter:
+
+```perl
+use v5.42;
+use feature 'keyword_all';
+no warnings 'experimental::keyword_all';
+
+sub odd_letters( $str ) {
+    my %is_odd;
+    $is_odd{$_} ^= 1
+        for split //, $str;
+    return all { $_ } values %is_odd;
 }
 ```
 
