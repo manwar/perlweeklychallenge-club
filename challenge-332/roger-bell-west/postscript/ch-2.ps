@@ -1,0 +1,83 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/all { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    true exch
+    {
+        p not {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+/counterify {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n known {
+            c n 2 copy get 1 add put
+        } {
+            c n 1 put
+        } ifelse
+    } forall
+    c
+    end
+} bind def
+
+/oddletters {
+    counterify values { 2 mod 1 eq } all
+} bind def
+
+(oddletters) test.start
+(weekly) oddletters not test
+(perl) oddletters test
+(challenge) oddletters not test
+test.end
