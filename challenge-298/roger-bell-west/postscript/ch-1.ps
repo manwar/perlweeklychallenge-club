@@ -1,0 +1,109 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/any { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    false exch
+    {
+        p {
+            pop true
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/maximalsquare {
+    0 dict begin
+    /a exch def
+    /mx 0 def
+    /boundy a length def
+    /boundx a 0 get length def
+    0 1 boundy 1 sub {
+        /y exch def
+        0 1 boundx 1 sub {
+            /x exch def
+            /size 0 def
+            {
+                [
+                    x 1 x size add {
+                        [ exch y size add exch ]
+                    } for
+                    size 0 gt {
+                        y 1 y size add {
+                            [ exch x size add ]
+                        } for
+                    } if
+                ]
+                {
+                    /i exch def
+                    a i 0 get get i 1 get get
+                } map
+                { 0 eq } any {
+                    exit
+                } if
+                /size size 1 add def
+                x size add boundx ge
+                y size add boundy ge or {
+                    exit
+                } if
+            } loop
+            /mx mx size dup mul max def
+        } for
+    } for
+    mx
+    end
+} bind def
+
+(maximalsquare) test.start
+[[1 0 1 0 0] [1 0 1 1 1] [1 1 1 1 1] [1 0 0 1 0]] maximalsquare 4 eq test
+[[0 1] [1 0]] maximalsquare 1 eq test
+[[0]] maximalsquare 0 eq test
+test.end

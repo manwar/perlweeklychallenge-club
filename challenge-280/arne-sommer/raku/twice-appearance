@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str where $str ~~ /^<[a..z]>+$/);
+
+my %seen;
+
+for $str.comb -> $letter
+{
+  if %seen{$letter}
+  {
+    say $letter;
+    last;
+  }
+
+  %seen{$letter} = True;
+}

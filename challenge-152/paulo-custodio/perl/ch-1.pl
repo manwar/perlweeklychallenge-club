@@ -2,7 +2,7 @@
 
 # Challenge 152
 #
-# TASK #1 › Triangle Sum Path
+# TASK #1 > Triangle Sum Path
 # Submitted by: Mohammad S Anwar
 # You are given a triangle array.
 #

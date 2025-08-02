@@ -1,0 +1,28 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where all(@ints) ~~ Int,
+               :v(:$verbose));
+
+my @sorted = @ints.sort(-*);
+
+say ":Sorted: { @sorted.join(",") }" if $verbose;
+
+while @sorted.elems >= 2
+{
+  my $y = @sorted.shift;
+  my $x = @sorted.shift;
+
+  if $x == $y
+  {
+    say ":Removed x:$x and y:$y -> ({ @sorted.join(",") })" if $verbose;
+  }
+  else
+  {
+    my $replace = $y - $x;
+    @sorted.push: $replace;
+    @sorted .= sort(-*);
+    say ":Replaced x:$x and y:$y with $replace -> ({ @sorted.join(",") })" if $verbose;
+  }
+}
+
+say @sorted.elems ?? @sorted.head !! 0;

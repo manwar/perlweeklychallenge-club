@@ -1,0 +1,28 @@
+CREATE OR REPLACE FUNCTION
+pwc277.task1_plperl( text[], text[] )
+RETURNS int
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+
+   my @single_left;
+   my @single_right;
+
+   for my $word ( $left->@* ) {
+       push @single_left, $word  if ( scalar( grep { $_ eq $word } $left->@* ) == 1 );
+   }
+
+   for my $word ( $right->@* ) {
+       push @single_right, $word  if ( scalar( grep { $_ eq $word } $right->@* ) == 1 );
+   }
+
+   my $counter = 0;
+   for my $word ( @single_left ) {
+       $counter++ if ( grep { $_ eq $word } @single_right );
+   }
+
+   return $counter;
+
+$CODE$
+LANGUAGE plperl;
+

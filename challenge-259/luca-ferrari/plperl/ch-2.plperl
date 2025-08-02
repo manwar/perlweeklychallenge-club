@@ -1,0 +1,58 @@
+--
+-- Perl Weekly Challenge 259
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-259>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc259;
+
+CREATE OR REPLACE FUNCTION
+pwc259.task2_plperl( text)
+RETURNS TABLE( id text, field_name text, field_value text )
+AS $CODE$
+
+   my ( $line ) = @_;
+
+   if ( $line =~ / ^ [{] [%] \s* (?<id>\w+) \s* (?<options>.*) \s* [%] [}] $ /x ) {
+      my $id = $+{ id };
+      my ( $name, $value ) = ( '', '' );
+	if ( $+{ options } ) {
+	   my $is_value = 0;
+	   my $allowed_spaces = 0;
+	   my $previous = '';
+	   
+	   for ( split //, $+{ options } ) {
+
+	       
+	       $is_value = 1 and $previous = $_ and next if ( $_ eq '=' );
+	       $allowed_spaces = 1 and $previous = $_ and next if ( $_ eq '"' and $previous eq '=' );
+	       
+	       $name .= $_ if ( ! $is_value );
+	       $value .= $_ if ( $is_value );
+
+	       if ( $is_value
+	           && ( ( $_ eq ' ' && ! $allowed_spaces ) 
+		     || ( $_ eq '"' && $previous ne '\\' && $allowed_spaces ) )
+		     ) {
+	       	  # stop here!
+		  $value =~ s/^\s*|\s*$//g;
+		  $value =~ s/^["]|["]$//g;
+		  $value =~ s/\\"/"/g;
+     		  return_next( { id => $id ,
+      		     field_name => $name,
+		     field_value => $value } );
+
+		  ( $name, $value, $is_value, $allowed_spaces ) = ( '', '', 0, 0 );
+	       }
+
+	       $previous = $_;
+	   }   
+
+
+	   }	
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

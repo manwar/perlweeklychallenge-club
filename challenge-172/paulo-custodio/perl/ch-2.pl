@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 172
 #
@@ -40,4 +40,4 @@ sub five_number_summary {
     return ($n[0], lower_quartile(@n), median(@n), upper_quartile(@n), $n[-1]);
 }
 
-say join ", ", five_number_summary(@ARGV);
+say join ", ", map {sprintf("%.1f", $_)} five_number_summary(@ARGV);

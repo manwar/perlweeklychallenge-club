@@ -2,12 +2,12 @@
 
 # Challenge 160
 #
-# TASK #1 › Four Is Magic
+# TASK #1 > Four Is Magic
 # Submitted by: Mohammad S Anwar
 # You are given a positive number, $n < 10.
 #
 # Write a script to generate english text sequence starting with the English
-# cardinal representation of the given number, the word ‘is’ and then the
+# cardinal representation of the given number, the word 'is' and then the
 # English cardinal representation of the count of characters that made up the
 # first word, followed by a comma. Continue until you reach four.
 #

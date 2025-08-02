@@ -1,0 +1,36 @@
+--
+-- Perl Weekly Challenge 329
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-329>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc329;
+
+CREATE OR REPLACE FUNCTION
+pwc329.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+   die "Invalid string" unless( $string =~ / ^ [a-zA-Z]+ $ /x );
+
+   my $found;
+   my @chars = split //, $string;
+   for my $i ( 0 .. $#chars ) {
+       my $current = $chars[ $i ];
+       my $needle  = uc $current;
+       $needle = lc $current if ( $current =~ /[A-Z]/ );
+       my $index = 0;
+
+       my $index = ( sort 
+       map { $_->[ 1 ] }       
+       grep { $_->[ 0 ] eq $needle }
+       map { [ $_, $index++ ] }  @chars[ $i .. $#chars ] )[ -1 ];
+       my $match = join( '', @chars[ $i .. $index ] );
+       $found = $match if ( ! $found || length( $found ) < length( $match ) );
+   }
+
+   return $found;
+   
+$CODE$
+LANGUAGE plperl;

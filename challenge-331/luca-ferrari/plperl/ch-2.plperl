@@ -1,0 +1,32 @@
+--
+-- Perl Weekly Challenge 331
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-331>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc331;
+
+CREATE OR REPLACE FUNCTION
+pwc331.task2_plperl( text, text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+
+   return 1 if ( lc( $left ) eq lc( $right ) );
+   return 0 if ( length( $left ) != length( $right ) );
+
+   my $index = 0;
+   my @l = split //, $left;
+   my @r = split //, $right;
+
+   my @diff =
+       grep { $_->[ 0 ] ne $_->[ 1 ] }
+       map { [ $l[ $index ], $r[ $index++ ] ] }
+       ( 0 .. $#l );
+
+   return $#diff < 2 ? 1 : 0;
+
+   
+$CODE$
+LANGUAGE plperl;

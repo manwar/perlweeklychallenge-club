@@ -1,0 +1,168 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/isalpha {
+    dup
+    dup 65 ge exch 90 le and exch
+    dup 97 ge exch 122 le and or
+} bind def
+
+/splitalpha {
+    0 dict begin
+    s2a /s exch def
+    /state false def
+    [
+        /x -1 def
+        0 1 s length 1 sub {
+            /i exch def
+            s i get isalpha {
+                state not {
+                    /x i def
+                } if
+                /state true def
+            } {
+                state {
+                    [ x i ]
+                } if
+                /state false def
+            } ifelse
+        } for
+        state {
+            [ x i ]
+        } if
+    ]
+    [ exch {
+          aload pop
+          1 index exch sub neg
+          s 3 1 roll
+          getinterval a2s
+      } forall
+    ]
+    end
+} bind def
+
+/mostfrequentword {
+    0 dict begin
+    exch
+    /words 0 dict def
+    splitalpha {
+        /c exch def
+        words c 0 dget 1 add words exch c exch put
+    } forall
+    words exch undef
+    /m words values listmax def
+    /k words keys { words exch get m eq } filter def
+    k 0 get
+    end
+} bind def
+
+(mostfrequentword) test.start
+(Joe hit a ball, the hit ball flew far after it was hit.) (hit) mostfrequentword (ball) eq test
+(Perl and Raku belong to the same family. Perl is the most popular language in the weekly challenge.) (the) mostfrequentword (Perl) eq test
+test.end

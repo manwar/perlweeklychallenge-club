@@ -1,0 +1,65 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/multiplybytwo {
+    0 dict begin
+    exch
+    /p exch toset def
+    {
+        dup p exch known {
+            2 mul
+        } {
+            exit
+        } ifelse
+    } loop
+    end
+} bind def
+
+(multiplybytwo) test.start
+[5 3 6 1 12] 3 multiplybytwo 24 eq test
+[1 2 4 3] 1 multiplybytwo 8 eq test
+[5 6 7] 2 multiplybytwo 2 eq test
+test.end

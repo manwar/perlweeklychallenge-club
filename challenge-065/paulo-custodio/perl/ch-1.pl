@@ -2,7 +2,7 @@
 
 # Challenge 065
 #
-# TASK #1 › Digits Sum
+# TASK #1 > Digits Sum
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
 #

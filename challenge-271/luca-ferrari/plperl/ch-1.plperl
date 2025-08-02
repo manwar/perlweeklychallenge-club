@@ -1,0 +1,36 @@
+--
+-- Perl Weekly Challenge 271
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-271>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc271;
+
+CREATE OR REPLACE FUNCTION
+pwc271.task1_plperl( int[][] )
+RETURNS int
+AS $CODE$
+
+   my ( $matrix ) = @_;
+   my $row = 1;
+
+   my @ones =
+	   map { $_->[ 0 ] }
+	   grep { $_->[ 1 ] > 0 } 
+	   map { [ $row++,
+	           scalar grep { $_ == 1 } $_->@*  # columns
+		 ] } $matrix->@*; # rows
+
+   my $min = sub {
+      my $min = undef;
+      for ( @_ ) {
+      	  $min = $_ if ( ! $min || $min > $_ );
+      }
+
+      return $min;
+   };
+
+   return $min->( @ones );
+   
+$CODE$
+LANGUAGE plperl;

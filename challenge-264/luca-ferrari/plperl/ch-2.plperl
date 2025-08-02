@@ -1,0 +1,48 @@
+--
+-- Perl Weekly Challenge 264
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-264>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc264;
+
+/**
+ * Exdample of invocation
+
+testdb=> select pwc264.task2_plperl( array[0, 1, 2, 3, 4], array[0, 1, 2, 2, 1] );
+ task2_plperl 
+--------------
+ {0,4,1,3,2}
+
+*/
+CREATE OR REPLACE FUNCTION
+pwc264.task2_plperl( int[], int[] )
+RETURNS int[]
+AS $CODE$
+
+   my ( $source, $indexes ) = @_;
+
+   die "Array must have the same size!" if ( scalar( $source->@* ) != scalar( $indexes->@* ) );
+   for ( $indexes->@* ) {
+       next if $_ >= 0 && $_ <= scalar( $source->@* );
+       die "Array indexes must be contained in the source array"
+   }
+
+
+   my @target;
+
+   for my $index ( 0 .. $indexes->@* - 1 ) {
+       my $target_index = $indexes->@[ $index ];
+
+       if ( ! $target[ $target_index ] ) {
+       	  push @target, $source->@[ $index ];
+       }
+       else {
+       	    @target = ( @target[ 0 .. $target_index - 1  ], $source->@[ $index ], @target[ $target_index .. $#target ] );
+       }
+   }
+
+   return [ @target ];
+   
+$CODE$
+LANGUAGE plperl;

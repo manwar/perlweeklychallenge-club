@@ -1,0 +1,62 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt :$x where $x > 0 = 2,
+               UInt :$y where $y > 0 = 3,
+	       *@ints,
+               :v(:$verbose));
+
+die "Non-negative integers only" unless all(@ints) ~~ UInt;
+
+my @todo   = @ints.sort;
+
+say ": Sorted: @todo[]" if $verbose;
+
+my $target = @todo.pop;
+my $cost   = 0;
+
+say ": Target: $target" if $verbose;
+
+
+if $x + $x > $y
+{
+  loop
+  {
+    last unless @todo.elems >= 2;
+    
+    my $first  = @todo.shift;
+
+    next if $first == $target;
+
+    my $second = @todo.shift;
+      
+    if $second == $target
+    {
+      @todo.push: $first;
+      last;
+    }
+
+    $cost += $y;
+
+    $first++;
+    $second++;
+
+    @todo.push: $first  unless $first  == $target;
+    @todo.push: $second unless $second == $target;
+    @todo .= sort;
+
+   say ": Level 2: Add cost: $y for bringing { $first - 1 } to $first and { $second - 1 } to $second -> todo: @todo[]" if $verbose;
+  }
+}
+
+say ": Todo after level 2: @todo[]" if $verbose;
+
+for @todo -> $candidate
+{
+  my $delta = $target - $candidate;
+  
+  $cost += $delta * $x;
+
+  say ": Level 1: Add cost: { $delta * $x } ($delta * $x) for bringing $candidate to $target" if $verbose;
+}
+
+say $cost;

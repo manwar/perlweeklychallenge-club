@@ -1,0 +1,20 @@
+--
+-- Perl Weekly Challenge 267
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-267>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc267;
+
+CREATE OR REPLACE FUNCTION
+pwc267.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   return 0 if ( grep { $_ == 0 } $nums->@* );
+   return -1 if ( grep( { $_ < 0 } $nums->@* ) % 2 != 0 );
+   return 1;
+   
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,20 @@
+--
+-- Perl Weekly Challenge 273
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-273>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc273;
+
+CREATE OR REPLACE FUNCTION
+pwc273.task2_plperl( text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   return 1 if ( $string =~ / b /x and $string !~ / b .* a /x );
+   return 0;
+   
+$CODE$
+LANGUAGE plperl;

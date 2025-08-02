@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 178
 #
@@ -14,7 +14,6 @@
 # $number_quater_imaginary_base = 10300
 
 use Modern::Perl;
-use Test::More;
 
 sub dec_to_base2i {
     my($n) = @_;
@@ -49,6 +48,5 @@ sub base2i_to_dec {
     return $result;
 }
 
-is dec_to_base2i(4), 10300;
-is base2i_to_dec(10300), 4;
-done_testing;
+dec_to_base2i(4) == 10300 or die;
+base2i_to_dec(10300) == 4 or die;

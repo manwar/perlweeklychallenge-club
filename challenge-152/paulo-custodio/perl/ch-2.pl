@@ -2,7 +2,7 @@
 
 # Challenge 152
 #
-# TASK #2 › Rectangle Area
+# TASK #2 > Rectangle Area
 # Submitted by: Mohammad S Anwar
 # You are given coordinates bottom-left and top-right corner of two rectangles
 # in a 2D plane.

@@ -1,0 +1,75 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/wordcount {
+    0 dict begin
+    [ exch
+      {
+          dup
+          0 1 getinterval (aeiou) exch search {
+              pop pop pop pop 1
+          } {
+              pop
+              dup length 1 sub 1 getinterval (aeiou) exch search {
+                  pop pop pop 1
+              } {
+                  pop 0
+              } ifelse
+          } ifelse
+      } forall
+    ] { add } reduce
+    end
+} bind def
+
+(wordcount) test.start
+[(unicode) (xml) (raku) (perl)] wordcount 2 eq test
+[(the) (weekly) (challenge)] wordcount 2 eq test
+[(perl) (python) (postgres)] wordcount 0 eq test
+test.end

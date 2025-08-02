@@ -2,7 +2,7 @@
 
 # Challenge 153
 #
-# TASK #2 › Factorions
+# TASK #2 > Factorions
 # Submitted by: Mohammad S Anwar
 # You are given an integer, $n.
 #

@@ -2,7 +2,7 @@
 
 # Challenge 149
 #
-# TASK #1 › Fibonacci Digit Sum
+# TASK #1 > Fibonacci Digit Sum
 # Submitted by: Roger Bell_West
 # Given an input $N, generate the first $N numbers for which the sum of their
 # digits is a Fibonacci number.

@@ -1,0 +1,172 @@
+<!--
+SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+SPDX-License-Identifier: BSD-2-Clause
+-->
+
+# Peter Pentchev's solutions to PWC 286
+
+\[[Home][ringlet-home] | [GitHub][github]\]
+
+## Overview
+
+This directory contains Peter Pentchev's solutions to the two tasks in
+the [Perl & Raku Weekly Challenge 286][pwc-286].
+
+## General remarks
+
+### Task 1: Self Spammer
+
+Most programming languages have (different or the same) string-processing
+functions that can:
+
+- read a file and split it into lines at the same time
+- split the whole contents read from a file into lines
+- split a string by some commonly-accepted set of whitespace characters
+
+The tricky part here is finding the program source.
+In most of the so-called "interpreted" languages, e.g. Perl, Python, Ruby et al,
+there is either a file-global variable or a function that one can call to
+obtain the path to the file containing this particular source code line
+(note that I put "interpreted" in quotes, since it is common for these languages to
+do a precompilation phase to some intermediate representation, e.g. byte-code).
+For compiled languages such as Rust, Go, C, C++, etc., this part may be a bit
+more difficult since the end result does not generally include the program source code,
+so this part may have to depend on some specifics of the build environment and
+only be capable to run directly from a build directory near to its source code.
+
+### Task 2: Order Game
+
+There are several approaches to solving this problem:
+
+- trivial: take a pair of numbers, flip a "do we want the smaller or the larger one" flag,
+  produce the corresponding result, move on to the next pair
+- keep this information in an object, feed it numbers one by one or in pairs, let it
+  update its inner state (or, if it is an immutable object, let it produce a new one with
+  the inner state updated)
+- keep this information in an object, feed it number by number or the whole sequence,
+  have it work as an iterator that produces numbers for the programming language's
+  constructs to consume
+
+Some languages have built-in constructs for dealing with iterators, others can
+handle immutable objects easily and efficiently, so the approach depends on
+the programming language.
+
+## Running the test suite
+
+The `tests/` subdirectory contains a Perl test suite that outputs TAP, so that
+it can be run using `prove tests` (or, for the more adventurous, `prove -v tests`).
+
+The Python implementation has its own set of static checkers (linters).
+Those can be run from the `python/` directory using Tox 4.x - either directly
+(`tox run-parallel`) or using [the tox-stages tool][python-tox-stages]
+(`tox-stages run`).
+
+### Task 1: Self Spammer
+
+This task does not involve any input data (except for the program source itself),
+so the programs are executed without any parameters.
+
+The `PWCTest::Ch286` module in `tests/lib/` defines a `test_self_spammer` function that
+runs the specified program, checks whether it output a single line containing a single word, and
+then looks for that word in the specified source file (the program itself by default).
+Of course, for the Perl implementation there is a bit of a chicken-and-egg problem, since
+the test itself must implement the same algorithm to check whether the word that
+the program output is actually present as a separate word in the source file.
+I played around a bit with the idea of using an external `grep` program to look for
+the word, but it turns out that at least GNU grep has some... idionsyncrasies regarding
+character sequences like `\<`, `\>`, `'')`, etc, so the output of Perl's `quotemeta`
+function was not suitable for feeding to `grep` directly.
+Eh, let's hope my solution is correct anyway :)
+
+The `tests/03-python-ch-1.t` test first looks for a suitable Python 3 interpreter.
+If the `PYTHON3` environment variable is defined, it is used as the name or path of
+the Python 3 interpreter; oterhwise, `python3` is used.
+The test tries to run the Python 3 interpreter for a `pass` command; if that fails,
+the tests are skipped.
+
+### Task 2: Order Game
+
+This task takes some input, so there are two ways of running the program:
+
+- if the `PWC_FROM_STDIN` environment variable is not set to the exact value `1`,
+  the program runs the three sequences given as examples, and produces three numbers on
+  its standard output stream, each one on a line by itself.
+  In other words, the program must output `1\n0\n2\n` exactly.
+- if the `PWC_FROM_STDIN` environment variable is set, the program reads a single line of
+  text from its standard input, treats it as a sequence of decimal integers separated by
+  one or more whitespace characters, runs the order game on that sequence, and produces
+  a single number on a line by itself on its standard output stream.
+
+The `PWCTest::Ch286` module in `tests/lib/` defines a `test_order_game_default` function that
+runs a program with `PWC_FROM_STDIN` unset and expects the exact output, and also
+a `test_order_game` function that runs a series of tests with different sequences,
+each time running the program with `PWC_FROM_STDIN` set to 1 and feeding it the sequence.
+
+If the implementation in any language should provide more than one method, then
+the program should honor the `PWC_METHOD` environment variable.
+The value "0" indicates the use of the most natural method for the language,
+the value "1" indicates the use of an alternative method, and if there are more than two,
+then the values "2", "3", etc, are used to select them.
+If `PWC_METHOD` is set to a non-numeric value or to a value that is higher than
+the index of the last supported methods, it is ignored and the program proceeds as if
+`PWC_METHOD` was set to "0".
+
+The `tests/02-perl-ch-2.t` test runs these functions on the Perl implementation and
+produces TAP output suitable for the `prove` tool.
+
+The `tests/03-python-ch-2.t` test first looks for a suitable Python 3 interpreter.
+If the `PYTHON3` environment variable is defined, it is used as the name or path of
+the Python 3 interpreter; oterhwise, `python3` is used.
+The test tries to run the Python 3 interpreter for a `pass` command; if that fails,
+the tests are skipped.
+
+## Implementation details
+
+### Task 1: Self Spammer
+
+#### Perl
+
+We use the [FindBin core module][perl-findbin] and its `$Bin` and `$Script` variables to
+figure out where the program source is.
+
+#### Python
+
+We use Python's built-in `__file__` pseudoglobal variable to find the path to our source file.
+Then we use `random.choice()` to select a random word directly without bothering with
+an index into the words array.
+
+### Task 2: Order Game
+
+#### Perl
+
+The Perl solution has three major functions:
+
+- `round_trivial` - run a single round on a list, producing a list with half the number of
+  elements using the trivial approach: take numbers in pairs, keep a flag, produce
+  the smaller or the larger one as the flag says, flip it.
+- `run_order_game` - run the whole order game on the specified sequence of numbers.
+  This function currently only uses a single "run a round" implementation, `round_trivial`.
+  The `PWC_METHOD` environment variable is ignored even if set.
+- `parse_stdin` - read a line of numbers from the standard input, break it down into
+  a list of integers.
+
+#### Python
+
+The Python solution defines an `OrderIter` class and an `OrderIterState` enumeration.
+The class serves as an iterator, stashing a value and then performing a `min()` or
+`max()` operation on the next value fetched from the supplied input.
+The `OrderState` enumeration is used to keep track of the stash/yield state.
+
+## Contact
+
+These solutions were written by [Peter Pentchev][roam].
+They are developed in [the common PWC-club GitHub repository][github].
+This documentation is hosted at [Ringlet][ringlet-home].
+
+[roam]: mailto:roam@ringlet.net "Peter Pentchev"
+[github]: https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-286/ppentchev "These solutions at GitHub"
+[ringlet-home]: https://devel.ringlet.net/misc/perlweeklychallenge-club/286/ "This documentation at Ringlet"
+
+[perl-findbin]: https://perldoc.perl.org/FindBin "The FindBin Perl core module"
+[pwc-286]: https://theweeklychallenge.org/blog/perl-weekly-challenge-286/ "The 286th Perl & Raku Weekly Challenge"
+[python-tox-stages]: https://devel.ringlet.net/devel/test-stages "Run Tox tests in groups"

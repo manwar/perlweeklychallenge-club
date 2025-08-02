@@ -1,0 +1,97 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/combinations {
+    4 dict begin
+    /k exch def
+    /arr exch def
+    /c [
+        0 1 k 1 sub { } for
+        arr length
+        0
+    ] def
+    [
+        {
+            [
+                k 1 sub -1 0 {
+                    c exch get arr exch get
+                } for
+            ]
+            /j 0 def
+            {
+                c j get 1 add c j 1 add get ne {
+                    exit
+                } if
+                c j j put
+                /j j 1 add def
+            } loop
+            j k ge {
+                exit
+            } if
+            c j c j get 1 add put
+        } loop
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/completeday {
+    2 combinations {
+        aload pop
+        add 24 mod 0 eq
+    } filter length
+} bind def
+
+(completeday) test.start
+[12 12 30 24 24] completeday 2 eq test
+[72 48 24 5] completeday 3 eq test
+[12 18 24] completeday 0 eq test
+test.end

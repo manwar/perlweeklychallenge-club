@@ -1,0 +1,87 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/xmatrix {
+    0 dict begin
+    dup length 1 sub /order exch def
+    /valid true def
+    enumerate.array {
+        aload pop
+        exch
+        /y exch def
+        enumerate.array {
+            aload pop
+            /value exch def
+            /x exch def
+            x y eq x order y sub eq or {
+                value 0 eq {
+                    /valid false def
+                } if
+            } {
+                value 0 ne {
+                    /valid false def
+                } if
+            } ifelse
+            valid not {
+                exit
+            } if
+        } forall
+        valid not {
+            exit
+        } if
+    } forall
+    valid
+    end
+} bind def
+
+(xmatrix) test.start
+[[1 0 0 2] [0 3 4 0] [0 5 6 0] [7 0 0 1]] xmatrix test
+[[1 2 3] [4 5 6] [7 8 9]] xmatrix not test
+[[1 0 2] [0 3 0] [4 0 5]] xmatrix test
+test.end

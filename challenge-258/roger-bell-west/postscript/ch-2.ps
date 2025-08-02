@@ -1,0 +1,105 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/popcount64 {
+    0 dict begin
+    /M1  16#5555555555555555 def
+    /M2  16#3333333333333333 def
+    /M4  16#0f0f0f0f0f0f0f0f def
+    /H01 16#0101010101010101 def
+    /x exch def
+    /x x x -1 bitshift M1 and sub def
+    /x x M2 and x -2 bitshift M2 and add def
+    /x x x -4 bitshift add M4 and def
+    x H01 mul -56 bitshift
+    end
+} bind def
+
+/sumofvalues {
+    0 dict begin
+    /k exch def
+    /a exch def
+    [ 0 1 a length 1 sub { } for ]
+    { popcount64 k eq } filter
+    { a exch get } map
+    { add } reduce
+    end
+} bind def
+
+(sumofvalues) test.start
+[2 5 9 11 3] 1 sumofvalues 17 eq test
+[2 5 9 11 3] 2 sumofvalues 11 eq test
+[2 5 9 11 3] 0 sumofvalues 2 eq test
+test.end

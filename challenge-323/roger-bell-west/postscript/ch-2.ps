@@ -1,0 +1,62 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/taxamount {
+    0 dict begin
+    /brackets exch def
+    /income exch def
+    /lastbracket 0 def
+    0
+    brackets {
+        /bracket exch def
+        income lastbracket gt {
+            income bracket 0 get min lastbracket sub bracket 1 get mul add
+        } {
+            exit
+        } ifelse
+        /lastbracket bracket 0 get def
+    } forall
+    100.0 div
+    end
+} bind def
+
+(taxamount) test.start
+10 [[3 50] [7 10] [12 25]] taxamount 2.65 eq test
+2 [[1 0] [4 25] [5 50]] taxamount 0.25 eq test
+0 [[2 50]] taxamount 0 eq test
+test.end

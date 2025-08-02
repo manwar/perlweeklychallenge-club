@@ -1,0 +1,52 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file = "example1.txt", :v($verbose));
+
+my %hash;
+my $text;
+
+for (slurp $file).lines -> $line
+{
+  if $line ~~ /^\{\%(.*)\%\}$/ && ! %hash<name>
+  {
+    my $data    = $0.Str;
+    say ": Data: $data" if $verbose;
+
+    my @data    = $data.words;
+    %hash<name> =  @data.shift;
+
+    my %fields;
+    for @data -> $data
+    {
+      my ($k,$v) = $data.split('=');
+
+      if $v.Numeric
+      {
+         %fields{$k} = $v.Numeric;
+      }
+      else
+      {
+        $v ~~ /^\"(.*)\"$/;
+	die "String $v must be quoted" unless $0;
+        %fields{$k} = $0.Str;
+      }
+    }
+
+    %hash<fields> = %fields;
+  }
+  elsif $line eq '{% end' ~ %hash<name> ~ ' %}'
+  {
+    %hash<text> = $text if $text;
+    last;
+  }
+  elsif %hash<name>
+  {
+    $text ~= "$line\n";
+  }
+  else
+  {
+    die "Illegal data in input: $line";
+  }
+}
+
+say %hash.raku;

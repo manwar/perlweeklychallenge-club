@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/percentageofcharacter {
+    0 dict begin
+    /c exch s2a 0 get def
+    /a exch def
+    /d a length def
+    /n a s2a { c eq } filter length 100 mul def
+    n d 2 idiv add d idiv
+    end
+} bind def
+
+(percentageofcharacter) test.start
+(perl) (e) percentageofcharacter 25 eq test
+(java) (a) percentageofcharacter 50 eq test
+(python) (m) percentageofcharacter 0 eq test
+(ada) (a) percentageofcharacter 67 eq test
+(ballerina) (l) percentageofcharacter 22 eq test
+(analitik) (k) percentageofcharacter 13 eq test
+test.end

@@ -1,0 +1,39 @@
+--
+-- Perl Weekly Challenge 298
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-298>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc298;
+
+CREATE OR REPLACE FUNCTION
+pwc298.task2_plperl( int[] )
+RETURNS int[]
+AS $CODE$
+
+   my ( $intervals ) = @_;
+   my @right;
+
+   for my $current ( 0 .. $intervals->@* - 1 ) {
+       my $min = undef;
+       my $found_index = undef;
+       
+       for my $other ( 0 .. $intervals->@* - 1 ) {
+       	   next if ( $other == $current );
+
+	   if ( $intervals->[ $other ]->[ 0 ] >= $intervals->[ $current ]->[ 1 ] ) {
+	      if ( ! $min || $min > $intervals->[ $other ]->[ 0 ] ) {
+	      	 $min = $intervals->[ $other ]->[ 0 ];
+		 $found_index = $other;
+	      }
+	   }
+       }
+
+       $found_index //= -1;
+       push @right, $found_index;
+   }
+
+   return [ @right ];
+   
+$CODE$
+LANGUAGE plperl;

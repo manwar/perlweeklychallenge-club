@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 1 && all(@ints) ~~ Int,
+               :v(:$verbose));
+
+my @count;
+
+for @ints -> $int
+{
+  my @smaller = @ints.grep: * < $int;
+  my $count   = @smaller.elems;
+
+  say ": $int - with $count smaller ({ @smaller.join(",") })" if $verbose;
+
+  @count.push: $count;
+}
+
+say "({ @count.join(", ") })";

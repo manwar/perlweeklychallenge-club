@@ -1,0 +1,200 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/jd2ymd {
+    15 dict begin
+    /y 4716 def
+    /v 3 def
+    /j 1401 def
+    /u 5 def
+    /m 2 def
+    /s 153 def
+    /n 12 def
+    /w 2 def
+    /r 4 def
+    /B 274277 def
+    /p 1461 def
+    /C -38 def
+    dup
+    4 mul B add 146097 idiv 3 mul 4 idiv C add j add add /f exch def
+    r f mul v add /e exch def
+    e p mod r idiv u mul w add /h exch def
+    /day h s mod u idiv 1 add def
+    /month h s idiv m add n mod 1 add def
+    /year e p idiv y sub n m add month sub n idiv add def
+    [ year month day ]
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/ymd2jd {
+    4 dict begin
+    aload pop
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+    end
+} bind def
+
+/jd2dow {
+    1 add 7 mod 
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+
+% end included library code
+
+/s2jd {
+    0 dict begin
+    /s exch def
+    [ exch
+        s 0 4 getinterval cvi
+        s 5 2 getinterval cvi
+        s 8 2 getinterval cvi
+    ] ymd2jd
+    end
+} bind def
+
+/flz {
+    0 dict begin
+    /width exch def
+    /value exch def
+    value type /stringtype ne {
+        /value value width string cvs def
+    } if
+    /out [ width { 48 } repeat ] a2s def
+    out width value length sub value putinterval
+    out
+    end
+} bind def
+
+/bankingdayoffset {
+    0 dict begin
+    /bh exch { s2jd } map toset def
+    /offset exch def
+    /d exch s2jd def
+    offset {
+        /d d 1 add def
+        {
+            d jd2dow dup
+            0 gt exch 6 lt and
+            bh d known not and {
+                exit
+            } if
+        /d d 1 add def
+        } loop
+    } repeat
+    [
+        d jd2ymd aload pop
+        2 flz 3 1 roll
+        2 flz 3 1 roll
+        4 flz 3 1 roll
+    ] (-) strjoin
+    end
+} bind def
+
+(bankingdayoffset) test.start
+(2018-06-28) 3 [(2018-07-03)] bankingdayoffset (2018-07-04) eq test
+(2018-06-28) 3 [] bankingdayoffset (2018-07-03) eq test
+test.end

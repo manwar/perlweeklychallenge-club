@@ -1,0 +1,30 @@
+--
+-- Perl Weekly Challenge 256
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-256>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc256;
+
+CREATE OR REPLACE FUNCTION
+pwc256.task1_plperl( text[] )
+RETURNS int
+AS $CODE$
+
+   my ( $words ) = @_;
+
+   my $counting = {};
+   for my $current ( $words->@* ) {
+     $counting->{ $current } = scalar grep( { $_ eq reverse( $current ) } $words->@* )	;
+   }
+
+   
+   my $max = 0;
+   for ( values $counting->%* ) {
+       $max = $_ if ( $_ > $max );
+   }
+
+   return $max;
+   
+$CODE$
+LANGUAGE plperl;

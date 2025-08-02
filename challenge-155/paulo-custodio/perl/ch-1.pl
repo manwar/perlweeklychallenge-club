@@ -2,7 +2,7 @@
 
 # Challenge 155
 #
-# TASK #1 › Fortunate Numbers
+# TASK #1 > Fortunate Numbers
 # Submitted by: Mohammad S Anwar
 # Write a script to produce first 8 Fortunate Numbers (unique and sorted).
 #

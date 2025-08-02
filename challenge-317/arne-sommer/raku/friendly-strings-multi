@@ -1,0 +1,44 @@
+#! /usr/bin/env raku
+
+multi sub MAIN ($str1 where $str1.chars > 1,
+                $str2 where $str2.chars != $str1.chars,
+                :v(:$verbose))
+{
+  say ": The strings do not have the same length" if $verbose;
+  say False;
+}
+
+multi sub MAIN ($str1 where $str1.chars > 1,
+                $str2 where $str1.comb.sort.join ne $str2.comb.sort.join,
+                :v(:$verbose))
+{
+  say ": The strings do not have the same letters" if $verbose;
+  say False;
+}
+
+multi sub MAIN ($str1 where $str1.chars > 1,
+                $str2 where $str1 eq $str2,
+                :v(:$verbose))
+{
+  say ": The strings are identical" if $verbose;
+  say False;
+}
+
+multi sub MAIN ($str1 where $str1.chars > 1,
+                $str2 where $str1.chars == $str2.chars,
+                :v(:$verbose))
+{
+  my @delta;
+  for ^$str1.chars -> $index
+  {
+    if $str1.substr($index,1) ne $str2.substr($index,1)
+    {
+      @delta.push: ($str1.substr($index,1), $str2.substr($index,1) );
+    }
+  }
+
+  say ": Delta: { @delta.raku }" if $verbose;
+
+  say @delta.elems == 2;
+
+}

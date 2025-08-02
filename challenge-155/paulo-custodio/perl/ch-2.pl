@@ -2,7 +2,7 @@
 
 # Challenge 155
 #
-# TASK #2 › Pisano Period
+# TASK #2 > Pisano Period
 # Submitted by: Mohammad S Anwar
 # Write a script to find the period of the 3rd Pisano Period.
 #

@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 326
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-326>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc326;
+
+CREATE OR REPLACE FUNCTION
+pwc326.task1_plperl( text )
+RETURNS int
+AS $CODE$
+
+   use DateTime;
+   my ( $date ) = @_;
+
+   if ( $date =~ / ^ (\d{4}) - (\d{2}) - (\d{2}) $ /x ) {
+
+      my $day = DateTime->new( year  => $1,
+                               month => $2,
+   			    day   => $3 );
+
+      return $day->day_of_year;
+   }
+
+   return 0;
+$CODE$
+LANGUAGE plperlu;

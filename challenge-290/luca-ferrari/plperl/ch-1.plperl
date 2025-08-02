@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 290
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-290>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc290;
+
+CREATE OR REPLACE FUNCTION
+pwc290.task1_plperl( int[] )
+RETURNS bool
+AS $CODE$
+
+   my ( $numbers ) = @_;
+   my @found;
+
+   for my $i ( 0 .. $numbers->@* - 1 ) {
+       for my $j ( $i + 1 .. $numbers->@* - 1 ) {
+       	   push @found, [ $i, $j ] if ( $numbers->[ $i ] == 2 * $numbers->[ $j ] );
+       }
+   }
+
+   return @found > 0;
+   
+$CODE$
+LANGUAGE plperl;

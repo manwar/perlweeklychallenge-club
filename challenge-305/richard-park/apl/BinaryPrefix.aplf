@@ -1,0 +1,6 @@
+ BinaryPrefix←{
+⍝ ⍵: Boolean vector
+⍝ ←: Boolean vector in which 1s mark the ends of prefixes that are
+⍝    prime numbers in decimal
+     2=+⌿0=(⍳⌈/n)∘.|n←2⊥i⌽(i←⍳≢⍵)(↑⍤0 1)⍵
+ }

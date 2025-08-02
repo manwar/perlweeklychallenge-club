@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 278
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-278>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc278;
+
+CREATE OR REPLACE FUNCTION
+pwc278.task1_plperl( text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $words ) = @_;
+   my %sorted;
+
+   for ( $words->@* ) {
+       my ( $word, $position ) = ( $_ =~ / ^ ([a-zA-Z]+) (\d+) $ /x );
+       $sorted{ $position } = $word;
+   }
+
+   return_next( $sorted{ $_ } ) for ( sort keys %sorted );
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

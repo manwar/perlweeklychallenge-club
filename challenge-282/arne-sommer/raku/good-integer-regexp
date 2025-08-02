@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $int where $int > 99);
+
+say $int ~~ /(.) {} :my $c=$0; <?after $c ** 3> /
+  ?? $0.Str x 3
+  !! -1;

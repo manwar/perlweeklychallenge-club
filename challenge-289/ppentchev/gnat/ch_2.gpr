@@ -1,0 +1,17 @@
+--  SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+--  SPDX-License-Identifier: BSD-2-Clause
+
+project Ch_2 is
+   for Source_Dirs use ("ch-289-2");
+   for Object_Dir use "obj";
+   for Exec_Dir use "obj";
+   for Main use ("ch_2.adb");
+
+   package Builder is
+      for Executable ("ch_2.adb") use "ch-2";
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use ("-gnatVa", "-gnatwa", "-gnatyy");
+   end Compiler;
+end Ch_2;

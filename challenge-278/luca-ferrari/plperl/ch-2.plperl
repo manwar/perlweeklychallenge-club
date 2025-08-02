@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 278
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-278>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc278;
+
+CREATE OR REPLACE FUNCTION
+pwc278.task2_plperl( text, text )
+RETURNS text
+AS $CODE$
+
+   my ( $word, $char ) = @_;
+
+   return $word if ( $word !~ / $char /x );
+
+   my @original = split //, $word;
+   my @chars;
+   for ( @original ) {
+       push @chars, $_;
+       last if $_ eq $char;
+   }
+
+   return join( '', sort( @chars ),  @original[ $#chars + 1 .. $#original ] );
+   
+$CODE$
+LANGUAGE plperl;

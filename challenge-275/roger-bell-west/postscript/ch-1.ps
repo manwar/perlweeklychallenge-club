@@ -1,0 +1,152 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/tolower {
+    s2a
+    [ exch
+      {
+          dup dup 65 ge exch 90 le and {
+              32 add
+          } if
+      } forall
+    ] a2s
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/set.intersection {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/brokenkeys {
+    0 dict begin
+    { tolower s2a 0 get } map toset /failset exch def
+    0 exch
+    tolower
+    ( ) strsplit {
+        s2a toset /wordset exch def
+        failset wordset set.intersection length 0 eq {
+            1 add
+        } if
+    } forall
+    end
+} bind def
+
+(brokenkeys) test.start
+(Perl Weekly Challenge) [(l) (a)] brokenkeys 0 eq test
+(Perl and Raku) [(a)] brokenkeys 1 eq test
+(Well done Team PWC) [(l) (o)] brokenkeys 2 eq test
+test.end

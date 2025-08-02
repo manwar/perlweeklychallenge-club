@@ -1,0 +1,39 @@
+--
+-- Perl Weekly Challenge 265
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-265>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc265;
+
+CREATE OR REPLACE FUNCTION
+pwc265.task2_plperl( text, text[] )
+RETURNS text
+AS $CODE$
+
+   my ( $needle, $words ) = @_;
+
+   my $letters = {};
+   
+   for ( split( //, $needle ) ) {
+       next if /[0-9]|\s/;
+       $letters->{ lc $_ }++;   
+   }
+
+
+   my $found_words = {};
+   
+   for my $current ( $words->@* ) {
+       my $ok = 1;
+       for my $letter ( keys $letters->%* ) {
+       	   $ok = 0 and last if ( $letters->{ $letter } > scalar( grep { $_ eq $letter } split( //, $current ) ) );
+       }
+
+       next if ( ! $ok );
+       $found_words->{ length $current } = $current if ( $ok );
+   }
+
+   return $found_words->{ ( sort keys $found_words->%* )[ 0 ] };
+   
+$CODE$
+LANGUAGE plperl;

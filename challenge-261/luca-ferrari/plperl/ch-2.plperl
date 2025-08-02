@@ -1,0 +1,22 @@
+--
+-- Perl Weekly Challenge 261
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-261>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc261;
+
+CREATE OR REPLACE FUNCTION
+pwc261.task2_plperl( int, int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $start, $nums ) = @_;
+
+   while ( grep( { $start == $_ } $nums->@* ) ) {
+   	 $start *= 2;
+   }
+
+   return $start;
+$CODE$
+LANGUAGE plperl;

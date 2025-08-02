@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 263
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-263>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc263;
+
+CREATE OR REPLACE FUNCTION
+pwc263.task2_plperl( int[], int[] )
+RETURNS TABLE( item int, qty int )
+AS $CODE$
+
+   my ( $items1, $items2 ) = @_;
+   my $q = {};
+
+   for my $pair ( $items1->@*, $items2->@* ) {
+       $q->{ $pair->[ 0 ] } += $pair->[ 1 ];
+   }
+
+
+   return_next( { item => $_, qty => $q->{ $_ } } )  for ( sort keys $q->%* );
+   return undef;
+$CODE$
+LANGUAGE plperl;

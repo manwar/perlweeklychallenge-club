@@ -1,0 +1,14 @@
+import unittest
+import importlib  
+solution = importlib.import_module("ch-2")
+
+
+class TestStringMethods(unittest.TestCase):
+    def test_matcher(self):
+        solution.string_score("hello") |> self.assertEqual$(13)
+        solution.string_score("perl") |> self.assertEqual$(30)
+        solution.string_score("raku") |> self.assertEqual$(37)
+        solution.string_score("coconut") |> self.assertEqual$(45)
+
+if __name__ == '__main__':
+    unittest.main()

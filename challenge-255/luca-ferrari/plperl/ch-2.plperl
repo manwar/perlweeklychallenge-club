@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 255
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-255>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc255;
+
+CREATE OR REPLACE FUNCTION
+pwc255.task2_plperl( text, text )
+RETURNS text
+AS $CODE$
+
+   my ( $paragraph, $banned ) = @_;
+
+   $paragraph =~ s/\W*$banned\W*/ /g;
+
+   my $classification = {};
+   $classification->{ $_ }++  for ( split /\W/, $paragraph );
+   my $max = ( reverse sort values $classification->%* )[ 0 ];
+   for ( keys $classification->%* ) {
+       return $_ if ( $classification->{ $_ } == $max );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

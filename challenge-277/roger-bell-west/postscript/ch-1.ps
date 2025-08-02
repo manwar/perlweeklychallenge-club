@@ -1,0 +1,96 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/countcommon {
+    0 dict begin
+    /bc 0 dict def
+    {
+        /w exch def
+        bc w bc w 0 dget 1 add put
+    } forall
+    /ac 0 dict def
+    {
+        /w exch def
+        ac w ac w 0 dget 1 add put
+    } forall
+    ac keys {
+        /k exch def
+        ac k get 1 eq
+        bc k 0 dget 1 eq
+        and
+    } filter length
+    end
+} bind def
+
+(countcommon) test.start
+[(Perl) (is) (my) (friend)] [(Perl) (and) (Raku) (are) (friend)] countcommon 2 eq test
+[(Perl) (and) (Python) (are) (very) (similar)] [(Python) (is) (top) (in) (guest) (languages)] countcommon 1 eq test
+[(Perl) (is) (imperative) (Lisp) (is) (functional)] [(Crystal) (is) (similar) (to) (Ruby)] countcommon 0 eq test
+test.end

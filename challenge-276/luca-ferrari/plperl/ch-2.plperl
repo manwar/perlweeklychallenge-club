@@ -1,0 +1,27 @@
+--
+-- Perl Weekly Challenge 276
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-276>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc276;
+
+CREATE OR REPLACE FUNCTION
+pwc276.task2_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   die "Need only positives" if ( grep { $_ <= 0 } $nums->@* );
+
+   my $frequency = {};
+   for my $current ( $nums->@* ) {
+       my $count = scalar grep { $_ == $current } $nums->@*;
+       push $frequency->{ $count }->@*, $current if ( ! grep { $_ == $current } $frequency->{ $count }->@* );
+   }
+
+   my $max_frequency = ( sort( { $b <=> $a } keys $frequency->%* ) )[ 0 ];
+   return scalar $frequency->{ $max_frequency }->@*;
+   
+$CODE$
+LANGUAGE plperl;

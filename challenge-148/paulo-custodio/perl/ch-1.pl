@@ -2,11 +2,11 @@
 
 # Challenge 148
 #
-# TASK #1 › Eban Numbers
+# TASK #1 > Eban Numbers
 # Submitted by: Mohammad S Anwar
 # Write a script to generate all Eban Numbers <= 100.
 #
-# An Eban number is a number that has no letter ‘e’ in it when the number
+# An Eban number is a number that has no letter 'e' in it when the number
 # is spelled in English (American or British).
 #
 # Example

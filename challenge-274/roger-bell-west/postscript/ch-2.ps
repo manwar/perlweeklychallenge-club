@@ -1,0 +1,221 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/set.intersection {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/busroute {
+    0 dict begin
+    /routes exch
+    [ exch
+      {
+          aload pop
+          /duration exch def
+          /offset exch def
+          /interval exch def
+          /ri 0 dict def
+          /start offset def
+          {
+              start offset 60 add gt {
+                  exit
+              } if
+              ri start dup duration add put
+              /start start interval add def
+          } loop
+          ri
+      } forall
+    ] def
+    [
+        0 1 59 {
+            /t exch def
+            /best 0 dict def
+            /at -1 def
+            /nxt 0 dict def
+            /ndt -1 def
+            routes enumerate.array {
+                aload pop
+                /r exch def
+                /i exch def
+                /nb r keys { t ge } filter listmin def
+                /nt r nb get def
+                at -1 eq nt at lt or {
+                    /best 0 dict def
+                    /at nt def
+                } if
+                nt at le {
+                    best i true put
+                } if
+                ndt -1 eq nb ndt lt or {
+                    /nxt 0 dict def
+                    /ndt nb def
+                } if
+                nb ndt le {
+                    nxt i true put
+                } if
+            } forall
+            best nxt set.intersection length 0 eq {
+                t
+            } if
+        } for
+    ]
+    end
+} bind def
+
+(busroute) test.start
+[[12 11 41] [15 5 35]] busroute [36 37 38 39 40 41 42 43 44 45 46 47] deepeq test
+[[12 3 41] [15 9 35] [30 5 25]] busroute [0 1 2 3 25 26 27 40 41 42 43 44 45 46 47 48 49 50 51 55 56 57 58 59] deepeq test
+test.end

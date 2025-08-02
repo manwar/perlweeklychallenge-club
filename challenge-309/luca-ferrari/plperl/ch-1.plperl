@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 309
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-309>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc309;
+
+CREATE OR REPLACE FUNCTION
+pwc309.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my $gaps = {};
+
+   for my $index ( 1 .. $nums->@* - 1 ) {
+       $gaps->{ $nums->@[ $index ] - $nums->@[ $index - 1 ] } = $nums->@[ $index ];
+   }
+
+   return $gaps->{ ( sort( keys $gaps->%* ) )[0] };
+   
+$CODE$
+LANGUAGE plperl;

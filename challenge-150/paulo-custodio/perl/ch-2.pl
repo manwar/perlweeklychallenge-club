@@ -2,14 +2,14 @@
 
 # Challenge 150
 #
-# TASK #2 › Square-free Integer
+# TASK #2 > Square-free Integer
 # Submitted by: Mohammad S Anwar
 # Write a script to generate all square-free integers <= 500.
 #
 # In mathematics, a square-free integer (or squarefree integer) is an integer
 # which is divisible by no perfect square other than 1. That is, its prime
 # factorization has exactly one factor for each prime that appears in it. For
-# example, 10 = 2 · 5 is square-free, but 18 = 2 · 3 · 3 is not, because 18 is
+# example, 10 = 2 x 5 is square-free, but 18 = 2 x 3 x 3 is not, because 18 is
 # divisible by 9 = 3**2.
 #
 # Example

@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 1 && all(@ints) ~~ Int,
+               :v(:$verbose));
+
+my $bag     = @ints>>.Int.Bag;
+my $smaller = 0;
+my %smaller;
+
+for $bag.keys.sort -> $key
+{
+  say ": $key: smaller: $smaller" if $verbose;
+  %smaller{$key} = $smaller;
+  $smaller += $bag{$key};
+}
+
+say "({ @ints.map({ %smaller{$_} }).join(", ") })";

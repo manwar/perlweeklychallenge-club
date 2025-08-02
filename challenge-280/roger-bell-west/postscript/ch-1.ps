@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/twiceappearance {
+    0 dict begin
+    /m 0 dict def
+    (x) exch
+    s2a {
+        /c exch def
+        m c known {
+            pop [ c ] a2s
+            exit
+        } {
+            m c true put
+        } ifelse
+    } forall
+    end
+} bind def
+
+(twiceappearance) test.start
+(acbddbca) twiceappearance (d) eq test
+(abccd) twiceappearance (c) eq test
+(abcdabbb) twiceappearance (a) eq test
+test.end

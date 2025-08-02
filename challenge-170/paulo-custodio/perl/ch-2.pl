@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 170
 #
@@ -61,7 +61,7 @@ sub parse_input {
 sub kronecker_product {
     my($a, $b) = @_;
     my $wa = @{$a->[0]}; my $ha = @$a;
-    my $wb = @{$b->[0]}; my $hb = @$a;
+    my $wb = @{$b->[0]}; my $hb = @$b;
     my @prod;
     for my $ar (0..$ha-1) {
         for my $ac (0..$wa-1) {

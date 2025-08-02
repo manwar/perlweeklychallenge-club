@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 280
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-280>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc280;
+
+CREATE OR REPLACE FUNCTION
+pwc280.task2_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $input ) = @_;
+   my @pairs;
+
+   my @parts = split /[|]/, $input;
+   my $counter = 0;
+   for ( 0 .. @parts - 1 ) {
+       next if $_ % 2; # take only left side of a pair
+       my $needle = $parts[ $_ ];
+       
+       next if ! $needle;
+       $counter += scalar grep { $_ eq '*' } split //, $needle;
+   }
+
+   return $counter;
+$CODE$
+LANGUAGE plperl;

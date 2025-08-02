@@ -2,7 +2,7 @@
 
 # Challenge 156
 #
-# TASK #2 › Weird Number
+# TASK #2 > Weird Number
 # Submitted by: Mohammad S Anwar
 # You are given number, $n > 0.
 #

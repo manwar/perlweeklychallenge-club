@@ -2,7 +2,7 @@
 
 # Challenge 157
 #
-# TASK #2 › Brazilian Number
+# TASK #2 > Brazilian Number
 # Submitted by: Mohammad S Anwar
 # You are given a number $n > 3.
 #

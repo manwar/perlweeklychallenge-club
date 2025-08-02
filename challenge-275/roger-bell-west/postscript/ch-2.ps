@@ -1,0 +1,77 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/replacedigits {
+    0 dict begin
+    /prev 0 def
+    [ exch
+      s2a {
+          /c exch def
+          c 48 ge c 57 le and {
+              c 48 sub prev add
+          } {
+              /prev c def
+              c
+          } ifelse
+    } forall
+    ]
+    a2s
+    end
+} bind def
+
+(replacedigits) test.start
+(a1c1e1) replacedigits (abcdef) eq test
+(a1b2c3d4) replacedigits (abbdcfdh) eq test
+(b2b) replacedigits (bdb) eq test
+(a16z) replacedigits (abgz) eq test
+test.end

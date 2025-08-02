@@ -2,7 +2,7 @@
 
 # Challenge 158
 #
-# TASK #1 › Additive Primes
+# TASK #1 > Additive Primes
 # Submitted by: Mohammad S Anwar
 # Write a script to find out all Additive Primes <= 100.
 #

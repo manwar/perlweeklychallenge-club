@@ -2,7 +2,7 @@
 
 # Challenge 064
 #
-# TASK #2 › Word Break
+# TASK #2 > Word Break
 # Submitted by: Mohammad S Anwar
 #
 # You are given a string $S and an array of words @W.
@@ -32,7 +32,7 @@
 # 0 as none matching word found.
 
 use Modern::Perl;
-use Math::Combinatorics 'combine';
+use Math::Combinatorics 'permute';
 use Test::More;
 
 is word_break("perlweeklychallenge", "weekly", "challenge", "perl"),
@@ -45,7 +45,7 @@ done_testing;
 sub word_break {
     my($S, @W) = @_;
     my $k = scalar(@W);
-    for (combine($k, @W)) {
+    for (permute(@W)) {
         my @words = @$_;
         if (join('', @words) eq $S) {
             return "@W";

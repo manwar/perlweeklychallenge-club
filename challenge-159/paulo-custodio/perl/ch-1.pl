@@ -2,7 +2,7 @@
 
 # Challenge 159
 #
-# TASK #1 › Farey Sequence
+# TASK #1 > Farey Sequence
 # Submitted by: Mohammad S Anwar
 # You are given a positive number, $n.
 #

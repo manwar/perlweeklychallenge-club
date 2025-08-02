@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 329
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-329>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc329;
+
+CREATE OR REPLACE FUNCTION
+pwc329.task1_plperl( text )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $string ) = @_;
+   die "Invalid string" unless( $string =~ / ^ [a-zA-Z0-9]+ $ /x );
+
+   my $found = {};
+
+   for ( $string =~ / [0-9]+ /xg ) {
+        $found->{ $_ }++;
+   }
+
+   return [ sort keys $found->%* ];
+   
+$CODE$
+LANGUAGE plperl;

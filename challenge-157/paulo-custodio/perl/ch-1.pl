@@ -2,7 +2,7 @@
 
 # Challenge 157
 #
-# TASK #1 › Pythagorean Means
+# TASK #1 > Pythagorean Means
 # Submitted by: Mohammad S Anwar
 # You are given a set of integers.
 #

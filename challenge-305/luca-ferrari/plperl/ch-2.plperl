@@ -1,0 +1,31 @@
+--
+-- Perl Weekly Challenge 306
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-306>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc306;
+
+CREATE OR REPLACE FUNCTION
+pwc306.task2_plperl( char[], text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $dictionary, $words ) = @_;
+
+   my $alien_dictionary = {};
+   my $index = 0;
+
+   $alien_dictionary->{ lc $_ } = $index++ for ( $dictionary->@* );
+
+
+   my @sorted =
+   map { $_->[ 1 ] }
+   sort { $a->[ 0 ] <=> $b->[ 0 ] }
+   map { [ $alien_dictionary->{ lc(  ( split //, $_ )[ 0 ] ) }, $_ ] }
+   $words->@*;
+
+   return [ @sorted ];
+
+$CODE$
+LANGUAGE plperl;

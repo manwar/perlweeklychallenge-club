@@ -2,7 +2,7 @@
 
 # Challenge 073
 #
-# TASK #2 › Smallest Neighbour
+# TASK #2 > Smallest Neighbour
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers @A.
 #

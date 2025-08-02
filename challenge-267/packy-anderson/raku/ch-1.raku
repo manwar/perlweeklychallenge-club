@@ -1,0 +1,32 @@
+#!/usr/bin/env raku
+use v6;
+
+sub productSign(@ints) {
+  my $product = [*] @ints;
+  my $sign = $product == 0 ?? 0
+          !! $product/abs($product);
+  my $explain = 'The product ' ~ @ints.join(' × ')
+              ~ " => $product";
+  if ($sign < 0) {
+    $explain ~= " < 0";
+  }
+  elsif ($sign > 0) {
+    $explain ~= " > 0";
+  }
+  return ($sign, $explain);
+}
+
+sub solution(@ints) {
+  say 'Input: @ints = (' ~ @ints.join(', ') ~ ')';
+  my ($sign, $explain) = productSign(@ints);
+  say "Output: $sign\n$explain";
+}
+
+say "Example 1:";
+solution([-1, -2, -3, -4, 3, 2, 1]);
+
+say "\nExample 2:";
+solution([1, 2, 0, -2, -1]);
+
+say "\nExample 3:";
+solution([-1, -1, 1, -1, 2]);

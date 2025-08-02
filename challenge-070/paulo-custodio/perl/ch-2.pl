@@ -2,7 +2,7 @@
 
 # Challenge 070
 #
-# TASK #2 › Gray Code Sequence
+# TASK #2 > Gray Code Sequence
 # Submitted by: Mohammad S Anwar
 # You are given an integer 2 <= $N <= 5.
 #

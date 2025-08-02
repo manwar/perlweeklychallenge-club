@@ -1,0 +1,57 @@
+--
+-- Perl Weekly Challenge 257
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-257>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc257;
+
+CREATE OR REPLACE FUNCTION
+pwc257.task2_plperl( int[][] )
+RETURNS bool
+AS $CODE$
+
+   my ( $matrix ) = @_;
+
+   my $ok = 1;
+   my @zero_rows;
+   my @leadings;
+   
+ my $row ( 0 .. $matrix->@* - 1 ) {
+       my $first_in_row = undef;
+       
+       for my $col ( 0 .. $matrix->@* - 1 ) {
+       	   next if $matrix->[ $row ][ $col ] == 0;
+	   next if $first_in_row;
+
+	   $first_in_row = $matrix->[ $row ][ $col ] if ( ! $first_in_row );
+
+	   # the first non-zero value of every row must be a one
+	   $ok = 0 and last if ( $first_in_row != 1 );
+
+           # leading one
+	   push @leadings, { row => $row, col => $col };
+
+       }
+
+       if ( ! $first_in_row ) {
+       	  # the row was filled with zeros
+	  push @zero_rows, $row;
+
+	  next if @zero_rows <= 1;
+	  $ok = 0 and last if ( @zero_rows[ -1 ] != ( $row - 1 ) );
+       }
+       elsif ( $first_in_row == 1 ) {
+       	   next if @leadings <= 1;
+	   $ok = 0 and last if ( @leadings[ -2 ]->{ col } >= @leadings[ -1 ]->{ col }
+	                      || @leadings[ -2 ]->{ row } != @leadings[ -1 ]->{ row } - 1 );
+       }
+
+       return $ok if ! $ok;
+   }
+
+   return $ok;
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

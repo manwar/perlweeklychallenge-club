@@ -1,0 +1,134 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/deleteandearn {
+    0 dict begin
+    /ct 0 dict def
+    {
+        /x exch def
+        ct x 2 copy 0 dget 1 add put
+    } forall
+    0
+    /stack [ [ ct 0 ] ] def
+    {
+        stack length 0 eq {
+            exit
+        } if
+        /stack stack apop.right /c exch def def
+        c 0 get length 0 eq {
+            c 1 get max
+        } {
+            c 0 get keys {
+                /d exch def
+                /cc c 0 get deepcopy def
+                cc d 2 copy get 1 sub put
+                cc d get 0 eq {
+                    cc d undef
+                } if
+                cc d 1 sub undef
+                cc d 1 add undef
+                [ cc c 1 get d add ]
+                stack exch apush.right
+                /stack exch def
+            } forall
+        } ifelse
+    } loop
+    end
+} bind def
+
+(deleteandearn) test.start
+[3 4 2] deleteandearn 6 eq test
+[2 2 3 3 3 4] deleteandearn 9 eq test
+test.end

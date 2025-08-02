@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 323
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-323>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc323;
+
+CREATE OR REPLACE FUNCTION
+pwc323.task2_plperl( int, int[] )
+RETURNS float
+AS $CODE$
+
+   my ( $income, $taxes ) = @_;
+   my $value = 0;
+   my $last = 0;
+
+
+   my $min = sub { $_[ 0 ] > $_[ 1 ] ? $_[ 1 ] : $_[ 0 ] };
+
+   while ( $taxes->@* ) {
+   	 my $up_to = shift $taxes->@*;
+	 my $pct   = shift $taxes->@*;
+
+	 next if ( $last > $income );
+	 $value += ( $min->( $up_to, $income ) - $last ) * $pct / 100;
+	 $last = $up_to;
+   }
+
+   return $value;
+
+$CODE$
+LANGUAGE plperl;

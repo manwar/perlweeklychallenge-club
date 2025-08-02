@@ -2,7 +2,7 @@
 
 # Challenge 063
 #
-# TASK #1 › Last Word
+# TASK #1 > Last Word
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
 #
@@ -10,7 +10,7 @@
 # $regexp found in the given string, or undef if the string does not contain a
 # word matching $regexp.
 #
-# For this challenge, a “word” is defined as any character sequence consisting
+# For this challenge, a "word" is defined as any character sequence consisting
 # of non-whitespace characters (\S) only. That means punctuation and other
 # symbols are part of the word.
 #

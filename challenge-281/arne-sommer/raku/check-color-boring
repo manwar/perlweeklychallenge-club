@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+subset BOARDPOS where * ~~ /^<[a..h]><[1..8]>$/;
+
+unit sub MAIN (BOARDPOS $coordinate);
+
+my %l;
+
+%l<a2> = %l<a4> = %l<a6> = %l<a8> = True;
+%l<b1> = %l<b3> = %l<b5> = %l<b7> = True;
+%l<c2> = %l<c4> = %l<c6> = %l<c8> = True;
+%l<d1> = %l<d3> = %l<d5> = %l<d7> = True;
+
+%l<e2> = %l<e4> = %l<e6> = %l<e8> = True;
+%l<f1> = %l<f3> = %l<f5> = %l<f7> = True;
+%l<g2> = %l<g4> = %l<g6> = %l<g8> = True;
+%l<h1> = %l<h3> = %l<h5> = %l<h7> = True;
+
+say so %l{$coordinate};

@@ -2,11 +2,12 @@
 
 # Challenge 063
 #
-# TASK #2 › Rotate String
+# TASK #2 > Rotate String
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
 #
-# Given a word made up of an arbitrary number of x and y characters, that word can be rotated as follows: For the ith rotation (starting at i = 1),
+# Given a word made up of an arbitrary number of x and y characters, that word
+# can be rotated as follows: For the ith rotation (starting at i = 1),
 # i % length(word) characters are moved from the front of the string to the end.
 # Thus, for the string xyxx, the initial (i = 1) % 4 = 1 character (x) is moved
 # to the end, forming yxxx. On the second rotation, (i = 2) % 4 = 2 characters

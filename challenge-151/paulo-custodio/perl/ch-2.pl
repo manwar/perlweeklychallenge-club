@@ -2,10 +2,10 @@
 
 # Challenge 151
 #
-# TASK #2 › Rob The House
+# TASK #2 > Rob The House
 # Submitted by: Mohammad S Anwar
 # You are planning to rob a row of houses, always starting with the first
-# and moving in the same direction. However, you can’t rob two adjacent houses.
+# and moving in the same direction. However, you can't rob two adjacent houses.
 #
 # Write a script to find the highest possible gain that can be achieved.
 #

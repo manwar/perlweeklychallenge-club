@@ -1,0 +1,30 @@
+CREATE OR REPLACE FUNCTION
+pwc277.task2_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my @strong;
+
+   my $abs = sub {
+      return $_[ 0 ] * - 1 if ( $_[ 0 ] < 0 );
+      return $_[ 0 ];
+   };
+
+   my $min = sub {
+      return $_[ 0 ] if ( $_[ 0 ] < $_[ 1 ] );
+      return $_[ 1 ];
+   };
+
+   for my $i ( 0 .. $nums->@* - 2 ) {
+       for my $j ( $i + 1 .. $nums->@* - 1 ) {
+              my ( $left, $right ) = ( $nums->@[ $i ], $nums->@[ $j ] );
+    	   push @strong, [ $left, $right ]  if ( $abs->( $left - $rigth ) > 0 && $abs->( $left - $right ) < $min->( $left, $right ) );
+       }
+   }
+
+   return scalar( @strong );
+
+$CODE$
+LANGUAGE plperl;
+

@@ -1,0 +1,77 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/contiguousarray {
+    0 dict begin
+    /a exch def
+    /ret 0 def
+    /ml a length 1 add 2 idiv 2 mul def
+    ml -2 2 {
+        /l exch def
+        ret 0 eq {
+            0 1 a length l sub {
+                /st exch def
+                a st l getinterval { add } reduce 2 mul l eq {
+                    /ret l def
+                    exit
+                } if
+            } for
+        } if
+    } for
+    ret
+    end
+} bind def
+
+(contiguousarray) test.start
+[1 0] contiguousarray 2 eq test
+[0 1 0] contiguousarray 2 eq test
+[0 0 0 0 0] contiguousarray 0 eq test
+[0 1 0 0 1 0] contiguousarray 4 eq test
+test.end

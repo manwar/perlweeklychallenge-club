@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($word where $word.chars > 1,
+               *@list where @list.elems > 1);
+
+say @list>>.substr(0,1).join.lc eq $word.lc;
+

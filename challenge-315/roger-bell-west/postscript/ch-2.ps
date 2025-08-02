@@ -1,0 +1,184 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/c.isalpha {
+    dup c.islower exch c.isupper or
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/findthird {
+    0 dict begin
+    /b exch def
+    /a exch def
+    /ss 0 array def
+    /sa 0 array def
+    s2a {
+        /c exch def
+        c c.isalpha {
+            /sa sa c apush.right def
+        } {
+            sa length 0 gt {
+                /ss ss sa a2s apush.right def
+                /sa 0 array def
+            } if
+        } ifelse
+    } forall
+    sa length 0 gt {
+        /ss ss sa a2s apush.right def
+    } if
+    [
+        ss 3 -2 rotor {
+            /p exch def
+            p 0 get a deepeq
+            p 1 get b deepeq and {
+                p 2 get
+            } if
+        } forall
+    ]
+    end
+} bind def
+
+(findthird) test.start
+(Perl is a my favourite language but Python is my favourite too.) (my) (favourite) findthird [(language) (too)] deepeq test
+(Barbie is a beautiful doll also also a beautiful princess.) (a) (beautiful) findthird [(doll) (princess)] deepeq test
+(we will we will rock you rock you.) (we) (will) findthird [(we) (rock)] deepeq test
+test.end

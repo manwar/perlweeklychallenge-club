@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 268
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-268>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc268;
+
+CREATE OR REPLACE FUNCTION
+pwc268.task1_plperl( int[], int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+
+   die 'Array must have the same length!' if ( $left->@* != $right->@* );
+
+   my @diffs;
+   for my $index ( 0 .. $left->@* - 1 ) {
+       my $d = $left->@[ $index ] - $right->@[ $index ];
+       push @diffs, $d if ( ! grep( { $_ == $d } @diffs ) );
+   }
+
+   return $diffs[ 0 ] if ( @diffs == 1 );
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

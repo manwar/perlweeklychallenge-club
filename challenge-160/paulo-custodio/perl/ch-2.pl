@@ -2,15 +2,15 @@
 
 # Challenge 160
 #
-# TASK #2 › Equilibrium Index
+# TASK #2 > Equilibrium Index
 # Submitted by: Mohammad S Anwar
 # You are give an array of integers, @n.
 #
 # Write a script to find out the Equilibrium Index of the given array, if found.
 #
 # For an array A consisting n elements, index i is an equilibrium index if the
-# sum of elements of subarray A[0…i-1] is equal to the sum of elements of
-# subarray A[i+1…n-1].
+# sum of elements of subarray A[0...i-1] is equal to the sum of elements of
+# subarray A[i+1...n-1].
 #
 #
 # Example 1:

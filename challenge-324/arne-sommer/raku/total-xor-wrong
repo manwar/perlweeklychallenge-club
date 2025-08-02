@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ UInt,
+               :v(:$verbose));
+
+my $total = 0;
+
+for 0 .. @ints.end -> $i
+{
+  for $i .. @ints.end -> $j
+  {
+    my $xor = [+^] @ints[$i .. $j];
+    $total += $xor;
+
+    say "$i .. $j -> [{ @ints[$i .. $j].join(",") }] -> $xor" if $verbose;
+  }
+}
+
+say $total;

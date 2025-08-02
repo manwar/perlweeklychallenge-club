@@ -1,0 +1,87 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/maximumpairs {
+    0 dict begin
+    /n 0 def
+    /r 0 dict def
+    {
+        /s exch def
+        /t s s2a reverse a2s def
+        r t known {
+            /n n 1 add def
+        } {
+            r s true put
+        } ifelse
+    } forall
+    n
+    end
+} bind def
+
+(maximumpairs) test.start
+[(ab) (de) (ed) (bc)] maximumpairs 1 eq test
+[(aa) (ba) (cd) (ed)] maximumpairs 0 eq test
+[(uv) (qp) (st) (vu) (mn) (pq)] maximumpairs 2 eq test
+test.end

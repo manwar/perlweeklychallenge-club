@@ -2,21 +2,31 @@
 
 # Challenge 150
 #
-# Input: $a = '1234' $b = '5678'
-# Output: 7
+# TASK #1 > Fibonacci Words
+# Submitted by: Mohammad S Anwar
 #
-# Fibonacci Words:
+# You are given two strings having same number of digits, $a and $b.
 #
-# '1234'
-# '5678'
-# '12345678'
-# '567812345678'
-# '12345678567812345678'
-# '56781234567812345678567812345678'
-# '1234567856781234567856781234567812345678567812345678'
+# Write a script to generate Fibonacci Words by concatenation of the previous
+# two strings. Finally print 51st digit of the first term having at least
+# 51 digits.
+# Example:
 #
-# The 51st digit in the first term having at least 51 digits
-# '1234567856781234567856781234567812345678567812345678' is 7.
+#     Input: $a = '1234' $b = '5678'
+#     Output: 7
+#
+#     Fibonacci Words:
+#
+#     '1234'
+#     '5678'
+#     '12345678'
+#     '567812345678'
+#     '12345678567812345678'
+#     '56781234567812345678567812345678'
+#     '1234567856781234567856781234567812345678567812345678'
+#
+#     The 51st digit in the first term having at least 51 digits
+#     '1234567856781234567856781234567812345678567812345678' is 7.
 
 use Modern::Perl;
 

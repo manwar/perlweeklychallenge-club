@@ -40,6 +40,12 @@ for my $chall_dir (path(".")->children(qr/challenge-\d+/)) {
     }
 }
 
+# challenge 232 did not exist
+for my $lang (sort keys %LANG) {
+    $sols[232]{$lang} = 2;
+}
+
+
 # output
 for my $chall (1 .. $#sols) {
     if (($chall) % 10 == 1) {

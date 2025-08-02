@@ -9,8 +9,9 @@ my $nr = sprintf("%03d", $ARGV[0]);
 
 path("challenge-$nr/paulo-custodio")->mkpath;
 #for my $dir (qw(ada awk basic bc brainfuck c cpp d forth fortran lua pascal perl python t)) {
-#    path("challenge-$nr/paulo-custodio/$dir")->mkpath;
-#}
+for my $dir (qw( perl python t )) {
+    path("challenge-$nr/paulo-custodio/$dir")->mkpath;
+}
 
 path("challenge-$nr/paulo-custodio/README")->spew("Solution by Paulo Custodio\n");
 if (! -f "challenge-$nr/paulo-custodio/Makefile") {

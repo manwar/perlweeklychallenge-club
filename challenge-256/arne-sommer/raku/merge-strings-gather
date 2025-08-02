@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str1 where $str1.chars > 0,
+               $str2 where $str2.chars > 0,
+	       :v(:$verbose));
+
+my $ms := gather
+{
+  my @str1 = $str1.comb;
+  my @str2 = $str2.comb;
+
+  while (@str1.elems || @str2.elems)
+  {
+    if @str1.elems
+    {
+      say ":Fetching character '@str1[0]' from string 1" if $verbose;
+      take @str1.shift;
+    }
+    if @str2.elems
+    {
+      say ":Fetching character '@str2[0]' from string 2" if $verbose;
+      take @str2.shift;
+    }
+  }	
+}
+
+say $ms.join;

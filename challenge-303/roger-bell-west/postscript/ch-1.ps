@@ -1,0 +1,356 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/permute { % [array] {proc} permute runs proc on each permutation of array
+    7 dict begin
+    /permute.subproc exch def
+    /permute.a exch def
+    /permute.n permute.a length def
+    /permute.c [ permute.n { 0 } repeat ] def
+    permute.a permute.subproc
+    /permute.i 0 def
+    {
+        permute.i permute.n ge {
+            exit
+        } if
+        permute.c permute.i get permute.i lt {
+            permute.i 2 mod 0 eq {
+                0 permute.i permute.swap
+            } {
+                permute.c permute.i get permute.i permute.swap
+            } ifelse
+            permute.a permute.subproc
+            permute.c permute.i get 1 add permute.c exch permute.i exch put
+            /permute.i 0 def
+        } {
+            permute.c permute.i 0 put
+            /permute.i permute.i 1 add def
+        } ifelse
+    } loop
+    end
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/permute.swap {
+    /permute.bi exch def
+    /permute.ai exch def
+    permute.a permute.ai get
+    permute.a permute.bi get
+    permute.a exch permute.ai exch put
+    permute.a exch permute.bi exch put
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+
+% end included library code
+
+/concatenate {
+    { alloccvs } map
+    () strjoin
+    cvi
+} bind def
+
+/threedigitseven {
+    0 dict begin
+    /a exch def
+    /s 0 dict def
+    1 1 1 a length bitshift 1 sub {
+        /mask exch def
+        [
+            a enumerate.array {
+                aload pop
+                /v exch def
+                /k exch def
+                1 k bitshift mask and 0 gt {
+                    v
+                } if
+            } forall
+        ]
+        {
+            concatenate
+            /c exch def
+            c 100 ge c 999 le c 2 mod 0 eq and and {
+                s c true put
+            } if
+        } permute
+    } for
+    s keys quicksort
+    end
+} bind def
+
+(threedigitseven) test.start
+[2 1 3 0] threedigitseven [102 120 130 132 210 230 302 310 312 320] deepeq test
+[2 2 8 8 2] threedigitseven [222 228 282 288 822 828 882] deepeq test
+test.end

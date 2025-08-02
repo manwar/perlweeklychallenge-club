@@ -1,0 +1,169 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+
+% end included library code
+
+/strongpassword {
+    0 dict begin
+    /ctypes 0 dict def
+    /reps 0 def
+    /rep 0 def
+    /old 64 def
+    /a exch def
+    [
+        0
+        a s2a enumerate.array {
+            aload pop
+            /c exch def
+            /i exch def
+            i 0 gt c old eq and {
+                /rep rep 1 add def
+                rep 2 ge {
+                    /reps reps 1 add def
+                } if
+            } {
+                /rep 0 def
+                /old c def
+            } ifelse
+            /t 0 def
+            1 {
+                c c.isupper {
+                    /t 1 def
+                    exit
+                } if
+                c c.islower {
+                    /t 2 def
+                    exit
+                } if
+                c c.isdigit {
+                    /t 3 def
+                } if
+            } repeat
+            ctypes t 2 copy 0 dget 1 add put
+        } forall
+        reps
+        ctypes 0 undef
+        /k ctypes keys length def
+        k 3 lt {
+            /spare ctypes values { add } reduce k sub def
+            spare 0 lt {
+                spare neg
+            } if
+        } if
+        a length 6 lt {
+            6 a length sub
+        } if
+    ] listmax
+    end
+} bind def
+
+(strongpassword) test.start
+(a) strongpassword 5 eq test
+(aB2) strongpassword 3 eq test
+(PaaSW0rd) strongpassword 0 eq test
+(Paaasw0rd) strongpassword 1 eq test
+(aaaaa) strongpassword 3 eq test
+test.end

@@ -1,0 +1,7 @@
+ MinimumTime←{
+⍝ It takes 1 second to type a letter on the wheel of letters a-z
+⍝    the minimum time is the total distance between letters in ⍵
+⍝    care is taken to ensure we use the minimum distance
+⍝    d is 5 moves from y moving clockwise or 21 moves counter-clockwise
+     d⌊⍥|26|d←-|¯2-/1,⎕A⍳1 ⎕C ⍵
+ }

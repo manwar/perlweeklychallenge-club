@@ -1,0 +1,109 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+
+% end included library code
+
+/cs2xy {
+    [ exch
+      s2a aload pop
+      (1) s2a aload pop sub
+      exch
+      (a) s2a aload pop sub
+      exch
+    ]
+} bind def
+
+/knightsmove {
+    0 dict begin
+    cs2xy /tc exch def
+    cs2xy /fc exch def
+    /queue [ [ fc 0 get fc 1 get 0 ] ] def
+    /seen 0 dict def
+    -1
+    {
+        queue length 1 ge {
+            queue apop.left /cc exch def /queue exch def
+            cc 0 get tc 0 get eq cc 1 get tc 1 get eq and {
+                pop cc 2 get
+                exit
+            } {
+                [
+                    [2 1]
+                    [1 2]
+                    [2 -1]
+                    [1 -2]
+                    [-2 1]
+                    [-1 2]
+                    [-2 -1]
+                    [-1 -2]
+                ] {
+                    /offset exch def
+                    /x cc 0 get offset 0 get add def
+                    /y cc 1 get offset 1 get add def
+                    x 0 ge x 7 le and y 0 ge and y 7 le and {
+                        /cv x 8 mul y add def
+                        seen cv known not {
+                            /queue queue [ x y cc 2 get 1 add ] apush.right def
+                            seen cv true put
+                        } if
+                    } if
+                } forall
+            } ifelse
+        } {
+            exit
+        } ifelse
+    } loop
+    end
+} bind def
+
+(knightsmove) test.start
+(g2) (a8) knightsmove 4 eq test
+(g2) (h2) knightsmove 3 eq test
+test.end

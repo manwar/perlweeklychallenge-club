@@ -1,0 +1,151 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/groupposition {
+    0 dict begin
+    /a exch def
+    /lc 65 def
+    [
+        [
+            a s2a enumerate.array {
+                aload pop
+                /c exch def
+                /i exch def
+                i 0 eq {
+                    /lc c 1 add def
+                } if
+                lc c eq {
+                    dup dup 1 get 1 add 1 exch put
+                } {
+                    [ c 1 ]
+                    /lc c def
+                } ifelse
+            } forall
+        ] {
+            /ms exch def
+            ms 1 get 3 ge {
+                /s ms 1 get string def
+                0 1 ms 1 get 1 sub {
+                    /i exch def
+                    s i ms 0 get put
+                } for
+                s
+            } if
+        } forall
+    ]
+    end
+} bind def
+
+(groupposition) test.start
+(abccccd) groupposition [(cccc)] deepeq test
+(aaabcddddeefff) groupposition [(aaa) (dddd) (fff)] deepeq test
+(abcdd) groupposition [] deepeq test
+test.end

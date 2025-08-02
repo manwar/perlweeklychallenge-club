@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * > 0;
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ PosInt,
+               :v(:$verbose));
+
+my @as-str = @ints>>.Str;
+my $result = "";
+my %ints;
+
+for @as-str -> $int
+{
+  %ints{$int.substr(0,1)}.push: $int;
+}
+
+say ": Hash: { %ints.raku }" if $verbose;
+
+for %ints.keys.sort(-*) -> $key
+{
+  $result ~= @(%ints{$key}).permutations.map( *.join ).max;
+}
+
+say $result;

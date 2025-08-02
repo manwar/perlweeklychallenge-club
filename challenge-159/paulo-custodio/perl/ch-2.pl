@@ -2,7 +2,7 @@
 
 # Challenge 159
 #
-# TASK #2 › Moebius Number
+# TASK #2 > Moebius Number
 # Submitted by: Mohammad S Anwar
 # You are given a positive number $n.
 #

@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 269
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-269>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc269;
+
+CREATE OR REPLACE FUNCTION
+pwc269.task1_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+   for my $i ( 0 .. $nums->@* - 1 ) {
+       for my $j ( $i + 1 .. $nums->@* -1 ) {
+       	   my $result = $nums->@[ $i ] | $nums->@[ $j ];
+	   if ( $result % 2 == 0 ) {
+	      return_next( $nums->@[ $i ] );
+	      return_next( $nums->@[ $j ] );
+	   }
+       }
+   }
+
+   return undef;
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,1 @@
+task1(Letters, Weights, Word) :- maplist([E1, E2, E1-E2]>>true, Letters, Weights, Weighted_Letters), sort(2, @<, Weighted_Letters, Sorted_Pairs), pairs_keys(Sorted_Pairs, Sorted_Letters), string_chars(Word, Sorted_Letters).

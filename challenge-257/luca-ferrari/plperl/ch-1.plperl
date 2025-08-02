@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 257
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-257>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc257;
+
+CREATE OR REPLACE FUNCTION
+pwc257.task1_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   for my $current ( $numbers->@* ) {
+       return_next( scalar( grep( { $_ < $current } $numbers->@* ) ) );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

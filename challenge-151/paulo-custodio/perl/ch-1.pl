@@ -2,7 +2,7 @@
 
 # Challenge 151
 #
-# TASK #1 › Binary Tree Depth
+# TASK #1 > Binary Tree Depth
 # Submitted by: Mohammad S Anwar
 # You are given binary tree.
 #

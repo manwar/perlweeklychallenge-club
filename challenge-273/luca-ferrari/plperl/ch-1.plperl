@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 273
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-273>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc273;
+
+CREATE OR REPLACE FUNCTION
+pwc273.task1_plperl( text, text )
+RETURNS int
+AS $CODE$
+   use POSIX;
+
+   my ( $string, $char ) = @_;
+
+   die "Pass a single char!" if ( length( $char ) != 1 );
+
+   return 0 if $string !~ / $char /x;
+   return POSIX::ceil( ( scalar( grep { $_ eq $char } split //, $string ) / scalar( split //, $string ) * 100 ) );
+   
+$CODE$
+LANGUAGE plperlu;

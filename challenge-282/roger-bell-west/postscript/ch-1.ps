@@ -1,0 +1,140 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+
+% end included library code
+
+/goodinteger {
+    0 dict begin
+    /winsize 3 def
+    alloccvs s2a /d exch def
+    -1
+    d winsize 1 winsize sub rotor enumerate.array {
+        aload pop
+        /cc exch def
+        /offset exch def
+        cc 0 get cc 1 get eq cc 1 get cc 2 get eq and {
+            /valid true def
+            offset 0 ne {
+                d offset 1 sub get cc 0 get eq {
+                    /valid false def
+                } if
+            } if
+            offset d length winsize sub ne {
+                d offset winsize add get cc 2 get eq {
+                    /valid false def
+                } if
+            } if
+            valid {
+                pop
+                cc a2s cvi
+                exit
+            } if
+        } if
+    } forall
+    end
+} bind def
+
+(goodinteger) test.start
+12344456 goodinteger 444 eq test
+1233334 goodinteger -1 eq test
+10020003 goodinteger 0 eq test
+test.end

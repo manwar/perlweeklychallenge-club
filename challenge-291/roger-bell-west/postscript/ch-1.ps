@@ -1,0 +1,86 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/middleindex {
+    0 dict begin
+    /a exch def
+    /r a { add } reduce def
+    /l 0 def
+    -1
+    a enumerate.array {
+        aload pop
+        /c exch def
+        /i exch def
+        /r r c sub def
+        r l eq {
+            pop i
+            exit
+        } if
+        /l l c add def
+    } forall
+    end
+} bind def
+
+(middleindex) test.start
+[2 3 -1 8 4] middleindex 3 eq test
+[1 -1 4] middleindex 2 eq test
+[2 5] middleindex -1 eq test
+test.end

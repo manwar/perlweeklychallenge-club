@@ -2,7 +2,7 @@
 
 # Challenge 072
 #
-# TASK #2 › Lines Range
+# TASK #2 > Lines Range
 # Submitted by: Mohammad S Anwar
 # You are given a text file name $file and range $A - $B where $A <= $B.
 #

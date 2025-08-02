@@ -1,0 +1,76 @@
+
+  
+%token NUMBER
+%token START 
+%token END 
+%token WORD 
+%token QUOTE 
+%token ESCAPED_QUOTE 
+%{
+  my %record = (fields => {});  
+%}
+
+  %%
+  
+file: START id fields END         {$record{name} = $_[2]; \%record;} 
+;
+
+id: WORD
+;
+
+words: WORD
+ | words WORD 
+ | words ESCAPED_QUOTE WORD ESCAPED_QUOTE
+;
+
+field: WORD '=' NUMBER             {$record{fields}->{$_[1]} = $_[3]}  
+ | WORD '=' QUOTE words QUOTE      {$record{fields}->{$_[1]} = $_[4]}  
+;
+
+fields: field 
+ | fields field 
+;
+
+  %%
+  
+
+sub lexer{
+  my($parser) = @_;
+  $parser->YYData->{INPUT} or return('', undef);
+  $parser->YYData->{INPUT} =~ s/^[ \t]//g;
+  ##
+  # send tokens to parser
+  ##
+  for($parser->YYData->{INPUT}){
+      s/^([0-9]+)// and return ("NUMBER", $1);
+      s/^({%)// and return ("START", $1);
+      s/^(%})// and return ("END", $1);
+      s/^(\w+)// and return ("WORD", $1);
+      s/^(=)// and return ("=", $1);
+      s/^(")// and return ("QUOTE", $1);
+      s/^(\\")// and return ("ESCAPED_QUOTE", $1);
+      s/^(\\\\)// and return ("WORD", $1);
+  }  
+}
+
+
+sub error{
+  exists $_[0]->YYData->{ERRMSG}
+  and do{
+      print $_[0]->YYData->{ERRMSG};
+          return;
+  };
+  print "syntax error\n"; 
+}
+
+
+sub parse{
+  my($self, $input) = @_;
+  $input =~ tr/\t/ /s;
+  $input =~ tr/ //s;
+  $self->YYData->{INPUT} = $input;
+  my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+  return $result;  
+}
+
+

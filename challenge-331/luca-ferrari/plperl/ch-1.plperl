@@ -1,0 +1,21 @@
+--
+-- Perl Weekly Challenge 331
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-331>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc331;
+
+CREATE OR REPLACE FUNCTION
+pwc331.task1_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $sentence ) = @_;
+
+   return ( 
+      map { length $_ }
+      split( /\s+/,  $sentence ) )[ - 1 ];
+   
+$CODE$
+LANGUAGE plperl;

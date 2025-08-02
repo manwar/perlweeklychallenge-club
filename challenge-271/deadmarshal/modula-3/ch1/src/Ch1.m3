@@ -1,0 +1,38 @@
+MODULE Ch1 EXPORTS Main;
+
+IMPORT SIO;
+
+VAR
+  A1:ARRAY[0..1],[0..1] OF CARDINAL := ARRAY[0..1],[0..1] OF CARDINAL{
+  ARRAY[0..1] OF CARDINAL{0,1},
+  ARRAY[0..1] OF CARDINAL{1,0}};
+  A2:ARRAY[0..1],[0..2] OF CARDINAL := ARRAY[0..1],[0..2] OF CARDINAL{
+  ARRAY[0..2] OF CARDINAL{0,..},
+  ARRAY[0..2] OF CARDINAL{1,0,1}};
+  A3:ARRAY[0..2],[0..1] OF CARDINAL := ARRAY[0..2],[0..1] OF CARDINAL{
+  ARRAY[0..1] OF CARDINAL{0,..},
+  ARRAY[0..1] OF CARDINAL{1,1},
+  ARRAY[0..1] OF CARDINAL{0,..}};
+
+PROCEDURE MaximumOnes(VAR A:ARRAY OF ARRAY OF CARDINAL):CARDINAL =
+  VAR Max,Count:CARDINAL := 0;
+  PROCEDURE ArraySum(VAR A:ARRAY OF CARDINAL):CARDINAL =
+    VAR Sum:CARDINAL := 0;
+    BEGIN
+      FOR I := FIRST(A) TO LAST(A) DO INC(Sum,A[I]) END;
+      RETURN Sum
+    END ArraySum;
+  BEGIN
+    FOR I := FIRST(A) TO LAST(A) DO
+      Count := ArraySum(A[I]);
+      IF Count > Max THEN Max := I+1 END
+    END;
+    RETURN Max
+  END MaximumOnes;
+  
+BEGIN
+  SIO.PutInt(MaximumOnes(A1)); SIO.Nl();
+  SIO.PutInt(MaximumOnes(A2)); SIO.Nl();
+  SIO.PutInt(MaximumOnes(A3)); SIO.Nl();
+END Ch1.
+

@@ -1,0 +1,64 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/countasterisks {
+    0 dict begin
+    /out 0 def
+    /active true def
+    s2a {
+        /c exch def
+        c 124 eq {
+            /active active not def
+        } if
+        c 42 eq active and {
+            /out out 1 add def
+        } if
+    } forall
+    out
+    end
+} bind def
+
+(countasterisks) test.start
+(p|*e*rl|w**e|*ekly|) countasterisks 2 eq test
+(perl) countasterisks 0 eq test
+(th|ewe|e**|k|l***ych|alleng|e) countasterisks 5 eq test
+test.end

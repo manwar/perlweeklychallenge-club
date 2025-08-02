@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 280
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-280>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc280;
+
+CREATE OR REPLACE FUNCTION
+pwc280.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+   my @chars = split //, $string;
+
+   for my $needle ( @chars ) {
+       return $needle if ( grep( { $_ eq $needle } @chars ) > 1 );       
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

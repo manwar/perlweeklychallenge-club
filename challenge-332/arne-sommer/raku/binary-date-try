@@ -1,0 +1,6 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($date where $date ~~ /^ \d\d\d\d \- \d\d \- \d\d $/);
+
+try Date.new($date) && say $date.split('-').map( *.fmt('%b') ).join('-');
+
