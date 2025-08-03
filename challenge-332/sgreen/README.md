@@ -1,3 +1,3 @@
-# The Weekly Challenge 331
+# The Weekly Challenge 332
 
-Blog: [The last word is my buddy](https://dev.to/simongreennet/weekly-challenge-the-last-word-is-my-buddy-13pm)
+Blog: [I sent my date a letter](https://dev.to/simongreennet/weekly-challenge-i-sent-my-date-a-letter-1ppg)
