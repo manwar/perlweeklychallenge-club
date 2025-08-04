@@ -1,0 +1,36 @@
+--
+-- Perl Weekly Challenge 333
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-333>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc333;
+
+CREATE OR REPLACE FUNCTION
+pwc333.task1_plperl( int[] )
+RETURNS boolean
+AS $CODE$
+
+   my ( $coordinates ) = @_;
+   die "Wrong arguments!" if ( $coordinates->@* % 2 != 0 );
+
+   my @coords;
+   while ( $coordinates->@* ) {
+   	 push @coords, { x => shift( $coordinates->@* ),
+	                 y => shift( $coordinates->@* ) };
+   }
+
+   my $first  = $coords[ 0 ];
+   my $second = $coords[ 1 ];
+
+   for my $i ( 2 .. $#coords ) {
+       my $current = $coords[ $i ];
+       return 0 if ( ( $current->{ x } - $first->{ x } ) * ( $first->{ y } - $second->{ y } )
+                     != ( $current->{ y } - $first->{ y } ) * ( $first->{ x } - $second->{ x } ) );
+       
+   }
+
+   return 1;
+   
+$CODE$
+LANGUAGE plperl;

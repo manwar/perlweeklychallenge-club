@@ -1,0 +1,32 @@
+--
+-- Perl Weekly Challenge 333
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-333>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc333;
+
+CREATE OR REPLACE FUNCTION
+pwc333.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   my $limit = scalar( $numbers->@* );
+   my $index = 0;
+
+   while ( $limit ) {
+   	 my $current = $numbers->@[ $index++ ];
+	 return_next( $current );
+         $limit--;
+	 last if ( ! $limit );
+	 return_next( $current ) if ( ! $current );
+	 $limit-- if ( ! $current );
+
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;
