@@ -1,0 +1,98 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+
+% end included library code
+
+/straightline {
+    0 dict begin
+    /a exch def
+    /b 0 array def
+    a {
+        /xy exch def
+        /u true def
+        b {
+            /bxy exch def
+            xy 0 get bxy 0 get eq xy 1 get bxy 1 get eq and {
+                /u false def
+                exit
+            } if
+        } forall
+        u {
+            /b b xy apush.right def
+        } if
+    } forall
+    b length 3 lt {
+        true
+    } {
+        true
+        /p b 0 get 0 get def
+        /q b 1 get 0 get b 0 get 0 get sub def
+        /r b 0 get 1 get def
+        /s b 1 get 1 get b 0 get 1 get sub def
+        2 1 b length 1 sub {
+            /tpair exch b exch get def
+            q 0 eq tpair 0 get b 0 get 0 get ne and {
+                pop false
+                exit
+            } if
+            s 0 eq tpair 1 get b 0 get 1 get ne and {
+                pop false
+                exit
+            } if
+            q 0 ne s 0 ne and {
+                tpair 0 get p sub q div
+                tpair 1 get r sub s div
+                ne {
+                    pop false
+                    exit
+                } if
+            } if
+        } for
+    } ifelse
+    end
+} bind def
+
+(straightline) test.start
+[[2 1] [2 3] [2 5]] straightline test
+[[1 4] [3 4] [10 4]] straightline test
+[[0 0] [1 1] [2 3]] straightline not test
+[[1 1] [1 1] [1 1]] straightline test
+test.end
