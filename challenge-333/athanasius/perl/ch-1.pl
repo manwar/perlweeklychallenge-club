@@ -68,7 +68,8 @@ Assumptions
 
 Note
 ----
-This script handles real number co-ordinate values using Perl's built-in float- ing-point arithmetic. For this reason, equality comparison cannot be performed
+This script handles real number co-ordinate values using Perl's built-in float-
+ing-point arithmetic. For this reason, equality comparison cannot be performed
 reliably using the "==" operator; instead, an equal_values() subroutine is pro-
 vided. If the absolute difference between the values to be compared is less than
 a given $EPSILON, then the values are considered equal.
