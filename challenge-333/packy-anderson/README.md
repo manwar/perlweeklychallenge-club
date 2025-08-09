@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Oddly Binary](https://packy.dardan.com/b/ZQ)
+[Perl Weekly Challenge: Zero is Not the End of the Line](https://packy.dardan.com/b/Zd)
