@@ -1,3 +1,3 @@
-# The Weekly Challenge 332
+# The Weekly Challenge 333
 
-Blog: [I sent my date a letter](https://dev.to/simongreennet/weekly-challenge-i-sent-my-date-a-letter-1ppg)
+Blog: [Duplicate Lines](https://dev.to/simongreennet/weekly-challenge-duplicate-lines-6pd)
