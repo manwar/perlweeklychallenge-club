@@ -53,10 +53,10 @@ exit(0);
 
 ################################################################################
 # Given a set of coordinates that define three points, determine whether these
-# points make a straight line.  This is accomplished by etermining whether the
-# triangle formed by the points has an area of zero; due to round-off error, it
-# is possible that a set of points that are very nearly (but not quite)
-# colinear may be determined to be so.
+# points make a straight line.  This is accomplished by calculating the area of
+# the triangle formed by the points and determining whether it is zero; due to
+# round-off error, it is possible that a set of points that are very nearly
+# (but not quite) colinear may be indicated as colinear.
 # Takes one argument:
 # * A list of coordinates to examine (e.g. ([ 1, 4 ], [ 3, 4 ], [ 10, 4 ]) )
 # Returns:
