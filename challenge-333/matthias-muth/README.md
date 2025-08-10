@@ -1,148 +1,184 @@
-# Binary + Odd = XOR
+# Double O Straight (Not Stirred)
 
-**Challenge 332 solutions in Perl by Matthias Muth**
+**Challenge 333 solutions in Perl by Matthias Muth**
 
-## Task 1: Binary Date
+## Task 1: Straight Line
 
-> You are given a date in the format YYYY-MM-DD.<br/>
-> Write a script to convert it into binary date.
+> You are given a list of co-ordinates.<br/>
+> Write a script to find out if the given points make a straight line.
 >
 > **Example 1**
 >
 > ```text
-> Input: $date = "2025-07-26"
-> Output: "11111101001-111-11010"
+> Input: @list = ([2, 1], [2, 3], [2, 5])
+> Output: true
 >```
 > 
 >**Example 2**
 > 
 >```text
-> Input: $date = "2000-02-02"
-> Output: "11111010000-10-10"
-> ```
->
-> **Example 3**
->
-> ```text
->Input: $date = "2024-12-31"
-> Output: "11111101000-1100-11111"
-> ```
-
-Let's take our Perl toolbox and find the right tools:
-
-* Extracting numbers from a string:<br/>
-  Regular expressions, of course. Don't forget to use the `/g` *global* flag...<br/>
-  (Even though `split` would work nicely here, too, and maybe even a bit faster.)
-* Convert a number to binary:<br/>`sprintf` is all we need, and simple to use.
-
-Et voilà:
-
-```perl
-use v5.36;
-
-sub binary_date( $date ) {
-    return sprintf "%b-%b-%b", $date =~ /\d+/g;
-}
-```
-
-## Task 2: Odd Letters
-
-> You are given a string.<br/>
-> Write a script to find out if each letter in the given string appeared odd number of times.
->
-> **Example 1**
->
-> ```text
-> Input: $str = "weekly"
-> Output: false
->
-> w: 1 time
-> e: 2 times
-> k: 1 time
-> l: 1 time
-> y: 1 time
->
-> The letter 'e' appeared 2 times i.e. even.
->```
-> 
->**Example 2**
-> 
->```text
-> Input: $str = "perl"
+> Input: @list = ([1, 4], [3, 4], [10, 4])
 > Output: true
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: $source = "challenge"
+>Input: @list = ([0, 0], [1, 1], [2, 3])
 > Output: false
 > ```
+> 
+>**Example 4**
+> 
+>```text
+> Input: @list = ([1, 1], [1, 1], [1, 1])
+>Output: true
+> 
+> ```
+> 
+>**Example 5**
+> 
+>```text
+> Input: @list = ([1000000, 1000000], [2000000, 2000000], [3000000, 3000000])
+>Output: true
+> ```
 
-The first thought is that we need to count how many times each letter appears.<br/>Using a hash is the standard and proven way to do this.
+For all points $p_i = (x_i, y_i)$ to be on the same line, the slope of all connections between the first point $p_0$ and any other point $p_i$ in the list (with $i>0$) has to be the same. The slopes are defined like this:
+```math
+\left.slope_i = \frac{dy_i}{dx_i} = \frac{ y_i - y_0 }{ x_i - x_0 }\right|_{i>0}
+```
+To verify that all slopes are equal, we can determine the slope $slope_1$ between the first two points, $p_0$ and $p_1$, and then compare all other slopes $slope_i$ (with $i \ge 2$) to that. The comparison looks like this:
 
-Maybe the `frequency` function from `List::MoreUtils` could be used to create that hash, because it's as simple as this:
-
-```perl
-use List::MoreUtils qw( frequency );
-my $freq = frequency split //, $str;
+```math
+\displaylines{
+slope_i = slope_1 \\\\
+\frac{dy_i}{dx_i} = \frac{dy_1}{dx_1} \\\\
+dy_i \cdot dx_1 = dy_1 \cdot dx_i
+}
 ```
 
-Except experience shows that doing the counting ourselves in a loop usually is much faster, and not too complicated either.
+The good thing is that now, we don't have any divisions anymore, so this comparison is defined for whatever coordinates the points have and even for a vertical line. When the points are on a vertical line, the $dx$ values are zero, making both sides of the formula zero. In the product, the $dy$ values then don't really matter anymore. In fact, that corresponds to the fact that on that vertical line, the points' $y$ values really don't matter.
 
-But actually we don't really need to know the number of occurrences, we only to know whether the number is even or odd. The last bit of the count is all we need. So instead of counting, and then checking if the count is divisible by two, we can instead use just one bit that flips between 'even' and 'odd' .
+But there is still the special case that *both* $dx$ and $dy$ are $0$. Then, the two points are the same. They are both on *every* line that goes through the first point. In the formula, both sides are zero again, so the slopes are considered 'equal' for this check, which means that two identical points do not affect the overall result.
 
-The operation that does this 'flip-flop' for us is a binary XOR with a value of 1, in its assignment form, like this:
+Thanks to community solutions published in the [*The Weekly Challenge*](https://www.facebook.com/groups/theweeklychallengegroup) and [*The Perl Community*](https://www.facebook.com/groups/perlcommunity) Facebook groups I have realized that identical points in the list can make things go really wrong (thank you, Niels van Dijke and James Curtis-Smith!).
 
-```perl
-    $even_or_odd ^= 1;
-```
+In my solution, the critical point is that if the first two points $p_0$ and $p_1$ are identical, the $(dx_1, dy_1)$ pair will be $(0,0)$. As a consequence, *any* check will succeed and accept any point being on that 'line', which is wrong. So I need to take care that $(dx_1, dy_1)$ is set using a point that *differs* from $p_0$.
 
-Every `^= 1` operation flips the bit, perfectly indicating whether we've done an even or an odd number of operations so far.
+Let's transform this into some Perl code:
 
-```perl
-    my %is_odd;
-    $is_odd{$_} ^= 1
-        for split //, $str;
-```
+To save some typing (and probably some typos, too), I created a `dx_dy` function that returns  the $dx$ and $dy$ between two points.
 
-It comes in very handy that in Perl we don't even need to initialize the variable, because an `undef` value is considered as a `0` when we use it in a numerical operation like this one. So when a character is encountered for the first time, the corresponding hash value is created implicitly.
+In the main subroutine, I use this to get `( $dx_1, $dy_1 )` from the first two point in the list.
 
-Once we have run through all the characters, all existing hash entries are `1` if and only if all characters have appeared an odd number of times.
+Then, I use  the `all` keyword (available in Perl version 5.42, but `all` from  `List::Util` does the same job), to go through the rest of the points and check the 'is on the same line' condition.
 
-To get the final result, we can `grep` through the hash's values to find all non-`1` value, then check whether the count returned is zero.<br/>But we can already stop the search once we find a non-`1` value. The `any` and `all` functions from `List::Util` do exactly that, more 'elegant' than a loop:
+I deal with the 'identical first points in the list' problem right in that loop. If the `( $dx_1, $dy_1 )` initialization from the first two points made it `( 0, 0 )`,  we are still in the phase of finding the first non-identical point to determine a slope (or non-zero vector). The current point's `( $dx, $dy )` will be used as a next try, and the check is assumed to have succeeded.
 
-```perl
-use List::Util qw( all );
-...
-    return all { $_ } values %is_odd;
-```
-
-`any` and `all` have been available from `List::Util` since virtually forever (actually since 2002, Perl version 5.7.3), so not a problem with availability.
-
-But in the latest version of Perl (Perl 5.42), `any` and `all` have been made available as core operators, just like `grep`. Now there's no need to load a module, and there's no overhead of any function calls or parameter handling.<br/>
-For now, we need to add these two lines instead of the `use List::Util` statement (until this feature is declared non-experimental and added to a future Perl's 'feature bundle'):
-
-```perl
-use feature 'keyword_all';
-no warnings 'experimental::keyword_all';
-```
-
-In my mind, this new feature makes creation of a loop completely unnecessary (same as it's probably very rare that a loop is programmed out where `grep` could be used). It combines performance and expressiveness of code.
-
-So this is my preferred solution, making use of the most current evolutions of the Perl language and interpreter:
+If all checks succeed, all points are on the same line.
 
 ```perl
 use v5.42;
 use feature 'keyword_all';
 no warnings 'experimental::keyword_all';
 
-sub odd_letters( $str ) {
-    my %is_odd;
-    $is_odd{$_} ^= 1
-        for split //, $str;
-    return all { $_ } values %is_odd;
+sub dx_dy( $p1, $p2 ) {
+    return ( $p2->[0] - $p1->[0], $p2->[1] - $p1->[1] );
+}
+
+sub straight_line( $list ) {
+    my ( $dx_1, $dy_1 ) = dx_dy( $list->[0], $list->[1] );
+    return all {
+        my ( $dx, $dy ) = dx_dy( $list->[0], $list->[$_] );
+        $dx_1 == 0 && $dy_1 == 0
+            ? do { ( $dx_1, $dy_1 ) = ( $dx, $dy ); true }
+            : $dx_1 * $dy == $dy_1 * $dx;
+    } 2 .. $list->$#*;
 }
 ```
+
+In Example 4, *all* the points are identical. In this case, `( $dx_1, $dy_1 )` will still be `( 0, 0 )` in the end, because actually there is no line or slope to check. Example 4 expects a `true` result, and my implementation return that. Maybe it's just luck, but it can also be interpreted like 'identical points do not only lie on the same line, but on indefinitely many lines'!
+
+## Task 2: Duplicate Zeros
+
+> You are given an array of integers.<br/>
+> Write a script to duplicate each occurrence of zero, shifting the remaining elements to the right. The elements beyond the length of the original array are not written.
+>
+> **Example 1**
+>
+> ```text
+> Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)
+> Output: (1, 0, 0, 2, 3, 0, 0, 4)
+>
+> Each zero is duplicated.
+> Elements beyond the original length (like 5 and last 0) are discarded.
+>```
+> 
+>**Example 2**
+> 
+>```text
+> Input: @ints = (1, 2, 3)
+> Output: (1, 2, 3)
+> 
+>No zeros exist, so the array remains unchanged.
+> ```
+>
+> **Example 3**
+>
+> ```text
+>Input: @ints = (1, 2, 3, 0)
+> Output: (1, 2, 3, 0)
+> ```
+> 
+>**Example 4**
+> 
+>```text
+> Input: @ints = (0, 0, 1, 2)
+>Output: (0, 0, 0, 0)
+> ```
+> 
+> **Example 5**
+>
+> ```text
+>Input: @ints = (1, 2, 0, 3, 4)
+> Output: (1, 2, 0, 0, 3)
+>```
+
+Let's try to solve this in two different ways:
+
+##### The resource saving one:
+
+Trying to do only what is needed, nothing else. Building up the array containing the results one by one, using a `for` loop to go through the input data, then a `for` loop that loops over just the one element, if it's non-zero, or over two zeros if the element is zero. Return immediately when the array has the needed number of elements.
+
+Looks a bit clumsy, but might be more efficient if we have a large input array with a high number of zeros. But I am not even sure about that, because all the checking and looping is done on the Perl level. 
+
+```perl
+use v5.36;
+
+sub duplicate_zeros_loop( @ints ) {
+    my @results = ();
+    for ( @ints ) {
+        for ( $_ || ( 0, 0 ) ) {
+            push @results, $_;
+            return @results
+                if scalar @results == scalar @ints;
+        }
+    }
+}
+```
+
+##### The concise one:
+
+Use `map` to map every item into itself, but a zero into two zeros. From the list that this creates, return only the first elements up to the size of the original array, and throw away the rest.
+
+A one-liner!
+
+```perl
+sub duplicate_zeros( @ints ) {
+    return ( map $_ || ( 0, 0 ), @ints )[0..$#ints];
+}
+```
+
+And a little benchmark shows that it's around 50% faster! And more than 50% more Perlish for sure! 
 
 #### **Thank you for the challenge!**
