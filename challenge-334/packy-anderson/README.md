@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Zero is Not the End of the Line](https://packy.dardan.com/b/Zd)
+[Perl Weekly Challenge: SUMone tell me what makes a point VALID?](https://packy.dardan.com/b/_1)
