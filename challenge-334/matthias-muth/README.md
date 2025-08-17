@@ -153,7 +153,7 @@ sub range_sum( $ints, $x, $y ) {
 
 #### The Long Solution (using a `for` loop):
 
-I will start by constructing a more 'traditional' solution (even if it uses several concepts of 'modern' Perl).<br/>It will be based on a programmed-out `for` loop.  
+I will start by constructing a more 'traditional' solution (even if it uses several concepts of 'modern' Perl).<br/>It will be based on a programmed-out `for` loop.  
 
 Some thoughts:
 
@@ -218,7 +218,7 @@ Putting all together, this is my 'traditional' solution:
 use v5.36;
 use builtin qw( indexed );
 
-sub nearest_valid_point( $x, $y, $points ) {
+sub nearest_valid_point_traditional( $x, $y, $points ) {
     my ( $closest_index, $closest_distance ) = ( undef, undef );
     for my ( $index, $point ) ( indexed $points->@* ) {
         my $distance = 
@@ -257,7 +257,7 @@ But still, this results in a much shorter solution, rendering both the `for` loo
 use v5.36;
 use List::UtilsBy qw( min_by );
 
-sub nearest_valid_pointXXX( $x, $y, $points ) {
+sub nearest_valid_point( $x, $y, $points ) {
     my $closest_index =
         min_by { abs( $points->[$_][0] - $x ) + abs( $points->[$_][1] - $y ) }
             grep $points->[$_][0] == $x || $points->[$_][1] == $y,
