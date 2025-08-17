@@ -1,3 +1,3 @@
-# The Weekly Challenge 333
+# The Weekly Challenge 334
 
-Blog: [Duplicate Lines](https://dev.to/simongreennet/weekly-challenge-duplicate-lines-6pd)
+Blog: [Perl has classes now 👍](https://dev.to/simongreennet/weekly-challenge-perl-has-classes-now-4n8e)
