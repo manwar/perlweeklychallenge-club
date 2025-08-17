@@ -1,184 +1,271 @@
-# Double O Straight (Not Stirred)
+# Perl Slices Make a Valid Point
 
-**Challenge 333 solutions in Perl by Matthias Muth**
+**Challenge 334 solutions in Perl by Matthias Muth**
 
-## Task 1: Straight Line
+## Task 1: Range Sum
 
-> You are given a list of co-ordinates.<br/>
-> Write a script to find out if the given points make a straight line.
+> You are given a list integers and pair of indices..<br/>
+> Write a script to return the sum of integers between the given indices (inclusive).
 >
 > **Example 1**
 >
 > ```text
-> Input: @list = ([2, 1], [2, 3], [2, 5])
-> Output: true
->```
+> Input: @ints = (-2, 0, 3, -5, 2, -1), $x = 0, $y = 2
+> Output: 1
 > 
->**Example 2**
+> Elements between indices (0, 2) => (-2, 0, 3)
+> Range Sum: (-2) + 0 + 3 => 1
+> ```
+>
+> **Example 2**
+>
+> ```text
+> Input: @ints = (1, -2, 3, -4, 5), $x = 1, $y = 3
+> Output: -3
 > 
->```text
-> Input: @list = ([1, 4], [3, 4], [10, 4])
-> Output: true
+> Elements between indices (1, 3) => (-2, 3, -4)
+> Range Sum: (-2) + 3 + (-4) => -3
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @list = ([0, 0], [1, 1], [2, 3])
-> Output: false
+> Input: @ints = (1, 0, 2, -1, 3), $x = 3, $y = 4
+> Output: 2
+> 
+> Elements between indices (3, 4) => (-1, 3)
+> Range Sum: (-1) + 3 => 2
 > ```
-> 
->**Example 4**
-> 
->```text
-> Input: @list = ([1, 1], [1, 1], [1, 1])
->Output: true
-> 
-> ```
-> 
->**Example 5**
-> 
->```text
-> Input: @list = ([1000000, 1000000], [2000000, 2000000], [3000000, 3000000])
->Output: true
-> ```
-
-For all points $p_i = (x_i, y_i)$ to be on the same line, the slope of all connections between the first point $p_0$ and any other point $p_i$ in the list (with $i>0$) has to be the same. The slopes are defined like this:
-```math
-\left.slope_i = \frac{dy_i}{dx_i} = \frac{ y_i - y_0 }{ x_i - x_0 }\right|_{i>0}
-```
-To verify that all slopes are equal, we can determine the slope $slope_1$ between the first two points, $p_0$ and $p_1$, and then compare all other slopes $slope_i$ (with $i \ge 2$) to that. The comparison looks like this:
-
-```math
-\displaylines{
-slope_i = slope_1 \\\\
-\frac{dy_i}{dx_i} = \frac{dy_1}{dx_1} \\\\
-dy_i \cdot dx_1 = dy_1 \cdot dx_i
-}
-```
-
-The good thing is that now, we don't have any divisions anymore, so this comparison is defined for whatever coordinates the points have and even for a vertical line. When the points are on a vertical line, the $dx$ values are zero, making both sides of the formula zero. In the product, the $dy$ values then don't really matter anymore. In fact, that corresponds to the fact that on that vertical line, the points' $y$ values really don't matter.
-
-But there is still the special case that *both* $dx$ and $dy$ are $0$. Then, the two points are the same. They are both on *every* line that goes through the first point. In the formula, both sides are zero again, so the slopes are considered 'equal' for this check, which means that two identical points do not affect the overall result.
-
-Thanks to community solutions published in the [*The Weekly Challenge*](https://www.facebook.com/groups/theweeklychallengegroup) and [*The Perl Community*](https://www.facebook.com/groups/perlcommunity) Facebook groups I have realized that identical points in the list can make things go really wrong (thank you, Niels van Dijke and James Curtis-Smith!).
-
-In my solution, the critical point is that if the first two points $p_0$ and $p_1$ are identical, the $(dx_1, dy_1)$ pair will be $(0,0)$. As a consequence, *any* check will succeed and accept any point being on that 'line', which is wrong. So I need to take care that $(dx_1, dy_1)$ is set using a point that *differs* from $p_0$.
-
-Let's transform this into some Perl code:
-
-To save some typing (and probably some typos, too), I created a `dx_dy` function that returns  the $dx$ and $dy$ between two points.
-
-In the main subroutine, I use this to get `( $dx_1, $dy_1 )` from the first two point in the list.
-
-Then, I use  the `all` keyword (available in Perl version 5.42, but `all` from  `List::Util` does the same job), to go through the rest of the points and check the 'is on the same line' condition.
-
-I deal with the 'identical first points in the list' problem right in that loop. If the `( $dx_1, $dy_1 )` initialization from the first two points made it `( 0, 0 )`,  we are still in the phase of finding the first non-identical point to determine a slope (or non-zero vector). The current point's `( $dx, $dy )` will be used as a next try, and the check is assumed to have succeeded.
-
-If all checks succeed, all points are on the same line.
-
-```perl
-use v5.42;
-use feature 'keyword_all';
-no warnings 'experimental::keyword_all';
-
-sub dx_dy( $p1, $p2 ) {
-    return ( $p2->[0] - $p1->[0], $p2->[1] - $p1->[1] );
-}
-
-sub straight_line( $list ) {
-    my ( $dx_1, $dy_1 ) = dx_dy( $list->[0], $list->[1] );
-    return all {
-        my ( $dx, $dy ) = dx_dy( $list->[0], $list->[$_] );
-        $dx_1 == 0 && $dy_1 == 0
-            ? do { ( $dx_1, $dy_1 ) = ( $dx, $dy ); true }
-            : $dx_1 * $dy == $dy_1 * $dx;
-    } 2 .. $list->$#*;
-}
-```
-
-In Example 4, *all* the points are identical. In this case, `( $dx_1, $dy_1 )` will still be `( 0, 0 )` in the end, because actually there is no line or slope to check. Example 4 expects a `true` result, and my implementation return that. Maybe it's just luck, but it can also be interpreted like 'identical points do not only lie on the same line, but on indefinitely many lines'!
-
-## Task 2: Duplicate Zeros
-
-> You are given an array of integers.<br/>
-> Write a script to duplicate each occurrence of zero, shifting the remaining elements to the right. The elements beyond the length of the original array are not written.
 >
-> **Example 1**
+> **Example 4**
 >
 > ```text
-> Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)
-> Output: (1, 0, 0, 2, 3, 0, 0, 4)
->
-> Each zero is duplicated.
-> Elements beyond the original length (like 5 and last 0) are discarded.
->```
+> Input: @ints = (-5, 4, -3, 2, -1, 0), $x = 0, $y = 3
+> Output: -2
 > 
->**Example 2**
-> 
->```text
-> Input: @ints = (1, 2, 3)
-> Output: (1, 2, 3)
-> 
->No zeros exist, so the array remains unchanged.
+> Elements between indices (0, 3) => (-5, 4, -3, 2)
+> Range Sum: (-5) + 4 + (-3) + 2 => -2
 > ```
 >
-> **Example 3**
->
-> ```text
->Input: @ints = (1, 2, 3, 0)
-> Output: (1, 2, 3, 0)
-> ```
-> 
->**Example 4**
-> 
->```text
-> Input: @ints = (0, 0, 1, 2)
->Output: (0, 0, 0, 0)
-> ```
-> 
 > **Example 5**
 >
 > ```text
->Input: @ints = (1, 2, 0, 3, 4)
-> Output: (1, 2, 0, 0, 3)
->```
+> Input: @ints = (-1, 0, 2, -3, -2, 1), $x = 0, $y = 2
+> Output: 1
+> 
+> Elements between indices (0, 2) => (-1, 0, 2)
+> Range Sum: (-1) + 0 + 2 => 1
+> ```
 
-Let's try to solve this in two different ways:
+Wait, what?<br/>
+The elements between two indexes?<br/>As if Perl didn't have *array slices*...!<br/>It's just `@ints[$x..$y]`!<br/>OK, if we consider that the `@ints` array is passed in as a reference, it's `$ints->@[$x..$y]`.
 
-##### The resource saving one:
-
-Trying to do only what is needed, nothing else. Building up the array containing the results one by one, using a `for` loop to go through the input data, then a `for` loop that loops over just the one element, if it's non-zero, or over two zeros if the element is zero. Return immediately when the array has the needed number of elements.
-
-Looks a bit clumsy, but might be more efficient if we have a large input array with a high number of zeros. But I am not even sure about that, because all the checking and looping is done on the Perl level. 
+And summing up?<br/>Too lazy to write a loop. I'll use `sum` from `List::Util`.<br/>Maybe it's good to save my energy for Task 2... :wink:
 
 ```perl
 use v5.36;
+use List::Util qw( sum );
 
-sub duplicate_zeros_loop( @ints ) {
-    my @results = ();
-    for ( @ints ) {
-        for ( $_ || ( 0, 0 ) ) {
-            push @results, $_;
-            return @results
-                if scalar @results == scalar @ints;
-        }
-    }
+sub range_sum( $ints, $x, $y ) {
+    return sum( $ints->@[$x..$y] );
 }
 ```
 
-##### The concise one:
+## Task 2: Nearest Valid Point
 
-Use `map` to map every item into itself, but a zero into two zeros. From the list that this creates, return only the first elements up to the size of the original array, and throw away the rest.
+> You are given current location as two integers: x and y. You are also given a list of points on the grid.<br/>
+> A point is considered valid if it shares either the same x-coordinate or the same y-coordinate as the current location.<br/>
+> Write a script to return the index of the valid point that has the smallest Manhattan distance to the current location. If multiple valid points are tied for the smallest distance, return the one with the lowest index. If no valid points exist, return -1.<br/>
+> <br/>
+> The Manhattan distance between two points (x1, y1) and (x2, y2) is calculated as: |x1 - x2| + |y1 - y2|
+>
+> **Example 1**
+>
+> ```text
+> Input: $x = 3, $y = 4, @points ([1, 2], [3, 1], [2, 4], [2, 3])
+> Output: 2
+>
+> Valid points: [3, 1] (same x), [2, 4] (same y)
+>
+> Manhattan distances:
+>     [3, 1] => |3-3| + |4-1| = 3
+>     [2, 4] => |3-2| + |4-4| = 1
+>
+> Closest valid point is [2, 4] at index 2.
+>```
+> 
+>**Example 2**
+> 
+>```text
+> Input: $x = 2, $y = 5, @points ([3, 4], [2, 3], [1, 5], [2, 5])
+> Output: 3
+> 
+>Valid points: [2, 3], [1, 5], [2, 5]
+> 
+>Manhattan distances:
+>  [2, 3] => 2
+>     [1, 5] => 1
+>     [2, 5] => 0
+>    
+>Closest valid point is [2, 5] at index 3.
+> ```
+>
+> **Example 3**
+>
+> ```text
+>Input: $x = 1, $y = 1, @points ([2, 2], [3, 3], [4, 4])
+> Output: -1
+> 
+> No point shares x or y with (1, 1).
+>```
+> 
+>**Example 4**
+> 
+>```text
+> Input: $x = 0, $y = 0, @points ([0, 1], [1, 0], [0, 2], [2, 0])
+>Output: 0
+> 
+> Valid points: all of them
+> 
+>Manhattan distances:
+>  [0, 1] => 1
+> [1, 0] => 1
+>  [0, 2] => 2
+>     [2, 0] => 2
+>    
+>    Tie between index 0 and 1, pick the smaller index: 0
+>    ```
+>
+> **Example 5**
+>
+> ```text
+>Input: $x = 5, $y = 5, @points ([5, 6], [6, 5], [5, 4], [4, 5])
+> Output: 0
+>
+> Valid points: all of them
+>  [5, 6] => 1
+>  [6, 5] => 1
+> [5, 4] => 1
+>  [4, 5] => 1
+>    
+>    All tie, return the one with the lowest index: 0
+>    ```
 
-A one-liner!
+#### The Long Solution (using a `for` loop):
+
+I will start by constructing a more 'traditional' solution (even if it uses several concepts of 'modern' Perl).<br/>It will be based on a programmed-out `for` loop.  
+
+Some thoughts:
+
+* We need to return the *index* of the closest 'valid' point (not the point itself, nor its distance from ( \$x, \$y )). That means that when we filter out the points that are 'valid', we must maintain their index into the *original* point list.<br/>This means that we need to use the index into the point list as a driver for the loop rather than the points themselves. So instead of iterating over the points, like
+  ```perl
+      for my $point ( $points->@* ) { ... }
+  ```
+  we need to do this:
+  ```perl
+      for my $index ( keys $points->@* ) {
+          my $point = $points->[$index];
+          ...;
+      }
+  ```
+
+* Starting with Perl 5.36, however, we can use multiple (lexical) loop variables with `for`/`foreach` loops. <br/>
+  Together with the `indexed` builtin, also available since Perl 5.36,
+  we can loop over index and point at the same time, with a more concise syntax:
+
+  ```perl
+      for my ( $index, $point ) ( indexed $points->@* ) {
+          ...;
+      }
+  ```
+
+* If the point's x-coordinate is equal to `$x` or the point's y-coordinate is equal to `$y`, the point is 'valid'.
+  All other points need to be ignored.<br/>
+  Once we know that the point's x-coordinate is equal to `$x`,
+  the distance in the x dimension is zero,
+  and the point's Manhattan distance is reduced to the y dimension:
+  `abs( $y - $point->[1] )`.<br/>
+  The same for the y-coordinate being equal to `$y`, of course:
+  `abs( $x - $point->[0] )`.<br/>
+  If none of the equalities show up, we can directly start the next iteration. In Perl, we are lucky that statements (here, the `next` statement) can also be used within expressions, not only as separate statements. (Thank you, James Curtis-Smith, for giving me that idea in your [Challenge 325 solution](https://www.facebook.com/groups/perlcommunity/permalink/1954898661984417/)!).<br/>
+  So we can combine the Manhattan distance calculation and the filtering in one statement within the loop:
+
+  ```perl
+      for my ( $index, $point ) ( indexed $points->@* ) {
+          my $distance = 
+              $point->[0] == $x   ? abs( $y - $point->[1] )
+              : $point->[1] == $y ? abs( $x - $point->[0] )
+              : next;
+          ...
+      }
+  ```
+
+* For finding the index with the closest distance, we add some 'traditional' minimum finding code. We need to keep the best index as well as the closest distance, and update after a comparison in the loop.
+
+  ```perl
+      my ( $closest_index, $closest_distance ) = ( undef, undef );
+      for my ( $index, $point ) ( indexed $points->@* ) {
+          my $distance = ...;
+          ( $closest_index, $closest_distance ) = ( $index, $distance )
+              if ! defined $closest_index || $distance < $closest_distance;
+      }
+      return $closest_index // -1;
+  ```
+
+Putting all together, this is my 'traditional' solution: 
 
 ```perl
-sub duplicate_zeros( @ints ) {
-    return ( map $_ || ( 0, 0 ), @ints )[0..$#ints];
+use v5.36;
+use builtin qw( indexed );
+
+sub nearest_valid_point( $x, $y, $points ) {
+    my ( $closest_index, $closest_distance ) = ( undef, undef );
+    for my ( $index, $point ) ( indexed $points->@* ) {
+        my $distance = 
+            $point->[0] == $x   ? abs( $y - $point->[1] )
+            : $point->[1] == $y ? abs( $x - $point->[0] )
+            : next;
+        ( $closest_index, $closest_distance ) = ( $index, $distance )
+            if ! defined $closest_index || $distance < $closest_distance;
+    }
+    return $closest_index // -1;
 }
 ```
 
-And a little benchmark shows that it's around 50% faster! And more than 50% more Perlish for sure! 
+#### The Shorter Solution (using a clever library function)
+
+ Normally it is much easier to use a `min` function than programming a `for` loop for finding a minimum.
+So let's see how that can make the code shorter.<br/>
+As we have two values to keep (the index and the current closest distance), the normal `min` function from `List::Util` doesn't help here. But there is a `min_by` function in the `List::UtilsBy` CPAN module (also in `List::AllUtils`) that works like this:
+
+> ##### min_by
+>
+> ```
+>     $optimal = min_by { KEYFUNC } @vals
+>     @optimal = min_by { KEYFUNC } @vals       
+> ```
+>
+> [...] returns values which give the numerically smallest result from the key function.
+
+We can provide the indexes of the 'valid' points, and let the `KEYFUNC` calculate the Manhattan distance as the minimum criterion.<br/>And for getting those 'valid' indexes, we can use `grep` to filter them from the original list of points.
+
+Since we are separating the filtering from the distance calculation, we cannot take the shortcuts that ignore one dimension if the x- or y-coordinates equal `$x` or `$y` here. We must perform the standard Manhattan distance calculation, which includes both dimensions.
+
+But still, this results in a much shorter solution, rendering both the `for` loop and the two-variable minimum calculation code unnecessary:
+
+```perl   
+use v5.36;
+use List::UtilsBy qw( min_by );
+
+sub nearest_valid_pointXXX( $x, $y, $points ) {
+    my $closest_index =
+        min_by { abs( $points->[$_][0] - $x ) + abs( $points->[$_][1] - $y ) }
+            grep $points->[$_][0] == $x || $points->[$_][1] == $y,
+                keys $points->@*;
+    return $closest_index // -1;
+}
+```
+
+Less code is good code!
 
 #### **Thank you for the challenge!**
