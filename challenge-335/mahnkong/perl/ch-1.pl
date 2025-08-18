@@ -4,7 +4,7 @@ use feature 'signatures';
 use Test::More 'no_plan';
 
 sub run(@words) {
-    return undef unless scalar(@words);
+    return undef if scalar(@words) < 2;
 
     my %occurences;
     my @result;
@@ -12,7 +12,7 @@ sub run(@words) {
     foreach my $c (split //, $words[0]) {
         if (! exists($occurences{$c})) {
             my $max_occurences_all;
-            foreach my $word (@words) {
+            foreach my $word (@words[1 .. $#words]) {
                 my $occurences = () = $word =~ /$c/gi;
                 $max_occurences_all = $occurences if (!defined $max_occurences_all || $max_occurences_all > $occurences);
             }
