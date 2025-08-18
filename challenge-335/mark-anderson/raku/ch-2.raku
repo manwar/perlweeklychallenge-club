@@ -25,18 +25,18 @@ sub find-winner(+@moves)
     @moves[$seq].map({ @board[.[0];.[1]] = $ltr });
 
     # check rows
-    return $ltr if @board.first({ [eq] .flat });
+    return $ltr if @board.first({ .all eq $ltr });
 
     # check upper left to lower right diagonal
     my @a = (^Inf) Z (^Inf).head(@board);
-    return $ltr if [eq] @a.map({ @board[.[0];.[1]] });
+    return $ltr if @a.map({ @board[.[0];.[1]] }).all eq $ltr;
 
     # check upper right to lower left diagonal
     @a = (^Inf) Z (@board.end...0);
-    return $ltr if [eq] @a.map({ @board[.[0];.[1]] });
+    return $ltr if @a.map({ @board[.[0];.[1]] }).all eq $ltr;
 
     # check columns
-    return $ltr if ([Z] @board).first({ [eq] .flat });
+    return $ltr if ([Z] @board).first({ .all eq $ltr });
 
     return 'Draw'
 }
