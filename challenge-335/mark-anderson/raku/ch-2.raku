@@ -16,7 +16,6 @@ is find-winner([1,1],[0,0],[2,2],[0,1],[1,0],[0,2]),                   'B';
 sub find-winner(+@moves)
 {
     my $order = @moves[*;*].max + 1;
-
     my @board = (0 xx $order).Array xx $order;
 
     my $ltr  = @moves.end %% 2 ?? 'A' !! 'B';
@@ -30,12 +29,10 @@ sub find-winner(+@moves)
         @board.first.all,
 
         # check upper left to lower right diagonal
-        ((^Inf) Z (^Inf).head(@board))
-        .map({ @board[.[0];.[1]] }).all,
+        (^@board).map({@board[$_;$_]}).all,
 
         # check upper right to lower left diagonal
-        ((^Inf) Z (@board.end...0))
-        .map({ @board[.[0];.[1]] }).all,
+        (^@board).map({@board[$_;@board.end-$_]}).all,
 
         # check columns
         ([Z] @board).first.all
