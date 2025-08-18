@@ -2,7 +2,6 @@
 # https://github.com/codereport/bqn-code/blob/main/pwc/335-1.bqn
 
 u  ⇐ •Import "/home/cph/bqn-test/test.bqn"
-s  ⇐ •Import "/home/cph/bqn-code/lib/string.bqn"
 
 a ← 'a'+↕25
 CommonCharacters ← a/˜·⌊´(+´˘a⊸(=⌜))¨
