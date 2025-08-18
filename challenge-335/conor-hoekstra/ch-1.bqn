@@ -1,7 +1,7 @@
 # For up to date code:
 # https://github.com/codereport/bqn-code/blob/main/pwc/335-1.bqn
 
-u  ⇐ •Import "/home/cph/bqn-test/test.bqn"
+u ⇐ •Import "/home/cph/bqn-test/test.bqn"
 
 a ← 'a'+↕25
 CommonCharacters ← a/˜·⌊´(+´˘a⊸(=⌜))¨
