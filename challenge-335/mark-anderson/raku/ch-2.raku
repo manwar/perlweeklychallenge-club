@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use Test;
 
-# This solution allows for higher dimensional tic tac toe boards
+# This solution allows for higher dimensional tic-tac-toe boards
 # but it doesn't take into account any special rules those may have.
 
 # I didn't check for 'pending' because that's hard to check unless
@@ -17,7 +17,7 @@ sub find-winner(+@moves)
 {
     my $order = @moves[*;*].max + 1;
 
-    my @board = ('_' xx $order).Array xx $order;
+    my @board = (0 xx $order).Array xx $order;
 
     my $ltr  = @moves.end %% 2 ?? 'A' !! 'B';
     my $seq := @moves.end %% 2 ?? (0,2...*) !! (1,3...*);
@@ -27,18 +27,18 @@ sub find-winner(+@moves)
     return $ltr if any
     (
         # check rows
-        @board.first({ .all eq $ltr }),
+        @board.first.all,
 
         # check upper left to lower right diagonal
         ((^Inf) Z (^Inf).head(@board))
-        .map({ @board[.[0];.[1]] }).all eq $ltr,
+        .map({ @board[.[0];.[1]] }).all,
 
         # check upper right to lower left diagonal
         ((^Inf) Z (@board.end...0))
-        .map({ @board[.[0];.[1]] }).all eq $ltr,
+        .map({ @board[.[0];.[1]] }).all,
 
         # check columns
-        ([Z] @board).first({ .all eq $ltr })
+        ([Z] @board).first.all
     );
 
     return 'Draw'
