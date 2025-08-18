@@ -12,8 +12,8 @@ my @moves = EVAL $moves;
 my $any-row-col-diagonal = (
     |(@board[$_  ].all for ^3),
     |(@board[*;$_].all for ^3),
-    (@board[0;0],@board[1;1],@board[2;2]).all,
-    (@board[0;2],@board[1;1],@board[2;0]).all,
+    (@board[$_;$_  ] for ^3).all,
+    (@board[$_;2-$_] for ^3).all,
 ).any;
 
 put do given @board {
