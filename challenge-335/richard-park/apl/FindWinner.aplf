@@ -1,0 +1,53 @@
+ FindWinner←{
+     ⎕IO←0
+     Win←{3∊⊃,/+/¨(⍵)(⌽⍵)(0 0⍉⍵)(0 0⍉⌽⍵)}
+     board←(1 2⍴⍨≢⍵)@⍵⊢3 3⍴0
+     (a b)←1 2=⊂board
+     ⍝ who won is a, b or neither (0,1,2)
+     who←1⍳⍨Win¨a b
+     ⍝ draw if neither won and no gaps on board
+     who+←(2=who)∧(~0∊board)
+     who⊃'A' 'B' 'Pending' 'Draw'
+
+     tests←(
+         (
+             0 0
+             2 0
+             1 1
+             2 1
+             2 2
+         )
+         (
+             0 0
+             1 1
+             0 1
+             0 2
+             1 0
+             2 0
+         )
+         (
+             0 0
+             1 1
+             2 0
+             1 0
+             1 2
+             2 1
+             0 1
+             0 2
+             2 2
+         )
+         (
+             0 0
+             1 1
+         )
+         (
+             1 1
+             0 0
+             2 2
+             0 1
+             1 0
+             0 2
+         )
+     )
+
+ }
