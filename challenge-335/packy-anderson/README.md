@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: SUMone tell me what makes a point VALID?](https://packy.dardan.com/b/_1)
+[Perl Weekly Challenge: Fanfare for the Common Character](https://packy.dardan.com/b/_V)
