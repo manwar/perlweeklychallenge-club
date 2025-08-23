@@ -1,3 +1,3 @@
-# The Weekly Challenge 334
+# The Weekly Challenge 335
 
-Blog: [Perl has classes now 👍](https://dev.to/simongreennet/weekly-challenge-perl-has-classes-now-4n8e)
+Blog: [The Common Winner](https://dev.to/simongreennet/weekly-challenge-the-common-winner-57ka)
