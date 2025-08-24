@@ -5,7 +5,6 @@ use List::AllUtils qw( reduce );
 use Set::Bag;
 
 sub commonCharacters(@words) {
-  use Data::Dumper::Concise;
   my @bags = map {
     Set::Bag->new( map { $_ => 1 } split //, $_ )
   } @words;
