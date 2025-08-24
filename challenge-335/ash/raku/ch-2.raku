@@ -1,5 +1,27 @@
-# Task 1 of the Weekly Challenge 335
-# https://theweeklychallenge.org/blog/perl-weekly-challenge-335/#TASK1
+# Task 2 of the Weekly Challenge 335
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-335/#TASK2
+
+# $ raku ch-2.raku 
+# [A _ _]
+# [_ A _]
+# [B B A]
+# A
+# [A A B]
+# [A B _]
+# [B _ _]
+# B
+# [A A B]
+# [B B A]
+# [A B A]
+# Draw
+# [A _ _]
+# [_ B _]
+# [_ _ _]
+# Pending
+# [B B B]
+# [A A _]
+# [_ _ A]
+# B
 
 say outcome [0,0], [2,0], [1,1], [2,1], [2,2];
 say outcome [0,0], [1,1], [0,1], [0,2], [1,0], [2,0];
