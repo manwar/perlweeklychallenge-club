@@ -70,6 +70,6 @@ sub outcome(*@moves) {
         return True if (0..2).map({ $f[$_][$_]    eq $p }).all;
         return True if (0..2).map({ $f[$_][2-$_]  eq $p }).all;
 
-        False
+        return False
     }
 }
