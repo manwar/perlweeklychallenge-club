@@ -3,9 +3,9 @@ use v5.10; use strict; use warnings; use List::Util qw( uniq ); use Math::Prime:
 sub f {
     my @a = sort { $a <=> $b } @_;
     for my $size ( uniq factor 0+@a ){
-	my @g = @a;
-	uniq( splice @g, 0, $size ) == 1 or next while @g;
-	return 1
+        my @g = @a;
+        uniq( splice @g, 0, $size ) == 1 or next while @g;
+        return 1
     }
     return 0
 }
