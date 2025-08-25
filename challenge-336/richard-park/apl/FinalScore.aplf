@@ -1,0 +1,42 @@
+ FinalScore←{
+⍝ ⍵: Nested vector of character vectors with scores input
+⍝ ←: Final score
+⍝ Score is computed according to the following rules
+⍝ - scores are processed left to right
+⍝ - add numeric scores to the total
+⍝ - + adds the sum of the previous two scores
+⍝ - C subtracts the previously added score
+⍝ - D doubles the previously added score
+
+     FS←{
+        ⍝ Simple state machine
+        ⍝ Keep score so far + list of previously added scores
+        ⍝ Process one instruction at a time
+         ⍺←0 ⍬ ⋄ (score prev)←⍺
+         0∊⍴⍵:⍬⍴score
+         next←'¯'@('-'∘=)⊃⍵   ⍝ next instruction
+        ⍝⎕←score(2↑prev)next
+         isnum←1,⍛≡⊃vfi←⎕VFI next
+         n←2⊃vfi
+         isnum:(score+n)(n,prev)∇ 1↓⍵                  ⍝ numeric: add value
+         '+',⍛≡next:(score+n)(prev,⍨n←+/2↑prev)∇ 1↓⍵   ⍝ +: add previous two scores
+         'C',⍛≡next:(score-⊃prev)(1↓prev)∇ 1↓⍵         ⍝ C: subtract previously added value
+         'D',⍛≡next:(score+n)(prev,⍨n←2×⊃prev)∇ 1↓⍵    ⍝ D: double previously added value
+     }
+
+     FS ⍵
+
+⍝ Tests
+     Assert←{⍺←'Assertion Failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ 0}
+
+     _←Assert 30≡FS 0 ⎕JSON'["5","2","C","D","+"]'
+     _←Assert 27≡FS 0 ⎕JSON'["5","-2","4","C","D","9","+","+"]'
+     _←Assert 45≡FS 0 ⎕JSON'["7","D","D","C","+","3"]'
+     _←Assert ¯55≡FS 0 ⎕JSON'["-5","-10","+","D","C","+"]'
+     _←Assert 128≡FS 0 ⎕JSON'["3","6","+","D","C","8","+","D","-2","C","+"]'
+
+     _←Assert 61≡FS,¨'5DDDC3+'
+
+     'All tests passed.'
+
+ }
