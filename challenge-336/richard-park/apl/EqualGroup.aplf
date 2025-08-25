@@ -1,0 +1,22 @@
+ EqualGroup←{
+ ⍝ Return True (1) if ⍵ can be partitioned into at least one group, all groups of equal size ≥2
+
+     EG←{
+     ⍝ Assumes groups are non-zero, equal or ascending
+         size←⌊/≢¨⊆⍨⍵        ⍝ Compute size of smallest group of consecutive equal values
+         size<2:0            ⍝ Fail is smallest group size is <2
+         grp←⍵⊂⍨⍵≢⍛⍴size↑1   ⍝ Make groups, all size of smallest group
+         ∧/(∧/⊢=⊃)¨grp       ⍝ Test groups all contain the same value
+     }
+
+     EG ⍵   ⍝ Run function on input
+
+⍝ Tests
+     Assert←{⍺←'Assertion Failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
+     _←Assert 1≡EG 1 1 2 2 2 2
+     _←Assert 0≡EG 1 1 1 2 2 2 3 3
+     _←Assert 1≡EG 5 5 5 5 5 5 7 7 7 7 7 7
+     _←Assert 0≡EG 1 2 3 4
+     _←Assert 1≡EG 8 8 9 9 10 10 11 11
+     'All tests passed.'
+ }
