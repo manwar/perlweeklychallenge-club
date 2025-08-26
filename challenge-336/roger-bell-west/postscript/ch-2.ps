@@ -1,0 +1,136 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/finalscore {
+    [ exch
+      {
+          /n exch def
+          n (C) deepeq {
+              pop
+          } {
+              n (D) deepeq {
+                  dup 2 mul
+              } {
+                  n (+) deepeq {
+                      2 copy add
+                  } {
+                      n cvi
+                  } ifelse
+              } ifelse
+          } ifelse
+      } forall
+    ] { add } reduce
+} bind def
+
+(finalscore) test.start
+[(5) (2) (C) (D) (+)] finalscore 30 eq test
+[(5) (-2) (4) (C) (D) (9) (+) (+)] finalscore 27 eq test
+[(7) (D) (D) (C) (+) (3)] finalscore 45 eq test
+[(-5) (-10) (+) (D) (C) (+)] finalscore -55 eq test
+[(3) (6) (+) (D) (C) (8) (+) (D) (-2) (C) (+)] finalscore 128 eq test
+test.end
