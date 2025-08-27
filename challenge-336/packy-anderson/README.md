@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Fanfare for the Common Character](https://packy.dardan.com/b/_V)
+[Perl Weekly Challenge: The Score for Group Therapy](https://packy.dardan.com/b/a9)
