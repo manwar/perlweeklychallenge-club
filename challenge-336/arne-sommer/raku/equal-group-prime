@@ -1,0 +1,28 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ Int,
+               :v(:$verbose));
+
+
+my $bag = @ints>>.Int.Bag;
+my $min = $bag.values.min;
+
+if $verbose
+{
+  say ": Bag: { $bag.raku }";
+  say ": Group size (min freq): $min";
+}
+
+for 2 .. $min -> $i
+{
+  next unless $i.is-prime;
+
+  if $i > 1 && all($bag.values) %% $i
+  {
+    say ": Group size (prime): $i";
+    say 'true';
+    exit;
+  }
+}
+
+say 'false';
