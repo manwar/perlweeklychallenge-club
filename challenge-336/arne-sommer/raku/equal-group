@@ -1,0 +1,15 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where @ints.elems > 0 && all(@ints) ~~ Int,
+               :v(:$verbose));
+
+my $bag = @ints>>.Int.Bag;
+my $min = $bag.values.min;
+
+if $verbose
+{
+  say ": Bag: { $bag.raku }";
+  say ": Group size (min freq): $min";
+}
+
+say so $min > 1 && all($bag.values) %% $min;
