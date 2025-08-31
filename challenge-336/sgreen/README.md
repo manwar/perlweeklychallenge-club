@@ -1,3 +1,3 @@
-# The Weekly Challenge 335
+# The Weekly Challenge 336
 
-Blog: [The Common Winner](https://dev.to/simongreennet/weekly-challenge-the-common-winner-57ka)
+Blog: [Equalling the score](https://dev.to/simongreennet/weekly-challenge-equalling-the-score-5f2n)
