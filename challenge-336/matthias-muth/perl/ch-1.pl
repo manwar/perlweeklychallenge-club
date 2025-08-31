@@ -9,7 +9,6 @@
 #
 
 use v5.36;
-use Dsay;
 
 use List::MoreUtils qw( frequency );
 use Math::Prime::Util qw( divisors );
