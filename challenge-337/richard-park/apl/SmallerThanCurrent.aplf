@@ -1,0 +1,13 @@
+ SmallerThanCurrent←{
+     STC←{¯1++⌿∘.≤⍨⍵}
+     STC ⍵
+
+⍝ Tests
+     Assert←{⍺←'Assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
+     _←Assert 2 1 0 3≡STC 6 5 4 8
+     _←Assert 3 3 3 3≡STC 7 7 7 7
+     _←Assert 4 3 2 1 0≡STC 5 4 3 2 1
+     _←Assert 1 2 4 0 3≡STC ¯1 0 3 ¯2 1
+     _←Assert 1 3 3 4 1≡STC 0 1 1 2 0
+     'All tests passed.'
+ }
