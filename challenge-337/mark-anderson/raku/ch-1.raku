@@ -9,7 +9,7 @@ is-deeply stc(0,1,1,2,0),   (0,2,2,4,0);
 
 sub stc(+@nums)
 {
-    my %bag is Bag = @nums.Bag; 
+    my %bag is Bag = @nums; 
     my @keys = %bag.keys.sort;
     my %map is Map = @keys Z=> [\+] 0, |%bag{@keys};
     %map{@nums}
