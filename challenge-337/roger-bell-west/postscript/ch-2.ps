@@ -1,0 +1,73 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/oddmatrix {
+    0 dict begin
+    /points exch def
+    /cols exch def
+    /rows exch def
+    /rm 0 dict def
+    /cm 0 dict def
+    points {
+        aload pop
+        /p1 exch def
+        /p0 exch def
+        rm p0 known {
+            rm p0 undef
+        } {
+            rm p0 true put
+        } ifelse
+        cm p1 known {
+            cm p1 undef
+        } {
+            cm p1 true put
+        } ifelse
+    } forall
+    rm length cols cm length sub mul
+    cm length rows rm length sub mul
+    add
+    end
+} bind def
+
+(oddmatrix) test.start
+2 3 [[0 1] [1 1]] oddmatrix 6 eq test
+2 2 [[1 1] [0 0]] oddmatrix 0 eq test
+3 3 [[0 0] [1 2] [2 1]] oddmatrix 0 eq test
+1 5 [[0 2] [0 4]] oddmatrix 2 eq test
+4 2 [[1 0] [3 1] [2 0] [0 1]] oddmatrix 8 eq test
+test.end
