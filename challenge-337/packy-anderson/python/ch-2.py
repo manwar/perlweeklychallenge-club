@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 
-def displayTwo(display1, display2):
+def display_two(display1, display2):
   display = []
   # split the two strings and join each row together
   for d1,d2 in zip(display1.split("\n"), display2.split("\n")):
     display.append(d1 + d2)
   return "\n".join(display)
 
-def displayMatrix(label, matrix):
+def display_matrix(label, matrix):
   width = (len(matrix[0]) + 2) * 2 + 1
   display = label.ljust(width) + "\n"
   for r in range(len(matrix)):
     display += "[ " + int_join(" ",matrix[r]) + " ]  \n"
   return display
 
-def emptyMatrix(row, col):
+def empty_matrix(row, col):
   matrix = []
   for r in range(row):
     matrix.append([])
@@ -22,17 +22,17 @@ def emptyMatrix(row, col):
       matrix[r].append(0)
   return matrix
 
-def incrementRow(row, matrix):
+def increment_row(row, matrix):
   for col in range(len(matrix[0])):
     matrix[row][col] += 1
   return matrix
 
-def incrementCol(col, matrix):
+def increment_col(col, matrix):
   for row in range(len(matrix)):
     matrix[row][col] += 1
   return matrix
 
-def countOdd(matrix):
+def count_odd(matrix):
   count = 0
   for row in range(len(matrix)):
     for col in range(len(matrix[0])):
@@ -40,26 +40,26 @@ def countOdd(matrix):
   return count
 
 def odd_matrix(row, col, locations):
-  matrix = emptyMatrix(row, col)
-  display = displayMatrix("Initial:", matrix)
+  matrix = empty_matrix(row, col)
+  display = display_matrix("Initial:", matrix)
   for row,col in locations:
     display += f"\nApply [{row},{col}]:\n"
 
     display += f"Increment row {row}:\n"
-    before = displayMatrix("Before", matrix)
-    matrix = incrementRow(row, matrix)
-    after = displayMatrix("After", matrix)
-    display += displayTwo(before, after)
+    before = display_matrix("Before", matrix)
+    matrix = increment_row(row, matrix)
+    after = display_matrix("After", matrix)
+    display += display_two(before, after)
 
     display += f"Increment col {col}:\n"
-    before = displayMatrix("Before", matrix)
-    matrix = incrementCol(col, matrix)
-    after = displayMatrix("After", matrix)
-    display += displayTwo(before, after)
+    before = display_matrix("Before", matrix)
+    matrix = increment_col(col, matrix)
+    after = display_matrix("After", matrix)
+    display += display_two(before, after)
   display += "\n"
   return(
-    countOdd(matrix),
-    display + displayMatrix('Final:', matrix)
+    count_odd(matrix),
+    display + display_matrix('Final:', matrix)
   )
 
 def int_join(joiner, arr):
