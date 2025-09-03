@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: The Score for Group Therapy](https://packy.dardan.com/b/a9)
+[Perl Weekly Challenge: Small, but Oddly Current](https://packy.dardan.com/b/aR)
