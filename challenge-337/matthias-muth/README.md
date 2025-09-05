@@ -1,255 +1,466 @@
-# Equal Groups and Final Scores
+# Small Numbers, and No Matrix at All
 
-**Challenge 336 solutions in Perl by Matthias Muth**
+**Challenge 337 solutions in Perl by Matthias Muth**
 
-## Task 1: Equal Group
+## Task 1: Smaller Than Current
 
-> You are given an array of integers.<br/>
-> Write a script to return true if the given array can be divided into one or more groups: each group must be of the same size as the others, with at least two members, and with all members having the same value.
+> You are given an array of numbers, @num1.<br/>
+> Write a script to return an array, @num2, where \$num2[i] is the count of all numbers less than or equal to \$num1[i].
 >
 > **Example 1**
 >
 > ```text
-> Input: @ints = (1,1,2,2,2,2)
-> Output: true
+> Input: @num1 = (6, 5, 4, 8)
+> Output: (2, 1, 0, 3)
 >
-> Groups: (1,1), (2,2), (2,2)
->```
-> 
->**Example 2**
-> 
->```text
-> Input: @ints = (1,1,1,2,2,2,3,3)
-> Output: false
-> 
->Groups: (1,1,1), (2,2,2), (3,3)
+> index 0: numbers <= 6 are 5, 4    => 2
+> index 1: numbers <= 5 are 4       => 1
+> index 2: numbers <= 4, none       => 0
+> index 3: numbers <= 8 are 6, 5, 4 => 3
+> ```
+>
+> **Example 2**
+>
+> ```text
+> Input: @num1 = (7, 7, 7, 7)
+> Output: (3, 3, 3, 3)
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @ints = (5,5,5,5,5,5,7,7,7,7,7,7)
-> Output: true
-> 
-> Groups: (5,5,5,5,5,5), (7,7,7,7,7,7)
->```
-> 
->**Example 4**
-> 
->```text
-> Input: @ints = (1,2,3,4)
->Output: false
+> Input: @num1 = (5, 4, 3, 2, 1)
+> Output: (4, 3, 2, 1, 0)
 > ```
-> 
+>
+> **Example 4**
+>
+> ```text
+> Input: @num1 = (-1, 0, 3, -2, 1)
+> Output: (1, 2, 4, 0, 3)
+> ```
+>
 > **Example 5**
 >
 > ```text
->Input: @ints = (8,8,9,9,10,10,11,11)
-> Output: true
->
-> Groups: (8,8), (9,9), (10,10), (11,11)
+> Input: @num1 = (0, 1, 1, 2, 0)
+> Output: (1, 3, 3, 4, 1)
 > ```
 
-##### Approach
+There's no way I'm walking through the entire array for each number
+just to check and count all the numbers again and again.<br/>
+In other words: I want to do better than $O(n^2)$.
 
-I first determine how often each number occurs, in other words, the **frequency** of each number.
+So let's see:
 
-If we need to split all numbers into groups of the same size, the frequencies of all numbers must be divisible by that group size. I determine the **divisors** of each number's frequency to get a list of possible group sizes for each number.
+*  I need a count of all numbers that are lower than or equal to my current number.<br/>
+    I guess it is best to start with counting how often each number occurs.
+    As often, I use the `frequency` function (from `List::MoreUtils`).
+    Let me illustrate it with Example 5 from the description:
+    
+    ```perl
+        my @num1 = ( 0, 1, 1, 2, 0 );
+    
+        # Count how often every @num1 number appears.
+        # This also gives us the distint @num1 numbers in the hash keys.
+        use List::MoreUtils qw( frequency );
+        my %freq = frequency @num1;
+        # ( 0 => 2, 1 => 2, 2 => 1 )
+        # We have 2 times 0, 2 times 1, and 1 time 2.
+    ```
+    
+* In a subsequent step,
+    I will want to build a cumulative sum of the frequencies of the numbers,
+    for which the numbers must be ordered from lowest to highest.<br/>
+    So let's create an array containing the sorted numbers,
+    and each number only once.<br/>
+    For getting these 'distinct' numbers,
+    I can conveniently use the hash keys from the frequency array.
+    They are complete and distinct.
 
-Now, we are looking for a possible group size for *all* numbers. For this to happen, that group size must be in the list of divisors of *all* number's frequencies.
+    ```perl
+        # Sort the distinct @num1 numbers from lowest to highest.
+        my @num1_sorted = sort { $a <=> $b } keys %freq;
+        # ( 0, 1, 2 )
+    ```
 
-We can make this easy and just count how often each divisor occurs, and if that count matches the count of distinct input numbers, we have found a possible group size.
+* Next, we build the cumulative sums,
+    using the same order as the sorted distinct numbers.
 
-##### Implementation
+    I use `reductions` (from `List::Util`)  for this.
+    The code block for a cumulative sum is simply  `{ $a + $b }`. 
+    `$a` transports the current state of the cumulated sum
+    from iteration to iteration,
+    while `$b` is the respective number frequency to add.
+    The function then returns all intermediate (`$a`) values,
+    which are the cumulative sums up to (and including) each number.
 
-For this task, I base my solution on some common modules.
+    As the input list for the `reductions` call,
+    I supply the number frequencies,
+    sorted by their number (not the frequency).
+    A `map` call provides this.
 
-The `frequency` function from `List::MoreUtils` is a good and solid way for determining the frequencies of the input numbers:
+    ```perl
+        # Create an array of cumulative sums, summing up the frequencies of the
+        # numbers in 'sorted' order (not in @num1 order).
+        # The sums include all occurrences of each number itself and all lower
+        # numbers.
+        my @cumulated_sums = reductions { $a + $b } map $freq{$_}, @num1_sorted; 
+        # ( 2, 4, 5 )
+        # There are 2 numbers less than or equal to 0 (the two 0s themselves),
+        # 4 numbers less than or equal to 1 (the two 0s and the two 1s),
+        # and 5 numbers less than or equal to 2 (all 5 numbers) 
+    ```
+    
+* Next, I build a lookup hash,
+    to associate the respective cumulative sum with every number:
 
-```perl
-    use List::MoreUtils qw( frequency );
-    my %counts = frequency( @ints );
-```
+    ```perl
+        # Build a hash to map each (distinct) @num1 number to its cumulated sum.
+        # Using the fact that the sorted numbers and the cumulated sums are in
+        # the same order.
+        my %cumulated_sums_lookup =
+            map { $num1_sorted[$_] => $cumulated_sums[$_] } keys @num1_sorted;
+    ```
 
-For finding all possible divisors for each of the frequencies, `Math::Prime::Util` offers the `divisors` function, which is a perfect fit. I only need to exclude `1` (which always is a divisor) from being a possible group size. I put all possible divisors of all numbers into one big array, because we actually don't need the individual divisors per number, but we only need their count in the next step.
+    Note that `keys @num1_sorted` (the `keys` function on an array!)
+    is a piece of 'modern perl' that means the same as `0..$#num1_sorted`,
+    just a bit less typo-prone.
 
-```perl
-    use Math::Prime::Util qw( divisors );
-    my @all_divisors = grep $_ != 1, map divisors( $_ ), values %counts;
-```
+* In the end, we can return the list of 'looked-up' cumulative sums
+    for each `@num1` input number.
 
-We can use `frequency` again to determine how often each divisor exists:
+    With the update of example outputs on
+    [The Weekly Challenge](https://theweeklychallenge.org/blog/perl-weekly-challenge-337/#TASK1)
+    page, each number itself must not be included in the output counts.
+    This simply means to deduct `1` from the cumulative sum for each number:  
 
-```perl
-    my %divisor_frequencies = frequency @all_divisors;
-```
+    ```perl
+        # Map each @num1 number to its cumulated sum (the 'count of all numbers
+        # less than or equal to' result).
+        # Correct the sums by -1 to ignore the number itself, as per the updated
+        # task examples and clarification by Mohammad Sajid Anwar.
+        return map $cumulated_sums_lookup{$_} - 1, @num1;
+    ```
 
-Eventually, `any` (from `List::Util`) can check whether there is any divisor whose frequency matches the count of all distinct input numbers. We already have the 'distinct input numbers': as we created a hash with the numbers' frequency counts, the keys in that hash are the distinct numbers. So we can use a shortcut and save some CPU cycles by using `scalar keys %counts` instead of `scalar uniq @ints` to get the number of distinct input numbers:
-
-```perl
-    return any { $_ == scalar keys %counts } values %divisor_frequencies;
-```
-
-This strategy, making good use of existing modules (whether in core Perl or on CPAN), results in a four lines-of-code solution:
+This is my complete solution (here without the comments):
 
 ```perl
 use v5.36;
 use List::MoreUtils qw( frequency );
-use Math::Prime::Util qw( divisors );
-use List::Util qw( any );
+use List::Util qw( reductions );
 
-sub equal_group( @ints ) {
-    my %counts = frequency( @ints );
-    my @all_divisors = grep $_ != 1, map divisors( $_ ), values %counts;
-    my %divisor_frequencies = frequency @all_divisors;
-    return any { $_ == scalar %counts } values %divisor_frequencies;
+sub smaller_than_current( @num1 ) {
+    my %freq = frequency @num1;
+    my @num1_sorted = sort { $a <=> $b } keys %freq;
+    my @cumulated_sums = reductions { $a + $b } map $freq{$_}, @num1_sorted;
+    my %cumulated_sums_lookup =
+        map { $num1_sorted[$_] => $cumulated_sums[$_] } keys @num1_sorted;
+    return map $cumulated_sums_lookup{$_} - 1, @num1;
 }
 ```
 
-## Task 2: Final Score
 
-> You are given an array of scores by a team.<br/>
-> Write a script to find the total score of the given team. The score can be any integer, +, C or D. The + adds the sum of previous two scores. The score C invalidates the previous score. The score D will double the previous score.
+
+## Task 2: Odd Matrix
+
+> You are given row and col, also a list of positions in the matrix.<br/>
+> Write a script to perform action on each location (0-indexed) as provided in the list and find out the total odd valued cells.<br/>
+> For each location (r, c), do both of the following:<br/>
+> a) Increment by 1 all the cells on row r.<br/>
+> b) Increment by 1 all the cells on column c.
 >
 > **Example 1**
 >
 > ```text
-> Input: @scores = ("5","2","C","D","+")
-> Output: 30
+> Input: $row = 2, $col = 3, @locations = ([0,1],[1,1])
+> Output: 6
 >
-> Round 1: 5
-> Round 2: 5 + 2
-> Round 3: 5 (invalidate the previous score 2)
-> Round 4: 5 + 10 (double the previous score 5)
-> Round 5: 5 + 10 + 15 (sum of previous two scores)
+> Initial:
+> [ 0 0 0 ]
+> [ 0 0 0 ]
 >
-> Total Scores: 30
->```
-> 
->**Example 2**
-> 
->```text
-> Input: @scores = ("5","-2","4","C","D","9","+","+")
-> Output: 27
-> 
->Round 1: 5
-> Round 2: 5 + (-2)
-> Round 3: 5 + (-2) + 4
-> Round 4: 5 + (-2) (invalidate the previous score 4)
-> Round 5: 5 + (-2) + (-4) (double the previous score -2)
-> Round 6: 5 + (-2) + (-4) + 9
-> Round 7: 5 + (-2) + (-4) + 9 + 5 (sum of previous two scores)
-> Round 8: 5 + (-2) + (-4) + 9 + 5 + 14 (sum of previous two scores)
-> 
->Total Scores: 27
+> Apply [0,1]:
+> Increment row 0:
+> Before     After
+> [ 0 0 0 ]  [ 1 1 1 ]
+> [ 0 0 0 ]  [ 0 0 0 ]
+> Increment col 1:
+> Before     After
+> [ 1 1 1 ]  [ 1 2 1 ]
+> [ 0 0 0 ]  [ 0 1 0 ]
+>
+> Apply [1,1]:
+> Increment row 1:
+> Before     After
+> [ 1 2 1 ]  [ 1 2 1 ]
+> [ 0 1 0 ]  [ 1 2 1 ]
+> Increment col 1:
+> Before     After
+> [ 1 2 1 ]  [ 1 3 1 ]
+> [ 1 2 1 ]  [ 1 3 1 ]
+>
+> Final:
+> [ 1 3 1 ]
+> [ 1 3 1 ]
+> ```
+>
+> **Example 2**
+>
+> ```text
+> Input: $row = 2, $col = 2, @locations = ([1,1],[0,0])
+> Output: 0
+>
+> Initial:
+> [ 0 0 ]
+> [ 0 0 ]
+>
+> Apply [1,1]:
+> Increment row 1:
+> Before    After
+> [ 0 0 ]   [ 0 0 ]
+> [ 0 0 ]   [ 1 1 ]
+> Increment col 1:
+> Before    After
+> [ 0 0 ]   [ 0 1 ]
+> [ 1 1 ]   [ 1 2 ]
+>
+> Apply [0,0]:
+> Increment row 0:
+> Before    After
+> [ 0 1 ]   [ 1 2 ]
+> [ 1 2 ]   [ 1 2 ]
+> Increment col 0:
+> Before    After
+> [ 1 2 ]   [ 2 2 ]
+> [ 1 2 ]   [ 2 2 ]
+>
+> Final:
+> [ 2 2 ]
+> [ 2 2 ]
 > ```
 >
 > **Example 3**
 >
 > ```text
->Input: @scores = ("7","D","D","C","+","3")
-> Output: 45
-> 
-> Round 1: 7
->Round 2: 7 + 14 (double the previous score 7)
-> Round 3: 7 + 14 + 28 (double the previous score 14)
-> Round 4: 7 + 14 (invalidate the previous score 28)
-> Round 5: 7 + 14 + 21 (sum of previous two scores)
-> Round 6: 7 + 14 + 21 + 3
-> 
-> Total Scores: 45
->```
-> 
->**Example 4**
-> 
->```text
-> Input: @scores = ("-5","-10","+","D","C","+")
->Output: -55
-> 
-> Round 1: (-5)
-> Round 2: (-5) + (-10)
->Round 3: (-5) + (-10) + (-15) (sum of previous two scores)
-> Round 4: (-5) + (-10) + (-15) + (-30) (double the previous score -15)
-> Round 5: (-5) + (-10) + (-15) (invalidate the previous score -30)
-> Round 6: (-5) + (-10) + (-15) + (-25) (sum of previous two scores)
-> 
-> Total Scores: -55
+> Input: $row = 3, $col = 3, @locations = ([0,0],[1,2],[2,1])
+> Output: 0
+>
+> Initial:
+> [ 0 0 0 ]
+> [ 0 0 0 ]
+> [ 0 0 0 ]
+>
+> Apply [0,0]:
+> Increment row 0:
+> Before     After
+> [ 0 0 0 ]  [ 1 1 1 ]
+> [ 0 0 0 ]  [ 0 0 0 ]
+> [ 0 0 0 ]  [ 0 0 0 ]
+> Increment col 0:
+> Before     After
+> [ 1 1 1 ]  [ 2 1 1 ]
+> [ 0 0 0 ]  [ 1 0 0 ]
+> [ 0 0 0 ]  [ 1 0 0 ]
+>
+> Apply [1,2]:
+> Increment row 1:
+> Before     After
+> [ 2 1 1 ]  [ 2 1 1 ]
+> [ 1 0 0 ]  [ 2 1 1 ]
+> [ 1 0 0 ]  [ 1 0 0 ]
+> Increment col 2:
+> Before     After
+> [ 2 1 1 ]  [ 2 1 2 ]
+> [ 2 1 1 ]  [ 2 1 2 ]
+> [ 1 0 0 ]  [ 1 0 1 ]
+>
+> Apply [2,1]:
+> Increment row 2:
+> Before     After
+> [ 2 1 2 ]  [ 2 1 2 ]
+> [ 2 1 2 ]  [ 2 1 2 ]
+> [ 1 0 1 ]  [ 2 1 2 ]
+> Increment col 1:
+> Before     After
+> [ 2 1 2 ]  [ 2 2 2 ]
+> [ 2 1 2 ]  [ 2 2 2 ]
+> [ 2 1 2 ]  [ 2 2 2 ]
+>
+> Final:
+> [ 2 2 2 ]
+> [ 2 2 2 ]
+> [ 2 2 2 ]
+> ```
+>
+> **Example 4**
+>
+> ```text
+> Input: $row = 1, $col = 5, @locations = ([0,2],[0,4])
+> Output: 2
+>
+> Initial:
+> [ 0 0 0 0 0 ]
+>
+> Apply [0,2]:
+> Increment row 0:
+> Before         After
+> [ 0 0 0 0 0 ]  [ 1 1 1 1 1 ]
+> Increment col 2:
+> Before         After
+> [ 1 1 1 1 1 ]  [ 1 1 2 1 1 ]
+>
+> Apply [0,4]:
+> Increment row 0:
+> Before         After
+> [ 1 1 2 1 1 ]  [ 2 2 3 2 2 ]
+> Increment col 4:
+> Before         After
+> [ 2 2 3 2 2 ]  [ 2 2 3 2 3 ]
+>
+> Final:
+> [ 2 2 3 2 3 ]
 > ```
 >
 > **Example 5**
 >
 > ```text
->Input: @scores = ("3","6","+","D","C","8","+","D","-2","C","+")
-> Output: 128
+> Input: $row = 4, $col = 2, @locations = ([1,0],[3,1],[2,0],[0,1])
+> Output: 8
 >
-> Round  1: 3
-> Round  2: 3 + 6
-> Round  3: 3 + 6 + 9 (sum of previous two scores)
->Round  4: 3 + 6 + 9 + 18 (double the previous score 9)
-> Round  5: 3 + 6 + 9 (invalidate the previous score 18)
-> Round  6: 3 + 6 + 9 + 8
-> Round  7: 3 + 6 + 9 + 8 + 17 (sum of previous two scores)
-> Round  8: 3 + 6 + 9 + 8 + 17 + 34 (double the previous score 17)
-> Round  9: 3 + 6 + 9 + 8 + 17 + 34 + (-2)
-> Round 10: 3 + 6 + 9 + 8 + 17 + 34 (invalidate the previous score -2)
-> Round 11: 3 + 6 + 9 + 8 + 17 + 34 + 51 (sum of previous two scores)
-> 
-> Total Scores: 128
+> Initial:
+> [ 0 0 ]
+> [ 0 0 ]
+> [ 0 0 ]
+> [ 0 0 ]
+>
+> Apply [1,0]:
+> Increment row 1:
+> Before     After
+> [ 0 0 ]    [ 0 0 ]
+> [ 0 0 ]    [ 1 1 ]
+> [ 0 0 ]    [ 0 0 ]
+> [ 0 0 ]    [ 0 0 ]
+> Increment col 0:
+> Before     After
+> [ 0 0 ]    [ 1 0 ]
+> [ 1 1 ]    [ 2 1 ]
+> [ 0 0 ]    [ 1 0 ]
+> [ 0 0 ]    [ 1 0 ]
+>
+> Apply [3,1]:
+> Increment row 3:
+> Before     After
+> [ 1 0 ]    [ 1 0 ]
+> [ 2 1 ]    [ 2 1 ]
+> [ 1 0 ]    [ 1 0 ]
+> [ 1 0 ]    [ 2 1 ]
+> Increment col 1:
+> Before     After
+> [ 1 0 ]    [ 1 1 ]
+> [ 2 1 ]    [ 2 2 ]
+> [ 1 0 ]    [ 1 1 ]
+> [ 2 1 ]    [ 2 2 ]
+>
+> Apply [2,0]:
+> Increment row 2:
+> Before     After
+> [ 1 1 ]    [ 1 1 ]
+> [ 2 2 ]    [ 2 2 ]
+> [ 1 1 ]    [ 2 2 ]
+> [ 2 2 ]    [ 2 2 ]
+> Increment col 0:
+> Before     After
+> [ 1 1 ]    [ 2 1 ]
+> [ 2 2 ]    [ 3 2 ]
+> [ 2 2 ]    [ 3 2 ]
+> [ 2 2 ]    [ 3 2 ]
+>
+> Apply [0,1]:
+> Increment row 0:
+> Before     After
+> [ 2 1 ]    [ 3 2 ]
+> [ 3 2 ]    [ 3 2 ]
+> [ 3 2 ]    [ 3 2 ]
+> [ 3 2 ]    [ 3 2 ]
+> Increment col 1:
+> Before     After
+> [ 3 2 ]    [ 3 3 ]
+> [ 3 2 ]    [ 3 3 ]
+> [ 3 2 ]    [ 3 3 ]
+> [ 3 2 ]    [ 3 3 ]
+>
+> Final:
+> [ 3 3 ]
+> [ 3 3 ]
+> [ 3 3 ]
+> [ 3 3 ]
 > ```
 
-We obviously need a loop. Let's see how I can write that in a somewhat elegant style that is easy to follow.
+Wow, this is a cool task!<br/>
+What looks like an exercise in matrix-building can be simplified enormously:
 
-Apparently we need an array for keeping the list of scores. We only operate on the most recent entries, so it actually implements a stack, but I call it `@list` nevertheless because it is used for building the final list of scores. So:
+* Firstly, there is no need to really *count* what is in the cells. A simple *even/odd-indicator* that says whether the cell has been visited an even or odd number of times is enough.
+
+* Secondly, it turns out that whenever a row is touched,
+  this affects all columns in that row.
+  And vice versa, when a column is flipped, all rows are affected.
+  So let's not think 'odd fields', but let's think 'odd rows' and 'odd columns'.
+
+  Let's assume a row is 'odd'
+  (its row number was used in an odd number of locations).<br/>
+  Then in all columns that are 'odd', those row's fields are 'even',
+  and fields in 'even' columns keep their 'odd' value from the row.
+  
+  Similarly, for 'even' rows,
+  all those fields are 'odd' that are in 'odd' columns.
+  
+  Actually we don't need to know exactly *which* fields are even or odd,
+  but it's enough to know *how many rows* are even and odd,
+  and *how many columns* are even and odd.
+  
+  That means we don't even need a matrix at all!
+  
+* And thirdly, for the result,
+  if we have the number of  'odd' rows and of  'odd' columns,
+  we can *compute* the number of odd fields
+  with a single simple formula:<br/>
+  The number of 'odd' rows times the number of 'even' columns,
+  plus the number of 'even' rows times the number of 'odd' columns.
+
+This is how that translates to Perl:
+
+* Find out how often each row is mentioned in a location,
+  and the same for each column
+  (using `frequency` again for counting).
+
+* Count the number of 'odd' rows and 'odd' columns.
+  (using a binary 'and' (`$_ & 1`) as a shortcut
+  for the arithmetic modulo 2 operation (`$_ % 2 != 0`)).
+
+* Calculate the number of '*even*' rows and columns
+  (using the total number of rows and columns that were given).
+
+* Return the result.
+
+Putting it all together:
 
 ```perl
-    my @list;
-```
+use List::MoreUtils qw( frequency );
 
-Then we loop over the 'input scores'. The word 'score' is a bit ambiguous, because it can mean the 'input scores', which includes commands like `'C'`, `'D'`, or `'+'`, but it also means the final list of scores, which only consist of numbers that we will eventually sum up.
-
-What we get as 'input scores' may be integer numbers (including negative ones), or commands. To distinguish between them, and to do what is needed for each of them, my preferred structure is this one:
-
-```perl
-    for ( @scores ) {
-        /^C$/   and do { ... };
-        /^D$/   and do { ... };
-        /^\+$/  and do { ... };
-        /-?\d+$ and do { ... };
-    }
-```
-
-This nicely groups the possible inputs, and gives a good overview over the whole process.
-
-Now we have to fill in what to do for each case:
-
-* `'C'`:
-  `pop` the last value from the `@list` stack.
-* `'D'`: double the last value and `push` the result on the stack.
-* `'+'`: add the last two entries and `push` the sum on the stack.
-* A (possibly negative) integer number: simply `push` it on the stack.
-
-Everything else is silently ignored.
-
-In the end I use `sum` from `List::Util` to sum up the scores gathered in the `@list` array. 
-
-This is my solution for task 2:
-
-```perl
-use v5.36;
-use List::Util qw( sum );
-
-sub final_score( @scores ) {
-    my @list;
-    for ( @scores ) {
-        /^C$/    and do { pop @list;                         next };
-        /^D$/    and do { push @list, 2 * $list[-1];         next };
-        /^\+$/   and do { push @list, $list[-2] + $list[-1]; next };
-        /-?\d+$/ and do { push @list, $&;                    next };
-    }
-    return sum( @list );
+sub odd_matrix( $row, $col, $locations ) {
+    my %row_freq = frequency map $_->[0], $locations->@*;
+    my %col_freq = frequency map $_->[1], $locations->@*;
+    my $n_odd_rows = scalar grep $_ & 1, values %row_freq;
+    my $n_odd_cols = scalar grep $_ & 1, values %col_freq;
+    my ( $n_even_rows, $n_even_cols ) =
+        ( $row - $n_odd_rows, $col - $n_odd_cols );
+    return $n_odd_rows * $n_even_cols + $n_even_rows * $n_odd_cols;
 }
 ```
 
-I hope it's easy enough to recognize the task structure in the code.
+I like these challenges
+where you can save programming and computing energy
+by simplifying the task to only what is really needed!
 
 #### **Thank you for the challenge!**
