@@ -70,7 +70,7 @@ sub odd_matrix ($row, $col, @loc) {
     $indx->inplace->copybad($freq);
     $m(,$indx(,(0))) .= $freq(,(0))->dummy(0);
     $m($indx(,(1))) += $freq(,(1));
-    $m;
+    sum $m % 2;
 }
 
 
@@ -81,20 +81,19 @@ sub run_tests ($examples, $tests) {
 
     state sub run_example ($args, $expected, $name) {
         my $result = odd_matrix(@$args);
-        my $exp_pdl = indx $expected;
-        pdl_is $result, $exp_pdl,
-            qq($name: $args->@[0,1], (@{[map "[@$_]", $args->@[2..$#$args]]}) -> $exp_pdl);
+        is $result, $expected,
+            qq($name: $args->@[0,1], (@{[map "[@$_]", $args->@[2..$#$args]]}) -> $expected);
     }
 
     plan 2;
 
     $examples ? subtest_streamed(examples => sub {
         my @examples = (
-            [[2, 3 ,=> [0,1],[1,1]], [[1,3,1],[1,3,1]], 'example 1'],
-            [[2, 2 ,=> [1,1],[0,0]], [[2,2],[2,2]], 'example 2'],
-            [[3, 3 ,=> [0,0],[1,2],[2,1]], [[2,2,2],[2,2,2],[2,2,2]], 'example 3'],
-            [[1, 5 ,=> [0,2],[0,4]], [[2,2,3,2,3]], 'example 4'],
-            [[4, 2 ,=> [1,0],[3,1],[2,0],[0,1]], [[3,3],[3,3],[3,3],[3,3]], 'example 5'],
+            [[2, 3 ,=> [0,1],[1,1]], 6, 'example 1'],
+            [[2, 2 ,=> [1,1],[0,0]], 0, 'example 2'],
+            [[3, 3 ,=> [0,0],[1,2],[2,1]], 0, 'example 3'],
+            [[1, 5 ,=> [0,2],[0,4]], 2, 'example 4'],
+            [[4, 2 ,=> [1,0],[3,1],[2,0],[0,1]], 8, 'example 5'],
         );
         plan scalar @examples;
         for (@examples) {
@@ -104,9 +103,8 @@ sub run_tests ($examples, $tests) {
 
     $tests ? subtest_streamed(tests => sub {
         my @tests = (
-            [[2, 2 ,=> [0,0],[0,0]], [[4,2],[2,0]], 'non-unique loc'],
-            [[4, 3 ,=> [3,1],[2,1],[3,2],[0, 1]],
-                [[1,4,2],[0,3,1],[1,4,2],[2,5,3]], 'example from blog']
+            [[2, 2 ,=> [0,0],[0,0]], 0, 'non-unique loc'],
+            [[4, 3 ,=> [3,1],[2,1],[3,2],[0, 1]], 6, 'example from blog']
         );
         plan scalar @tests;
         for (@tests) {
