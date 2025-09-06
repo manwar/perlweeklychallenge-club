@@ -3,7 +3,7 @@ use Test;
 
 =begin early-bird
 
-# Solution from the original early bird club problem
+# Solution to the original early bird club problem
 
 is-deeply stc(6,5,4,8),     (2,1,0,3);
 is-deeply stc(7,7,7,7),     (0,0,0,0);
