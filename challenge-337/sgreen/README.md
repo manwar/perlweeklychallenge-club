@@ -1,3 +1,3 @@
-# The Weekly Challenge 336
+# The Weekly Challenge 337
 
-Blog: [Equalling the score](https://dev.to/simongreennet/weekly-challenge-equalling-the-score-5f2n)
+Blog: [Oddly small](https://dev.to/simongreennet/weekly-challenge-oddly-small-1g9o)
