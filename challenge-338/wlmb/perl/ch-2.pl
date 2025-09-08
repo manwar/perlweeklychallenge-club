@@ -21,5 +21,5 @@ for my ($x, $y)(@ARGV){
         my $result = ($p-$q(-1:0))->abs->max;
         say "$x, $y -> ", $result;
     }
-    catch($e){ say $e }
+    catch($e){ warn $e }
 }

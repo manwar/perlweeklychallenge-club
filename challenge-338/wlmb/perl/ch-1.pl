@@ -15,5 +15,5 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try{say "$_ -> ", pdl($_)->sumover->max}
-    catch($e){say $e}
+    catch($e){warn $e}
 }
