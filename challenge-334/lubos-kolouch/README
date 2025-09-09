@@ -1,1 +1,48 @@
 Solutions by Lubos Kolouch.
+
+# Perl Weekly Challenge 334
+
+This repository contains solutions for the Perl Weekly Challenge 334, implemented in both Perl and Python. Below is a summary of the tasks and the code written for each.
+
+## Task 1: Range Sum
+
+### Description
+Given a list of integers and two indices, return the sum of integers between the given indices (inclusive).
+
+### Solution
+- **ch-1.pl**: Implements the `range_sum` function that takes an array of integers and two indices, calculates the sum of elements between the indices (inclusive), and returns the result. Input validation ensures valid indices.
+- **ch-1.py**: Implements the `range_sum` function using Python's `sum` function with list slicing for efficiency. Type hints are included for clarity, and input validation ensures valid indices.
+
+### Test Cases
+1. Input: `[-2, 0, 3, -5, 2, -1]`, `x=0`, `y=2` → Output: `1`
+2. Input: `[1, -2, 3, -4, 5]`, `x=1`, `y=3` → Output: `-3`
+3. Input: `[1, 0, 2, -1, 3]`, `x=3`, `y=4` → Output: `2`
+4. Input: `[-5, 4, -3, 2, -1, 0]`, `x=0`, `y=3` → Output: `-2`
+5. Input: `[-1, 0, 2, -3, -2, 1]`, `x=0`, `y=2` → Output: `1`
+
+## Task 2: Nearest Valid Point
+
+### Description
+Given a current location (x, y) and a list of points, find the index of the valid point (sharing x or y coordinate) with the smallest Manhattan distance. Return -1 if no valid points exist. The Manhattan distance is calculated as `|x1 - x2| + |y1 - y2|`. If multiple points tie, return the one with the lowest index.
+
+### Solution
+- **ch-2.pl**: Implements the `nearest_valid_point` function that iterates through the points, checks for validity (same x or y coordinate), calculates the Manhattan distance, and tracks the point with the smallest distance and lowest index.
+- **ch-2.py**: Implements the `nearest_valid_point` function with similar logic, using Python's enumeration for cleaner iteration. Type hints are included for clarity.
+
+### Test Cases
+1. Input: `x=3`, `y=4`, `points=[[1, 2], [3, 1], [2, 4], [2, 3]]` → Output: `2`
+2. Input: `x=2`, `y=5`, `points=[[3, 4], [2, 3], [1, 5], [2, 5]]` → Output: `3`
+3. Input: `x=1`, `y=1`, `points=[[2, 2], [3, 3], [4, 4]]` → Output: `-1`
+4. Input: `x=0`, `y=0`, `points=[[0, 1], [1, 0], [0, 2], [2, 0]]` → Output: `0`
+5. Input: `x=5`, `y=5`, `points=[[5, 6], [6, 5], [5, 4], [4, 5]]` → Output: `0`
+
+## Running the Solutions
+- **Perl**: Run `perl ch-1.pl` and `perl ch-2.pl` to execute the test cases.
+- **Python**: Run `python3 ch-1.py` and `python3 ch-2.py` to execute the test cases.
+- All solutions include the provided test cases, which are executed using `Test::More` (Perl) and `unittest` (Python).
+
+## Notes
+- The Perl solutions use strict and warnings for robustness.
+- The Python solutions use type hints for better code clarity.
+- Both solutions handle edge cases as per the problem requirements.
+- The code has been tested to ensure all provided test cases pass.
