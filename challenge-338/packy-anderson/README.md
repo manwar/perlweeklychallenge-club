@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Small, but Oddly Current](https://packy.dardan.com/b/aR)
+[Perl Weekly Challenge: Maxwell's Silver Highest](https://packy.dardan.com/b/b0)
