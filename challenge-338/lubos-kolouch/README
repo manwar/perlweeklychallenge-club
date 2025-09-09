@@ -1,1 +1,76 @@
 Solutions by Lubos Kolouch.
+
+# The Weekly Challenge - 338
+
+## Task 1: Highest Row
+
+### Description
+
+Given an m x n matrix, the task is to find the highest row sum in the matrix. Each row is summed, and the maximum sum is returned.
+
+### Solution
+
+#### Perl (ch-1.pl)
+
+The Perl solution defines a function `highest_row` that takes a reference to a 2D array (matrix). It iterates through each row, computes the sum of the elements, and tracks the maximum sum. Input validation ensures the matrix is not empty.
+
+- **Input**: A 2D array reference (`@matrix`).
+- **Output**: The maximum sum of any row.
+- **Approach**: Use a loop to sum each row and update the maximum sum if the current row's sum is larger.
+
+#### Python (ch-1.py)
+
+The Python solution defines a function `highest_row` that takes a 2D list (matrix). It uses Python's `sum` function to compute each row's sum and tracks the maximum using the `max` function. Type hints are included for clarity, and input validation checks for empty matrices.
+
+- **Input**: A 2D list (`matrix: List[List[int]]`).
+- **Output**: An integer representing the maximum row sum.
+- **Approach**: Iterate through rows, compute sums, and track the maximum.
+
+### Examples
+
+- Example 1: `[[4, 4, 4, 4], [10, 0, 0, 0], [2, 2, 2, 9]]` → `16`
+- Example 2: `[[1, 5], [7, 3], [3, 5]]` → `10`
+- Example 3: `[[1, 2, 3], [3, 2, 1]]` → `6`
+- Example 4: `[[2, 8, 7], [7, 1, 3], [1, 9, 5]]` → `17`
+- Example 5: `[[10, 20, 30], [5, 5, 5], [0, 100, 0], [25, 25, 25]]` → `100`
+
+## Task 2: Max Distance
+
+### Description
+
+Given two integer arrays, the task is to find the maximum absolute difference between any pair of values from the two arrays.
+
+### Solution
+
+#### Perl (ch-2.pl)
+
+The Perl solution defines a function `max_distance` that takes references to two arrays. It computes the absolute difference between each pair of elements from the two arrays using nested loops and tracks the maximum difference. Input validation ensures both arrays are non-empty.
+
+- **Input**: Two array references (`@arr1`, `@arr2`).
+- **Output**: The maximum absolute difference between any pair of elements.
+- **Approach**: Use nested loops to compute `abs(x - y)` for each pair and update the maximum.
+
+#### Python (ch-2.py)
+
+The Python solution defines a function `max_distance` that takes two lists of integers. It uses nested loops to compute the absolute difference between each pair of elements and tracks the maximum using the `max` function. Type hints are included, and input validation checks for empty arrays.
+
+- **Input**: Two lists (`arr1: List[int]`, `arr2: List[int]`).
+- **Output**: An integer representing the maximum absolute difference.
+- **Approach**: Iterate through all pairs, compute absolute differences, and track the maximum.
+
+### Examples
+
+- Example 1: `arr1 = [4, 5, 7], arr2 = [9, 1, 3, 4]` → `6`
+- Example 2: `arr1 = [2, 3, 5, 4], arr2 = [3, 2, 5, 5, 8, 7]` → `6`
+- Example 3: `arr1 = [2, 1, 11, 3], arr2 = [2, 5, 10, 2]` → `9`
+- Example 4: `arr1 = [1, 2, 3], arr2 = [3, 2, 1]` → `2`
+- Example 5: `arr1 = [1, 0, 2, 3], arr2 = [5, 0]` → `5`
+
+## Running the Code
+
+### Perl
+
+Run the Perl scripts with:
+```bash
+perl ch-1.pl
+perl ch-2.pl
