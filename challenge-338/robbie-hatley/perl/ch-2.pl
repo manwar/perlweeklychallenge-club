@@ -101,5 +101,4 @@ for my $apref (@arraypairs) {
    say "Array #1: (@{$$apref[0]})";
    say "Array #2: (@{$$apref[1]})";
    my $md = max_dist($apref);
-   say "Max distance = $md";
-}
+   say "Max distance = $md"}
