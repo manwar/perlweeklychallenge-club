@@ -1,466 +1,294 @@
-# Small Numbers, and No Matrix at All
+# Higher and Higher
 
-**Challenge 337 solutions in Perl by Matthias Muth**
+**Challenge 338 solutions in Perl by Matthias Muth**
 
-## Task 1: Smaller Than Current
+## Task 1: Highest Row
 
-> You are given an array of numbers, @num1.<br/>
-> Write a script to return an array, @num2, where \$num2[i] is the count of all numbers less than or equal to \$num1[i].
+> You are given a m x n matrix.<br/>
+> Write a script to find the highest row sum in the given matrix.
 >
 > **Example 1**
 >
 > ```text
-> Input: @num1 = (6, 5, 4, 8)
-> Output: (2, 1, 0, 3)
+> Input: @matrix = ([4,  4, 4, 4],
+>                   [10, 0, 0, 0],
+>                   [2,  2, 2, 9])
+> Output: 16
 >
-> index 0: numbers <= 6 are 5, 4    => 2
-> index 1: numbers <= 5 are 4       => 1
-> index 2: numbers <= 4, none       => 0
-> index 3: numbers <= 8 are 6, 5, 4 => 3
+> Row 1: 4  + 4 + 4 + 4 => 16
+> Row 2: 10 + 0 + 0 + 0 => 10
+> Row 3: 2  + 2 + 2 + 9 => 15
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @num1 = (7, 7, 7, 7)
-> Output: (3, 3, 3, 3)
+> Input: @matrix = ([1, 5],
+>                   [7, 3],
+>                   [3, 5])
+> Output: 10
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @num1 = (5, 4, 3, 2, 1)
-> Output: (4, 3, 2, 1, 0)
+> Input: @matrix = ([1, 2, 3],
+>                   [3, 2, 1])
+> Output: 6
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @num1 = (-1, 0, 3, -2, 1)
-> Output: (1, 2, 4, 0, 3)
+> Input: @matrix = ([2, 8, 7],
+>                   [7, 1, 3],
+>                   [1, 9, 5])
+> Output: 17
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @num1 = (0, 1, 1, 2, 0)
-> Output: (1, 3, 3, 4, 1)
+> Input: @matrix = ([10, 20,  30],
+>                   [5,  5,   5],
+>                   [0,  100, 0],
+>                   [25, 25,  25])
+> Output: 100
 > ```
 
-There's no way I'm walking through the entire array for each number
-just to check and count all the numbers again and again.<br/>
-In other words: I want to do better than $O(n^2)$.
+Nothing spectacular about this solution.
 
-So let's see:
+For every the row of the matrix, compute the `sum` of the elements in that row.
+Using `map` for this,
+because I find it so much more expressive and concise than a `for` loop.
 
-*  I need a count of all numbers that are lower than or equal to my current number.<br/>
-    I guess it is best to start with counting how often each number occurs.
-    As often, I use the `frequency` function (from `List::MoreUtils`).
-    Let me illustrate it with Example 5 from the description:
-    
-    ```perl
-        my @num1 = ( 0, 1, 1, 2, 0 );
-    
-        # Count how often every @num1 number appears.
-        # This also gives us the distint @num1 numbers in the hash keys.
-        use List::MoreUtils qw( frequency );
-        my %freq = frequency @num1;
-        # ( 0 => 2, 1 => 2, 2 => 1 )
-        # We have 2 times 0, 2 times 1, and 1 time 2.
-    ```
-    
-* In a subsequent step,
-    I will want to build a cumulative sum of the frequencies of the numbers,
-    for which the numbers must be ordered from lowest to highest.<br/>
-    So let's create an array containing the sorted numbers,
-    and each number only once.<br/>
-    For getting these 'distinct' numbers,
-    I can conveniently use the hash keys from the frequency array.
-    They are complete and distinct.
+As another benefit of `map`,
+we can also feed the resulting set of row sums
+directly into `max` as parameters,
+which directly gives us our return value.  
 
-    ```perl
-        # Sort the distinct @num1 numbers from lowest to highest.
-        my @num1_sorted = sort { $a <=> $b } keys %freq;
-        # ( 0, 1, 2 )
-    ```
-
-* Next, we build the cumulative sums,
-    using the same order as the sorted distinct numbers.
-
-    I use `reductions` (from `List::Util`)  for this.
-    The code block for a cumulative sum is simply  `{ $a + $b }`. 
-    `$a` transports the current state of the cumulated sum
-    from iteration to iteration,
-    while `$b` is the respective number frequency to add.
-    The function then returns all intermediate (`$a`) values,
-    which are the cumulative sums up to (and including) each number.
-
-    As the input list for the `reductions` call,
-    I supply the number frequencies,
-    sorted by their number (not the frequency).
-    A `map` call provides this.
-
-    ```perl
-        # Create an array of cumulative sums, summing up the frequencies of the
-        # numbers in 'sorted' order (not in @num1 order).
-        # The sums include all occurrences of each number itself and all lower
-        # numbers.
-        my @cumulated_sums = reductions { $a + $b } map $freq{$_}, @num1_sorted; 
-        # ( 2, 4, 5 )
-        # There are 2 numbers less than or equal to 0 (the two 0s themselves),
-        # 4 numbers less than or equal to 1 (the two 0s and the two 1s),
-        # and 5 numbers less than or equal to 2 (all 5 numbers) 
-    ```
-    
-* Next, I build a lookup hash,
-    to associate the respective cumulative sum with every number:
-
-    ```perl
-        # Build a hash to map each (distinct) @num1 number to its cumulated sum.
-        # Using the fact that the sorted numbers and the cumulated sums are in
-        # the same order.
-        my %cumulated_sums_lookup =
-            map { $num1_sorted[$_] => $cumulated_sums[$_] } keys @num1_sorted;
-    ```
-
-    Note that `keys @num1_sorted` (the `keys` function on an array!)
-    is a piece of 'modern perl' that means the same as `0..$#num1_sorted`,
-    just a bit less typo-prone.
-
-* In the end, we can return the list of 'looked-up' cumulative sums
-    for each `@num1` input number.
-
-    With the update of example outputs on
-    [The Weekly Challenge](https://theweeklychallenge.org/blog/perl-weekly-challenge-337/#TASK1)
-    page, each number itself must not be included in the output counts.
-    This simply means to deduct `1` from the cumulative sum for each number:  
-
-    ```perl
-        # Map each @num1 number to its cumulated sum (the 'count of all numbers
-        # less than or equal to' result).
-        # Correct the sums by -1 to ignore the number itself, as per the updated
-        # task examples and clarification by Mohammad Sajid Anwar.
-        return map $cumulated_sums_lookup{$_} - 1, @num1;
-    ```
-
-This is my complete solution (here without the comments):
+So why not use a one-liner if we can?
 
 ```perl
 use v5.36;
-use List::MoreUtils qw( frequency );
-use List::Util qw( reductions );
+use List::Util qw( sum max );
 
-sub smaller_than_current( @num1 ) {
-    my %freq = frequency @num1;
-    my @num1_sorted = sort { $a <=> $b } keys %freq;
-    my @cumulated_sums = reductions { $a + $b } map $freq{$_}, @num1_sorted;
-    my %cumulated_sums_lookup =
-        map { $num1_sorted[$_] => $cumulated_sums[$_] } keys @num1_sorted;
-    return map $cumulated_sums_lookup{$_} - 1, @num1;
+sub highest_row( $matrix ) {
+    return max( map sum( $_->@* ), $matrix->@* );
 }
 ```
 
+## Task 2: Max Distance
 
-
-## Task 2: Odd Matrix
-
-> You are given row and col, also a list of positions in the matrix.<br/>
-> Write a script to perform action on each location (0-indexed) as provided in the list and find out the total odd valued cells.<br/>
-> For each location (r, c), do both of the following:<br/>
-> a) Increment by 1 all the cells on row r.<br/>
-> b) Increment by 1 all the cells on column c.
+> You are given two integer arrays, @arr1 and @arr2.<br/>
+> Write a script to find the maximum difference between any pair of values from both arrays.
 >
 > **Example 1**
 >
 > ```text
-> Input: $row = 2, $col = 3, @locations = ([0,1],[1,1])
+> Input: @arr1 = (4, 5, 7)
+>        @arr2 = (9, 1, 3, 4)
 > Output: 6
 >
-> Initial:
-> [ 0 0 0 ]
-> [ 0 0 0 ]
+> With element $arr1[0] = 4
+> | 4 - 9 | = 5
+> | 4 - 1 | = 3
+> | 4 - 3 | = 1
+> | 4 - 4 | = 0
+> max distance = 5
 >
-> Apply [0,1]:
-> Increment row 0:
-> Before     After
-> [ 0 0 0 ]  [ 1 1 1 ]
-> [ 0 0 0 ]  [ 0 0 0 ]
-> Increment col 1:
-> Before     After
-> [ 1 1 1 ]  [ 1 2 1 ]
-> [ 0 0 0 ]  [ 0 1 0 ]
+> With element $arr1[1] = 5
+> | 5 - 9 | = 4
+> | 5 - 1 | = 4
+> | 5 - 3 | = 2
+> | 5 - 4 | = 1
+> max distance = 4
 >
-> Apply [1,1]:
-> Increment row 1:
-> Before     After
-> [ 1 2 1 ]  [ 1 2 1 ]
-> [ 0 1 0 ]  [ 1 2 1 ]
-> Increment col 1:
-> Before     After
-> [ 1 2 1 ]  [ 1 3 1 ]
-> [ 1 2 1 ]  [ 1 3 1 ]
+> With element $arr1[2] = 7
+> | 7 - 9 | = 2
+> | 7 - 1 | = 6
+> | 7 - 3 | = 4
+> | 7 - 4 | = 4
+> max distance = 6
 >
-> Final:
-> [ 1 3 1 ]
-> [ 1 3 1 ]
+> max (5, 6, 6) = 6
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $row = 2, $col = 2, @locations = ([1,1],[0,0])
-> Output: 0
+> Input: @arr1 = (2, 3, 5, 4)
+>        @arr2 = (3, 2, 5, 5, 8, 7)
+> Output: 6
 >
-> Initial:
-> [ 0 0 ]
-> [ 0 0 ]
+> With element $arr1[0] = 2
+> | 2 - 3 | = 1
+> | 2 - 2 | = 0
+> | 2 - 5 | = 3
+> | 2 - 5 | = 3
+> | 2 - 8 | = 6
+> | 2 - 7 | = 5
+> max distance = 6
 >
-> Apply [1,1]:
-> Increment row 1:
-> Before    After
-> [ 0 0 ]   [ 0 0 ]
-> [ 0 0 ]   [ 1 1 ]
-> Increment col 1:
-> Before    After
-> [ 0 0 ]   [ 0 1 ]
-> [ 1 1 ]   [ 1 2 ]
+> With element $arr1[1] = 3
+> | 3 - 3 | = 0
+> | 3 - 2 | = 1
+> | 3 - 5 | = 2
+> | 3 - 5 | = 2
+> | 3 - 8 | = 5
+> | 3 - 7 | = 4
+> max distance = 5
 >
-> Apply [0,0]:
-> Increment row 0:
-> Before    After
-> [ 0 1 ]   [ 1 2 ]
-> [ 1 2 ]   [ 1 2 ]
-> Increment col 0:
-> Before    After
-> [ 1 2 ]   [ 2 2 ]
-> [ 1 2 ]   [ 2 2 ]
+> With element $arr1[2] = 5
+> | 5 - 3 | = 2
+> | 5 - 2 | = 3
+> | 5 - 5 | = 0
+> | 5 - 5 | = 0
+> | 5 - 8 | = 3
+> | 5 - 7 | = 2
+> max distance = 3
 >
-> Final:
-> [ 2 2 ]
-> [ 2 2 ]
+> With element $arr1[3] = 4
+> | 4 - 3 | = 1
+> | 4 - 2 | = 2
+> | 4 - 5 | = 1
+> | 4 - 5 | = 1
+> | 4 - 8 | = 4
+> | 4 - 7 | = 3
+> max distance = 4
+>
+> max (5, 6, 3, 4) = 6
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $row = 3, $col = 3, @locations = ([0,0],[1,2],[2,1])
-> Output: 0
+> Input: @arr1 = (2, 1, 11, 3)
+>        @arr2 = (2, 5, 10, 2)
+> Output: 9
 >
-> Initial:
-> [ 0 0 0 ]
-> [ 0 0 0 ]
-> [ 0 0 0 ]
+> With element $arr1[0] = 2
+> | 2 - 2  | = 0
+> | 2 - 5  | = 3
+> | 2 - 10 | = 8
+> | 2 - 2  | = 0
+> max distance = 8
 >
-> Apply [0,0]:
-> Increment row 0:
-> Before     After
-> [ 0 0 0 ]  [ 1 1 1 ]
-> [ 0 0 0 ]  [ 0 0 0 ]
-> [ 0 0 0 ]  [ 0 0 0 ]
-> Increment col 0:
-> Before     After
-> [ 1 1 1 ]  [ 2 1 1 ]
-> [ 0 0 0 ]  [ 1 0 0 ]
-> [ 0 0 0 ]  [ 1 0 0 ]
+> With element $arr1[1] = 1
+> | 1 - 2  | = 1
+> | 1 - 5  | = 4
+> | 1 - 10 | = 9
+> | 1 - 2  | = 1
+> max distance = 9
 >
-> Apply [1,2]:
-> Increment row 1:
-> Before     After
-> [ 2 1 1 ]  [ 2 1 1 ]
-> [ 1 0 0 ]  [ 2 1 1 ]
-> [ 1 0 0 ]  [ 1 0 0 ]
-> Increment col 2:
-> Before     After
-> [ 2 1 1 ]  [ 2 1 2 ]
-> [ 2 1 1 ]  [ 2 1 2 ]
-> [ 1 0 0 ]  [ 1 0 1 ]
+> With element $arr1[2] = 11
+> | 11 - 2  | = 9
+> | 11 - 5  | = 6
+> | 11 - 10 | = 1
+> | 11 - 2  | = 9
+> max distance = 9
 >
-> Apply [2,1]:
-> Increment row 2:
-> Before     After
-> [ 2 1 2 ]  [ 2 1 2 ]
-> [ 2 1 2 ]  [ 2 1 2 ]
-> [ 1 0 1 ]  [ 2 1 2 ]
-> Increment col 1:
-> Before     After
-> [ 2 1 2 ]  [ 2 2 2 ]
-> [ 2 1 2 ]  [ 2 2 2 ]
-> [ 2 1 2 ]  [ 2 2 2 ]
+> With element $arr1[3] = 3
+> | 3 - 2  | = 1
+> | 3 - 5  | = 2
+> | 3 - 10 | = 7
+> | 3 - 2  | = 1
+> max distance = 7
 >
-> Final:
-> [ 2 2 2 ]
-> [ 2 2 2 ]
-> [ 2 2 2 ]
+> max (8, 9, 9, 7) = 9
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $row = 1, $col = 5, @locations = ([0,2],[0,4])
+> Input: @arr1 = (1, 2, 3)
+>        @arr2 = (3, 2, 1)
 > Output: 2
 >
-> Initial:
-> [ 0 0 0 0 0 ]
+> With element $arr1[0] = 1
+> | 1 - 3 | = 2
+> | 1 - 2 | = 1
+> | 1 - 1 | = 0
+> max distance = 2
 >
-> Apply [0,2]:
-> Increment row 0:
-> Before         After
-> [ 0 0 0 0 0 ]  [ 1 1 1 1 1 ]
-> Increment col 2:
-> Before         After
-> [ 1 1 1 1 1 ]  [ 1 1 2 1 1 ]
+> With element $arr1[1] = 2
+> | 2 - 3 | = 1
+> | 2 - 2 | = 0
+> | 2 - 1 | = 1
+> max distance = 1
 >
-> Apply [0,4]:
-> Increment row 0:
-> Before         After
-> [ 1 1 2 1 1 ]  [ 2 2 3 2 2 ]
-> Increment col 4:
-> Before         After
-> [ 2 2 3 2 2 ]  [ 2 2 3 2 3 ]
+> With element $arr1[2] = 3
+> | 3 - 3 | = 0
+> | 3 - 2 | = 1
+> | 3 - 1 | = 2
+> max distance = 2
 >
-> Final:
-> [ 2 2 3 2 3 ]
+> max (2, 1, 2) = 2
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $row = 4, $col = 2, @locations = ([1,0],[3,1],[2,0],[0,1])
-> Output: 8
+> Input: @arr1 = (1, 0, 2, 3)
+>        @arr2 = (5, 0)
+> Output: 5
 >
-> Initial:
-> [ 0 0 ]
-> [ 0 0 ]
-> [ 0 0 ]
-> [ 0 0 ]
+> With element $arr1[0] = 1
+> | 1 - 5 | = 4
+> | 1 - 0 | = 1
+> max distance = 4
 >
-> Apply [1,0]:
-> Increment row 1:
-> Before     After
-> [ 0 0 ]    [ 0 0 ]
-> [ 0 0 ]    [ 1 1 ]
-> [ 0 0 ]    [ 0 0 ]
-> [ 0 0 ]    [ 0 0 ]
-> Increment col 0:
-> Before     After
-> [ 0 0 ]    [ 1 0 ]
-> [ 1 1 ]    [ 2 1 ]
-> [ 0 0 ]    [ 1 0 ]
-> [ 0 0 ]    [ 1 0 ]
+> With element $arr1[1] = 0
+> | 0 - 5 | = 5
+> | 0 - 0 | = 0
+> max distance = 5
 >
-> Apply [3,1]:
-> Increment row 3:
-> Before     After
-> [ 1 0 ]    [ 1 0 ]
-> [ 2 1 ]    [ 2 1 ]
-> [ 1 0 ]    [ 1 0 ]
-> [ 1 0 ]    [ 2 1 ]
-> Increment col 1:
-> Before     After
-> [ 1 0 ]    [ 1 1 ]
-> [ 2 1 ]    [ 2 2 ]
-> [ 1 0 ]    [ 1 1 ]
-> [ 2 1 ]    [ 2 2 ]
+> With element $arr1[2] = 2
+> | 2 - 5 | = 3
+> | 2 - 0 | = 2
+> max distance = 3
 >
-> Apply [2,0]:
-> Increment row 2:
-> Before     After
-> [ 1 1 ]    [ 1 1 ]
-> [ 2 2 ]    [ 2 2 ]
-> [ 1 1 ]    [ 2 2 ]
-> [ 2 2 ]    [ 2 2 ]
-> Increment col 0:
-> Before     After
-> [ 1 1 ]    [ 2 1 ]
-> [ 2 2 ]    [ 3 2 ]
-> [ 2 2 ]    [ 3 2 ]
-> [ 2 2 ]    [ 3 2 ]
+> With element $arr1[3] = 3
+> | 3 - 5 | = 2
+> | 3 - 0 | = 3
+> max distance = 3
 >
-> Apply [0,1]:
-> Increment row 0:
-> Before     After
-> [ 2 1 ]    [ 3 2 ]
-> [ 3 2 ]    [ 3 2 ]
-> [ 3 2 ]    [ 3 2 ]
-> [ 3 2 ]    [ 3 2 ]
-> Increment col 1:
-> Before     After
-> [ 3 2 ]    [ 3 3 ]
-> [ 3 2 ]    [ 3 3 ]
-> [ 3 2 ]    [ 3 3 ]
-> [ 3 2 ]    [ 3 3 ]
->
-> Final:
-> [ 3 3 ]
-> [ 3 3 ]
-> [ 3 3 ]
-> [ 3 3 ]
+> max (4, 5, 3, 3) = 5
 > ```
 
-Wow, this is a cool task!<br/>
-What looks like an exercise in matrix-building can be simplified enormously:
+A lot of explicit examples for a simple task.
+But the more examples the better, because the more *tests* the better.
 
-* Firstly, there is no need to really *count* what is in the cells. A simple *even/odd-indicator* that says whether the cell has been visited an even or odd number of times is enough.
+A short reflection tells us that the maximum distance between any two numbers
+in the arrays can only be between the lowest number of the first array
+and the highest one of the second, or vice versa.
 
-* Secondly, it turns out that whenever a row is touched,
-  this affects all columns in that row.
-  And vice versa, when a column is flipped, all rows are affected.
-  So let's not think 'odd fields', but let's think 'odd rows' and 'odd columns'.
+So the easiest way to solve this is not to try each and every combination of numbers
+of the two arrays,
+but to first extract the lowest and highest number of each array,
+and then return the larger difference.
 
-  Let's assume a row is 'odd'
-  (its row number was used in an odd number of locations).<br/>
-  Then in all columns that are 'odd', those row's fields are 'even',
-  and fields in 'even' columns keep their 'odd' value from the row.
-  
-  Similarly, for 'even' rows,
-  all those fields are 'odd' that are in 'odd' columns.
-  
-  Actually we don't need to know exactly *which* fields are even or odd,
-  but it's enough to know *how many rows* are even and odd,
-  and *how many columns* are even and odd.
-  
-  That means we don't even need a matrix at all!
-  
-* And thirdly, for the result,
-  if we have the number of  'odd' rows and of  'odd' columns,
-  we can *compute* the number of odd fields
-  with a single simple formula:<br/>
-  The number of 'odd' rows times the number of 'even' columns,
-  plus the number of 'even' rows times the number of 'odd' columns.
+There is a function called `minmax`
+that returns the minimum *and* the maximum of the parameter list
+at the same time (available from `List::SomeUtils` on CPAN).<br/>
+`minmax` can optimize the performance a bit,
+because instead of running through each arrays two times,
+using $2\cdot(n-1) = 2n -2$ comparisons,
+we only need $\frac{3}{2}n - 2$ comparisons.
 
-This is how that translates to Perl:
-
-* Find out how often each row is mentioned in a location,
-  and the same for each column
-  (using `frequency` again for counting).
-
-* Count the number of 'odd' rows and 'odd' columns.
-  (using a binary 'and' (`$_ & 1`) as a shortcut
-  for the arithmetic modulo 2 operation (`$_ % 2 != 0`)).
-
-* Calculate the number of '*even*' rows and columns
-  (using the total number of rows and columns that were given).
-
-* Return the result.
-
-Putting it all together:
+Whether that's worth it or not,
+I think it also makes the code a bit more readable:
 
 ```perl
-use List::MoreUtils qw( frequency );
+use v5.36;
+use List::SomeUtils qw( minmax );
+use List::Util qw( max );
 
-sub odd_matrix( $row, $col, $locations ) {
-    my %row_freq = frequency map $_->[0], $locations->@*;
-    my %col_freq = frequency map $_->[1], $locations->@*;
-    my $n_odd_rows = scalar grep $_ & 1, values %row_freq;
-    my $n_odd_cols = scalar grep $_ & 1, values %col_freq;
-    my ( $n_even_rows, $n_even_cols ) =
-        ( $row - $n_odd_rows, $col - $n_odd_cols );
-    return $n_odd_rows * $n_even_cols + $n_even_rows * $n_odd_cols;
+sub max_distance( $arr1, $arr2 ) {
+    my ( $arr1_min, $arr1_max ) = minmax $arr1->@*;
+    my ( $arr2_min, $arr2_max ) = minmax $arr2->@*;
+    return max( $arr2_max - $arr1_min, $arr1_max - $arr2_min );
 }
 ```
-
-I like these challenges
-where you can save programming and computing energy
-by simplifying the task to only what is really needed!
 
 #### **Thank you for the challenge!**
