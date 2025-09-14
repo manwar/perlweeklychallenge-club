@@ -1,3 +1,3 @@
-# The Weekly Challenge 337
+# The Weekly Challenge 338
 
-Blog: [Oddly small](https://dev.to/simongreennet/weekly-challenge-oddly-small-1g9o)
+Blog: [The Highest Distance](https://dev.to/simongreennet/weekly-challenge-the-highest-distance-4ec)
