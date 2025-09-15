@@ -14,9 +14,9 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try{
-	say "$_ -> ", append(0,pdl($_))->cumusumover->max
+        say "$_ -> ", append(0,pdl($_))->cumusumover->max
     }
     catch($e){
-	warn $e;
+        warn $e;
     }
 }

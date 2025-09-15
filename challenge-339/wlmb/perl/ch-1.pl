@@ -15,17 +15,18 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try {
-	my $in=pdl($_);
-	my $products=$in*$in(*1);
-	my $diffs=$products-$products(*1,*1);  # Xi*Xj-Xk*Xl
-	my ($i, $j, $k, $l) = $diffs->ndcoords->mv(0,-1)->dog; #coordinates into ndarray $diffs
-	$diffs=$diffs->where(
-	    ($i!=$j)&($i!=$k)&($i!=$l)
-	    &($j!=$k)&($j!=$l)
-	    &($k!=$l));  # select elements with no repeating coordinates
-	say "$_ -> ", $diffs->max;
+        my $in=pdl($_);
+	die "Expected four or more numbers" unless $in->dim(0)>=4;
+        my $products=$in*$in(*1);
+        my $diffs=$products-$products(*1,*1);  # Xi*Xj-Xk*Xl
+        my ($i, $j, $k, $l) = $diffs->ndcoords->mv(0,-1)->dog; #coordinates into ndarray $diffs
+        $diffs=$diffs->where(
+            ($i!=$j)&($i!=$k)&($i!=$l)
+            &($j!=$k)&($j!=$l)
+            &($k!=$l));  # select elements with no repeating coordinates
+        say "$_ -> ", $diffs->max;
     }
     catch($e){
-	warn $e;
+        warn $e;
     }
 }
