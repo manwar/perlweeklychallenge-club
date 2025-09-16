@@ -1,76 +1,79 @@
 Solutions by Lubos Kolouch.
 
-# The Weekly Challenge - 338
+# The Weekly Challenge - 339
 
-## Task 1: Highest Row
+## Task 1: Max Diff
 
 ### Description
 
-Given an m x n matrix, the task is to find the highest row sum in the matrix. Each row is summed, and the maximum sum is returned.
+Given an array of at least four integers, find two disjoint pairs whose product
+difference is as large as possible. The difference for pairs (a, b) and (c, d)
+is `(a * b) - (c * d)`, and we are interested in the maximum absolute value of
+this difference across all pair selections.
 
 ### Solution
 
 #### Perl (ch-1.pl)
 
-The Perl solution defines a function `highest_row` that takes a reference to a 2D array (matrix). It iterates through each row, computes the sum of the elements, and tracks the maximum sum. Input validation ensures the matrix is not empty.
-
-- **Input**: A 2D array reference (`@matrix`).
-- **Output**: The maximum sum of any row.
-- **Approach**: Use a loop to sum each row and update the maximum sum if the current row's sum is larger.
+Enumerates every combination of four numbers, evaluates the three possible
+pairings, and keeps the maximum absolute difference between the resulting
+products. Input validation ensures the list has at least four elements, with
+unit tests covering the provided examples.
 
 #### Python (ch-1.py)
 
-The Python solution defines a function `highest_row` that takes a 2D list (matrix). It uses Python's `sum` function to compute each row's sum and tracks the maximum using the `max` function. Type hints are included for clarity, and input validation checks for empty matrices.
-
-- **Input**: A 2D list (`matrix: List[List[int]]`).
-- **Output**: An integer representing the maximum row sum.
-- **Approach**: Iterate through rows, compute sums, and track the maximum.
+Uses `itertools.combinations` to iterate through all quadruples of integers and
+checks the three pairings of each quadruple. Tracks the maximum absolute
+product difference. Type hints and `unittest` cases cover the supplied
+scenarios.
 
 ### Examples
 
-- Example 1: `[[4, 4, 4, 4], [10, 0, 0, 0], [2, 2, 2, 9]]` → `16`
-- Example 2: `[[1, 5], [7, 3], [3, 5]]` → `10`
-- Example 3: `[[1, 2, 3], [3, 2, 1]]` → `6`
-- Example 4: `[[2, 8, 7], [7, 1, 3], [1, 9, 5]]` → `17`
-- Example 5: `[[10, 20, 30], [5, 5, 5], [0, 100, 0], [25, 25, 25]]` → `100`
+- Example 1: `[5, 9, 3, 4, 6]` → `42`
+- Example 2: `[1, -2, 3, -4]` → `10`
+- Example 3: `[-3, -1, -2, -4]` → `10`
+- Example 4: `[10, 2, 0, 5, 1]` → `50`
+- Example 5: `[7, 8, 9, 10, 10]` → `44`
 
-## Task 2: Max Distance
+## Task 2: Peak Point
 
 ### Description
 
-Given two integer arrays, the task is to find the maximum absolute difference between any pair of values from the two arrays.
+Given a list of altitude gains, starting from altitude zero compute the running
+sum and report the highest altitude reached at any step.
 
 ### Solution
 
 #### Perl (ch-2.pl)
 
-The Perl solution defines a function `max_distance` that takes references to two arrays. It computes the absolute difference between each pair of elements from the two arrays using nested loops and tracks the maximum difference. Input validation ensures both arrays are non-empty.
-
-- **Input**: Two array references (`@arr1`, `@arr2`).
-- **Output**: The maximum absolute difference between any pair of elements.
-- **Approach**: Use nested loops to compute `abs(x - y)` for each pair and update the maximum.
+Processes the gains sequentially, maintaining the cumulative altitude and the
+highest value encountered. Embedded tests verify the challenge examples.
 
 #### Python (ch-2.py)
 
-The Python solution defines a function `max_distance` that takes two lists of integers. It uses nested loops to compute the absolute difference between each pair of elements and tracks the maximum using the `max` function. Type hints are included, and input validation checks for empty arrays.
-
-- **Input**: Two lists (`arr1: List[int]`, `arr2: List[int]`).
-- **Output**: An integer representing the maximum absolute difference.
-- **Approach**: Iterate through all pairs, compute absolute differences, and track the maximum.
+Updates the running altitude for each gain and retains the maximum altitude
+seen. Includes type annotations and unit tests mirroring the provided cases.
 
 ### Examples
 
-- Example 1: `arr1 = [4, 5, 7], arr2 = [9, 1, 3, 4]` → `6`
-- Example 2: `arr1 = [2, 3, 5, 4], arr2 = [3, 2, 5, 5, 8, 7]` → `6`
-- Example 3: `arr1 = [2, 1, 11, 3], arr2 = [2, 5, 10, 2]` → `9`
-- Example 4: `arr1 = [1, 2, 3], arr2 = [3, 2, 1]` → `2`
-- Example 5: `arr1 = [1, 0, 2, 3], arr2 = [5, 0]` → `5`
+- Example 1: `[-5, 1, 5, -9, 2]` → `1`
+- Example 2: `[10, 10, 10, -25]` → `30`
+- Example 3: `[3, -4, 2, 5, -6, 1]` → `6`
+- Example 4: `[-1, -2, -3, -4]` → `0`
+- Example 5: `[-10, 15, 5]` → `10`
 
 ## Running the Code
 
 ### Perl
 
-Run the Perl scripts with:
 ```bash
 perl ch-1.pl
 perl ch-2.pl
+```
+
+### Python
+
+```bash
+python3 ch-1.py
+python3 ch-2.py
+```
