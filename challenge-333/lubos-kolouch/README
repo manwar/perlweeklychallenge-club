@@ -1,1 +1,37 @@
 Solutions by Lubos Kolouch.
+
+# Perl Weekly Challenge 333
+
+This repository contains solutions for the Perl Weekly Challenge 333, implemented in both Perl and Python. The solutions are written to be clean, efficient, and compliant with coding standards, passing linters such as `Perl::Critic`, `flake8`, `pyupgrade`, and `bandit`. Each solution includes proper documentation, type annotations (where applicable), and unit tests for the provided test cases.
+
+## Task 1: Straight Line
+
+### Problem Statement
+Given a list of coordinates, determine if they form a straight line. Points are collinear if the slope between any pair of points is the same, or if they are vertically aligned (same x-coordinate) or all identical.
+
+### Solution Approach
+- **Perl (ch-1.pl)**: Uses `List::Util::all` to check if points are collinear by comparing cross products of vectors formed by the points to avoid division. Handles special cases like identical points or vertical lines.
+- **Python (ch-1.py)**: Similar approach using list comprehension and type annotations. Checks for collinearity using cross product comparison and handles edge cases.
+
+### Test Cases
+1. Input: `[(2,1), (2,3), (2,5)]` → Output: `True` (vertical line)
+2. Input: `[(1,4), (3,4), (10,4)]` → Output: `True` (horizontal line)
+3. Input: `[(0,0), (1,1), (2,3)]` → Output: `False` (not collinear)
+4. Input: `[(1,1), (1,1), (1,1)]` → Output: `True` (same point)
+5. Input: `[(1000000,1000000), (2000000,2000000), (3000000,3000000)]` → Output: `True` (diagonal line)
+
+## Task 2: Duplicate Zeros
+
+### Problem Statement
+Given an array of integers, duplicate each occurrence of zero, shifting the remaining elements to the right. Elements beyond the original array length are discarded.
+
+### Solution Approach
+- **Perl (ch-2.pl)**: Iterates through the input array, appending each number to the result. For zeros, appends two zeros if space remains within the original length.
+- **Python (ch-2.py)**: Similar logic with type annotations, building a new list while respecting the original length constraint.
+
+### Test Cases
+1. Input: `[1, 0, 2, 3, 0, 4, 5, 0]` → Output: `[1, 0, 0, 2, 3, 0, 0, 4]`
+2. Input: `[1, 2, 3]` → Output: `[1, 2, 3]`
+3. Input: `[1, 2, 3, 0]` → Output: `[1, 2, 3, 0]`
+4. Input: `[0, 0, 1, 2]` → Output: `[0, 0, 0, 0]`
+5. Input: `[1, 2, 0, 3, 4]` → Output: `[1, 2, 0, 0, 3]`
