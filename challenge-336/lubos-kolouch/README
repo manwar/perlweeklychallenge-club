@@ -1,1 +1,77 @@
 Solutions by Lubos Kolouch.
+
+# The Weekly Challenge - 336
+
+## Task 1: Equal Group
+
+### Description
+
+Given an array of integers, determine whether it can be partitioned into one or
+more groups of equal size (at least two elements per group) such that every
+member within a group has the same value.
+
+### Solution
+
+#### Perl (ch-1.pl)
+
+Counts occurrences of each value, ensures every frequency is at least two, and
+computes the greatest common divisor across the frequencies. A GCD of two or
+more confirms that the array can be divided into uniform groups. Embedded
+`Test::More` cases cover the official examples.
+
+#### Python (ch-1.py)
+
+Uses `collections.Counter` and `math.gcd` to mirror the Perl logic. Type hints
+and `unittest` tests verify the five examples supplied in the challenge.
+
+### Examples
+
+- Example 1: `[1, 1, 2, 2, 2, 2]` → `True`
+- Example 2: `[1, 1, 1, 2, 2, 2, 3, 3]` → `False`
+- Example 3: `[5, 5, 5, 5, 5, 5, 7, 7, 7, 7, 7, 7]` → `True`
+- Example 4: `[1, 2, 3, 4]` → `False`
+- Example 5: `[8, 8, 9, 9, 10, 10, 11, 11]` → `True`
+
+## Task 2: Final Score
+
+### Description
+
+Given a sequence of scoring operations consisting of integers, `C`, `D`, and
+`+`, compute the final total. `C` removes the previous score, `D` doubles it,
+and `+` adds the last two scores.
+
+### Solution
+
+#### Perl (ch-2.pl)
+
+Maintains a stack of recorded scores, applying each operation as specified, and
+returns the sum of the stack. `Test::More` subtests cover the challenge cases.
+
+#### Python (ch-2.py)
+
+Implements the same stack-based logic using type annotations and `unittest`
+coverage for the provided examples.
+
+### Examples
+
+- Example 1: `["5", "2", "C", "D", "+"]` → `30`
+- Example 2: `["5", "-2", "4", "C", "D", "9", "+", "+"]` → `27`
+- Example 3: `["7", "D", "D", "C", "+", "3"]` → `45`
+- Example 4: `["-5", "-10", "+", "D", "C", "+"]` → `-55`
+- Example 5: `["3", "6", "+", "D", "C", "8", "+", "D", "-2", "C", "+"]` → `128`
+
+## Running the Code
+
+### Perl
+
+```bash
+perl ch-1.pl
+perl ch-2.pl
+```
+
+### Python
+
+```bash
+python3 ch-1.py
+python3 ch-2.py
+```
