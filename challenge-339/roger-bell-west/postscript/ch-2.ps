@@ -1,0 +1,56 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/peakpoint {
+    0 dict begin
+    0 exch
+    /h 0 def
+    {
+        h add /h exch def
+        h max
+    } forall
+    end
+} bind def
+
+(peakpoint) test.start
+[-5 1 5 -9 2] peakpoint 1 eq test
+[10 10 10 -25] peakpoint 30 eq test
+[3 -4 2 5 -6 1] peakpoint 6 eq test
+[-1 -2 -3 -4] peakpoint 0 eq test
+[-10 15 5] peakpoint 10 eq test
+test.end

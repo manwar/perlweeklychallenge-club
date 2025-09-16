@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/maxdiff {
+    0 dict begin
+    /a exch def
+    0
+    0 1 a length 2 sub {
+        /w exch def
+        w 1 add 1 a length 1 sub {
+            /x exch def
+            w 1 add 1 a length 2 sub {
+                /y exch def
+                x y ne {
+                    y 1 add 1 a length 1 sub {
+                        /z exch def
+                        z x ne {
+                            a w get a x get mul a y get a z get mul sub abs
+                            max
+                        } if
+                    } for
+                } if
+            } for
+        } for
+    } for
+    end
+} bind def
+
+(maxdiff) test.start
+[5 9 3 4 6] maxdiff 42 eq test
+[1 -2 3 -4] maxdiff 10 eq test
+[-3 -1 -2 -4] maxdiff 10 eq test
+[10 2 0 5 1] maxdiff 50 eq test
+[7 8 9 10 10] maxdiff 44 eq test
+test.end
