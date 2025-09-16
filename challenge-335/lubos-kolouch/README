@@ -1,1 +1,79 @@
 Solutions by Lubos Kolouch.
+
+# The Weekly Challenge - 335
+
+## Task 1: Common Characters
+
+### Description
+
+Given an array of words, return every character that appears in each word,
+including duplicates. For example, `("bella", "label", "roller")` should yield
+`("e", "l", "l")`.
+
+### Solution
+
+#### Perl (ch-1.pl)
+
+Builds frequency tables for every word and keeps the minimum count for each
+character across all words. The retained characters are emitted according to
+that minimum count. Unit tests cover the five official examples.
+
+#### Python (ch-1.py)
+
+Uses `collections.Counter` intersection (`&`) to compute the shared character
+counts, then expands the characters sorted alphabetically. Includes `unittest`
+cases mirroring the provided inputs.
+
+### Examples
+
+- Example 1: `("bella", "label", "roller")` → `("e", "l", "l")`
+- Example 2: `("cool", "lock", "cook")` → `("c", "o")`
+- Example 3: `("hello", "world", "pole")` → `("l", "o")`
+- Example 4: `("abc", "def", "ghi")` → `()`
+- Example 5: `("aab", "aac", "aaa")` → `("a", "a")`
+
+## Task 2: Find Winner
+
+### Description
+
+Analyze a tic-tac-toe game described by a sequence of moves. Players alternate
+starting with A. Report `A` or `B` if a winner is decided, `Draw` if all nine
+moves finish without a winner, or `Pending` otherwise.
+
+### Solution
+
+#### Perl (ch-2.pl)
+
+Applies each move to a 3×3 board, checks rows, columns, and diagonals for a win,
+and returns the appropriate outcome. Embeds `Test::More` subtests for all five
+examples.
+
+#### Python (ch-2.py)
+
+Replicates the board logic using lists, verifies win conditions, and determines
+the resulting state. The accompanying `unittest` suite exercises all official
+scenarios.
+
+### Examples
+
+- Example 1: `[[0,0],[2,0],[1,1],[2,1],[2,2]]` → `A`
+- Example 2: `[[0,0],[1,1],[0,1],[0,2],[1,0],[2,0]]` → `B`
+- Example 3: `[[0,0],[1,1],[2,0],[1,0],[1,2],[2,1],[0,1],[0,2],[2,2]]` → `Draw`
+- Example 4: `[[0,0],[1,1]]` → `Pending`
+- Example 5: `[[1,1],[0,0],[2,2],[0,1],[1,0],[0,2]]` → `B`
+
+## Running the Code
+
+### Perl
+
+```bash
+perl ch-1.pl
+perl ch-2.pl
+```
+
+### Python
+
+```bash
+python3 ch-1.py
+python3 ch-2.py
+```
