@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Maxwell's Silver Highest](https://packy.dardan.com/b/b0)
+[Perl Weekly Challenge: Points? What's the diff?](https://packy.dardan.com/b/bN)
