@@ -49,50 +49,34 @@ sub max_diff( @ints ) {
 
     # Try the lowest *second* product first,
     # with the three options for the first product after that.
-    if ( @negatives ) {
-        if ( @positives ) {
-            # We have negatives and positives.
-            # Use the best possible mixed pair for the second product.
-            # For the first product, we then have one less positive and
-            # one less negative available.
-            my $got_positive_first_product = false;
-            if ( @positives >= 3 ) {
-                push @cases, [ "case 3",
-                    [ @positives[1,2] ],
-                    [ $positives[0], $negatives[-1] ],
-                ];
-                $got_positive_first_product = true;
-            }
-            if ( @negatives >= 3 ) {
-                push @cases, [ "case 4",
-                    [ @negatives[-3,-2] ],
-                    [ $positives[0], $negatives[-1] ],
-                ];
-                $got_positive_first_product = true;
-            }
-            # In case we couldn't create either of the two cases above,
-            # we have to use a 'mixed pair' for the first product:
-            unless ( $got_positive_first_product ) {
-                push @cases, [ "case 5",
-                    [ $positives[1], $negatives[-2] ],
-                    [ $positives[0], $negatives[-1] ]
-                ];
-            }
+    if ( @negatives && @positives ) {
+        # We have negatives and positives.
+        # Use the best possible mixed pair for the second product.
+        # For the first product, we then have one less positive and
+        # one less negative available.
+        my $got_positive_first_product = false;
+        if ( @positives >= 3 ) {
+            push @cases, [ "case 3",
+                [ @positives[1,2] ],
+                [ $positives[0], $negatives[-1] ],
+            ];
+            $got_positive_first_product = true;
         }
-        else {
-            # Only negatives, no positives.
-            push @cases, [ "case 6",
-                [ @negatives[-2,-1] ],
-                [ @negatives[0,1] ]
+        if ( @negatives >= 3 ) {
+            push @cases, [ "case 4",
+                [ @negatives[-3,-2] ],
+                [ $positives[0], $negatives[-1] ],
+            ];
+            $got_positive_first_product = true;
+        }
+        # In case we couldn't create either of the two cases above,
+        # we have to use a 'mixed pair' for the first product:
+        unless ( $got_positive_first_product ) {
+            push @cases, [ "case 5",
+                [ $positives[1], $negatives[-2] ],
+                [ $positives[0], $negatives[-1] ]
             ];
         }
-    }
-    else {
-        # Only positives, no negatives.
-        push @cases, [ "case 7",
-            [ @positives[0,1] ],
-            [ @positives[-2,-1] ],
-        ];
     }
 
     my $maximum =
@@ -116,6 +100,8 @@ sub max_diff( @ints ) {
         : $maximum;
 }
 
+# Allow for including this script for the function definitioni, but without
+# executing the tests:
 unless ( caller ) {
 
     use Test2::V0 qw( -no_srand );
