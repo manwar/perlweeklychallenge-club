@@ -2,8 +2,6 @@
 
 from functools import reduce
 
-from functools import reduce
-
 def add_max(x, y):
   global max_alt
   max_alt = max(max_alt, x+y)
