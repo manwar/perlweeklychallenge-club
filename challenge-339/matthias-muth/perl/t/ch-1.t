@@ -5,11 +5,10 @@
 #
 #       Challenge 339 Task 1: Max Diff
 #
-#       test-ch-1.pl - test script for ch-1.pl.
+#       t/ch-1.t - test script for ch-1.pl.
 #
 
 use v5.36;
-use builtin qw( true false );
 
 use lib qw( . .. );
 require "./ch-1.pl";
@@ -47,23 +46,7 @@ for ( @tests ) {
     my ( $test_name, $input, $expected ) = $_->@*;
     my $descr = "$test_name:"
         . " max_diff( " . join( ", ", $input->@* ) . " ) == $expected";
-    my ( $maximum, $pair_1, $pair_2 ) = max_diff( $input->@* );
-    is $maximum, $expected, $descr
-        and $pair_1 && $pair_2 && do {
-            # Explain the correct solution.
-            my $product_1 = $pair_1->[0] * $pair_1->[1];
-            my $product_2 = $pair_2->[0] * $pair_2->[1];
-            my $result = $product_1 - $product_2;
-            note "            Pair 1: ( $pair_1->[0], $pair_1->[1] )";
-            note "            Pair 2: ( $pair_2->[0], $pair_2->[1] )";
-            note "            Product Diff: ",
-                "( $pair_1->[0] * $pair_1->[1] )",
-                    " - ( $pair_2->[0] * $pair_2->[1] )",
-                " => ( ", $product_1 >= 0 ? $product_1 : "($product_1)",
-                    " - ", $product_2 >= 0 ? $product_2 : "($product_2)", " )",
-                " => $result";
-            note "";
-        }
+    is max_diff( $input->@* ), $expected, $descr;
 }
 
 done_testing;
