@@ -7,7 +7,7 @@ is peak-point(<   3  -4  2   5 -6 1 >),  6;
 is peak-point(<  -1  -2 -3  -4      >),  0;
 is peak-point(< -10  15  5          >), 10;
 
-sub peak-point(+@gain)
+sub peak-point(@gain)
 {
     max [\+] 0, |@gain     
 }
