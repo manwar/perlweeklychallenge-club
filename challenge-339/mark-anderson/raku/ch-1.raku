@@ -95,7 +95,7 @@ sub max-diff(@a)
         
             if all(%c<-1 1>) == 2
             {
-                take (%c<-1>.tail * %c<1>.head) - (%c<-1>.head * %c<1>.tail)
+                take ([*] %c<-1>.tail, %c<1>.head) - ([*] %c<-1>.head, %c<1>.tail)
             }
         }
     }
