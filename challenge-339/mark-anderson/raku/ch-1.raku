@@ -50,7 +50,6 @@ sub max-diff(@a)
  
     return .max given gather
     {  
-
         if all %c<1> >= 3, %c<-1> 
         {
             take ([*] %c<1>[*-3,*-2]) - ([*] %c<-1>[0], %c<1>[*-1]);
