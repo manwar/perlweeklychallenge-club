@@ -1,7 +1,5 @@
 # Max Complication for Min Brute Force
 
-# --- DRAFT Work in Progress ---
-
 **Challenge 339 solutions in Perl by Matthias Muth**
 
 ## Task 1: Max Diff
@@ -62,35 +60,32 @@
 > Pair 2: (7, 8)
 > ```
 
-As usual, I try not to use brute force to solve the task. I will *not* do 'combinations', and *not* go through $\binom{n}{4} = \frac{n!}{4!(n-4)!}$ iterations to choose the right numbers.
+As usual, I try not to use brute force to solve the task.<br/>I will *not* do 'combinations', and *not* go through $\binom{n}{4} = \frac{n!}{4!(n-4)!}$ iterations to choose the right numbers.
 
-Instead, I do will do an analysis to learn which numbers to choose.
+Instead, I will choose a small number of candidate pairs of numbers, based on the numbers' signs and their magnitudes.
 
-My first observation is that for getting the largest difference, the first product has to be as big as possible, and the subtracted number has to be as low as possible. So we can change the task to
-
-> 'Find two pairs that result in the highest possible product and the lowest possible product, respectively.'
+My first observation is that for getting the largest difference, the first product has to be as high as possible, and the subtracted product has to be as low as possible.
 
 Next observation:<br/>
 The largest product can be obtained by multiplying the two largest numbers.<br/>
 This should be an obvious one. But there is a huge BUT:
 
 If we have at least two *negative* numbers in our list, and remembering that 'minus times minus equals plus', we might find that the largest (positive) product is obtained by multiplying the two *lowest* numbers (those with the largest absolute amounts).<br/>
-So we have to consider the products of both the two highest positive numbers and the two lowest negative ones, and use the 'better' one.
+So we have to consider the products of both the two highest positive numbers and the two lowest negative ones, and use the 'better' one. If we cannot compute both of them (for example because we don't have any negative numbers in the list), we will only use the one we have.
+
+So it seems a good idea to separate the positive and the negative numbers into separate arrays, and have them sorted numerically, so that we can access the highest or lowest positive or negative numbers just by indexing into these arrays.
+
+For the second pair of numbers, the one whose product we will subtract, we need to find the *lowest* product possible. This is special, because we might get lucky and even get a *negative* product, which would be good because negative numbers are 'low'.
+
+So if we have negative numbers at all, we will use the lowest one (the one with the highest absolute value) that is still available (and was not used for the first product!), together with the highest positive number available.<br/>
+We should then get a product as far in the negative as possible.
 
 Thus, the candidates for **the first product** are these:
 
 * the highest two positive numbers,
 * the lowest two negative numbers (resulting in a positive product).
 
-We need to compare which one is better. If we cannot compute one or the other, we will simply use only the other one.
-
-In any case, it will be good to separate the positive and the negative numbers into separate arrays, and have them sorted numerically, so that we can access the highest or lowest positive or negative numbers just by indexing into these arrays.
-
-For the number to subtract, we need to find the *lowest* product possible. But this is different, because now we can be lucky and get a negative product, because negative numbers are 'low'.
-
-So if we have negative numbers at all, we will be happy to use the lowest one available ((that was not used for the first product!), together with the highest positive number available, to get a negative product as far in the negative as possible.
-
-So the candidates for **the second product** are these:
+And the candidates for **the second product** are these:
 
 * if we have positive and negative numbers:<br/>
   the lowest negative number times the highest positive number,<br/>
@@ -100,20 +95,97 @@ So the candidates for **the second product** are these:
 * if we have no positive numbers:<br/>
   the two negative numbers closest to zero (or zero itself, if we have one). 
 
-There are cases where the choice for the first product reduce the possible choices for the second product in a way that makes the combination of both not the best choice overall. Especially when there are only few numbers, and the choice of one product reduces the availability of numbers to choose from for the second one.
+Next observation:<br/>
+There can be cases where the choice for the first product reduces the possible choices for the second product in a way that makes the combination of both not the best choice overall. Especially when there are only few numbers, and the choice of one product reduces the availability of numbers to choose from for the other one.
 
-To be sure, my strategy is to try both:
+To be sure to deal correctly with this, my strategy is to try both:
 
-* The two possible candidates for the best first product, as described above,<br/>combined with the second product chosen from what is left, for each of the candidates separately,
-* the best *second* product chosen from all numbers,<br/>combined with the two possible candidates for the best *first* product from what is left.<br/>Actually we need to consider a third candidate for the first product in this case: If we used a positive and a negative number for the second product, it could be that all we have left is only a 'mixed pair' to use for the first product, something that we didn't need to consider in the cases described above for the first product.
+* Find the two possible candidates for the best *first* product, as described above.<br/>Then choose the best *second* product from the numbers that each of those candidates left.
+* Find the best *second* product chosen from all numbers.<br/>Then choose the best two possible *first* products from what is left.<br/>Actually, in that case, we need to consider a third possible candidate for the first product here: If we used a positive and a negative number for that second product, we might end up with only another 'mixed pair' left, while before, we were sure to have at least two positive *or* two negative numbers for the first pair. So in case we don't succeed in creating either of the two positive candidates for the first pair described above, we need to use what we have and create a negative first product. It still might be a good choice in combination with a good second product.
 
-
+My implementations reflects the above, gathering the first and second pair of each different case in an array `@cases`, together with a case number for checking and debugging.<br/>Then, I feed the cases into `map` to compute the differences between the two products for each, with the product computed using `product`, and `max` used to get the best one:
 
 ```perl
-sub max_diff() {
-    ...;
+use v5.36;
+use List::Util qw( product max );
+
+sub max_diff( @ints ) {
+    my @positives = sort { $b <=> $a } grep $_ >= 0, @ints;
+    my @negatives = sort { $b <=> $a } grep $_ < 0, @ints;
+
+    my @cases = (
+        # Try the highest two positive numbers as the first product,
+        # with the second product as small as possible after having used
+        # those two positive numbers:
+        @positives >= 2 ? do {
+            my $pair_1 = [ @positives[0,1] ];
+            @positives >= 3 && @negatives
+                ? [ "case 1", $pair_1, [ $positives[2], $negatives[-1] ] ] : (),
+            @positives >= 2 && @negatives >= 2
+                ? [ "case 2", $pair_1, [ @negatives[0,1] ] ] : (),
+            @negatives == 0
+                ? [ "case 3", $pair_1, [ @positives[-2,-1] ] ] : (),
+        } : (),
+
+        # Try the lowest two negative numbers as the first product,
+        # with the second product as small as possible after having used
+        # those two negative numbers:
+        @negatives >= 2 ? do {
+            my $pair_1 = [ @negatives[-2,-1] ];
+            @negatives >= 3 && @positives
+                ? [ "case 4", $pair_1, [ $positives[0], $negatives[-3] ] ] : (),
+            @positives >= 2
+                ? [ "case 5", $pair_1, [ @positives[-2,-1] ] ] : (),
+            @positives == 0
+                ? [ "case 6", $pair_1, [ @negatives[0,1] ] ] : (),
+        } : (),
+
+        # Try a negative second product using the best possible 'mixed pair',
+        # with the three options for the first product after that.
+        # For the first product, we then have one less positive and
+        # one less negative available.
+        @negatives && @positives ? do {
+            my $pair_2 = [ $positives[0], $negatives[-1] ];
+            @positives >= 3
+                ? [ "case 7", [ @positives[1,2] ], $pair_2 ] : (),
+            @negatives >= 3
+                ? [ "case 8", [ @negatives[-3,-2] ], $pair_2 ] : (),
+
+            # In case we couldn't create either of the two cases above,
+            # we have to use a 'mixed pair' for the first product:
+            @negatives <= 2 && @positives <= 2
+                ? [ "case 9", [ $positives[1], $negatives[-2] ], $pair_2 ] : (),
+        } : (),
+    );
+
+    return
+        max( map product( $_->[1]->@* ) - product( $_->[2]->@* ), @cases );
 }
 ```
+
+My actual code (on [github](https://github.com/MatthiasMuth/perlweeklychallenge-club/blob/muthm-339/challenge-339/matthias-muth/perl/)) includes some additions for checking and debugging. The function can return the case number and the two number pairs that lead to the best combination if it is used in list context.
+
+I also wrote two test scripts with additional tests. As most tests in Perl should , they reside in the [`t` subdirectory](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-339/challenge-339/matthias-muth/perl/t) , so that `prove` can be used to run them.
+
+The [`t/ch-1-full-output.t`](https://github.com/MatthiasMuth/perlweeklychallenge-club/blob/muthm-339/challenge-339/matthias-muth/perl/t/ch-1-full-output.t) test script makes use of the added return values, and prints out which case was used for which test case, in the style used in the task description (see [`ch-1-full-output.txt`](https://github.com/MatthiasMuth/perlweeklychallenge-club/blob/muthm-339/challenge-339/matthias-muth/perl/ch-1-full-output.txt) for the captured output). 
+
+These are the counts from the tests for each of the cases, showing that actually none of them is redundant: 
+
+```text
+case 1: 6 times
+case 2: 9 times
+case 3: 4 times
+case 4: 5 times
+case 5: 9 times
+case 6: 2 times
+case 7: 2 times
+case 8: 1 time
+case 9: 7 times
+```
+
+This might easily be the Weekly Challenge task that caused me longest to complete!<br/>Not only because it took some effort finding the cases, but I also changed the code structure several times until I was happy enough with the readability of the code.
+
+I love this challenge!
 
 ## Task 2: Peak Point
 
@@ -197,9 +269,11 @@ sub max_diff() {
 > max(0, -10, 5, 10) = 10
 > ```
 
+If the first task took me quite a bit of effort, the second task was really easy.
 
+I use `reductions` to compute the running sum of the input numbers, and with `reductions` returning all intermediate results, these intermediate results happen to be the altitudes that we want to get the maximum of.
 
-
+So the task can be solved in a single line:
 
 ```perl
 use v5.36;
