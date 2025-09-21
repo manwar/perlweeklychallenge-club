@@ -1,3 +1,3 @@
-# The Weekly Challenge 338
+# The Weekly Challenge 339
 
-Blog: [The Highest Distance](https://dev.to/simongreennet/weekly-challenge-the-highest-distance-4ec)
+Blog: [Maximum climb](https://dev.to/simongreennet/weekly-challenge-maximum-climb-28i3)
