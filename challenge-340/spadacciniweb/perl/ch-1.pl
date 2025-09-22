@@ -75,7 +75,6 @@ sub get_noduplicate {
 
     do {
         $str =~ s/(\w)\1//;
-        
     } while $str =~ /(\w)\1/;
 
     printf "'%s' -> '%s'\n", $str_orig, $str;
