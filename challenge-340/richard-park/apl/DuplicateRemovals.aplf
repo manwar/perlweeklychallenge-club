@@ -1,0 +1,15 @@
+ DuplicateRemovals←{
+     DR←{
+         0∊⍴⍵:⍵
+         ~∨/2=/⍵:,⍵
+         ∇ ⍵⌿⍨~1(⊢∨⌽)0,2=/⍵
+     }
+⍝ Tests
+     'ca'≢DR'abbaca':∘∘∘
+     'ay'≢DR'azxxzy':∘∘∘
+     ''≢DR'aaaaaaaa':∘∘∘
+     (,'a')≢DR'aabccba':∘∘∘   ⍝ Our function always returns a vector
+     ''≢DR'abcddcba':∘∘∘
+
+     'All tests passed.'
+ }
