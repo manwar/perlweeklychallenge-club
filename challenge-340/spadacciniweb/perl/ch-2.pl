@@ -60,6 +60,7 @@ sub ascending_numbers {
                 $sorted = 0;
                 last;
             }
+            $curr = $_
         }
     }
 

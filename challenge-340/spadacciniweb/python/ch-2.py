@@ -32,7 +32,7 @@
 import re
 
 def ascending_numbers(str):
-    numbers =  re.findall(r'\d+', str)
+    numbers = list(map(int, re.findall(r'\d+', str) ))
 
     sorted = True
     if (len(numbers) > 0):
@@ -41,6 +41,7 @@ def ascending_numbers(str):
             if (curr >= i):
                 sorted = False
                 break
+            curr = i
 
     print("'%s' -> %s" % ( str, sorted ) )
 
