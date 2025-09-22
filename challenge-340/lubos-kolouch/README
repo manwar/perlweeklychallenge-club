@@ -1,0 +1,79 @@
+Solutions by Lubos Kolouch.
+
+# The Weekly Challenge - 339
+
+## Task 1: Max Diff
+
+### Description
+
+Given an array of at least four integers, find two disjoint pairs whose product
+difference is as large as possible. The difference for pairs (a, b) and (c, d)
+is `(a * b) - (c * d)`, and we are interested in the maximum absolute value of
+this difference across all pair selections.
+
+### Solution
+
+#### Perl (ch-1.pl)
+
+Enumerates every combination of four numbers, evaluates the three possible
+pairings, and keeps the maximum absolute difference between the resulting
+products. Input validation ensures the list has at least four elements, with
+unit tests covering the provided examples.
+
+#### Python (ch-1.py)
+
+Uses `itertools.combinations` to iterate through all quadruples of integers and
+checks the three pairings of each quadruple. Tracks the maximum absolute
+product difference. Type hints and `unittest` cases cover the supplied
+scenarios.
+
+### Examples
+
+- Example 1: `[5, 9, 3, 4, 6]` → `42`
+- Example 2: `[1, -2, 3, -4]` → `10`
+- Example 3: `[-3, -1, -2, -4]` → `10`
+- Example 4: `[10, 2, 0, 5, 1]` → `50`
+- Example 5: `[7, 8, 9, 10, 10]` → `44`
+
+## Task 2: Peak Point
+
+### Description
+
+Given a list of altitude gains, starting from altitude zero compute the running
+sum and report the highest altitude reached at any step.
+
+### Solution
+
+#### Perl (ch-2.pl)
+
+Processes the gains sequentially, maintaining the cumulative altitude and the
+highest value encountered. Embedded tests verify the challenge examples.
+
+#### Python (ch-2.py)
+
+Updates the running altitude for each gain and retains the maximum altitude
+seen. Includes type annotations and unit tests mirroring the provided cases.
+
+### Examples
+
+- Example 1: `[-5, 1, 5, -9, 2]` → `1`
+- Example 2: `[10, 10, 10, -25]` → `30`
+- Example 3: `[3, -4, 2, 5, -6, 1]` → `6`
+- Example 4: `[-1, -2, -3, -4]` → `0`
+- Example 5: `[-10, 15, 5]` → `10`
+
+## Running the Code
+
+### Perl
+
+```bash
+perl ch-1.pl
+perl ch-2.pl
+```
+
+### Python
+
+```bash
+python3 ch-1.py
+python3 ch-2.py
+```
