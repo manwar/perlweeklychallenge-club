@@ -1,0 +1,73 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/duplicateremovals {
+    s2a
+    [ exch
+      {
+          counttomark 0 gt
+          3 copy pop eq and {
+              pop pop
+          } if
+      } forall
+    ]
+    a2s
+} bind def
+
+(duplicateremovals) test.start
+(abbaca) duplicateremovals (ca) eq test
+(azxxzy) duplicateremovals (ay) eq test
+(aaaaaaaa) duplicateremovals () eq test
+(aabccba) duplicateremovals (a) eq test
+(abcddcba) duplicateremovals () eq test
+test.end
