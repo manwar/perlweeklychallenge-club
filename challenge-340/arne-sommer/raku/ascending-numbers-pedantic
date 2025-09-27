@@ -1,0 +1,41 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str where $str.chars > 0,
+               :u(:$ucfirst),
+	       :z(:$allow-zero),
+               :v(:$verbose));
+
+my @words    = $str.split(/\s/);
+my $error    = 0;
+my @integers;
+
+for @words -> $word
+{
+  print ": Token '$word'" if $verbose;
+
+  if $word ~~ /^ <[1..9]> <[0..9]>* $/
+  {
+    @integers.push: $word;
+    say " is a positive integer" if $verbose;
+  }
+  elsif $allow-zero && $word eq "0"
+  {
+    @integers.push: $word;
+    say " is a positive integer" if $verbose;
+  }
+  elsif $word ~~ /^ <[a..z]>+ $/
+  {
+    say " is an English lowercase word" if $verbose
+  }
+  elsif $ucfirst && $word ~~ /^ <[A..Z]><[a..z]>* $/
+  {
+    say " is an English lowercase word" if $verbose
+  }
+  else
+  {
+    say " is illegal";
+    $error++;
+  }
+}
+
+say $error ?? False !! [<] @integers;
