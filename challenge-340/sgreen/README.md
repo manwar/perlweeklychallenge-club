@@ -1,3 +1,3 @@
-# The Weekly Challenge 339
+# The Weekly Challenge 340
 
-Blog: [Maximum climb](https://dev.to/simongreennet/weekly-challenge-maximum-climb-28i3)
+Blog: [Ascending Regex to remove the Duplicates](https://dev.to/simongreennet/weekly-challenge-ascending-regex-to-remove-the-duplicates-2bd)
