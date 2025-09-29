@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+use strict;
+use warnings;
+
 use Test2::V0;
 use feature qw(signatures);
 
@@ -19,6 +22,5 @@ done_testing;
 
 sub broken_keyboard($in, @broken) {
   my @words = split m{\s+}, $in;
-  my $pat   = "[@broken]";
-  return @broken ? grep { $_ !~ m{$pat}i } @words : @words
+  return @broken ? grep { $_ !~ m{[@broken]}i } @words : @words
 }
