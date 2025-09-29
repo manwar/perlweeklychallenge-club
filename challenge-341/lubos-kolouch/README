@@ -1,79 +1,33 @@
-Solutions by Lubos Kolouch.
+# Perl Weekly Challenge: Broken Keyboard and Reverse Prefix
 
-# The Weekly Challenge - 339
-
-## Task 1: Max Diff
+## Task 1: Broken Keyboard
 
 ### Description
-
-Given an array of at least four integers, find two disjoint pairs whose product
-difference is as large as possible. The difference for pairs (a, b) and (c, d)
-is `(a * b) - (c * d)`, and we are interested in the maximum absolute value of
-this difference across all pair selections.
+Given a string containing English letters and a list of broken keys, return the count of words that can be typed completely without using any broken keys. The check is case-insensitive.
 
 ### Solution
+- **Perl (ch-1.pl)**: The `broken_keyboard` function splits the input string into words and checks each word against a hash of broken keys. If a word contains no broken keys, it increments a counter. The function uses `split` for word separation and a hash for O(1) key lookup.
+- **Python (ch-1.py)**: The `broken_keyboard` function uses a set for broken keys lookup, splits the string into words, and counts words that don't contain any broken keys. It uses `str.split()` and a set for efficient lookup.
 
-#### Perl (ch-1.pl)
+### Test Cases
+1. Input: "Hello World", ['d'] → Output: 1
+2. Input: "apple banana cherry", ['a', 'e'] → Output: 0
+3. Input: "Coding is fun", [] → Output: 3
+4. Input: "The Weekly Challenge", ['a', 'b'] → Output: 2
+5. Input: "Perl and Python", ['p'] → Output: 1
 
-Enumerates every combination of four numbers, evaluates the three possible
-pairings, and keeps the maximum absolute difference between the resulting
-products. Input validation ensures the list has at least four elements, with
-unit tests covering the provided examples.
-
-#### Python (ch-1.py)
-
-Uses `itertools.combinations` to iterate through all quadruples of integers and
-checks the three pairings of each quadruple. Tracks the maximum absolute
-product difference. Type hints and `unittest` cases cover the supplied
-scenarios.
-
-### Examples
-
-- Example 1: `[5, 9, 3, 4, 6]` → `42`
-- Example 2: `[1, -2, 3, -4]` → `10`
-- Example 3: `[-3, -1, -2, -4]` → `10`
-- Example 4: `[10, 2, 0, 5, 1]` → `50`
-- Example 5: `[7, 8, 9, 10, 10]` → `44`
-
-## Task 2: Peak Point
+## Task 2: Reverse Prefix
 
 ### Description
-
-Given a list of altitude gains, starting from altitude zero compute the running
-sum and report the highest altitude reached at any step.
+Given a string and a character, reverse the prefix of the string up to and including the first occurrence of the character, and return the new string. If the character is not found, return the original string.
 
 ### Solution
+- **Perl (ch-2.pl)**: The `reverse_prefix` function uses `index` to find the character's position, extracts the prefix with `substr`, reverses it, and appends the remaining string.
+- **Python (ch-2.py)**: The `reverse_prefix` function uses `str.find` to locate the character, slices the prefix, reverses it using slice notation `[::-1]`, and concatenates the rest of the string.
 
-#### Perl (ch-2.pl)
-
-Processes the gains sequentially, maintaining the cumulative altitude and the
-highest value encountered. Embedded tests verify the challenge examples.
-
-#### Python (ch-2.py)
-
-Updates the running altitude for each gain and retains the maximum altitude
-seen. Includes type annotations and unit tests mirroring the provided cases.
-
-### Examples
-
-- Example 1: `[-5, 1, 5, -9, 2]` → `1`
-- Example 2: `[10, 10, 10, -25]` → `30`
-- Example 3: `[3, -4, 2, 5, -6, 1]` → `6`
-- Example 4: `[-1, -2, -3, -4]` → `0`
-- Example 5: `[-10, 15, 5]` → `10`
-
-## Running the Code
-
-### Perl
-
-```bash
-perl ch-1.pl
-perl ch-2.pl
-```
-
-### Python
-
-```bash
-python3 ch-1.py
-python3 ch-2.py
-```
+### Test Cases
+1. Input: "programming", "g" → Output: "gorpramming"
+2. Input: "hello", "h" → Output: "hello"
+3. Input: "abcdefghij", "h" → Output: "hgfedcbaij"
+4. Input: "reverse", "s" → Output: "srevere"
+5. Input: "perl", "r" → Output: "repl"
