@@ -1,0 +1,20 @@
+ BrokenKeyboard←{
+⍝ ⍺: Scalar or vector of characters that cannot be types
+⍝ ⍵: Character scalar or vector of space-separated words
+⍝ ←: Count of words in ⍵ that can be typed in full
+
+     BK←{
+    ⍝    _←+/~∨/¨(' '=' ',⍵)⊂0,⍵∊⍥⎕C ⍺   ⍝ Nested version
+         +/~2<⌿0⍪(1⌽' '=' ',⍵)⌿+⍀0,⍵∊⍥⎕C ⍺
+     }
+
+⍝ Tests
+     1≢'d'BK'Hello World':∘∘∘
+     0≢'ae'BK'apple banana cherry':∘∘∘
+     3≢''BK'Coding is fun':∘∘∘
+     2≢'ab'BK'The Weekly Challenge':∘∘∘
+     1≢'p'BK'Perl and Python':∘∘∘
+
+     'All tests passed.'
+
+ }

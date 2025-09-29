@@ -1,0 +1,17 @@
+ ReversePrefix←{
+⍝ ⍺:
+
+     RP←{
+         ⌽@(⍳⍵⍳⍺)⊢⍵
+     }
+
+⍝ Tests
+     'gorpramming'≢'g'RP'programming':∘∘∘
+     'hello'≢'h'RP'hello':∘∘∘
+     'hgfedcbaij'≢'h'RP'abcdefghij':∘∘∘
+     'srevere'≢'s'RP'reverse':∘∘∘
+     'repl'≢'r'RP'perl':∘∘∘
+
+     'All tests passed.'
+
+ }
