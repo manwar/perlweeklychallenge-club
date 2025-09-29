@@ -22,4 +22,3 @@ my $examples = [
 is(typable_word_count($_->{str}, $_->{keys}), $_->{exp}) for @$examples;
 
 done_testing;
-
