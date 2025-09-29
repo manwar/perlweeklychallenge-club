@@ -68,5 +68,5 @@ sub broken_keyboard {
 
     printf "'%s' (%s) -> %d\n", $str,
                                 (join ', ', map { sprintf "'$_'" } @$keys),
-                                (scalar keys %words) - (scalar grep { $_ } values %words);
+                                scalar grep { $_ == 0 } values %words;
 }
