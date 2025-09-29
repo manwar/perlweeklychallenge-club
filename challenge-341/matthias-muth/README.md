@@ -1,155 +1,167 @@
-# Two Times Two Lines
+# (Pre-)Fix what is Broken
 
-**Challenge 340 solutions in Perl by Matthias Muth**
+**Challenge 341 solutions in Perl by Matthias Muth**
 
-## Task 1: Duplicate Removals
+## Task 1: Broken Keyboard
 
-> You are given a string, $str, consisting of lowercase English letters.<br/>
-> Write a script to return the final string after all duplicate removals have been made. Repeat duplicate removals on the given string until we no longer can.<br/>
-> A duplicate removal consists of choosing two adjacent and equal letters and removing them.
+> You are given a string containing English letters only and also you are given broken keys.<br/>
+> Write a script to return the total words in the given sentence can be typed completely.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = 'abbaca'
-> Output: 'ca'
+> Input: $str = 'Hello World', @keys = ('d')
+> Output: 1
 >
-> Step 1: Remove 'bb' => 'aaca'
-> Step 2: Remove 'aa' => 'ca'
+> With broken key 'd', we can only type the word 'Hello'.
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = 'azxxzy'
-> Output: 'ay'
->
-> Step 1: Remove 'xx' => 'azzy'
-> Step 2: Remove 'zz' => 'ay'
+> Input: $str = 'apple banana cherry', @keys = ('a', 'e')
+> Output: 0
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = 'aaaaaaaa'
-> Output: ''
+> Input: $str = 'Coding is fun', @keys = ()
+> Output: 3
 >
-> Step 1: Remove 'aa' => 'aaaaaa'
-> Step 2: Remove 'aa' => 'aaaa'
-> Step 3: Remove 'aa' => 'aa'
-> Step 4: Remove 'aa' => ''
+> No keys broken.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = 'aabccba'
-> Output: 'a'
->
-> Step 1: Remove 'aa' => 'bccba'
-> Step 2: Remove 'cc' => 'bba'
-> Step 3: Remove 'bb' => 'a'
+> Input: $str = 'The Weekly Challenge', @keys = ('a','b')
+> Output: 3
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = 'abcddcba'
-> Output: ''
->
-> Step 1: Remove 'dd' => 'abccba'
-> Step 2: Remove 'cc' => 'abba'
-> Step 3: Remove 'bb' => 'aa'
-> Step 4: Remove 'aa' => ''
+> Input: $str = 'Perl and Python', @keys = ('p')
+> Output: 1
 > ```
 
-Of course I will use regular expressions for this one, particularly because the 'repeated something' detection feels almost like a common idiom meanwhile (at least for me). It uses  a capture group `(...)`, and a _backreference_ to that capture buffer. I typically use a _relative_ reference, such a `\g{-1}` for the last capture group preceding the reference, in order to not getting confused by the capture buffers numbers when there could be changes to the regex later.
+Perl's regular expressions help to find a concise solution for this task.<br/>But the main goal for me this time isn't shortness, it's readability.
 
-The substitution needs to be done repetitively, but a simple `/g` _global_ option is not enough, because some sequences to be removed only appear once other sequences have been removed. In this case, putting a `while` loop around the substitution does the trick.
+This could have been my short solution:
 
-The loop body itself can be empty because the substitution both does the work and determines the end criteria. I choose a `do {} while ...` loop, because I think it is the best way to make it obvious that the loop body is empty. (If I used a `while ( ... ) { ... }` loop instead, I would probably put a comment into the loop body to guide the reader. But this would need three lines of code instead of only one.)
+```perl
+sub broken_keyboard_short_and_ugly( $str, $keys ) {
+    scalar grep ! $keys->@* || ! /[$keys->@*]/i, split " ", $str;
+}
+```
 
-I still use the `/g` option to catch as many occurrences as possible in one substitution, to minimize the number of times the loop iterates.
+(Assuming `use v5.36` or whatever you prefer for having  `strict`, `warnings`, and `feature signatures`.)
 
-After all the substitutions are done, I just return what is left of the `$str` string.   
+Don't worry, there's no need to dive into it to see what it does. I will explain later for those who are curious.
+
+Here is my 'real' solution.<br/>
+This one is much clearer, I hope:
 
 ```perl
 use v5.36;
 
-sub duplicate_removals( $str ) {
-    do {} while $str =~ s/(.)\g-1//g;
-    return $str;
+sub broken_keyboard( $str, $keys ) {
+    my @words = split " ", $str;
+    return scalar @words
+        if ! $keys->@*;
+    my $keys_concat = join "", $keys->@*;
+    return scalar grep ! /[$keys_concat]/i, @words;
 }
 ```
 
-Nice and concise.
+The concept is the same, only that this code can almost be read as its own description in English:
 
-## Task 2: Ascending Numbers
+* 
+  Split up the input string into words, using any amount of whitespace as separator<br/>(the `" "` special case for the `split` separator does that perfectly):<br/>
+  `    my @words = split " ", $str;`
+* Return the full number of words if there are no broken keys.<br/>
+  `    return scalar @words`<br/>`         if ! $keys->@*;`
+* Build a string with the concatenated broken key characters<br/>(we will see in the next step what that will be used for):<br/>
+  `     my $keys_concat = join "", $keys->@*;`
+* Return the count of words that do not(!) match a regular expression with a bracketed character class containing all broken keys, ignoring upper or lower case.<br/>
+  `    return scalar grep ! /[$keys_concat]/i, @words;`<br/>
+   (`grep` in scalar context returns the number of hits instead of the hits themselves.)
 
-> You are given a string, $str, is a list of tokens separated by a single space. Every token is either a positive number consisting of digits 0-9 with no leading zeros, or a word consisting of lowercase English letters.<br/>
-> Write a script to check if all the numbers in the given string are strictly increasing from left to right.
+There are chances that even I will understand what I wrote when I stumble over this code in a year or so...
+
+But just for the curious, here is what the 'short' version does.<br/>Basically the same thing just mapped into one single statement, but with a fews pitfalls:
+
+* For keeping the code short, the `grep` condition contains both cases of having broken keys or not.<br/>It is assumed that any word is a hit if there are no keys (`! $keys->@*`) or -- if there are -- the word does not match the regular expression containing the character class with the list of broken keys.<br/>Clearly, there is a runtime punishment for this. The check whether we have any broken keys is repeated for every word.
+* Watch out: In the regular expression, the *array* is interpolated into the character class (not a string, as in the other solution).<br/>This results in all array elements being put in, separated by space characters. Similar to using `"$keys->@*"` in double quoted strings.<br/>But that means that our character class also contains space characters. So actually we are not only looking for broken keys in the words, but also for space characters!<br/>
+  Good that we know there cannot be any...
+
+So to understand the code fully, the reader also has to understand these specialties. Any changes to the code can be surprising...
+
+This is why I didn't use my shortest solution for this task.<br/>I hope you agree.
+
+## Task 2: Reverse Prefix
+
+> You are given a string, \$str and a character in the given string, \$char.<br/>
+> Write a script to reverse the prefix upto the first occurrence of the given \$char in the given string \$str and return the new string.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "The cat has 3 kittens 7 toys 10 beds"
-> Output: true
-> 
-> Numbers 3, 7, 10 - strictly increasing.
+> Input: $str = "programming", $char = "g"
+> Output: "gorpmming"
+>
+> Reverse of prefix "prog" is "gorp".
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = 'Alice bought 5 apples 2 oranges 9 bananas'
-> Output: false
+> Input: $str = "hello", $char = "h"
+> Output: "hello"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = 'I ran 1 mile 2 days 3 weeks 4 months'
-> Output: true
+> Input: $str = "abcdefghij", $char = "h"
+> Output: "hgfedcbaj"
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = 'Bob has 10 cars 10 bikes'
-> Output: false
+> Input: $str = "reverse", $char = "s"
+> Output: "srevere"
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = 'Zero is 0 one is 1 two is 2'
-> Output: true
+> Input: $str = "perl", $char = "r"
+> Output: "repl"
 > ```
 
-Another use case for regular expressions.<br/>
-This time, for extracting all numbers from the input string:
-
-```perl
-    my @numbers = $str =~ /(\d+)/g;
-```
-
-Then, I translate the sentence 'all numbers have to be strictly greater that their respective predecessor' into this Perl statement, using `all` from `List::Util`:
-
-```perl
-    all { $numbers[$_] > $numbers[ $_ - 1 ] } 1..$#numbers
-```
-
-The result is the return value, so I end up with a typical Perl two-liner:
+Now this is the task where I fully promote a short solution!<br/>
+A single regular expression substitution is all that is needed:
 
 ```perl
 use v5.36;
-use List::Util qw( all );
 
-sub ascending_numbers( $str ) {
-    my @numbers = $str =~ /(\d+)/g;
-    return all { $numbers[$_] > $numbers[ $_ - 1 ] } 1..$#numbers;
+sub reverse_prefix( $str, $char ) {
+    return $str =~ s<^.*?$char>{ reverse $& }er;
 }
-
 ```
 
-#### **Thank you for the challenge!**
+Explanation?
+
+Everything from the beginning of the string up to and including the first `$char` character is matched:<br/>`     /^.*?$char/`<br/>The 'everything' match is 'non-greedy' (`.*?`), so that it stops when the first `$char` is found.
+
+The replacement for the prefix is generated with `reverse $&`. That's why the substitution part is an evaluated expression (code), using the `/e` flag.<br/>It's a habit of mine to put the code part into curly brackets when I use the `/e` flag, to make it more visible.<br/>
+I then use a pair of angle brackets for the first part.
+
+The `/r` flag returns the resulting string (instead of the number of matches found).<br/>That's the subroutine's return value, and that's all.
+
+ This is Perl. Not everything short is bad! 
+
+**Thank you for the challenge!**
