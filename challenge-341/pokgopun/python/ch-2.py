@@ -49,9 +49,8 @@ SO WHAT DO YOU THINK ?
 ### solution by pokgopun@gmail.com
 
 def rp(string: str, char: str) -> str:
-    string
     i = string.find(char)
-    if i == -1:
+    if i < 1:
         return string
     return "".join(reversed(string[:i+1])) + string[i+1:]
 

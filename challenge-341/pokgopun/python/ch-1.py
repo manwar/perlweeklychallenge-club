@@ -57,6 +57,10 @@ def bk(string: str, keys: tuple[str]) -> int:
             cnt += 1
     return cnt
 
+def bk0(string: str, keys: tuple[str]) -> int:
+    keys = set(keys)
+    return sum( 1 if keys.intersection(set(e.lower())) == set() else 0 for e in string.split(" ") )
+
 import unittest
 
 class TestBk(unittest.TestCase):
