@@ -20,7 +20,7 @@ use Test2::V0 qw(-no_srand);
 use exact 'v5.32', -signatures;
 
 sub reversePrefix ($str,$char) {
-  $str = $char.reverse ($1).$2 if ($str =~ m#^(.*?)$char(.*)#);
+  return reverse($1).$2 if ($str =~ m#^(.+?$char)(.*)#);
   return $str;
 }
 
