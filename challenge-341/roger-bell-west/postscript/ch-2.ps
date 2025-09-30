@@ -1,0 +1,86 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/reverseprefix {
+    /f exch def
+    /a exch def
+    /c a s2a def
+    a f search {
+        length /p exch def pop pop
+        c 0 p 1 add getinterval reverse
+        c exch 0 exch putinterval
+    } {
+        pop
+    } ifelse
+    c a2s
+} bind def
+
+(reverseprefix) test.start
+(programming) (g) reverseprefix (gorpramming) eq test
+(hello) (h) reverseprefix (hello) eq test
+(abcdefghij) (h) reverseprefix (hgfedcbaij) eq test
+(reverse) (s) reverseprefix (srevere) eq test
+(perl) (r) reverseprefix (repl) eq test
+test.end
