@@ -1,0 +1,96 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/ascendingnumbers {
+    0 dict begin
+    /first true def
+    /prev 0 def
+    true exch
+    ( ) strsplit {
+        {
+            cvi
+        } stopped {
+            pop
+        } {
+            /n exch def
+            first not {
+                prev n ge {
+                    pop false
+                    exit
+                } if
+            } if
+            /first false def
+            /prev n def
+        } ifelse
+    } forall
+    end
+} bind def
+
+(ascendingnumbers) test.start
+(The cat has 3 kittens 7 toys 10 beds) ascendingnumbers test
+(Alice bought 5 apples 2 oranges 9 bananas) ascendingnumbers not test
+(I ran 1 mile 2 days 3 weeks 4 months) ascendingnumbers test
+(Bob has 10 cars 10 bikes) ascendingnumbers not test
+(Zero is 0 one is 1 two is 2) ascendingnumbers test
+test.end

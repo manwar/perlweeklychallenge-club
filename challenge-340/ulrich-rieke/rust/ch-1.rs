@@ -8,14 +8,12 @@ fn main() {
     let mut word : &str = inline.trim( ) ;
     let re = Regex::new(r"(.)\1").unwrap( ) ;
     let mut result = re.is_match( word ).unwrap( ) ;
-    let empty : String = "".to_string( ) ;
-    let mut current : String ;
+    let mut value : String ;
     while result {
        let fields : Vec<&str> = re.split( word ).map( |x| x.unwrap( ) ).collect( ) ;
-       let value : String = fields.iter( ).fold( empty.clone( ) , |acc , w|
-	    acc.to_owned( ) + w ) ;
-       current = value.clone( ) ;
-       word = current.as_str( ) ;
+       value = fields.iter( ).fold( "".to_string( ) , |acc , w| acc.to_owned( ) +
+	     w ) ;
+       word = value.as_str( ) ;
        result = re.is_match( word ).unwrap( ) ;
     }
     println!("{}" , word ) ;
