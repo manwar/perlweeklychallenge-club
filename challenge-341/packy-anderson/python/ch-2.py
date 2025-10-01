@@ -1,28 +1,24 @@
 #!/usr/bin/env python
 
-def distinctAverages(nums):
-  pass
+def reverse_prefix(mystr, char):
+  loc = mystr.find(char) + 1
+  return mystr[0:loc][::-1] + mystr[loc:]
 
-def int_join(joiner, arr):
-  return joiner.join(map(lambda i: str(i), arr))
-
-def solution(nums):
-  print(f'Input: @nums = ({int_join(", ", nums)})')
-  count, explain = distinctAverages(nums)
-  print(f'Output: {count}\n\n{explain}')
-
+def solution(mystr, char):
+  print(f'Input: $str = "{mystr}", $char = "{char}"')
+  print(f'Output: "{reverse_prefix(mystr, char)}"')
 
 print('Example 1:')
-solution()
+solution("programming", "g")
 
 print('\nExample 2:')
-solution()
+solution("hello", "h")
 
 print('\nExample 3:')
-solution()
+solution("abcdefghij", "h")
 
 print('\nExample 4:')
-solution()
+solution("reverse", "s")
 
 print('\nExample 5:')
-solution()
+solution("perl","r")

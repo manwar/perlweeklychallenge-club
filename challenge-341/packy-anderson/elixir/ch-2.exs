@@ -1,26 +1,28 @@
 #!/usr/bin/env elixir
 
 defmodule PWC do
+  def reverse_prefix(str, char) do
+    [a, b] = String.split(str, char, parts: 2)
+    char <> String.reverse(a) <> b
+  end
 
-  def solution(ints) do
-    IO.puts("Input: @ints = (" <> Enum.join(ints, ", ") <> ")")
-    {sign, explain} = PWC.productSign(ints)
-    IO.puts("Output: " <> to_string(sign) )
-    IO.puts("\n" <> explain)
+  def solution(str, char) do
+    IO.puts("Input: $str = \"#{str}\", $char = \"#{char}\"")
+    IO.puts("Output: \"#{reverse_prefix(str, char)}\"")
   end
 end
 
 IO.puts("Example 1:")
-PWC.solution()
+PWC.solution("programming", "g")
 
 IO.puts("\nExample 2:")
-PWC.solution()
+PWC.solution("hello", "h")
 
 IO.puts("\nExample 3:")
-PWC.solution()
+PWC.solution("abcdefghij", "h")
 
 IO.puts("\nExample 4:")
-PWC.solution()
+PWC.solution("reverse", "s")
 
 IO.puts("\nExample 5:")
-PWC.solution()
+PWC.solution("perl","r")

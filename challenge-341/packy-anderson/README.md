@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Points? What's the diff?](https://packy.dardan.com/b/bN)
+[Perl Weekly Challenge: Something just BROKE](https://packy.dardan.com/b/bw)
