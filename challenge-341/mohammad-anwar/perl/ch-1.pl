@@ -8,7 +8,7 @@ sub typable_word_count($str, $keys) {
     return scalar @words unless @$keys;
 
     my $broken_chars = quotemeta(join '', @$keys);
-    return scalar grep { !/[$broken_chars]/i } split /\s+/, $str;
+    return scalar grep { !/[$broken_chars]/i } @words;
 }
 
 my $examples = [
