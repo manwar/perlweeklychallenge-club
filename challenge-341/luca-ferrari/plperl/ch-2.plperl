@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 341
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-341>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc341;
+
+CREATE OR REPLACE FUNCTION
+pwc341.task2_plperl( text, text )
+RETURNS text
+AS $CODE$
+
+   my ( $text, $prefix ) = @_;
+
+   my $index = index( $text, $prefix );
+   return $index unless( $index );
+
+   my @chars = split //, $text;
+   return join( '',
+                reverse( @chars[ 0 .. $index ] ),
+		@chars[ $index + 1 .. $#chars ] );
+   
+$CODE$
+LANGUAGE plperl;

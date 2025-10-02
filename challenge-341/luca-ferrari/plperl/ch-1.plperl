@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 341
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-341>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc341;
+
+CREATE OR REPLACE FUNCTION
+pwc341.task1_plperl( text, text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $text, $keys ) = @_;
+
+   for my $word ( split /\s+/, $text ) {
+       my $found = 0;
+       for my $key ( $keys->@* ) {
+       	   $found += scalar grep { $_ eq $key } split( //, $word );
+	   last if ( $found );
+       }
+       
+       return_next( $word ) unless ( $found );
+   }
+
+return undef;
+
+$CODE$
+LANGUAGE plperl;
