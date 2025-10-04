@@ -28,5 +28,3 @@ foreach my $word (@words) {
 }
 
 print "$count\n";
-
-
