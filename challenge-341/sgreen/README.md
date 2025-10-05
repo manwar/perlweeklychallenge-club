@@ -1,3 +1,3 @@
-# The Weekly Challenge 340
+# The Weekly Challenge 341
 
-Blog: [Ascending Regex to remove the Duplicates](https://dev.to/simongreennet/weekly-challenge-ascending-regex-to-remove-the-duplicates-2bd)
+Blog: [Reversing my broken keys](https://dev.to/simongreennet/weekly-challenge-reversing-my-broken-keys-313l)
