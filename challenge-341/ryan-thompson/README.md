@@ -1,19 +1,18 @@
 # Ryan Thompson
 
-## Week 301 Solutions
+## Week 341 Solutions
 
-### Task 1 › Largest Number
+### Task 1 › Broken Keyboard
 
  * [Perl](perl/ch-1.pl)
 
-### Task 2 › Hamming Distance
+### Task 2 › Reverse Prefix
 
  * [Perl](perl/ch-2.pl)
- * [C](c/ch-2.c)
 
 ## Blog
 
- * [Hamming Distance and Large Numbers](https://ry.ca/2024/12/pwc-301-hamming-distance-and-large-numbers/)
+ * [Brken Keybard and Reverse Prefix](https://ry.ca/2025/10/brken-keybards-reverse-prefixes/)
 
 ## Tests
 
