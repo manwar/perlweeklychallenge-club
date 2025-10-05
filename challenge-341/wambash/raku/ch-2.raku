@@ -4,7 +4,6 @@ sub reverse-prefix (+$str, :$char) {
     my ($prefix, $root) = $str.split: / <?after "$char"> /, 2;
 
     $prefix.flip ~ $root
-
 }
 
 multi MAIN (Bool :test($)!) {
