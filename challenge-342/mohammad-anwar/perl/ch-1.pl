@@ -18,28 +18,47 @@ for (@examples) {
 done_testing;
 
 sub balance_string {
-    my $s = shift;                           # Get the input string from arguments
-    my @d = sort grep /\d/, split //, $s;    # Extract all digits and sort them
-    my @l = sort grep /\D/, split //, $s;    # Extract all letters and sort them
+    my $s = shift;
+    # Extract all digits and sort them
+    my @d = sort grep /\d/, split //, $s;
+    # Extract all letters and sort them
+    my @l = sort grep /\D/, split //, $s;
 
-    return "" if abs(@d - @l) > 1;           # Return empty string if impossible
+    # Return empty string if impossible
+    return "" if abs(@d - @l) > 1;
 
-    @d > @l ?                                # If more digits than letters:
-        join "",                             #   Join all elements into a string
-        map $d[$_] . ($l[$_] || ""),         #   For each index: digit + letter (or empty if no letter)
-        0..$#d                               #   Iterate through all digit indices
-    :                                        # Else:
-    @l > @d ?                                # If more letters than digits:
-        join "",                             #   Join all elements into a string
-        map $l[$_] . ($d[$_] || ""),         #   For each index: letter + digit (or empty if no digit)
-        0..$#l                               #   Iterate through all letter indices
-    :                                        # Else (equal counts):
-    $d[0] lt $l[0] ?                         # If first digit < first letter lexicographically:
-        join "",                             #   Join all elements into a string
-        map $d[$_] . $l[$_],                 #   For each index: digit + letter
-        0..$#d                               #   Iterate through all indices (both arrays same size)
-    :                                        # Else:
-        join "",                             #   Join all elements into a string
-        map $l[$_] . $d[$_],                 #   For each index: letter + digit
-        0..$#d                               #   Iterate through all indices (both arrays same size)
+    # If more digits than letters:
+    @d > @l ?
+        #   Join all elements into a string
+        join "",
+        #   For each index: digit + letter (or empty if no letter)
+        map $d[$_] . ($l[$_] || ""),
+        #   Iterate through all digit indices
+        0..$#d
+    :
+    # If more letters than digits:
+    @l > @d ?
+        #   Join all elements into a string
+        join "",
+        #   For each index: letter + digit (or empty if no digit)
+        map $l[$_] . ($d[$_] || ""),
+        #   Iterate through all letter indices
+        0..$#l
+    # Else (equal counts):
+    :
+    # If first digit < first letter lexicographically:
+    $d[0] lt $l[0] ?
+        #   Join all elements into a string
+        join "",
+        #   For each index: digit + letter
+        map $d[$_] . $l[$_],
+        #   Iterate through all indices (both arrays same size)
+        0..$#d
+    :   # Else:
+        #   Join all elements into a string
+        join "",
+        #   For each index: letter + digit
+        map $l[$_] . $d[$_],
+        #   Iterate through all indices (both arrays same size)
+        0..$#d
 }
