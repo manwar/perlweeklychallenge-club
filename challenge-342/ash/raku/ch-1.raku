@@ -17,20 +17,14 @@ sub balance-string($s) {
 
     # It's only possible to balance a string if
     # the number of digits and letters differs by not more than 2.
-    if ((@digits.elems - @letters.elems).abs > 1) {
-        return '';
-    }
-    elsif (@digits.elems == @letters.elems) {
-        # Assuming that alphabetical sort puts digits first
-        return [~] (@digits Z~ @letters);
-    }
+    return '' if (@digits.elems - @letters.elems).abs > 1;
+
+    # Assuming that alphabetical sort puts digits first
+    return [~] (@digits Z~ @letters) if @digits.elems == @letters.elems;
 
     # Now the two cases where the size is different, but the
     # difference of sizes is always 1 here. So appending the extra character.
-    elsif (@digits.elems > @letters.elems) {
-        return ([~] (@digits Z~ @letters)) ~ @digits[*-1];
-    }
-    else {
-        return ([~] (@letters Z~ @digits)) ~ @letters[*-1];
-    }
+    return ([~] (@digits Z~ @letters)) ~ @digits[*-1] if @digits.elems > @letters.elems;
+    
+    return ([~] (@letters Z~ @digits)) ~ @letters[*-1];
 }
