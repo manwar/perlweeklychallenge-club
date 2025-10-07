@@ -1,0 +1,84 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/maxscore {
+    0 dict begin
+    /a exch def
+    /zeroestoleft 0 def
+    /onestoright a length def
+    /maxscore 0 def
+    a s2a enumerate.array {
+        aload pop
+        /c exch def
+        /i exch def
+        c 48 eq {
+            /zeroestoleft zeroestoleft 1 add def
+        } if
+        c 49 eq {
+            /onestoright onestoright 1 sub def
+        } if
+        i 1 add a length lt {
+            /maxscore maxscore zeroestoleft onestoright add max def
+        } if
+    } forall
+    maxscore onestoright sub
+    end
+} bind def
+
+(maxscore) test.start
+(0011) maxscore 4 eq test
+(0000) maxscore 3 eq test
+(1111) maxscore 3 eq test
+(0101) maxscore 3 eq test
+(011101) maxscore 5 eq test
+test.end
