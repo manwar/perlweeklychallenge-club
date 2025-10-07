@@ -12,28 +12,28 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try {
-	my(@digits, @letters, @output);
-	for(split ""){
-	    die "Expected only digits or lowercase letters: $_" unless /\d|[a-z]/;
-	    push @digits, $_ if /\d/;
-	    push @letters, $_ if /[a-z]/;
-	}
-	#print"$_ -> ";
-	say("$_ ->"),next unless abs(@digits - @letters) <= 1;
-	@digits = sort {$a cmp $b} @digits;
-	@letters = sort {$a cmp $b} @letters;
-	if(@digits >= @letters){
-	    push @output, shift @digits, shift @letters while @letters;
-	    push @output, @digits; # if there were one more digit than letters
-	    say "$_ -> ", join "", @output;
-	    next
-	}
-	# @digits < @letters
-	push @output, shift @letters, shift @digits  while @digits;
-	push @output, @letters; # remaining letter
-	say "$_ -> ", join "", @output;
+        my(@digits, @letters, @output);
+        for(split ""){
+            die "Expected only digits or lowercase letters: $_" unless /\d|[a-z]/;
+            push @digits, $_ if /\d/;
+            push @letters, $_ if /[a-z]/;
+        }
+        #print"$_ -> ";
+        say("$_ ->"),next unless abs(@digits - @letters) <= 1;
+        @digits = sort {$a cmp $b} @digits;
+        @letters = sort {$a cmp $b} @letters;
+        if(@digits >= @letters){
+            push @output, shift @digits, shift @letters while @letters;
+            push @output, @digits; # if there were one more digit than letters
+            say "$_ -> ", join "", @output;
+            next
+        }
+        # @digits < @letters
+        push @output, shift @letters, shift @digits  while @digits;
+        push @output, @letters; # remaining letter
+        say "$_ -> ", join "", @output;
     }
     catch($e){
-	warn $e;
+        warn $e;
     }
 }
