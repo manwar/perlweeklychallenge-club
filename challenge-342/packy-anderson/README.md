@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Something just BROKE](https://packy.dardan.com/b/bw)
+[Perl Weekly Challenge: Balanced Adagio for Strings](https://packy.dardan.com/b/cQ)
