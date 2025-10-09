@@ -1,3 +1,3 @@
-# The Weekly Challenge 341
+# The Weekly Challenge 342
 
-Blog: [Reversing my broken keys](https://dev.to/simongreennet/weekly-challenge-reversing-my-broken-keys-313l)
+Blog: [Balancing the Score](https://dev.to/simongreennet/weekly-challenge-balancing-the-score-38kd)
