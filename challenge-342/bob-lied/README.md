@@ -2,4 +2,4 @@
 
 ## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-342/)
 ## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-342/bob-lied)
-[Blog](https://dev.to/boblied/)
+[Blog](https://dev.to/boblied/pwc-342-balance-4eh4)
