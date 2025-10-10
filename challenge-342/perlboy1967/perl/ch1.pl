@@ -26,7 +26,7 @@ use List::MoreUtils qw(zip);
 sub balanceString ($str) {
   my (@d,@c);
 
-  map { /\d/ ? push(@d,$_) : push(@c,$_) } split(//,$str);
+  map { /\d/ ? push(@d,$_) : push(@c,$_) } sort split(//,$str);
 
   return '' if (abs(@d - @c) > 1);
 
@@ -41,10 +41,11 @@ sub balanceString ($str) {
 
 is(balanceString('a0b1c2'),'0a1b2c','Example 1');
 is(balanceString('abc12'),'a1b2c','Example 2');
-is(balanceString('0a2b1c3'),'0a2b1c3','Example 3');
+is(balanceString('0a2b1c3'),'0a1b2c3','Example 3');
 is(balanceString('1a23'),'','Example 4');
 is(balanceString('ab123'),'1a2b3','Example 5');
 is(balanceString('a'),'a','Own example 1');
 is(balanceString('1'),'1','Own example 2');
+is(balanceString('zyx321'),'1x2y3z','Own example 3');
 
 done_testing;
