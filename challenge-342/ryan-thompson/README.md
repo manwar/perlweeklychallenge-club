@@ -1,18 +1,18 @@
 # Ryan Thompson
 
-## Week 341 Solutions
+## Week 342 Solutions
 
-### Task 1 › Broken Keyboard
+### Task 1 › Balanced Strings
 
  * [Perl](perl/ch-1.pl)
 
-### Task 2 › Reverse Prefix
+### Task 2 › Max Score
 
  * [Perl](perl/ch-2.pl)
 
 ## Blog
 
- * [Brken Keybard and Reverse Prefix](https://ry.ca/2025/10/brken-keybards-reverse-prefixes/)
+ * [Perfectly Balanced and Pointlessly Optimized](https://ry.ca/2025/10/pwc-342-balanced-optimized/)
 
 ## Tests
 
