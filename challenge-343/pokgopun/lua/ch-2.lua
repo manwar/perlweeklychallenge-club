@@ -108,27 +108,27 @@ local function sum(nums)
 end
 
 local function ct(grid)
-	local mx, score = 0, {}
+	local mx, scores = 0, {}
 	for i, nums in ipairs(grid) do
 		local sm = sum(nums)
-		table.insert(score, sm)
+		table.insert(scores, sm)
 		if mx < sm then
 			mx = sm
 		end
 	end
-	local top = {}
-	for i, v in ipairs(score) do
+	local top_ids = {}
+	for i, v in ipairs(scores) do
 		if v == mx then
-			table.insert(top, i)
+			table.insert(top_ids, i)
 		end
 	end
-	local l = #top
+	local l = #top_ids
 	if l == 1 then
-		return top[1] - 1   -- minus-one-offset as lua's collection start with index#1 while the challenge assumes more general index#0
+		return top_ids[1] - 1   -- minus-one-offset as lua's collection start with index#1 while the challenge assumes more general index#0
 	end
 	for i=1, l-1 do
 		for j=i+1, l do
-			local a, b = top[i], top[j]
+			local a, b = top_ids[i], top_ids[j]
 			if grid[a][b] == 1 then
 				return a - 1   -- minus-one-offset as lua's collection start with index#1 while the challenge assumes more general index#0
 			end

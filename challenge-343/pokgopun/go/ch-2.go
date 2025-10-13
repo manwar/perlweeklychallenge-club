@@ -122,27 +122,27 @@ type grid []ints
 
 func (gd grid) process() int {
 	mx := 0
-	rank := make(ints, len(gd))
+	scores := make(ints, len(gd))
 	for i, rw := range gd {
 		v := rw.sum()
-		rank[i] = v
+		scores[i] = v
 		if mx < v {
 			mx = v
 		}
 	}
-	var top ints
-	for i, v := range rank {
+	var top_ids ints
+	for i, v := range scores {
 		if v == mx {
-			top = append(top, i)
+			top_ids = append(top_ids, i)
 		}
 	}
-	l := len(top)
+	l := len(top_ids)
 	if l == 1 {
-		return top[0]
+		return top_ids[0]
 	}
 	for i := 0; i < l-1; i++ {
 		for j := i + 1; j < l; j++ {
-			a, b := top[i], top[j]
+			a, b := top_ids[i], top_ids[j]
 			if gd[a][b] == 1 {
 				return a
 			}

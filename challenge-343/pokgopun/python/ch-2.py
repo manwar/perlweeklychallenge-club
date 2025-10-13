@@ -101,15 +101,18 @@ SO WHAT DO YOU THINK ?
 
 def ct(grid: list[list[int]]) -> int:
     ranks = sorted((sum(grid[i]),i) for i in range(len(grid)))   ### list of tup where tup[1] is team_id and tup[0] is win count, asc sorted by win count
-    max = ranks[-1][0]                                           ### max win count
-    tops = [ e[1] for e in ranks if e[0] == max ]                ### list of top team_id that have max win cout
-    if len(tops) == 1:                                           ### if only one team_id in the top team_id, return the team_id 
-        return ranks[-1][1]
-    tops.sort()                                                  ### check the result between two teams in the top team and return the first team_id that wins
-    for i in tops:
-        for j in tops:
-            if grid[i][j] == 1:
-                return i
+    mx = ranks[-1][0]                                           ### max win count
+    top_ids = [ e[1] for e in ranks if e[0] == mx ]                ### list of top team_id that have max win cout
+    l = len(top_ids)
+    if l == 1:                                           ### if only one team_id in the top team_id, return the team_id 
+        return top_ids[0]
+    for i in range(l-1):
+        for j in range(i+1,l):
+            a, b = top_ids[i], top_ids[j]
+            if grid[a][b] == 1:
+                return a
+            if grid[b][a] == 1:
+                return b
     return None                                                  ### top teams cannot win each other
 
 import unittest
