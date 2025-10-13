@@ -100,20 +100,10 @@ sub champion(@grid)
     my @strongest = indexes { $_ == $maxStrength } @strength;
 
     # Eliminate losers
-    #
-    #my @champ;
-    #for my $team1 ( @strongest )
-    #{
-    #    next if any { $grid[$_][$team1] } @strongest ;
-    #    push @champ, $team1;
-    #}
-    #
+    my @champ = grep { my $t = $_; ! any { $grid[$_][$t]} @strongest } @strongest;
 
-    # For a possible tie, choose the smallest
-    #my @champ = grep { my $t = $_; ! any { $grid[$_][$t]} @strongest } @strongest;
-    #return $champ[0];
-
-    return (grep { my $t = $_; ! any { $grid[$_][$t]} @strongest } @strongest)[0];
+    # For a possible tie, return a list. If no champions, it's an N-way tie.
+    return ( @champ > 0 ? "@champ" : "@strongest" );
 }
 
 sub runTest
@@ -136,11 +126,11 @@ sub runTest
         { case => "Example 5", expect => 2,
           input => [ [0,0,0,0,0], [1,0,0,0,0], [1,1,0,1,1], [1,1,0,0,0], [1,1,0,1,0]  ]
         } ,
-        { case => "Rock paper scissors", expect => undef,
+        { case => "Rock paper scissors", expect => "0 1 2",
           input => [ [0,0,1], [1,0,0], [0,1,0] ]
         } ,
-        { case => "Tied ", expect => 1,
-          input => [ [0,0,0,0,0,0], [0,0,0,0,1,1], [0,0,0,0,0,0], [0,0,1,1,0,0], [0,0,0,0,0], [0,0,0,0,0,0]  ]
+        { case => "Tied ", expect => "1 3",
+          input => [ [0,0,0,0,0,0], [0,0,0,0,1,1], [0,0,0,0,0,0], [1,0,1,0,0,0], [0,0,0,0,0], [0,0,0,0,0,0]  ]
         } ,
     );
 
