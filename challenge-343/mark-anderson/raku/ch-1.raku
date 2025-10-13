@@ -15,10 +15,7 @@ is zero-friend-alt(-2, 2, -4, 4, -1, 1),  1;
 
 sub zero-friend(+@nums)
 {
-    @nums.classify({ .sign }, :as{ .abs }) 
-         .values
-         .flat(:hammer)
-         .min 
+     @nums.map(*.abs).min
 }
 
 # I think this alternate solution matches the instructions better.
