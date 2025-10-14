@@ -1,33 +1,38 @@
-# Perl Weekly Challenge: Broken Keyboard and Reverse Prefix
+# Perl Weekly Challenge Solutions
 
-## Task 1: Broken Keyboard
+This repository contains solutions for the Perl Weekly Challenge tasks in both Perl and Python. Below is a summary of the tasks and the implemented solutions.
 
-### Description
-Given a string containing English letters and a list of broken keys, return the count of words that can be typed completely without using any broken keys. The check is case-insensitive.
-
-### Solution
-- **Perl (ch-1.pl)**: The `broken_keyboard` function splits the input string into words and checks each word against a hash of broken keys. If a word contains no broken keys, it increments a counter. The function uses `split` for word separation and a hash for O(1) key lookup.
-- **Python (ch-1.py)**: The `broken_keyboard` function uses a set for broken keys lookup, splits the string into words, and counts words that don't contain any broken keys. It uses `str.split()` and a set for efficient lookup.
-
-### Test Cases
-1. Input: "Hello World", ['d'] → Output: 1
-2. Input: "apple banana cherry", ['a', 'e'] → Output: 0
-3. Input: "Coding is fun", [] → Output: 3
-4. Input: "The Weekly Challenge", ['a', 'b'] → Output: 2
-5. Input: "Perl and Python", ['p'] → Output: 1
-
-## Task 2: Reverse Prefix
+## Task 1: Zero Friend
 
 ### Description
-Given a string and a character, reverse the prefix of the string up to and including the first occurrence of the character, and return the new string. If the character is not found, return the original string.
+Given a list of numbers, find the number closest to zero and return its distance to zero. If zero is present in the list, it is considered the closest, and the distance is 0.
 
 ### Solution
-- **Perl (ch-2.pl)**: The `reverse_prefix` function uses `index` to find the character's position, extracts the prefix with `substr`, reverses it, and appends the remaining string.
-- **Python (ch-2.py)**: The `reverse_prefix` function uses `str.find` to locate the character, slices the prefix, reverses it using slice notation `[::-1]`, and concatenates the rest of the string.
+- **Perl (`ch-1.pl`)**: The `zero_friend` function iterates through the list of numbers, computing the absolute value of each to find the minimum distance to zero. If the list is empty, it returns 0.
+- **Python (`ch-1.py`)**: The `zero_friend` function uses a list comprehension with `min` and `abs` to find the smallest absolute value in the list. Returns 0 for an empty list.
+- **Test Cases**:
+  - `(4, 2, -1, 3, -2)` → `1`
+  - `(-5, 5, -3, 3, -1, 1)` → `1`
+  - `(7, -3, 0, 2, -8)` → `0`
+  - `(-2, -5, -1, -8)` → `1`
+  - `(-2, 2, -4, 4, -1, 1)` → `1`
 
-### Test Cases
-1. Input: "programming", "g" → Output: "gorpramming"
-2. Input: "hello", "h" → Output: "hello"
-3. Input: "abcdefghij", "h" → Output: "hgfedcbaij"
-4. Input: "reverse", "s" → Output: "srevere"
-5. Input: "perl", "r" → Output: "repl"
+## Task 2: Champion Team
+
+### Description
+Given a matrix `grid` where `grid[i][j] == 1` means team `i` is stronger than team `j`, and `grid[i][j] == 0` means team `j` is stronger, find the champion team with the most wins. If multiple teams tie for the most wins, return the one that beats the others.
+
+### Solution
+- **Perl (`ch-2.pl`)**: The `champion_team` function counts wins for each team by summing the rows of the grid (excluding self-comparisons). It identifies teams with the maximum wins and, if multiple, checks which one beats the others based on the grid.
+- **Python (`ch-2.py`)**: Similar to the Perl solution, it counts wins per team, finds those with the maximum wins, and selects the champion by checking which team beats all other top teams.
+- **Test Cases**:
+  - `[[0, 1, 1], [0, 0, 1], [0, 0, 0]]` → `Team 0`
+  - `[[0, 1, 0, 0], [0, 0, 0, 0], [1, 1, 0, 0], [1, 1, 1, 0]]` → `Team 3`
+  - `[[0, 1, 0, 1], [0, 0, 1, 1], [1, 0, 0, 0], [0, 0, 1, 0]]` → `Team 0`
+  - `[[0, 1, 1], [0, 0, 0], [0, 1, 0]]` → `Team 0`
+  - `[[0, 0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 1, 0, 1, 1], [1, 1, 0, 0, 0], [1, 1, 0, 1, 0]]` → `Team 2`
+
+## Running the Solutions
+- **Perl**: Run `perl ch-1.pl` or `perl ch-2.pl` to execute the tests.
+- **Python**: Run `python3 ch-1.py` or `python3 ch-2.py` to execute the tests.
+- The solutions have been validated with `flake8`, `pyupgrade`, `bandit` (Python), and `Perl::Critic` (Perl) to ensure code quality.
