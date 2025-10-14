@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Balanced Adagio for Strings](https://packy.dardan.com/b/cQ)
+[Perl Weekly Challenge: Ze-ro the CHAMPIONS!](https://packy.dardan.com/b/cg)
