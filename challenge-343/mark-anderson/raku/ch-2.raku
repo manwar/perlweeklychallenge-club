@@ -154,8 +154,8 @@ is champion-team([< 0 1 0 1 0 1 1 0 1 1 0 0 0 1 0 0 0 1 1 1 1 1 1 1 0 0 1 1 0 0 
 
 sub champion-team(@m)
 {
-    my %h  = @m.map:   { $++ => .grep(1, :k) }      
-       %h .= classify: { .value.elems }
-       %h  = %h.max.value;
+    my %h = .pairs given @m.map: { .grep(1, :k) }     
+       %h = %h.classify: { .value.elems }
+       %h = %h.max.value;
        %h.keys>>.Int (-) %h.values.flat(:hammer)
 }
