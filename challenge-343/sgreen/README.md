@@ -1,3 +1,3 @@
-# The Weekly Challenge 342
+# The Weekly Challenge 343
 
-Blog: [Balancing the Score](https://dev.to/simongreennet/weekly-challenge-balancing-the-score-38kd)
+Blog: [Absolute Champion](https://dev.to/simongreennet/weekly-challenge-absolute-champion-57cf)
