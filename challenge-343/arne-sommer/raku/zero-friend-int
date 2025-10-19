@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@nums where @nums.elems > 0 && all(@nums) ~~ Int)
+
+say @nums>>.abs.min;
