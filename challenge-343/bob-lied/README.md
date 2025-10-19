@@ -1,5 +1,5 @@
-# Solutions to weekly challenge 342 by Bob Lied
+# Solutions to weekly challenge 343 by Bob Lied
 
-## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-342/)
-## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-342/bob-lied)
+## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-343/)
+## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-343/bob-lied)
 [Blog](https://dev.to/boblied/pwc-342-balance-4eh4)
