@@ -1,0 +1,22 @@
+ BalanceString←{
+     let←¯1 ⎕C ⎕A
+     dig←⎕D
+     BS←{
+         sorted←⍵[⍋⍵]
+         l←sorted∊let ⋄ d←sorted∊dig
+         1<|l-⍥(+/)d:''
+         mo←⍒(l×+/l)+(d×+/d)
+         Ignore0←(⌊/⍬)@(0∘=)
+         o←sorted[mo]
+         o[⍋(+\o∊let)⌊⍥Ignore0(+\o∊dig)]
+     }
+
+⍝ Tests
+     '0a1b2c'≢BS'a0b1c2':∘∘∘
+     'a1b2c'≢BS'abc12':∘∘∘
+     '0a1b2c3'≢BS'0a2b1c3':∘∘∘
+     ''≢BS'1a23':∘∘∘
+     '1a2b3'≢BS'ab123':∘∘∘
+
+     'All tests passed.'
+ }
