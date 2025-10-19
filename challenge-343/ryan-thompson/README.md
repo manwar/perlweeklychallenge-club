@@ -1,18 +1,18 @@
 # Ryan Thompson
 
-## Week 342 Solutions
+## Week 343 Solutions
 
-### Task 1 › Balanced Strings
+### Task 1 › Zero Friend
 
  * [Perl](perl/ch-1.pl)
 
-### Task 2 › Max Score
+### Task 2 › Champion Team
 
  * [Perl](perl/ch-2.pl)
 
 ## Blog
 
- * [Perfectly Balanced and Pointlessly Optimized](https://ry.ca/2025/10/pwc-342-balanced-optimized/)
+ * [It's hard to make friends when you're a zero](https://ry.ca/2025/10/pwc-343-its-hard-to-make-friends/)
 
 ## Tests
 
