@@ -1,3 +1,4 @@
+find . -name "*.cu" -delete
 find . -name "*.retro" -delete
 find . -name "*.typ" -delete
 find . -name "*.l" -delete
