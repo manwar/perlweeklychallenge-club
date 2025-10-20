@@ -100,4 +100,3 @@ print(f"Output: {str(result5).lower()}")
 
 if result5:
     print(f"Use in the order: {format_list_of_lists(order5)}")
-print("\n")

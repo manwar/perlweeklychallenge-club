@@ -27,12 +27,10 @@ sub can_build_target {
                 last;
             }
         }
-
         unless ($match_found_in_cycle) {
             return (0, []);
         }
     }
-
     return (1, \@used_order);
 }
 
@@ -124,4 +122,3 @@ say "Output: " . ($result5 ? 'true' : 'false');
 if ($result5) {
     say "Use in the order: " . format_array_of_arrays(\@order5);
 }
-
