@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Ze-ro the CHAMPIONS!](https://packy.dardan.com/b/cg)
+[Perl Weekly Challenge: A-ray Sunshine!](https://packy.dardan.com/b/ct)
