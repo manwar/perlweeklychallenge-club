@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 def compute(ints, x):
-  return list(str(int("".join(map(str, ints))) + x))
+  return map(int, list(str(int("".join(map(str, ints))) + x)))
 
 def solution(ints, x):
   print(f'Input: @ints = ({"".join(map(str, ints))}), $x = {x}')
