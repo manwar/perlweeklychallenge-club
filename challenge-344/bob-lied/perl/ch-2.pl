@@ -60,21 +60,32 @@ sub canMake($source, $target)
         {
             next unless isPrefix($p, $t);
 
-            my @t = $t->@*;
-            splice(@t, 0, @$p);
-            return true if @t == 0;
+            my @t = $t->@*;     # Make a copy of remaining target.
+            splice(@t, 0, @$p); # Remove prefix from target.
 
-            my @s = $s->@*;
-            splice(@s, $i, 1);
+            # Have we completely matched the target?
+            if ( @t == 0 )
+            {
+                $logger->debug("YES: Left in source: ", scalar(@$source) );
+                # Returning here regardless of what's left in source.
+                # If the requirement was to use all of source, we would
+                # check that the size of s is now down to 1.
+                return true;
+            }
 
-            push @stack, [ \@s, \@t ];
+            my @s = $s->@*;     # Make a copy of remaining source.
+            splice(@s, $i, 1);  # Remove the segment we used.
+
+            push @stack, [ \@s, \@t ];  # Try again with smaller sets.
         }
     }
+    $logger->debug("NO: Left in source: ", scalar(@$source) );
     return false;
 }
 
 sub isPrefix($s, $t)
 {
+    return false if @$s > @$t;
     my $match = true;
     for my ($i, $n) ( indexed $s->@* )
     {
@@ -92,15 +103,18 @@ sub runTest
     is( isPrefix([1,2,3], [1,2,3]), true, "isPrefix 3");
     is( isPrefix([7,2,3], [1,2,3]), false, "isPrefix 4");
     is( isPrefix([1,2,7], [1,2,3,4]), false, "isPrefix 5");
+    is( isPrefix([1,2,3,4], [1,2,3]), false, "isPrefix 6");
 
     is( canMake( [[2,3],[1],[4]]  , [1,2,3,4]  ),  true, "Example 1");
     is( canMake( [[1,3],[2,4]]    , [1,2,3,4]  ), false, "Example 2");
-    is( canMake( [[9,1],[5,8],[2]], [5,8,2,9,1]),  true, "Example 2");
-    is( canMake( [[1],[3]]        , [1,2,3]    ), false, "Example 2");
-    is( canMake( [[7,4,6]]        , [7,4,6]    ),  true, "Example 2");
+    is( canMake( [[9,1],[5,8],[2]], [5,8,2,9,1]),  true, "Example 3");
+    is( canMake( [[1],[3]]        , [1,2,3]    ), false, "Example 4");
+    is( canMake( [[7,4,6]]        , [7,4,6]    ),  true, "Example 5");
 
-    is( canMake( [[1,4],[1,3],[1,2],[1,1]], [1,1,1,2,1,3,1,4]    ),  true, "bigger");
-    is( canMake( [[1,4],[1,3],[1,2],[1,1]], [1,0,1,1,2,1,3,1,4]    ),  false, "bigger fail");
+    is( canMake( [[1,4],[1,3],[1,2],[1,1]], [1,1,1,2,1,3,1,4] ), true, "bigger");
+    is( canMake( [[1,4],[1,3],[1,2],[1,1]], [1,0,1,1,2,1,3,1,4] ), false, "bigger fail");
+    is( canMake( [ [1,7,3], [4,5], [1,7], [3,4,5], [3], [4] ], [1,7,3,4] ), true, "backtrack");
+    is( canMake( [ [1,7,3], [4,5], [1,7], [3,4,5], [3,4,6] ], [1,7,3,4] ), false, "backtrack fail");
 
     done_testing;
 }
