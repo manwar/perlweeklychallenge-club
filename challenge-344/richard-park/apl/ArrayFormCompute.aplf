@@ -1,0 +1,14 @@
+ ArrayFormCompute←{
+
+     _U_←{⍵⍵⍣¯1⊢⍺ ⍺⍺⍥⍵⍵ ⍵}   ⍝ Under operator
+     AFC←+_U_(10∘⊥)
+⍝ Tests
+     1 2 4 6≢12 AFC 1 2 3 4:∘∘∘
+     4 5 5≢181 AFC 2 7 4:∘∘∘
+     1 0 0 0≢1 AFC 9 9 9:∘∘∘
+     1 9 9 9 9≢9999 AFC 1 0 0 0 0:∘∘∘
+     1 0 0 0≢1000 AFC 0:∘∘∘
+
+     'All tests passed.'
+
+ }
