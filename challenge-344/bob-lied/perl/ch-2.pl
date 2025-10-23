@@ -83,11 +83,11 @@ sub canMake($source, $target)
     return false;
 }
 
-sub isPrefix($s, $t)
+sub isPrefix($p, $t)
 {
-    return false if @$s > @$t;
+    return false if @$p > @$t;
     my $match = true;
-    for my ($i, $n) ( indexed $s->@* )
+    for my ($i, $n) ( indexed $p->@* )
     {
         $match &&= ($n == $t->[$i]);
     }
