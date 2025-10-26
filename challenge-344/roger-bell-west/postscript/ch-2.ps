@@ -1,0 +1,153 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/arrayformation {
+    0 dict begin
+    /tgt exch def
+    /src exch def
+    /stack [ [ 0 array [ 0 1 src length 1 sub { } for ] toset ] ] def
+    /sol false def
+    {
+        stack length 0 eq {
+            exit
+        } if
+        stack apop.right /c exch def /stack exch def
+        c 0 get length tgt length eq {
+            /sol true def
+            /c 0 array def
+        } {
+            c 1 get keys {
+                /candidate exch def
+                /offset c 0 get length def
+                /nextcandidate c 1 get deepcopy def
+                nextcandidate candidate undef
+                /valid true def
+                /seq c 0 get deepcopy def
+                src candidate get enumerate.array {
+                    aload pop
+                    /x exch def
+                    /i exch def
+                    x tgt i offset add get eq {
+                        /seq seq x apush.right def
+                    } {
+                        /valid false def
+                        exit
+                    } ifelse
+                } forall
+                valid {
+                    /stack stack [ seq nextcandidate ] apush.right def
+                } if
+            } forall
+        } ifelse
+    } loop
+    sol
+    end
+} bind def
+
+(arrayformation) test.start
+[[2 3] [1] [4]] [1 2 3 4] arrayformation test
+[[1 3] [2 4]] [1 2 3 4] arrayformation not test
+[[9 1] [5 8] [2]] [5 8 2 9 1] arrayformation test
+[[1] [3]] [1 2 3] arrayformation not test
+[[7 4 6]] [7 4 6] arrayformation test
+test.end
