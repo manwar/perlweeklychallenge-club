@@ -1,0 +1,33 @@
+# Perl Weekly Challenge 345 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 345.
+
+## Task 1: Peak Positions
+
+Identify every index whose value is strictly greater than its immediate
+neighbour(s). Endpoints are considered peaks when they exceed their sole
+neighbour.
+
+- **Perl (`perl/ch-1.pl`)**: Validates the integer list with `Type::Params`,
+  then performs a single pass comparing each value against the surrounding
+  entries to collect the peak indices.
+- **Python (`python/ch-1.py`)**: Mirrors the linear scan with explicit type
+  hints and a set of `unittest` cases for the provided examples.
+
+## Task 2: Last Visitor
+
+Process a mixed list of positive integers and `-1` markers. Each integer is
+stored at the front of a queue, while every `-1` requests the value `x` steps
+back in that queue, where `x` counts consecutive `-1` entries.
+
+- **Perl (`perl/ch-2.pl`)**: Maintains the visitor queue with input validation
+  and tracks the current `-1` run to select the right lookup or `-1` when the
+  queue is too short.
+- **Python (`python/ch-2.py`)**: Provides the same behaviour with typed
+  functions and unit tests aligned with the specification examples.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.
