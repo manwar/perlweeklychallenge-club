@@ -15,7 +15,6 @@ sub last-visitor(@ints)
 {
     my @seen;
     my @snip = @ints.snip: flat (@ints.head > 0 ?? (* > 0, * == -1) !! (* == -1, * > 0)) xx *;
-
     my @ans.append: @snip.shift.flat if @snip.head.head == -1;
     @snip.pop if @snip.tail.tail > 0;
 
