@@ -1,0 +1,16 @@
+ LastVisitor←{
+     ⎕IO←0
+     LV←{
+         s←⌽⍵⌿⍨0<⍵       ⍝ Seen is reverse of positive integers
+         i←⍳∘≢¨⊆⍨¯1=⍵    ⍝ How many ¯1s in a row seen so far?
+         i←∊s≢⍛⌊i+⌽⍳≢i   ⍝ Offset by how many groups of ¯1s seen and cap at how many +ve ints seen so far
+         (s,¯1)[i]       ⍝ seen[x] or ¯1
+     }
+⍝ Tests
+     5 ¯1≢LV 5 ¯1 ¯1:∘∘∘
+     7 3 ¯1≢LV 3 7 ¯1 ¯1 ¯1:∘∘∘
+     2 4 2≢LV 2 ¯1 4 ¯1 ¯1:∘∘∘
+     20 30 20≢LV 10 20 ¯1 30 ¯1 ¯1:∘∘∘
+     ¯1 ¯1 5≢LV ¯1 ¯1 5 ¯1:∘∘∘
+     'All tests passed.'
+ }
