@@ -25,8 +25,7 @@ sub peak-positions-alternate(@ints)
 {
     my @histogram;
 
-    @ints.kv.map(-> $k,$v { @histogram[$k] = flat 'x' xx $v, 
-                                                  ' ' xx @ints.max - $v });
+    @ints.kv.map(-> $k,$v { @histogram[$k] = flat 'x' xx $v, ' ' xx @ints.max - $v });
 
     @histogram  = [Z] @histogram;
     @histogram .= map(*.Array);
