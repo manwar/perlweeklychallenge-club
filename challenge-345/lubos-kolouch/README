@@ -1,0 +1,38 @@
+# Perl Weekly Challenge Solutions
+
+Solutions for Perl Weekly Challenge 344 presented in both Perl and Python.
+
+## Task 1: Array Form Compute
+
+### Description
+Given an integer represented as an array of digits (`@ints`) and another integer (`$x`), add them and return the resulting integer in array form.
+
+### Solution
+- **Perl (`perl/ch-1.pl`)**: Processes digits from least significant to most significant, maintaining a carry and constructing the resulting digit list.
+- **Python (`python/ch-1.py`)**: Mirrors the Perl approach using an iterative carry-based loop to build the new digit array.
+- **Examples Covered**:
+  - `(1, 2, 3, 4) + 12` → `(1, 2, 4, 6)`
+  - `(2, 7, 4) + 181` → `(4, 5, 5)`
+  - `(9, 9, 9) + 1` → `(1, 0, 0, 0)`
+  - `(1, 0, 0, 0, 0) + 9999` → `(1, 9, 9, 9, 9)`
+  - `(0) + 1000` → `(1, 0, 0, 0)`
+
+## Task 2: Array Formation
+
+### Description
+Determine if the target array (`@target`) can be formed by concatenating subarrays from `@source` without altering the order inside each subarray, though subarrays themselves may be reordered.
+
+### Solution
+- **Perl (`perl/ch-2.pl`)**: Iterates through the target, greedily matching unused source subarrays based on their leading element and length, marking each subarray as consumed once used.
+- **Python (`python/ch-2.py`)**: Utilises the same greedy matching strategy, leveraging Python's iteration constructs for clarity.
+- **Examples Covered**:
+  - `([2,3], [1], [4])` → `(1, 2, 3, 4)` → `true`
+  - `([1,3], [2,4])` → `(1, 2, 3, 4)` → `false`
+  - `([9,1], [5,8], [2])` → `(5, 8, 2, 9, 1)` → `true`
+  - `([1], [3])` → `(1, 2, 3)` → `false`
+  - `([7,4,6])` → `(7, 4, 6)` → `true`
+
+## Running the Solutions
+- **Perl**: Execute `perl perl/ch-1.pl` or `perl perl/ch-2.pl`.
+- **Python**: Execute `python3 python/ch-1.py` or `python3 python/ch-2.py`.
+- Each script includes embedded unit tests covering all examples from the task specification.
