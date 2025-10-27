@@ -12,13 +12,10 @@ is-deeply peak-positions(@arr), peak-positions-alternate(@arr);
 
 sub peak-positions(@ints)
 {
-    @ints.unshift(0);
-    @ints.push(0);
-    
-    @ints.pairs
-         .rotor(3 => -2)
-         .grep({ .[0].value < .[1].value > .[2].value })
-         .map( { .[0].key })
+    given flat 0, @ints, 0
+    {
+        (^@ints).grep(-> $i { .[$i] < .[$i+1] > .[$i+2] }) 
+    }
 }
 
 sub peak-positions-alternate(@ints)
@@ -38,7 +35,7 @@ sub peak-positions-alternate(@ints)
         {
             for @m    
             {
-                take .from - 1;
+                take .from;
                 @histogram[*;.from] = ' ' xx *  
             }
         }
