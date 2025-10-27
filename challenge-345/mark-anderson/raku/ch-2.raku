@@ -9,7 +9,7 @@ is-deeply last-visitor(<10 20 -1 30 -1 -1>), [<20 30 20>];
 is-deeply last-visitor(<-1 -1 5 -1>),        [<-1 -1 5>];
 
 my @arr = (-1 xx 1000, 1..1000).flat.roll(10_000);
-is last-visitor(@arr), last-visitor-alternate(@arr);
+is-deeply last-visitor(@arr), last-visitor-alternate(@arr);
 
 sub last-visitor(@ints)
 {
