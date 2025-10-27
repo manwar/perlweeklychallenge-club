@@ -13,12 +13,10 @@ is last-visitor(@arr), last-visitor-alternate(@arr);
 
 sub last-visitor(@ints)
 {
-    my @ans;
     my @seen;
-    my $seq  = flat (@ints.head > 0 ?? (* > 0, * == -1) !! (* == -1, * > 0)) xx *;
-    my @snip = @ints.snip: $seq;
+    my @snip = @ints.snip: flat (@ints.head > 0 ?? (* > 0, * == -1) !! (* == -1, * > 0)) xx *;
 
-    @ans.append: @snip.shift.flat if @snip.head.head == -1;
+    my @ans.append: @snip.shift.flat if @snip.head.head == -1;
     @snip.pop if @snip.tail.tail > 0;
 
     for @snip -> @pos, @neg-ones
