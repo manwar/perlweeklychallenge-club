@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: A-ray Sunshine!](https://packy.dardan.com/b/ct)
+[Perl Weekly Challenge: Teach Them How To Say PWC...](https://packy.dardan.com/b/dD)
