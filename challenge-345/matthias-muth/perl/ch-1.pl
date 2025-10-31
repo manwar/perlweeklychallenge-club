@@ -14,13 +14,6 @@ use feature 'signatures';
 no warnings 'experimental::signatures';
 
 sub peak_positions( @ints ) {
-    return grep {
-               ( $_ == 0      || $ints[$_] > $ints[ $_ - 1 ] )
-            && ( $_ == $#ints || $ints[$_] > $ints[ $_ + 1 ] )
-        } keys @ints;
-}
-
-sub peak_positions( @ints ) {
     my @ridge = ( 0, @ints, 0 );
     return grep $ridge[$_] < $ridge[ $_ + 1 ] > $ridge[ $_ + 2 ], keys @ints;
 }
