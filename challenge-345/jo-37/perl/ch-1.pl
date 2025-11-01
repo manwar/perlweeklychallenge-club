@@ -8,7 +8,6 @@ use experimental 'signatures';
 
 use PDL;
 use PDL::NiceSlice;
-use PDL::Stats::TS;
 
 
 ### Options and Arguments
