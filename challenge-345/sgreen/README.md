@@ -1,3 +1,3 @@
-# The Weekly Challenge 344
+# The Weekly Challenge 345
 
-Blog: [The one about arrays](https://dev.to/simongreennet/weekly-challenge-the-one-about-arrays-1h8k)
+Blog: [Peak Visitors](https://dev.to/simongreennet/weekly-challenge-peak-visitors-3lei)
