@@ -1,0 +1,132 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apush.left { % [b c] a -> [a b c]
+    exch % a [b c]
+    [ 3 1 roll aload pop ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/lastvisitor {
+    0 dict begin
+    /a exch def
+    [
+        /seen 0 array def
+        /minusones 0 def
+        a {
+            /n exch def
+            n -1 eq {
+                /minusones minusones 1 add def
+                minusones seen length le {
+                    seen minusones 1 sub get
+                } {
+                    -1
+                } ifelse
+            } {
+                /seen seen n apush.left def
+                /minusones 0 def
+            } ifelse
+        } forall
+    ]
+    end
+} bind def
+
+(lastvisitor) test.start
+[5 -1 -1] lastvisitor [5 -1] deepeq test
+[3 7 -1 -1 -1] lastvisitor [7 3 -1] deepeq test
+[2 -1 4 -1 -1] lastvisitor [2 4 2] deepeq test
+[10 20 -1 30 -1 -1] lastvisitor [20 30 20] deepeq test
+[-1 -1 5 -1] lastvisitor [-1 -1 5] deepeq test
+test.end
