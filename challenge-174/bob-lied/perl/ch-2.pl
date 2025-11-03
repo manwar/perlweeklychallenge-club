@@ -25,7 +25,7 @@
 #   rank2permutation([0, 1, 2], 1) = [0, 2, 1]
 #=============================================================================
 
-use v5.36;
+use v5.42;
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -59,7 +59,7 @@ sub permutation2rank($p)
         $r += $fact * $q;
         say "p=($p->@*) i=$i q=$q fact=$fact r=$r" if $Verbose;
 
-        $fact /= ($n- $i +1);
+        $fact /= floor($n - $i +1);
     }
     return $r;
 }
