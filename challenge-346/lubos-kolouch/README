@@ -1,30 +1,26 @@
-# Perl Weekly Challenge 345 Solutions
+# Perl Weekly Challenge 346 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 345.
+Perl and Python implementations for both tasks of Weekly Challenge 346.
 
-## Task 1: Peak Positions
+## Task 1: Longest Parenthesis
 
-Identify every index whose value is strictly greater than its immediate
-neighbour(s). Endpoints are considered peaks when they exceed their sole
-neighbour.
+Determine the length of the longest valid parenthesis substring contained
+within an input built from `(` and `)`.
 
-- **Perl (`perl/ch-1.pl`)**: Validates the integer list with `Type::Params`,
-  then performs a single pass comparing each value against the surrounding
-  entries to collect the peak indices.
-- **Python (`python/ch-1.py`)**: Mirrors the linear scan with explicit type
-  hints and a set of `unittest` cases for the provided examples.
+- **Perl (`perl/ch-1.pl`)**: Uses a stack of indices with type-checked input
+  to track unmatched parentheses and compute the maximum span.
+- **Python (`python/ch-1.py`)**: Mirrors the stack-based pass with explicit
+  type hints and `unittest` coverage for the specification data.
 
-## Task 2: Last Visitor
+## Task 2: Magic Expression
 
-Process a mixed list of positive integers and `-1` markers. Each integer is
-stored at the front of a queue, while every `-1` requests the value `x` steps
-back in that queue, where `x` counts consecutive `-1` entries.
+Insert `+`, `-`, and `*` between the digits of the supplied string so the
+expression evaluates to the target integer.
 
-- **Perl (`perl/ch-2.pl`)**: Maintains the visitor queue with input validation
-  and tracks the current `-1` run to select the right lookup or `-1` when the
-  queue is too short.
-- **Python (`python/ch-2.py`)**: Provides the same behaviour with typed
-  functions and unit tests aligned with the specification examples.
+- **Perl (`perl/ch-2.pl`)**: Performs depth-first search with precedence-aware
+  bookkeeping, returning every lexicographically sorted solution.
+- **Python (`python/ch-2.py`)**: Applies the same backtracking strategy with
+  typed helpers and unit tests bound to the official examples.
 
 ## Running the Solutions
 
