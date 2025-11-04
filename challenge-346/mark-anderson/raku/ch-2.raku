@@ -198,7 +198,9 @@ multi magic-expression($str, $target)
 
     [
         [
-            ["*"],["+"],["-"]
+            ["*"],
+            ["+"],
+            ["-"]
         ],
 
         [
