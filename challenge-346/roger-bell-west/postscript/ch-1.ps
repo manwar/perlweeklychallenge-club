@@ -1,0 +1,79 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/longestparenthesis {
+    0 dict begin
+    /a exch def
+    /ml 0 def
+    0 1 a length 1 sub {
+        /l exch def
+        l 1 add 1 a length 1 sub {
+            /r exch def
+            /depth 0 def
+            /valid true def
+            l 1 r {
+                /i exch def
+                a i get 40 eq {
+                    /depth depth 1 add def
+                } {
+                    /depth depth 1 sub def
+                    depth 0 lt {
+                        /valid false def
+                        exit
+                    } if
+                } ifelse
+            } for
+            depth 0 ne {
+                /valid false def
+            } if
+            valid {
+                /ml ml r l sub 1 add max def
+            } if
+        } for
+    } for
+    ml
+    end
+} bind def
+
+(longestparenthesis) test.start
+(\(\(\)\(\)\)) longestparenthesis 6 eq test
+(\)\(\)\(\)\)) longestparenthesis 4 eq test
+(\(\(\(\)\)\)\(\)\(\(\(\(\)) longestparenthesis 8 eq test
+(\)\)\)\)\(\(\(\)\() longestparenthesis 2 eq test
+(\(\)\(\(\)) longestparenthesis 2 eq test
+test.end
