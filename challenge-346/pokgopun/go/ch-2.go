@@ -76,7 +76,7 @@ func (sc SegmentCombo) process(n, l int, s []int, yield func([]int) bool) {
 
 func segCmb(n, l int) SegmentCombo {
 	return func(yield func([]int) bool) {
-		new(SegmentCombo).process(n, l, []int{}, yield)
+		new(SegmentCombo).process(n, l, make([]int, 0, n), yield)
 	}
 }
 
