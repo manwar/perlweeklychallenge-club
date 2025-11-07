@@ -1,7 +1,7 @@
 sub f {
     my($str, $target) = @_;
     grep !/0\d/ && eval == $target,
-    map $str =~ s{ \d\B }{ [ $& . substr(' +-*', $_ % 4,1),  $_ >>= 2 ]->[0] }gxer =~ s/ //gr,
+    map $str =~ s{ \d\B }{ [ $& . ['','+','-','*']->[$_ % 4],  $_ >>= 2 ]->[0] }gxer,
     0   ..   4 ** length($str) / 4  -  1
 }
     
