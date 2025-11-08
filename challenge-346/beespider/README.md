@@ -1,1 +1,1 @@
-Solution by beespider
+Solutions by beespider
