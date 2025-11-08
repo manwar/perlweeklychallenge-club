@@ -1,0 +1,34 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str where $str ~~ /^ <[0..9]>+ $/,
+	       Int $target,
+	       :v(:$verbose));
+
+my $op-size = $str.chars -1;
+my @ops = (("+", "-", "*", "") xx $op-size).flat;
+my @digits = $str.comb;
+my @matches;
+my %seen;
+
+say ": Operators: { @ops.raku }" if $verbose;
+
+for @ops.combinations($op-size) -> @op
+{
+  my $eval     = roundrobin(@digits, @op)>>.join.join;
+
+  next if %seen{$eval}++;
+
+  if $eval ~~ /^0<[0..9]>/ || $eval ~~ /<[+*-]>0<[0..9]>/ 
+  {
+    say ": $eval has a leading zero; skip" if $verbose;
+    next;
+  }
+
+  my $sum      = $eval.EVAL;
+  my $is-equal = $sum == $target;
+  say ": $eval = $sum { $is-equal ?? "OK" !! "(!= $target)" }" if $verbose;
+
+  @matches.push: $eval if $is-equal;
+}
+
+say "({ @matches.map('"' ~ * ~ '"').join(", ") })";
