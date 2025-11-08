@@ -6,6 +6,7 @@
 use v5.36;
 use feature qw(try);
 use Algorithm::Combinatorics qw(tuples_with_repetition);
+use Scalar::Util qw(looks_like_number);
 die <<~"FIN" unless @ARGV && @ARGV%2==0;
     Usage: $0 S0 T0 S1 T1...
     to intercalate arithmetic operators among the digits of string Sn
@@ -13,24 +14,22 @@ die <<~"FIN" unless @ARGV && @ARGV%2==0;
     FIN
 for my($string, $target)(@ARGV){
     try {
-	die "Only digits accepted in string: $string" unless $string=~/^\d*$/;
-        # Deal with marginal cases
-	say("$string -> "), next if length $string == 0 && $string==$target;
-	say("$string -> $target"), next if length $string == 1 && $string==$target;
-	# Two or more digits
-	my @digits=split "", $string;
-	my $iterator=tuples_with_repetition(["",qw(+ - * /)], @digits-1);
-	my @results=();
-	while(my $intercalate=$iterator->next){
-	    my $expression=join "",
-		map({($digits[$_], $intercalate->[$_])} 0..@digits-2),
-		$digits[-1];
-	    next if $expression=~/0\d/; # forbid leading zeros
-	    my $value = eval $expression;
-	    next unless defined $value; # ignore illegal expressions
-	    push @results, $expression if $value==$target;
-	}
-	say "$string,  $target -> @results";
+	die "Empty string" unless $string ne "";
+        die "Only digits accepted in string: $string" unless $string=~/^\d*$/;
+        die "Target doesn't looks like number: $target" unless looks_like_number($target);
+        my @digits=split "", $string;
+        my $iterator=tuples_with_repetition(["",qw(+ - * /)], @digits-1);
+        my @results=();
+        while(my $intercalate=$iterator->next){
+            my $expression=join "",
+                map({($digits[$_], $intercalate->[$_])} 0..@digits-2),
+                $digits[-1];
+            next if $expression=~/(^|\D)0\d/; # forbid leading zeros
+            my $value = eval $expression;
+            next unless defined $value; # ignore illegal expressions
+            push @results, $expression if $value==$target;
+        }
+        say "$string,  $target -> @results";
     }
     catch($e){warn $e;}
 }
