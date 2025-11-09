@@ -1,3 +1,3 @@
-# The Weekly Challenge 345
+# The Weekly Challenge 346
 
-Blog: [Peak Visitors](https://dev.to/simongreennet/weekly-challenge-peak-visitors-3lei)
+Blog: [Longest Expression](https://dev.to/simongreennet/weekly-challenge-longest-expression-b8b)
