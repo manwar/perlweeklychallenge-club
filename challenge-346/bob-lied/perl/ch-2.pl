@@ -21,14 +21,14 @@
 #=============================================================================
 
 use v5.42;
+use feature "class"; no warnings "experimental::class";
 
 
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
-my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchmark);
+GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 my $logger;
 {
     use Log::Log4perl qw(:easy);
@@ -37,9 +37,39 @@ my $logger;
     $logger = Log::Log4perl->get_logger();
 }
 #=============================================================================
+# Iterator to do permutations by counting. If there are 'base' objects, count
+# in base 'base'. Take it up to 'n' choices, then return undef to signal
+# the end.
+class Permute {
+    field $base :param //= 4;
+    field $n    :param //= 3;
+    field $max = $base ** ($n);
+
+    field @c = (0) x $n;
+    field $count = 0;
+    field $number = 0;
+
+    method next()
+    {
+        return undef if ++$number >= $max;
+
+        my $place = 0;
+        my $carry;
+        while ( ($carry = (++$c[$place]  % $base)) == 0 )
+        {
+            $c[$place++] = 0;
+        }
+        return $self;
+    }
+
+    # Return the selections as reference to array.
+    method val() { return $number < $max ? \@c : undef }
+
+    method show() { "(" . join(" ", reverse(@c)) . ")" }
+};
+#=============================================================================
 
 exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 say '(', join(', ', magic(@ARGV)->@*), ')';
 
@@ -48,8 +78,28 @@ sub magic($str, $target)
 {
     state @OP = ("", "-", "+", "*");
     $logger->debug("@OP");
+
+    my @s = split(//, $str);
     my @expr;
-    return \@expr;
+
+    my $count = Permute->new( base => scalar(@OP), n => $#s );
+
+    for ( ; my $idx = $count->val ; $count->next )
+    {
+        my @ops = ( ( map { $OP[$_] } $count->val()->@*), "");
+
+        use List::Util qw/mesh/;
+        my $e = join("", mesh \@s, \@ops);
+
+        # Numbers with leading zeroes don't count
+        next if $e =~ m/^0\d|[^0-9]0\d/;
+
+        my $t = eval $e;
+        $logger->debug("ops:", $count->show(), " |", join("|", @ops), '|',  "expr: ", $e, "=$t");
+        push @expr, $e if $t == $target;
+    }
+
+    return [sort @expr];
 }
 
 sub runTest
@@ -64,13 +114,3 @@ sub runTest
 
     done_testing;
 }
-
-sub runBenchmark($repeat)
-{
-    use Benchmark qw/cmpthese/;
-
-    cmpthese($repeat, {
-            label => sub { },
-        });
-}
-

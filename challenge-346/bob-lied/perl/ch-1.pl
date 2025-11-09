@@ -50,32 +50,39 @@ say longestParen($_) for @ARGV;
 #=============================================================================
 sub longestParenSub($str)
 {
+    # Since the ony characters are ( and ), if there are any balanced
+    # sets at all, at some point there must be a (). Replace those with
+    # something else (I'm using xx). Then keep replacing matching pairs
+    # of parenthese as long as we have (xxxxxx) patterns.
     while ( $str =~ s/\((x*)\)/x$1x/g ) { }
 
+    # Extract the strings of x, map to length, and find the longest one.
     use List::Util qw/max/;
     return ( max map { length($_) } $str =~ m/x+/g ) // 0;
 }
 sub longestParen($str)
 {
+    # Leading ) and trailing ( can never pair up, so a small
+    # optimization is to trim those off before we start.
+    $str =~ s/^\)+//;
+    $str =~ s/\($//;
+
+    # Stack up when we hit a (, pop off when we find a ).
     my @stack = ( -1 );
     my $longest = my $streak =  0;
-    my $open = 0;
     for my ($i, $p) ( indexed split(//, $str) )
     {
         if ( $p eq '(' )
         {
-            push @stack, $i;
+            push @stack, $i;    # Note, pushing index
         }
         else {
             pop @stack;
             if ( @stack )
             {
                 my $len = $i - $stack[-1];
+                $logger->debug(") i=$i len=$len stack=(@stack)");
                 $longest = $len if $len > $longest;
-            }
-            else
-            {
-                push @stack, $i;
             }
         }
         $logger->debug("$p i=$i, longest=$longest, stack=(@stack)");
