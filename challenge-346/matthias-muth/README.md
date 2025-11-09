@@ -1,163 +1,105 @@
-# Visiting the Peaks
+# Recursive Parentheses - But no Recursive Magic
 
-**Challenge 345 solutions in Perl by Matthias Muth**
+**Challenge 346 solutions in Perl by Matthias Muth**
 
-## Task 1: Peak Positions
+This week, I am sorry to only have a solution for Task 1. 
 
-> You are given an array of integers, @ints.<br/>
-> Find all the peaks in the array, a peak is an element that is strictly greater than its left and right neighbours. Return the indices of all such peak positions.
+## Task 1: Longest Parenthesis
+
+> You are given a string containing only ( and ).<br/>
+> Write a script to find the length of the longest valid parenthesis.
 >
 > **Example 1**
 >
 > ```text
-> Input: @ints = (1, 3, 2)
-> Output: (1)
+> Input: $str = '(()())'
+> Output: 6
+>
+> Valid Parenthesis: '(()())'
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @ints = (2, 4, 6, 5, 3)
-> Output: (2)
+> Input: $str = ')()())'
+> Output: 4
+>
+> Valid Parenthesis: '()()' at positions 1-4.
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @ints = (1, 2, 3, 2, 4, 1)
-> Output: (2, 4)
+> Input: $str = '((()))()(((()'
+> Output: 8
+>
+> Valid Parenthesis: '((()))()' at positions 0-7.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @ints = (5, 3, 1)
-> Output: (0)
+> Input: $str = '))))((()('
+> Output: 2
+>
+> Valid Parenthesis: '()' at positions 6-7.
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @ints = (1, 5, 1, 5, 1, 5, 1)
-> Output: (1, 3, 5)
+> Input: $str = '()(()'
+> Output: 2
+>
+> Valid Parenthesis: '()' at positions 0-1 and 3-4.
 > ```
 
-I conclude from Example 4 that the first position in the array can be a 'peak' even if it doesn't strictly have a 'left and right neighbour' (it only has a right one). I assume that the last element can therefore be a 'peak' as well.
+This task is a good showcase for recursive regular expressions.<br/>Recursive regular expressions are not used too often, that's why I even guess that not every Perl programmer knows about their existence. I also had to look up the details in [perldoc](https://perldoc.perl.org/perlre#(?PARNO)-(?-PARNO)-(?+PARNO)-(?R)-(?0)). 
 
-To simplify the comparisons and avoid checking for the left and right edge for every possible 'peak', I make a copy of the array, adding a zero at each end. We are looking for 'peaks' in our landscape of numbers, so I call this new array the `@ridge`.
-
-I then make use Perl's ability to perform *chained comparisons*:<br/>
-Checking whether an element's left neighbour is *strictly smaller than* (`<`) the element, and the element itself is *strictly larger than* (`>`) its right neighbour can be done in a single expression, because the two comparison operators have the same operator precedence (minding that `==` has a lower one, so it can not be be chained with `<` or `>`).
-
-It looks a bit unusual because most of the times, the comparisons are in the same direction (like `$a <= $_ <= $b`), but it works perfectly. 
-
-*Chained comparison*s were introduced in Perl 5.32. To reflect that fact, I changed my standard boilerplate (which is `use v5.36`,  for getting *strict* and *warnings* and subroutine signatures).
-
-Note that in each iteration, we are testing  `$ridge[ $_ + 1 ]` to be a peak, but it is correct to return `$_` as its position `$_` is the peak's index in the original `@ints` array.
-
-This is my whole solution:
+Constructing that regular expression, I start with a pair of parentheses. I use the `/x` modifier to be able to use whitespace within the pattern for easier reading. 
 
 ```perl
-use v5.32;      # For chained comparisons.
-use warnings;
-use feature 'signatures';
-no warnings 'experimental::signatures';
-
-sub peak_positions( @ints ) {
-    my @ridge = ( 0, @ints, 0 );
-    return grep $ridge[$_] < $ridge[ $_ + 1 ] > $ridge[ $_ + 2 ], keys @ints;
-}
+    $str =~ / \(  \) /x
 ```
 
-## Task 2: Last Visitor
+Now within these parentheses,  the pattern is supposed to accept an optional other pair of parentheses, and inside that one again, which gives us the point where to insert the recursion pattern `(?R)?` . The ending `?` makes it optional to have subgroups of parentheses:
 
-> You are given an integer array @ints where each element is either a positive integer or -1.<br/>
-> We process the array from left to right while maintaining two lists:
-> ```
-> @seen: stores previously seen positive integers (newest at the front)
-> @ans: stores the answers for each -1
-> ```
-> Rules:
-> ```text
-> If \$ints[i] is a positive number -> insert it at the front of @seen<br/>
-> If \$ints[i] is -1:<br/>
-> ```
->
-> Let \$x be how many -1s in a row we’ve seen before this one.<br/>
-> If \$x < len(@seen) -> append seen[x] to @ans<br/>
-> Else -> append -1 to @ans<br/>
-> At the end, return @ans.
->
-> **Example 1**
->
-> ```text
-> Input: @ints = (5, -1, -1)
-> Output: (5, -1)
->
-> @seen = (5)
-> First  -1: @ans = (5)
-> Second -1: @ans = (5, -1)
-> ```
->
-> **Example 2**
->
-> ```text
-> Input: @ints = (3, 7, -1, -1, -1)
-> Output: (7, 3, -1)
->
-> @seen = (3, 7)
-> First  -1: @ans = (7)
-> Second -1: @ans = (7, 3)
-> Third  -1: @ans = (7, 3, -1)
-> ```
->
-> **Example 3**
->
-> ```text
-> Input: @ints = (2, -1, 4, -1, -1)
-> Output: (2, 4, 2)
-> ```
->
-> **Example 4**
->
-> ```text
-> Input: @ints = (10, 20, -1, 30, -1, -1)
-> Output: (20, 30, 20)
-> ```
->
-> **Example 5**
->
-> ```text
-> Input: @ints = (-1, -1, 5, -1)
-> Output: (-1, -1, 5)
-> ```
+```perl
+    $str =~ / \( (?R)? \) /x
+```
 
-For this task, I have condensed my code a bit, Perl style. Actually there only is one declaration and one statement. This means that I make more use of implicit behaviors. Let's see whether I can find and explain them all.
+But we also need to be able to accept a string like `'(()()())'`, which contains several parentheses groups in a row. We can do that by simply replacing the ending `?` by an ending `*`, to have zero, one or any number  of parentheses groups there:
 
-The declaration is for the `@seen` array, exactly as the task description says, and for `$count`, which is the variable that counts how many `-1`s have been seen in a row (called `$x` in the task description, but I prefer a more telling name).<br>Actually I initialize `$count` with `0` explicitly, even though this is not really needed. The only operation on this variable is an auto-increment, and that operation's little magic works without warning even if the variable is undefined.
+```perl
+    $str =~ / \( (?R)* \) /x
+```
 
-Instead of writing a `for` loop and pushing values to an `@ans` array within the loop, I let `map`do the processing. The result of `map` can be returned directly, so in fact there is no need for the `@ans` array to even exist.
+Example 3 shows us that we also need to accept several groups of parentheses following each other directly on the first level, like in `'((()))()'`. So let's put what we have into a (non-capturing) group, of which we need to have at least one, but possibly many, so `(?: ... )+`:
 
-Within `map`'s code block, if the number that is processed is `-1`, we generate a value for the result list.<br/>
-No need to check whether '\$x < len(@seen)' (or, in Perl: `$count <= $#seen`), because if `$count` points to an element beyond the current length of the `@seen` array, Perl just returns `undef`, and we can use the `//` *defined or* operator to get the appropriate value for that case (which is `-1`).
+```perl
+    $str =~ / (?: \( (?R)* \) )+ /x
+```
 
-Another trick is that as the list generated by `map` consists of the collection of zero, one, or more elements from each evaluation of the code block, in our case, if the input number is *not* `-1`, the code block can perform some necessary processing, but then evaluate to an empty list to be added to the result.<br/>
-The 'necessary processing' in our case involves pushing the value to the `@seen` array and resetting the `$count` to `0`.<br/>
-Mixing code execution and data generation in this way is easy in Perl and helps create concise programs, even though it may sometimes require a second look.
-
-But maybe it's still easy enough to read the code itself:
+In the end, we are supposed to return the length of the longest match. So let's add a `/g` *global* option to the regex to get all matches as a list, then use `map` and `length` to transform that list of matches into a list of their lengths, and then pass that list as parameters to the `max` function (from `List::Util`) to get the proper result:
 
 ```perl
 use v5.36;
+use List::Util qw( max );
 
-sub last_visitor( @ints ) {
-    my ( $count, @seen ) = ( 0 );
-    return map {
-        $_ == -1
-        ? $seen[$count++] // -1
-        : do { unshift @seen, $_; $count = 0; () }
-    } @ints;
+sub longest_parenthesis( $str ) {
+    return max( map length, $str =~ / (?: \( (?R)* \) )+ /xg );
 }
 ```
+
+That wasn't too difficult, was it?
+
+## Task 2: Magic Expression
+
+Seems I was too ambitious to find a recursive solution for Task 2 that does not evaluate every term from scratch for all the possible combinations.<br/>
+To my own disappointment I was not able to finish it in time.
+
+Sorry for having no solution for Task 2 this week.
+
+
 
 #### **Thank you for the challenge!**
