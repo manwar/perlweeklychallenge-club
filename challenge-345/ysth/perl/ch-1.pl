@@ -1,7 +1,4 @@
 use 5.040;
-use Cpanel::JSON::XS;
-use JSON::Schema::Modern;
-use List::Util ();
 
 sub longest_balanced_parentheses($string) {
 
@@ -41,56 +38,16 @@ sub longest_balanced_parentheses($string) {
 }
 
 sub main() {
-    my $input_example = '"()()"';
-
-    my $input_schema = '{
-        "type": "string"
-    }';
+    require Run::WeeklyChallenge;
 
     my $run_solution = sub ($inputs) {
         longest_balanced_parentheses($inputs);
     };
-
-    my $json = Cpanel::JSON::XS->new->allow_nonref;
-    my $validator = JSON::Schema::Modern->new( 'specification_version' => 'draft2020-12', 'output_format' => 'flag' );
-    my $schema = $json->decode($input_schema);
-
-    my $errors;
-
-    for my $inputs_json (@ARGV) {
-        say "Input: $inputs_json";
-
-        try {
-            my $inputs = $json->decode($inputs_json);
-            if (! $validator->evaluate($inputs, $schema)->valid) {
-                $errors = true;
-                say "Error: invalid input";
-                next;
-            }
-            else {
-                try {
-                    my $result = $run_solution->($inputs);
-                    say "Output: $result";
-                }
-                catch ($e) {
-                    chomp $e;
-                    say "Error: $e";
-                }
-            }
-        }
-        catch ($e) {
-            $errors = true;
-            chomp $e;
-            say "Error: invalid json input: $e";
-            next;
-        }
-    }
-
-    if ($errors) {
-        say "Expected arguments like '$input_example'";
-    }
-
-    return;
+    my $inputs_example = '"()()"';
+    my $inputs_schema_json = '{
+        "type": "string"
+    }';
+    Run::WeeklyChallenge::run_weekly_challenge($run_solution, $inputs_example, $inputs_schema_json);
 }
 
 main() unless caller;
