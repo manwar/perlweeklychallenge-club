@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Teach Them How To Say PWC...](https://packy.dardan.com/b/dD)
+[Perl Weekly Challenge: Whoa-oh-oh! Sing about parens!](https://packy.dardan.com/b/dX)
