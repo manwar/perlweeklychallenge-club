@@ -11,7 +11,7 @@ sub format-phone-number($phone is copy)
 {
     $phone .= subst(/<space> | '-'/, :g);
 
-    .join('-') given do given $phone.chars % 3
+    .join('-') given do given $phone.chars mod 3
     {
         when 0 { 
                    m:g/.../ given $phone 
