@@ -11,22 +11,20 @@ sub format-phone-number($str is copy)
 {
     $str .= subst(/<space> | '-'/, :g);
 
-    do given $str.chars % 3
+    .join('-') given do given $str.chars % 3
     {
         when 0 { 
-                   .join('-') given $str ~~ m:g/.../ 
+                   m:g/.../ given $str 
                }
 
         when 1 { 
-                   .join('-') given flat 
-                   $str.substr(0, *-4) ~~ m:g/.../, 
-                   $str.substr(   *-4) ~~ m:g/../
+                   flat .substr(0, *-4) ~~ m:g/.../, 
+                        .substr(   *-4) ~~ m:g/../   given $str
                }
 
         when 2 {
-                   .join('-') given flat 
-                   $str.substr(0, *-2) ~~ m:g/.../,
-                   $str.substr(   *-2)
+                   flat .substr(0, *-2) ~~ m:g/.../,
+                        .substr(   *-2)              given $str
                }
     }     
 }
