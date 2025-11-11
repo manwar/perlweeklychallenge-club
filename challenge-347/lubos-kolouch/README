@@ -1,0 +1,29 @@
+# Perl Weekly Challenge 346 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 346.
+
+## Task 1: Longest Parenthesis
+
+Determine the length of the longest valid parenthesis substring contained
+within an input built from `(` and `)`.
+
+- **Perl (`perl/ch-1.pl`)**: Uses a stack of indices with type-checked input
+  to track unmatched parentheses and compute the maximum span.
+- **Python (`python/ch-1.py`)**: Mirrors the stack-based pass with explicit
+  type hints and `unittest` coverage for the specification data.
+
+## Task 2: Magic Expression
+
+Insert `+`, `-`, and `*` between the digits of the supplied string so the
+expression evaluates to the target integer.
+
+- **Perl (`perl/ch-2.pl`)**: Performs depth-first search with precedence-aware
+  bookkeeping, returning every lexicographically sorted solution.
+- **Python (`python/ch-2.py`)**: Applies the same backtracking strategy with
+  typed helpers and unit tests bound to the official examples.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.

@@ -29,7 +29,7 @@ def test_examples():
         result = valid_longest_parenthesis(example["str"])
         expected = example["exp"]
         assert result == expected, f"Failed for '{example['str']}': expected {expected}, got {result}"
-        print(f"✓ '{example['str']}' -> {result}")
+        print(f"'{example['str']}' -> {result}")
 
 if __name__ == "__main__":
     test_examples()
