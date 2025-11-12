@@ -23,4 +23,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Whoa-oh-oh! Sing about parens!](https://packy.dardan.com/b/dX)
+[Perl Weekly Challenge: Oh, oh, formatted strings, give me some thing...](https://packy.dardan.com/b/dp)
