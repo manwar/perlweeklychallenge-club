@@ -1,0 +1,109 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/formatphonenumber {
+    0 dict begin
+    s2a { c.isdigit } filter /pure exch def
+    /left pure length def
+    /i 0 def
+    [
+        left 4 gt {
+            pure {
+                /i i 1 add def
+                /left left 1 sub def
+                i 3 mod 0 eq {
+                    45
+                    left 4 le {
+                        exit
+                    } if
+                } if
+            } forall
+        } if
+        left 4 eq {
+            pure i get
+            pure i 1 add get
+            45
+            /i i 2 add def
+        } if
+        i 1 pure length 1 sub {
+            pure exch get
+        } for
+    ] a2s
+    end
+} bind def
+
+(formatphonenumber) test.start
+(1-23-45-6) formatphonenumber (123-456) eq test
+(1234) formatphonenumber (12-34) eq test
+(12 345-6789) formatphonenumber (123-456-789) eq test
+(123 4567) formatphonenumber (123-45-67) eq test
+(123 456-78) formatphonenumber (123-456-78) eq test
+test.end
