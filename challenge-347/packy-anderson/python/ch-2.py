@@ -1,28 +1,37 @@
 #!/usr/bin/env python
 
-def distinctAverages(nums):
-  pass
+import re
 
-def int_join(joiner, arr):
-  return joiner.join(map(str, arr))
+def format_phone2(phone, formatted):
+  if len(phone) < 4:
+    return formatted + phone
+  elif len(phone) == 4:
+    return formatted + phone[0:2] + "-" + phone[2:4]
+  else:
+    return format_phone2(
+      phone[3:],
+      formatted + phone[0:3] + "-" 
+    )
 
-def solution(nums):
-  print(f'Input: @nums = ({int_join(", ", nums)})')
-  count, explain = distinctAverages(nums)
-  print(f'Output: {count}\n\n{explain}')
+def format_phone(phone):
+  phone = re.sub(r'\D', '', phone)
+  return format_phone2(phone, "")
 
+def solution(phone):
+  print(f'Input: $phone = "{phone}"')
+  print(f'Output: "{format_phone(phone)}"')
 
 print('Example 1:')
-solution()
+solution("1-23-45-6")
 
 print('\nExample 2:')
-solution()
+solution("1234")
 
 print('\nExample 3:')
-solution()
+solution("12 345-6789")
 
 print('\nExample 4:')
-solution()
+solution("123 4567")
 
 print('\nExample 5:')
-solution()
+solution("123 456-78")
