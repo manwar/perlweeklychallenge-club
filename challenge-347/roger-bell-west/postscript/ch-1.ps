@@ -1,0 +1,195 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+
+% end included library code
+
+/fmn {
+    0 dict begin
+    /n exch def
+    /a exch def
+    /ap a alloccvs def
+    /apl ap length def
+    /out n string def
+    0 1 n 1 sub {
+        out exch 48 put
+    } for
+    0 1 apl 1 sub {
+        /i exch def
+        /o n apl sub i add def
+        out ap i get o exch put
+    } for
+    out
+    end
+} bind def
+
+
+/formatdate {
+    0 dict begin
+    ( ) strsplit /dmy exch def
+    <<
+       (Jan) 1
+        (Feb) 2
+        (Mar) 3
+        (Apr) 4
+        (May) 5
+        (Jun) 6
+        (Jul) 7
+        (Aug) 8
+        (Sep) 9
+        (Oct) 10
+        (Nov) 11
+        (Dec) 12
+    >> dmy 1 get get dmy exch 1 exch put
+    dmy 0 get
+    dup
+    0 exch
+    1 get c.isdigit {
+        2
+    } {
+        1
+    } ifelse
+    getinterval cvi dmy exch 0 exch put
+    [
+        dmy 2 get cvi 4 fmn
+        dmy 1 get cvi 2 fmn
+        dmy 0 get cvi 2 fmn
+    ] (-) strjoin
+    end
+} bind def
+
+(formatdate) test.start
+(1st Jan 2025) formatdate (2025-01-01) eq test
+(22nd Feb 2025) formatdate (2025-02-22) eq test
+(15th Apr 2025) formatdate (2025-04-15) eq test
+(23rd Oct 2025) formatdate (2025-10-23) eq test
+(31st Dec 2025) formatdate (2025-12-31) eq test
+test.end
