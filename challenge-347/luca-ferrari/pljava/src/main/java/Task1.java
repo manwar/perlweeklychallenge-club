@@ -1,0 +1,76 @@
+
+
+
+package PWC347;
+
+/**
+ * PL/Java implementation for PWC 347
+ * Task 1
+ * See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-347>
+ *
+ *
+ * To compile on the local machine:
+
+ $ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/  # if not already set
+ $ mvn clean build
+ $ scp target/PWC347-1.jar  luca@rachel:/tmp
+
+
+ * To install into PostgreSQL execute:
+
+ select sqlj.install_jar( 'file:///tmp/PWC347-1.jar', 'PWC347', true );
+ select sqlj.set_classpath( 'public', 'PWC347' );
+
+ select pwc347.task2_pljava();
+
+ and then to redeploy:
+
+ select sqlj.replace_jar( 'file:///tmp/PWC347-1.jar', 'PWC347', true );
+
+*/
+
+import org.postgresql.pljava.*;
+import org.postgresql.pljava.annotation.Function;
+import static org.postgresql.pljava.annotation.Function.Effects.IMMUTABLE;
+import static org.postgresql.pljava.annotation.Function.OnNullInput.RETURNS_NULL;
+
+import java.util.*;
+import java.util.stream.*;
+import java.sql.SQLException;
+import java.util.logging.*;
+import java.sql.ResultSet;
+import java.sql.Date;
+
+public class Task1 {
+
+    private final static Logger logger = Logger.getAnonymousLogger();
+
+    @Function( schema = "pwc347",
+	       onNullInput = RETURNS_NULL,
+	       effects = IMMUTABLE )
+    public static final String task1_pljava( String date ) throws SQLException {
+	logger.log( Level.INFO, "Entering pwc347.task1_pljava" );
+
+	Map<String, Integer> months = new HashMap<String, Integer>();
+
+	months.put( "Jan", 1 );
+	months.put( "Feb", 2 );
+	months.put( "Mar", 3 );
+	months.put( "Apr", 4 );
+	months.put( "May", 5 );
+	months.put( "Jun", 6 );
+	months.put( "Jul", 7 );
+	months.put( "Aug", 8 );
+	months.put( "Sep", 9 );
+	months.put( "Oct", 10 );
+	months.put( "Nov", 11 );
+	months.put( "Dec", 12 );
+
+	
+	String[] parts = date.split( "\\s+" );
+	return String.format( "%04d-%02d-%02d",
+			      Integer.parseInt( parts[ 2 ] ),
+			      months.get( parts[ 1 ] ),
+			      Integer.parseInt( parts[ 0 ].replace( "st", "" ).replace( "nd", "" ).replace( "rd", "" ).replace( "rh", "" ) ) );
+    }
+}

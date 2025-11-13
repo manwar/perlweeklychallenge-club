@@ -1,0 +1,39 @@
+--
+-- Perl Weekly Challenge 347
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-347>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc347;
+
+CREATE OR REPLACE FUNCTION
+pwc347.task1_plperl( text )
+RETURNS date
+AS $CODE$
+
+   my ( $date ) = @_;
+
+   my %months = ( 'Jan' => 1,
+		  'Feb' => 2,	
+		  'Mar' => 3,	
+		  'Apr' => 4,
+		  'May' => 5,
+		  'Jun' => 6,
+		  'Jul' => 7,
+		  'Aug' => 8,
+		  'Sep' => 9,
+		  'Oct' => 10,
+		  'Nov' => 11,
+		  'Dec' => 12 );
+
+   if ( $date =~ / ^ (?<day>\d{1,2}) \D{2} \s+ (?<month>\D{3}) \s+ (?<year>\d{4}) $ /x ) {
+      return sprintf '%04d-%02d-%02d', $+{year}, $months{ $+{month} }, $+{day};
+   }
+   else {
+     elog( WARN, "No valid date format" );
+     return undef;
+   }
+
+   
+$CODE$
+LANGUAGE plperl;

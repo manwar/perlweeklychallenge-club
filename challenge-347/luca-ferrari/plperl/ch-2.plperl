@@ -1,0 +1,39 @@
+--
+-- Perl Weekly Challenge 347
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-347>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc347;
+
+CREATE OR REPLACE FUNCTION
+pwc347.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $phone ) = @_;
+
+   $phone =~ s/ [- ] //gx;
+
+   my @groups;
+   while ( length( $phone ) >= 3 ) {
+   	 push @groups, join( '', ( ( split( //, $phone ) )[ 0 .. 2 ] ) );
+	 $phone =~ s/ ^ .{3} //xg;
+   }
+
+   if ( $phone ) {
+      push @groups, $phone;
+   }
+
+   if ( length( $groups[ $#groups ] ) != 2 || length( $groups[ $#groups ] ) != 3 ) {
+      my ( $end, $begin ) = ( pop @groups, pop @groups );
+      my $last = $begin . $end;
+      push @groups, join( '', ( split( //, $last ) )[ 0 .. 1 ] );
+      push @groups, join( '', ( split( //, $last ) )[ 2 .. 3 ] );
+   }
+
+   
+   return join( '-', @groups );
+   
+$CODE$
+LANGUAGE plperl;
