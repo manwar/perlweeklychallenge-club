@@ -63,7 +63,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    sub format_date ( $s ) {
       my ($d1, $m1, $y) = split /\s+/, $s;
       my $d2 = $d1 =~ s/\D+//gr;
-      if (length($d2) < 2) {$d2 .= '0'}
+      if (length($d2) < 2) {$d2='0'.$d2}
       my %mth_map =
       ('Jan' => '01', 'Feb' => '02', 'Mar' => '03',
        'Apr' => '04', 'May' => '05', 'Jun' => '06',
