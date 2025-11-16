@@ -1,3 +1,3 @@
-# The Weekly Challenge 346
+# The Weekly Challenge 347
 
-Blog: [Longest Expression](https://dev.to/simongreennet/weekly-challenge-longest-expression-b8b)
+Blog: [The one about formatting](https://dev.to/simongreennet/weekly-challenge-the-one-about-formatting-kfp)
