@@ -56,15 +56,19 @@ sub ops_to_make_time_difference{
     $start = [ split(/:/, $start) ];
     $end = [ split(/:/, $end) ];
 
-    # If the hour of the end time appears to be less
-    # than that of the start time, assume that it's
-    # from the next day
-    $end->[0] += 24
-        if($end->[0] < $start->[0]);
+    # Convert the times into numbers of minutes since
+    # 00:00
+    $end = ($end->[0] * 60 + $end->[1]);
+    $start = ($start->[0] * 60 + $start->[1]);
 
-    # Convert hours and minutes to just minutes, and
-    # calculate the difference
-    $diff = ($end->[0] * 60 + $end->[1]) - ($start->[0] * 60 + $start->[1]);
+    # If the end appears to be before the start,
+    # assume that it's meant to be the next day
+    $end += 1440
+        if($end < $start);
+
+    # Calculate the difference between the start and
+    # end times
+    $diff = $end - $start;
 
     # Loop over each unit of minutes, determining how
     # many of each are required to equal the difference
