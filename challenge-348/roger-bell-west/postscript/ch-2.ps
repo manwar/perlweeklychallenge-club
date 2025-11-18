@@ -1,0 +1,99 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/hm2m {
+    (:) strsplit
+    aload pop
+    cvi
+    exch
+    cvi
+    60 mul
+    add
+} bind def
+
+/converttime {
+    0 dict begin
+    hm2m /tgt exch def
+    hm2m /src exch def
+    tgt src lt {
+        /tgt tgt 24 60 mul add def
+    } if
+    /delta tgt src sub def
+    /oc 0 def
+    [ 60 15 5 1 ] {
+        /op exch def
+        /oc oc delta op idiv add def
+        /delta delta op mod def
+    } forall
+    oc
+    end
+} bind def
+
+(converttime) test.start
+(02:30) (02:45) converttime 1 eq test
+(11:55) (12:15) converttime 2 eq test
+(09:00) (13:00) converttime 4 eq test
+(23:45) (00:30) converttime 3 eq test
+(14:20) (15:25) converttime 2 eq test
+test.end
