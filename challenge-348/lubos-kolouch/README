@@ -1,26 +1,26 @@
-# Perl Weekly Challenge 346 Solutions
+# Perl Weekly Challenge 348 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 346.
+Perl and Python implementations for both tasks of Weekly Challenge 348.
 
-## Task 1: Longest Parenthesis
+## Task 1: String Alike
 
-Determine the length of the longest valid parenthesis substring contained
-within an input built from `(` and `)`.
+Split an even-length string into two halves and verify that each half contains
+the same, non-zero number of vowels.
 
-- **Perl (`perl/ch-1.pl`)**: Uses a stack of indices with type-checked input
-  to track unmatched parentheses and compute the maximum span.
-- **Python (`python/ch-1.py`)**: Mirrors the stack-based pass with explicit
-  type hints and `unittest` coverage for the specification data.
+- **Perl (`perl/ch-1.pl`)**: Uses typed parameter validation and a single pass
+  over each half to count vowels before comparing the totals.
+- **Python (`python/ch-1.py`)**: Provides the same logic with type annotations
+  and `unittest` coverage of the specification examples.
 
-## Task 2: Magic Expression
+## Task 2: Convert Time
 
-Insert `+`, `-`, and `*` between the digits of the supplied string so the
-expression evaluates to the target integer.
+Determine the minimal number of operations required to turn the source 24-hour
+timestamp into the target when you may add 1, 5, 15, or 60 minutes.
 
-- **Perl (`perl/ch-2.pl`)**: Performs depth-first search with precedence-aware
-  bookkeeping, returning every lexicographically sorted solution.
-- **Python (`python/ch-2.py`)**: Applies the same backtracking strategy with
-  typed helpers and unit tests bound to the official examples.
+- **Perl (`perl/ch-2.pl`)**: Converts stamps to minutes-past-midnight with type
+  validation and applies a greedy decomposition over the permitted steps.
+- **Python (`python/ch-2.py`)**: Uses the same helper logic, fully typed, along
+  with a unittest suite that exercises the provided scenarios.
 
 ## Running the Solutions
 

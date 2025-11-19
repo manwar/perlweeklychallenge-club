@@ -1,26 +1,26 @@
-# Perl Weekly Challenge 346 Solutions
+# Perl Weekly Challenge 347 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 346.
+Perl and Python implementations for both tasks of Weekly Challenge 347.
 
-## Task 1: Longest Parenthesis
+## Task 1: Format Date
 
-Determine the length of the longest valid parenthesis substring contained
-within an input built from `(` and `)`.
+Convert strings like `10th Nov 2025` into ISO form `2025-11-10` while validating
+the provided day, month, and year values.
 
-- **Perl (`perl/ch-1.pl`)**: Uses a stack of indices with type-checked input
-  to track unmatched parentheses and compute the maximum span.
-- **Python (`python/ch-1.py`)**: Mirrors the stack-based pass with explicit
-  type hints and `unittest` coverage for the specification data.
+- **Perl (`perl/ch-1.pl`)**: Parses the ordinal components with type-checked
+  input and enforces suffix/month/year constraints before formatting.
+- **Python (`python/ch-1.py`)**: Uses the same parsing logic with type
+  annotations and `unittest` coverage for each provided example.
 
-## Task 2: Magic Expression
+## Task 2: Format Phone Number
 
-Insert `+`, `-`, and `*` between the digits of the supplied string so the
-expression evaluates to the target integer.
+Normalize phone numbers that contain digits, spaces, and dashes by removing
+separators and regrouping the digits according to the challenge rules.
 
-- **Perl (`perl/ch-2.pl`)**: Performs depth-first search with precedence-aware
-  bookkeeping, returning every lexicographically sorted solution.
-- **Python (`python/ch-2.py`)**: Applies the same backtracking strategy with
-  typed helpers and unit tests bound to the official examples.
+- **Perl (`perl/ch-2.pl`)**: Validates allowed characters, strips separators,
+  and creates 3-digit blocks with special handling for the trailing digits.
+- **Python (`python/ch-2.py`)**: Mirrors the greedy regrouping approach and
+  includes type hints plus example-driven unit tests.
 
 ## Running the Solutions
 
