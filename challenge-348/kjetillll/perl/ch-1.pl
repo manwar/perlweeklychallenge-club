@@ -6,13 +6,13 @@ sub f_verbose {  #same thing more verbose
     my($str, $count_vowels_left, $count_vowels_right) = (@_,0,0);
 
     if( $str =~ s/^(.)(.*)(.)$/$2/ ){
-	my($left_char, $middle_string, $right_char) = ($1,$2,$3);
-	return f_verbose( $middle_string,
-			  $count_vowels_left  + ( $left_char  =~ /[aeiou]/i ? 1 : 0 ),
-			  $count_vowels_right + ( $right_char =~ /[aeiou]/i ? 1 : 0 ) )
+        my($left_char, $middle_string, $right_char) = ($1,$2,$3);
+        return f_verbose( $middle_string,
+                          $count_vowels_left  + ( $left_char  =~ /[aeiou]/i ? 1 : 0 ),
+                          $count_vowels_right + ( $right_char =~ /[aeiou]/i ? 1 : 0 ) )
     }
     else {
-	return $count_vowels_left > 0   &&   $count_vowels_left == $count_vowels_right
+        return $count_vowels_left > 0   &&   $count_vowels_left == $count_vowels_right
     }
 }
 
