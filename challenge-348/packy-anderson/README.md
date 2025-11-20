@@ -22,5 +22,4 @@
 
 
 ## Blog Post
-
-[Perl Weekly Challenge: Oh, oh, formatted strings, give me some thing...](https://packy.dardan.com/b/dp)
+[Perl Weekly Challenge: Ticking away the moments that make up a challenge...](https://packy.dardan.com/b/eC)
