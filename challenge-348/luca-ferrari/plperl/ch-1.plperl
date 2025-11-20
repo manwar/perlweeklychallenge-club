@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 348
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-348>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc348;
+
+CREATE OR REPLACE FUNCTION
+pwc348.task1_plperl( text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $text ) = @_;
+
+   return 0 unless ( length( $text ) % 2 == 0 );
+
+   my @chars = split //, $text;
+   my ( @left, @right ) = ( @chars[ 0 .. $#chars / 2 - 1 ],
+                            @chars[ $#chars / 2 .. $#chars ] );
+
+  return scalar( grep( { $_ =~ / [aeiou] / } @left ) ) == scalar( grep( { $_ =~ / [aeiou] / } @right ) );
+   
+$CODE$
+LANGUAGE plperl;

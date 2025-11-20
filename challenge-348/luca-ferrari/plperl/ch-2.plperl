@@ -1,0 +1,34 @@
+--
+-- Perl Weekly Challenge 348
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-348>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc348;
+
+CREATE OR REPLACE FUNCTION
+pwc348.task2_plperl( text, text )
+RETURNS int
+AS $CODE$
+
+   my ( $source, $target ) = @_;
+
+   my @elems = split /[:]/, $source;
+   my $src_mins = $elems[ 0 ] * 60 + $elems[ 1 ];
+
+   @elems = split /[:]/, $target; 
+   my $dst_mins = $elems[ 0 ] * 60 + $elems[ 1 ];
+
+   my @operations;
+   for my $current ( 60, 15, 10, 5, 1 ) {
+       while ( $dst_mins - $src_mins >= $current ) {
+       	     push @operations, $current;
+	     $src_mins += $current;
+       }
+   }
+
+   return scalar( @operations );
+
+
+$CODE$
+LANGUAGE plperl;
