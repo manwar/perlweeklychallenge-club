@@ -1,5 +1,5 @@
-# Solutions to weekly challenge 347 by Bob Lied
+# Solutions to weekly challenge 348 by Bob Lied
 
-## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-347/)
-## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-347/bob-lied)
-[Blog](https://dev.to/boblied/)
+## [PWC](https://perlweeklychallenge.org/blog/perl-weekly-challenge-348/)
+## [GitHub](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-348/bob-lied)
+[Blog](https://dev.to/boblied/pwc-348-string-alike-convert-time-3nf9)
