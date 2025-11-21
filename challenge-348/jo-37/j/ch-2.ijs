@@ -1,7 +1,6 @@
 #!/usr/local/bin/jconsole
 
 ConvertTime =: {{+/ 24 4 3 5 #: (24 * 60) | -~/ 24 60 #. > y}}
-NB. ConvertTime =: +/ 24 4 3 5 #: (24 * 60) | -~/ (24 60)&#.
 
 3 : 0 > 2}. ARGV
 if.
@@ -11,7 +10,7 @@ do.
 	try.
 		echo ConvertTime ". > {{((TR; 1 2) rxmatch y) rxfrom y}} "1 y
 	catch.
-		echo 'invalid arguments', 13!:12''
+		echo 'invalid arguments'
 	end.
 elseif.
 	0 = # y
