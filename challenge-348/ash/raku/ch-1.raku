@@ -12,7 +12,7 @@ say can-split 'odd'; # False
 sub can-split($str) {
     return False if $str.chars % 2;
 
-    my $len = ($str.chars / 2).Int;
+    my $len = ($str.chars / 2).Int; # why: https://github.com/rakudo/rakudo/issues/6030
     my ($a, $b) = $str.comb($len);
 
     $a ~~ s:g:i/<-[aeiou]>+//;
