@@ -80,6 +80,22 @@ sub meet($path)
     return $m[0] == $m[1]  && $m[2] == $m[3];
 }
 
+sub meetC($path)
+{
+    use Math::Complex;
+
+    state $origin = Math::Complex->make(0,0);
+    state %move = ( U => Math::Complex->make( 0,  1),
+                    D => Math::Complex->make( 0, -1),
+                    R => Math::Complex->make( 1,  0),
+                    L => Math::Complex->make(-1,  0) );
+
+    my $place = $origin;
+    $place += $move{$_} for split(//, uc $path);
+
+    return ($place == $origin ? true : false);
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -89,6 +105,12 @@ sub runTest
     is( meet(   "UUURRRDDD"), false, "Example 3");
     is( meet(  "UURRRDDLLL"),  true, "Example 4");
     is( meet("RRUULLDDRRUU"), false, "Example 5");
+
+    is( meetC(         "ULD"), false, "Example 1 C");
+    is( meetC(        "ULDR"),  true, "Example 2 C");
+    is( meetC(   "UUURRRDDD"), false, "Example 3 C");
+    is( meetC(  "UURRRDDLLL"),  true, "Example 4 C");
+    is( meetC("RRUULLDDRRUU"), false, "Example 5 C");
 
     done_testing;
 }
