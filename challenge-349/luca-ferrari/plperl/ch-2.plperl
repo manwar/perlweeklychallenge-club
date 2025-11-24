@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 349
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-349>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc349;
+
+CREATE OR REPLACE FUNCTION
+pwc349.task2_plperl( text )
+RETURNS boolean
+AS $CODE$
+
+   my ( $directions ) = @_;
+
+   my $moves = {};
+   for ( split //, $directions ) {
+       $moves->{ $_ }++;
+   }
+
+   return 1 if (  $moves->{ 'D' } == $moves->{ 'U' }
+               && $moves->{ 'L' } == $moves->{ 'R' } );
+  return 0;
+   
+$CODE$
+LANGUAGE plperl;

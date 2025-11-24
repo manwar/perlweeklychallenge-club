@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 349
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-349>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc349;
+
+CREATE OR REPLACE FUNCTION
+pwc349.task1_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $string ) = @_;
+   my $longest = 0;
+
+    while ( $string =~ / (.) \1+ /xg ) {
+        $longest = length( $& ) if ( length( $& ) > $longest );
+    }
+
+
+   return $longest;
+$CODE$
+LANGUAGE plperl;
