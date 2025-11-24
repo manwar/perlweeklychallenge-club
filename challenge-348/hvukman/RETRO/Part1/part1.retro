@@ -1,0 +1,13 @@
+splitat calculate half length of string
+consonants filters non vowels from string
+stringalike checks if filtered strings are not zero and if so, compares the lengths of the strings
+print -1 if true; 0 otherwise
+~~~
+
+:splitat dup s:length #2 / ;
+:consonants [ c:vowel?  ] s:filter ;
+:stringalike dup-pair [ n:-zero? ] bi@ and [ eq? n:put nl ] [ #0 n:put nl ] choose ;
+:stringsplit [ splitat s:right consonants ] [ splitat s:left consonants ] bi [ s:length ] bi@ stringalike ;
+{ 'textbook 'book 'AbCdEfGh 'rhythmmyth 'UmpireeAudio } [ dup s:put ':_ s:put stringsplit ] a:for-each
+
+~~~
