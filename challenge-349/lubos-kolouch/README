@@ -1,0 +1,29 @@
+# Perl Weekly Challenge 348 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 348.
+
+## Task 1: String Alike
+
+Split an even-length string into two halves and verify that each half contains
+the same, non-zero number of vowels.
+
+- **Perl (`perl/ch-1.pl`)**: Uses typed parameter validation and a single pass
+  over each half to count vowels before comparing the totals.
+- **Python (`python/ch-1.py`)**: Provides the same logic with type annotations
+  and `unittest` coverage of the specification examples.
+
+## Task 2: Convert Time
+
+Determine the minimal number of operations required to turn the source 24-hour
+timestamp into the target when you may add 1, 5, 15, or 60 minutes.
+
+- **Perl (`perl/ch-2.pl`)**: Converts stamps to minutes-past-midnight with type
+  validation and applies a greedy decomposition over the permitted steps.
+- **Python (`python/ch-2.py`)**: Uses the same helper logic, fully typed, along
+  with a unittest suite that exercises the provided scenarios.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.
