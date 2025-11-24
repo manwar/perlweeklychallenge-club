@@ -1,9 +1,12 @@
-sub f { $_[0] =~ y/U/U/ == $_[0] =~ y/D/D/ and   #equal count of U's and D's and
-        $_[0] =~ y/L/L/ == $_[0] =~ y/R/R/     } #equal count of L's and R's.
+sub f {
+    my( $s, %c ) = @_;
+    $s !~ s{ ^. }{ ++$c{$&}; '' }ex  ? 0
+   :$c{U} == $c{D} && $c{L} == $c{R} ? 1
+   :f($s, %c)
+}
 
 print!f("ULD")          ? "ok\n" : "error\n";
 print f("ULDR")         ? "ok\n" : "error\n";
 print!f("UUURRRDDD")    ? "ok\n" : "error\n";
 print f("UURRRDDLLL")   ? "ok\n" : "error\n";
-#print f("RRUULLDDRRUU") ? "ok\n" : "error\n"; #bug in example 5
-print f("RRUULLDDrruu") ? "ok\n" : "error\n";
+print f("RRUULLDDRRUU") ? "ok\n" : "error\n";
