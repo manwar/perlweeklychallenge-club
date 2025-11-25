@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($path where $path ~~ /^ <[UDLR]>+ $/, :v(:$verbose));
+
+my $x = 0;
+my $y = 0;
+
+for $path.comb -> $move
+{
+  given $move
+  {
+    when 'L' { $x--; }
+    when 'R' { $x++; }
+    when 'U' { $y--; }
+    when 'D' { $y++; }
+  }
+
+  say ": $move -> ($x, $y)" if $verbose;
+
+  last if $x == $y == 0;
+}
+
+say $x == $y == 0;
