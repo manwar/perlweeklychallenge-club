@@ -1,0 +1,68 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/powerstring {
+    0 dict begin
+    /mx 0 def
+    /prev 0 def
+    /cur 0 def
+    s2a {
+        /c exch def
+        cur 0 gt c prev eq and {
+            /cur cur 1 add def
+        } {
+            /cur 1 def
+            /prev c def
+        } ifelse
+        /mx mx cur max def
+    } forall
+    mx
+    end
+} bind def
+
+(powerstring) test.start
+(textbook) powerstring 2 eq test
+(aaaaa) powerstring 5 eq test
+(hoorayyy) powerstring 3 eq test
+(x) powerstring 1 eq test
+(aabcccddeeffffghijjk) powerstring 4 eq test
+test.end

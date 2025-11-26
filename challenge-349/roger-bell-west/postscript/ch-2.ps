@@ -1,0 +1,82 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/counterify {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n known {
+            c n 2 copy get 1 add put
+        } {
+            c n 1 put
+        } ifelse
+    } forall
+    c
+    end
+} bind def
+
+/meetingpoint {
+    0 dict begin
+    s2a counterify /c exch def
+    c 85 0 dget c 68 0 dget eq
+    c 76 0 dget c 82 0 dget eq and
+    end
+} bind def
+
+(meetingpoint) test.start
+(ULD) meetingpoint not test
+(ULDR) meetingpoint test
+(UUURRRDDD) meetingpoint not test
+(UURRRDDLLL) meetingpoint test
+(RRUULLDDRRUU) meetingpoint not test
+test.end
