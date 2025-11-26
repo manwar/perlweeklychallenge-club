@@ -70,13 +70,10 @@ exit(!runTest()) if $DoTest;
 say '', (meet($_) ? "true" : "false") for @ARGV;
 
 #=============================================================================
-sub meet($path)
+sub meet($path) # Doesn't work, fails Example 5
 {
-    # my %move;
-    # $move{$_} =()= $path =~ m/$_/g for ( qw(U D L R) );
-    # return $move{U} == $move{D}  &&  $move{R} == $move{L};
-
     my @m = map { scalar(()= $path =~ m/$_/g) } qw(U D L R);
+    # The Ups must be offset by Downs, and Rights by Lefts
     return $m[0] == $m[1]  && $m[2] == $m[3];
 }
 
@@ -85,13 +82,16 @@ sub meetComplex($path)
     use Math::Complex;
 
     state $origin = (0 + 0*i);
-    state %move = ( R => ( 1 +  0*i), L => (-1 +  0*i),
-                    U => ( 0 +  1*i), D => ( 0 + -1*i), );
+    state %move   = ( R => (1 + 0*i), L => (-1 +  0*i),
+                      U => (0 + 1*i), D => ( 0 + -1*i), );
 
     my $place = $origin;
-    $place += $move{$_} for split(//, uc $path);
-
-    return ($place <=> $origin) == 0;
+    for ( split(//, uc $path) )
+    {
+        $place += $move{$_};
+        return true if $place == $origin;
+    }
+    return false;
 }
 
 sub runTest
@@ -108,7 +108,7 @@ sub runTest
     is( meetComplex(        "ULDR"),  true, "Example 2 C");
     is( meetComplex(   "UUURRRDDD"), false, "Example 3 C");
     is( meetComplex(  "UURRRDDLLL"),  true, "Example 4 C");
-    is( meetComplex("RRUULLDDRRUU"), false, "Example 5 C");
+    is( meetComplex("RRUULLDDRRUU"),  true, "Example 5 C");
 
     done_testing;
 }
