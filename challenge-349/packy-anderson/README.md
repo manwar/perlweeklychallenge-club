@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Ticking away the moments that make up a challenge...](https://packy.dardan.com/b/eC)
+[Perl Weekly Challenge: The Power of String](https://packy.dardan.com/b/eZ)
