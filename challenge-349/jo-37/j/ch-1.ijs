@@ -2,11 +2,11 @@
 
 PowerString =: 3 : 0
 if.
-	2 > #>y
+	2 > #y
 do.
-	#>y
+	#y
 else.
-	1 + >./ ([*+) /\. 2 =/\ >y
+	1 + >./ ([*+) /\. 2=/\ y
 end.
 )
 
@@ -18,16 +18,16 @@ x
 aabcccddeeffffghijjk
 )
 
-3 : 0 > 2}. ARGV
+3 : 0 (2}. ARGV)
 if.
 	1 = # y
 do.
-	echo PowerString "1 y
+	echo PowerString ;> y
 elseif.
 	0 = # y
 do.
 	try.
-		assert. (2 5 3 1 4) -:  PowerString "0 Ex
+		assert. (2; 5; 3; 1; 4) -:  PowerString &.> Ex
 		echo 'tests succeeded'
 	catch.
 		echo 'tests failed '
