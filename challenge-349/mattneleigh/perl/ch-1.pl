@@ -44,11 +44,11 @@ exit(0);
 sub calculate_string_power{
     my $string = shift();
 
-    my $max = 0;
+    my $max = 1;
 
     # Search the entire string for substrings of repeated
     # characters
-    while($string =~ m/((.)\2*)/g){
+    while($string =~ m/((.)\2+)/g){
         # If this substring is the longest yet seen, store its
         # length
         $max = length($1)
