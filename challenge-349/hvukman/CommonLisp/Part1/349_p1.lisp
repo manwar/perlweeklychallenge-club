@@ -1,5 +1,4 @@
-(ql:quickload "fiveam")
-(use-package :fiveam)
+
 (defun power_string (X l &optional (i 1))
     (if (< 1 (length X))
         (let* (
@@ -38,10 +37,4 @@
                 )
           )
 
-(fiveam:test read-file-as-string-normal-file
-  (let ((result (read-file-as-string "/tmp/hello.txt")))
-    ;; Tip: put the expected value as the first argument of = or equal, string= etc.
-    ;; FiveAM generates a more readable report following this convention.
-    (is (string= "hello" result))))
-    
-(reduce #'max values)
+
