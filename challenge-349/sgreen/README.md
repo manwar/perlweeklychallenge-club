@@ -1,3 +1,3 @@
-# The Weekly Challenge 348
+# The Weekly Challenge 349
 
-Blog: [Alike Time](https://dev.to/simongreennet/the-weekly-challenge-alike-time-41oe)
+Blog: [Power Meeting](https://dev.to/simongreennet/weekly-challenge-power-meeting-21m0)
