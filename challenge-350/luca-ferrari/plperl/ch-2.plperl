@@ -1,0 +1,35 @@
+--
+-- Perl Weekly Challenge 350
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-350>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc350;
+
+CREATE OR REPLACE FUNCTION
+pwc350.task2_plperl( int, int, int)
+RETURNS int
+AS $CODE$
+
+   my ( $from, $to, $count ) = @_;
+   my $found = {};
+
+   use List::Permutor;
+   
+
+   for my $current ( $from .. $to ) {
+       my $digits = List::Permutor->new( split //, $current );
+       while ( my @permutations = $digits->next ) {
+       	     my $comparing = join( '', @permutations );
+	     if ( $current < $comparing && $comparing % $current == 0 ) {
+	     	push $found->{ $current }->@*, $comparing;
+	     }
+       }
+   }
+
+   return scalar values $found->%*;
+
+      
+   
+$CODE$
+LANGUAGE plperlu;
