@@ -1,179 +1,255 @@
-# Get Those Strings and Times Covered
+# Power Meets Points
 
-**Challenge 348 solutions in Perl by Matthias Muth**
+**Challenge 349 solutions in Perl by Matthias Muth**
 
-## Task 1: String Alike
+## Task 1: Power String
 
-> You are given a string of even length.<br/>
-> Write a script to find if the given string split into two halves of equal lengths and they both have same number of vowels.
+> You are given a string.<br/>
+> Write a script to return the power of the given string.<br/>
+> The power of the string is the maximum length of a non-empty substring that contains only one unique character.
 >
 > **Example 1**
 >
 > ```text
 > Input: $str = "textbook"
+> Output: 2
+>Breakdown: "t", "e", "x", "b", "oo", "k"
+> The longest substring with one unique character is "oo".
+> ```
+> 
+>**Example 2**
+> 
+>```text
+> Input: $str = "aaaaa"
+> Output: 5
+> ```
+> 
+>**Example 3**
+> 
+>```text
+> Input: $str = "hoorayyy"
+> Output: 3
+> Breakdown: "h", "oo", "r", "a", "yyy"
+>The longest substring with one unique character is "yyy".
+> ```
+> 
+> **Example 4**
+>
+> ```text
+>Input: $str = "x"
+> Output: 1
+> ```
+> 
+> **Example 5**
+>
+> ```text
+>Input: $str = "aabcccddeeffffghijjk"
+> Output: 4
+> Breakdown: "aa", "b", "ccc", "dd", "ee", "ffff", "g", "h", "i", "jj", "k"
+> The longest substring with one unique character is "ffff".
+>```
+
+With a little help from a regular expression and from `List::Util`, my solution is one line of code.
+
+The regular expression captures a character, and then matches as many of the same character as possible, using a *backreference* to the captured one.
+
+I use `\g-1` as the backreference. This is a relative backreference, which I prefer because if the whole regular expression changes or is embedded into another one, it is easy to forget to update references that have absolute numbers.
+
+As the character may be repeated an unknown number of times (as often as possible), a `*` quantifier is added.   
+
+```perl   
+    /(.)\g-1*/
+```
+
+Adding the `/g` (*global*) option will return all matches as a list. But if there are captures (parenthesized expressions) within the regular expression, a list of all *captures* is returned instead. In the above regular expression, we do have a capture, but it contains only one single character, not the whole sequence at is needed. This can be solved by putting the whole sequence into another capture. Then it looks like that:
+
+ ```perl
+     /((.)\g-1*)/g
+ ```
+
+Note that now, for each match, *two* elements are returned: The whole sequence *and* the first character. That's because we have two parenthesized captures, and all of them are returned.
+
+I can live with that, because in the next step, the matches are mapped to their lengths to find the largest one, and the single characters (with length 1) will in most of the cases be shorter than the longest sequence. If they are not, they represent the maximum length themselves, which is OK, too.
+
+Returning the maximum of the mapped lengths concludes the solution:
+
+```perl
+use v5.36;
+use List::Util qw( max );
+
+sub power_string( $str ) {
+    return max( map length, $str =~ /((.)\g-1*)/g );
+}
+```
+
+## Task 2: Meeting Point
+
+> You are given instruction string made up of U (up), D (down), L (left) and R (right).<br/>
+> Write a script to return true if following the instruction, you meet the starting point (0,0).
+>
+> **Example 1**
+>
+> ```text
+> Input: $path = "ULD"
 > Output: false
 >
-> 1st half: "text" (1 vowel)
-> 2nd half: "book" (2 vowels)
+> (-1,1) <- (0,1)
+>    |        ^
+>    v        |
+> (-1,0)    (0,0)
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "book"
+> Input: $path = "ULDR"
 > Output: true
 >
-> 1st half: "bo" (1 vowel)
-> 2nd half: "ok" (1 vowel)
+>  (-1,1) <- (0,1)
+>     |        ^
+>     v        |
+>  (-1,0) -> (0,0)
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "AbCdEfGh"
-> Output: true
+> Input: $path = "UUURRRDDD"
+> Output: false
 >
-> 1st half: "AbCd" (1 vowel)
-> 2nd half: "EfGh" (1 vowel)
+> (0,3) -> (1,3) -> (2,3) -> (3,3)
+>   ^                          |
+>   |                          v
+> (0,2)                      (3,2)
+>   ^                          |
+>   |                          v
+> (0,1)                      (3,1)
+>   ^                          |
+>   |                          v
+> (0,0)                      (3,0)
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "rhythmmyth"
-> Output: false
+> Input: $path = "UURRRDDLLL"
+> Output: true
 >
-> 1st half: "rhyth" (0 vowel)
-> 2nd half: "mmyth" (0 vowel)
+> (0,2) -> (1,2) -> (2,2) -> (3,2)
+>   ^                          |
+>   |                          v
+> (0,1)                      (3,1)
+>   ^                          |
+>   |                          v
+> (0,0) <- (1,0) <- (1,1) <- (3,0)
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "UmpireeAudio"
-> Output: false
+> Input: $path = "RRUULLDDRRUU"
+> Output: true
 >
-> 1st half: "Umpire" (3 vowels)
-> 2nd half: "eAudio" (5 vowels)
+> (0,2) <- (1,2) <- (2,2)
+>   |                 ^
+>   v                 |
+> (0,1)             (2,1)
+>   |                 ^
+>   v                 |
+> (0,0) -> (1,0) -> (2,1)
 > ```
 
-The fastest way to count the occurrences of a fixed set of characters in a string in Perl probably is this:
+The interesting point in implementing a solution for this task is to find a way how to translate the direction letters (U, D, L and R) into a change of the current location's coordinates.
 
-```perl
-    tr/<characters to count>//
-```
-
-This is mentioned explicitly in [perldoc](https://perldoc.perl.org/perlop#tr/SEARCHLIST/REPLACEMENTLIST/cdsr):
-
-> ```
-> tr/*SEARCHLIST*/*REPLACEMENTLIST*/cdsr
-> ```
->
-> [...]<br/>
-> An empty *REPLACEMENTLIST* is useful for counting characters in a class [...]
-
-For this solution, I apply `tr` to the left and right parts, with upper case and lower case vowels as the *SEARCHLIST*. I use `map` to map the two parts to their respective number of vowels.
-
-For the returned result, the two counts have to be equal. And at least one of them (it doesn't matter which one, as they are equal) has to be greater than zero.
-
-This is my solution:
+The outline is always the same:
 
 ```perl
 use v5.36;
+use builtin qw( true false );
 
-sub string_alike( $str ) {
-    my $half_length = length( $str ) / 2;
-    my ( $n_1, $n_2 ) = map tr/aeiouAEIOU//,
-        substr( $str, 0, $half_length ),
-        substr( $str, $half_length );
-    return $n_1 > 0 && $n_2 == $n_1;
+sub meeting_point( $path ) {
+    my ( $x, $y ) = ( 0, 0 );
+    for ( split "", $path ) {
+        <CHANGE $x AND $y ACCORDING TO THE DIRECTION IN $_>
+        return true
+            if $x == 0 && $y == 0;
+    }
+    return false;
 }
 ```
 
-## Task 2: Co[n]vert Time
+The classical approach is an if-then-else chain. For brevity, I use the ternary conditional operator (`?:`):
 
-> You are given two strings, \$source and \$target, containing time in 24-hour time form.<br/>
-> Write a script to convert the source into target by performing one of the following operations:
-> 
-> ```text
-> 1. Add  1 minute
-> 2. Add  5 minutes
-> 3. Add 15 minutes
-> 4. Add 60 minutes
->```
-> 
->Find the total operations needed to get to the target.
-> 
-> **Example 1**
-> 
-> ```text
->Input: $source = "02:30"
->        $target = "02:45"
-> Output: 1
->Just one operation i.e. "Add 15 minutes".
-> ```
->
-> **Example 2**
-> 
-> ```text
-> Input: $source = "11:55"
->       $target = "12:15"
-> Output: 2
-> Two operations i.e. "Add 15 minutes" followed by "Add 5 minutes".
->```
-> 
->**Example 3**
-> 
-> ```text
-> Input: $source = "09:00"
->        $target = "13:00"
->Output: 4
-> Four operations of "Add 60 minutes".
-> ```
->
-> **Example 4**
->
-> ```text
-> Input: $source = "23:45"
->        $target = "00:30"
-> Output: 3
->Three operations of "Add 15 minutes".
-> ```
-> 
->**Example 5**
-> 
->```text
-> Input: $source = "14:20"
->        $target = "15:25"
-> Output: 2
-> Two operations, one "Add 60 minutes" and one "Add 5 minutes"
->```
+```perl
+        $_ eq "U" ? ++$y :
+        $_ eq "D" ? --$y :
+        $_ eq "L" ? --$x :
+        $_ eq "R" ? ++$x : ();
+```
 
-First we need to find the time difference between `$source` and `$target`, in minutes. For converting the time strings into a number of minutes, I use a regular expression of `/^(\d+):(\d+)/`, after which `$1` and `$2` contain the hour and the minute, respectively. The time in minutes then obviously is `( $1 * 60 ) + $2`. I use a `map` call to convert both `$source` and `$target` into `$source_min` and `$target_min`.
+In the case of an `"R"`, it is only detected after the other three directions have been excluded. There is always a doubt whether the runtime can be improved by reordering the conditional checks.
 
-The time difference in minutes `$diff` then is  `$target_min - $source_min`. If getting to the target time means crossing midnight, the difference will be negative. The easy way to deal with that is to just use the modulo operator with one whole day's number of minutes, like so: `  % ( 24 * 60 )`. This will turn a negative difference into the correct positive value.
+An alternative implementation uses a hash to look up some information depending on the direction letter. The hash can contain the x and y increments (or decrements) for the respective direction. Like this:
 
-For determining the number `$n` of operations needed, I use a `for` loop.<br/>With `$_` containing the operation values of `60`, `15` and `5` (in this descending order), the number of possible operations is `int( $diff / $_ )`. This number is added to the total number of operations in `$n`.
+```perl
+    my %incr_x = ( U => 0,  D => 0,  L => -1, R => +1 );
+    my %incr_y = ( U => +1, D => -1, L => 0,  R => 0  );
+    ...
+        $x += $incr_x{$_};
+        $y += $incr_y{$_};
+```
 
-Next, `$diff` needs to be diminished by the total value that these operations represent. Applying all operations with the value of `$_` at once means we reduce `$diff` to what is left, which we can do by just applying `$diff %= $_`.
+or, very similar:
 
-I excluded the operation with the value of `1` from the loop, because obviously the number of operations with value `1` to cover what is left in `$diff` is the value of `$diff` itself, no divisions or modulo computations needed. The value of  the remaining `$diff` can just be added to `$n` for the final result.
+```perl
+    my %incr = (
+        U => [ 0, +1 ],
+        D => [ 0, -1 ],
+        L => [ -1, 0 ],
+        R => [ +1, 0 ] );
+    ...
+        $x += $incr{$_}->[0];
+        $y += $incr{$_}->[1];
+```
 
-Putting it together:
+Another approach is to look up a subroutine that changes the location:
+
+```perl
+    my %move_subs = (
+        U => sub { ++$y },
+        D => sub { --$y },
+        L => sub { --$x },
+        R => sub { ++$x },
+    );
+    ...
+        $move_subs{$_}->();
+```
+
+This is appealing because every subroutine only does what is needed, while the incrementing solutions always also operate on the x or y coordinate that does *not* need to be changed for the respective direction.
+
+Best is to let a benchmark decide! 
+
+I ran benchmarks with 1,000, 10,000 and 100,000 random direction letters (setting the random seed manually to make sure that the path never passes through (0,0)). I also instrumented the code to accept an arrayref as the parameter instead of a string, to avoid that the call to `split` dominates the run time.
+
+All of the solutions show results within a margin of a few percentage points, even though the 'if-then-else' solution seems to win slightly more often, followed by the 'increment' solution with separate hashes `%incr_x` and `%incr_y`.  
+
+With these results, the 'increment' solution is my preferred one, because it is more balanced and symmetrical. Here it is in full:
 
 ```perl
 use v5.36;
+use builtin qw( true false );
 
-sub convert_time( $source, $target ) {
-    my ( $source_min, $target_min ) =
-        map { /(\d+):(\d+)/; ( $1 * 60 + $2 )  } $source, $target;
-    my $diff = ( $target_min - $source_min ) % ( 24 * 60 );
-    my $n = 0;
-    for ( 60, 15, 5 ) {
-        $n += int( $diff / $_ );
-        $diff %= $_;
-    };
-    return $n + $diff;
+sub meeting_point_using_subs( $path ) {
+    my ( $x, $y ) = ( 0, 0 );
+    my %incr_x = ( U => 0,  D => 0,  L => -1, R => +1 );
+    my %incr_y = ( U => +1, D => -1, L => 0,  R => 0  );
+    for ( ref $path ? $path->@* : split "", $path ) {
+        $x += $incr_x{$_};
+        $y += $incr_y{$_};
+        return true
+            if $x == 0 && $y == 0;
+    }
+    return false;
 }
 ```
 
