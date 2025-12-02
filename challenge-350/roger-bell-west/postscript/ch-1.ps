@@ -1,0 +1,118 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+/counterify {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n known {
+            c n 2 copy get 1 add put
+        } {
+            c n 1 put
+        } ifelse
+    } forall
+    c
+    end
+} bind def
+
+/goodsubstrings {
+    0 dict begin
+    0 exch
+    s2a 3 -2 rotor {
+        counterify values listmax 1 eq {
+            1 add
+        } if
+    } forall
+    end
+} bind def
+
+(goodsubstrings) test.start
+(abcaefg) goodsubstrings 5 eq test
+(xyzzabc) goodsubstrings 3 eq test
+(aababc) goodsubstrings 1 eq test
+(qwerty) goodsubstrings 4 eq test
+(zzzaaa) goodsubstrings 0 eq test
+test.end
