@@ -1,0 +1,221 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/counterify {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n known {
+            c n 2 copy get 1 add put
+        } {
+            c n 1 put
+        } ifelse
+    } forall
+    c
+    end
+} bind def
+
+/countdigits {
+    alloccvs s2a counterify
+} bind def
+
+/comparehash {
+    0 dict begin
+    /b exch def
+    /a exch def
+    a length b length eq {
+        /h 0 dict def
+        a keys {
+            h exch true put
+        } forall
+        b keys {
+            h exch true put
+        } forall
+        true
+        h keys {
+            /k exch def
+            /t true def
+            a k known not {
+                /t false def
+            } if
+            t {
+                b k known not {
+                    /t false def
+                } if
+            } if
+            t {
+                a k get b k get ne {
+                    /t false def
+                } if
+            } if
+            t not {
+                pop false
+                exit
+            } if
+        } forall
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/shufflepairs {
+    0 dict begin
+    /pairs exch def
+    /high exch def
+    /low exch def
+    0
+    low 1 high {
+        /candidate exch def
+        /candidatec candidate countdigits def
+        /cnt 0 def
+        2 1 9 {
+            candidate mul countdigits candidatec deepeq {
+                /cnt cnt 1 add def
+                cnt pairs ge {
+                    exit
+                } if
+            } if
+        } for
+        cnt pairs ge {
+            1 add
+        } if
+    } for
+    end
+} bind def
+
+(shufflepairs) test.start
+1 1000 1 shufflepairs 0 eq test
+1500 2500 1 shufflepairs 3 eq test
+1000000 1500000 5 shufflepairs 2 eq test
+13427000 14100000 2 shufflepairs 11 eq test
+1000 5000 1 shufflepairs 7 eq test
+test.end
