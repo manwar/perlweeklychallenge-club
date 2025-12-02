@@ -1,0 +1,38 @@
+--
+-- Perl Weekly Challenge 350
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-350>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc350;
+
+CREATE OR REPLACE FUNCTION
+pwc350.task1_plperl( text, int )
+RETURNS int
+AS $CODE$
+
+   my ( $string, $size ) = @_;
+   $size //= 3;
+
+   my @chars = split //, $string;
+   my @found;
+
+   for my $index ( 0 .. $#chars - $size + 1 ) {
+       my $bag = {};
+       for ( 0 .. $size - 1 ) {
+       	   $bag->{ $chars[ $_ + $index ] }++;
+       }
+
+       my $ok = 1;
+       for ( keys $bag->%* ) {
+       	   $ok = 0 if ( $bag->{ $_ } > 1 );
+       }
+
+       next if ! $ok;
+       push @found, join '', keys $bag->%*;
+   }
+
+   return scalar @found;	
+   
+$CODE$
+LANGUAGE plperl;
