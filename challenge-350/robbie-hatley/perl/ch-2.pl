@@ -102,13 +102,13 @@ Output is to STDOUT and will be each input followed by the corresponding output.
          my $s = sig($x);                   # Digit signature of $x.
          my $cnt = 0;                       # How many partners does $x have?
          for my $f (2..9) {                 # For each possible factor,
-            if (sig($x) eq sig($f*$x)) {    # If signatures match for $x and $x*$f,
+            if ($s eq sig($f*$x)) {         # If signatures match for $x and $x*$f,
                ++$cnt;                      # increment counter.
                if ($cnt >= $q) {            # If our quota has been met,
                   ++$p;                     # increment partner counter,
                   next X}}                  # and skip to next candidate.
             if (0 == $x%$f                  # If $f divides $x,
-                && sig($x/$f) eq sig($x)) { # and if signatures match for $x/$f and $x,
+                && sig($x/$f) eq $s) {      # and if signatures match for $x/$f and $x,
                ++$cnt;                      # increment counter.
                if ($cnt >= $q) {            # If our quota has been met,
                   ++$p;                     # increment partner counter.
