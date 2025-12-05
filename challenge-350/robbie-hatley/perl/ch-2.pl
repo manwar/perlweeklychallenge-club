@@ -113,7 +113,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
                if ($cnt >= $q) {            # If our quota has been met,
                   ++$p;                     # increment partner counter.
                   next X}}}}                # and skip to next candidate.
-      return $p}                            # Return list of integers in $i..$j with $q-or-more partners.
+      $p}                                   # Return list of integers in $i..$j with $q-or-more partners.
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
