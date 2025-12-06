@@ -72,18 +72,6 @@ sub shuffle_pairs ($from, $to, $count) {
     @pairs;
 }
 
-sub shuffle_pairs_q ($from, $to, $count) {
-    my $pairs;
-    for my $i ($from .. $to) {
-        my $si = join '', sort split //, $i;
-        my $m = int +(10**(int(log($i)/log(10)) + 1) - 1) / $i;
-        $pairs +=
-            $count <= grep $si eq join('', sort split //, $_),
-            map $_ * $i,
-            2 .. $m;
-    }
-    $pairs;
-}
 
 ### Examples and Tests
 
