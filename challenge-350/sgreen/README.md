@@ -1,3 +1,3 @@
-# The Weekly Challenge 349
+# The Weekly Challenge 350
 
-Blog: [Power Meeting](https://dev.to/simongreennet/weekly-challenge-power-meeting-21m0)
+Blog: [Good shuffling](https://dev.to/simongreennet/weekly-challenge-good-shuffling-3cdj)
