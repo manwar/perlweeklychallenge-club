@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: The Power of String](https://packy.dardan.com/b/eZ)
+[Perl Weekly Challenge: Shuffling the Good](https://packy.dardan.com/b/er)
