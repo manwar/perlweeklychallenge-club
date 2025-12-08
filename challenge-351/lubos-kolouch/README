@@ -1,0 +1,30 @@
+# Perl Weekly Challenge 349 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 349.
+
+## Task 1: Power String
+
+Compute the length of the longest run of identical characters inside a string.
+
+- **Perl (`perl/ch-1.pl`)**: Validates input with Type::Tiny, iterates once
+  over the characters, and reports the maximum run length together with inline
+  Test::More coverage for the five specification examples.
+- **Python (`python/ch-1.py`)**: Mirrors the single-pass logic with full type
+  annotations and the same tests implemented via `unittest`.
+
+## Task 2: Meeting Point
+
+Track a path built from the moves `U`, `D`, `L`, and `R` and determine whether
+you ever return to the origin while following the steps.
+
+- **Perl (`perl/ch-2.pl`)**: Streams the instructions with type validation,
+  updating a coordinate accumulator and returning once the origin is revisited;
+  bundled tests assert the supplied scenarios.
+- **Python (`python/ch-2.py`)**: Implements equivalent logic with typed
+  movement deltas and a `unittest` suite containing the specification cases.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.
