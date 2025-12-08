@@ -7,8 +7,8 @@ nok arithmetic-progression(1,2,4,8,16);
 ok  arithmetic-progression(5,-1,3,1,-3);
 ok  arithmetic-progression(1.5,3,0,4.5,6);
 
-sub arithmetic-progression(*@nums)
+sub arithmetic-progression(*@n)
 {
-    @nums .= sort;    
-    @nums ~~ (@nums[0],@nums[1]...*).head(@nums)
+    @n .= sort;    
+    @n ~~ (@n[0],@n[1]...*).head(@n)
 }
