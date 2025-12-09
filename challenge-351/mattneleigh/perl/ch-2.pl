@@ -8,7 +8,7 @@ use English;
 # Begin main execution
 ################################################################################
 
-my @integer_lists = (
+my @number_lists = (
     [ 1, 3, 5, 7, 9 ],
     [ 9, 1, 7, 5, 3 ],
     [ 1, 2, 4, 8, 16 ],
@@ -17,11 +17,11 @@ my @integer_lists = (
 );
 
 print("\n");
-foreach my $integer_list (@integer_lists){
+foreach my $number_list (@number_lists){
     printf(
         "Input: \@num = (%s)\nOutput: %s\n\n",
-        join(", ", @{$integer_list}),
-        is_arithmetic_sequence(@{$integer_list}) ? "true" : "false"
+        join(", ", @{$number_list}),
+        is_arithmetic_sequence(@{$number_list}) ? "true" : "false"
     );
 }
 
