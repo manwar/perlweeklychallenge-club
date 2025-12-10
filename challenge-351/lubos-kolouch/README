@@ -1,27 +1,28 @@
-# Perl Weekly Challenge 349 Solutions
+# Perl Weekly Challenge 351 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 349.
+Perl and Python implementations for both tasks of Weekly Challenge 351.
 
-## Task 1: Power String
+## Task 1: Special Average
 
-Compute the length of the longest run of identical characters inside a string.
+Compute the average of the list after removing all occurrences of the minimum
+and maximum values; if nothing remains, the result is `0`.
 
-- **Perl (`perl/ch-1.pl`)**: Validates input with Type::Tiny, iterates once
-  over the characters, and reports the maximum run length together with inline
-  Test::More coverage for the five specification examples.
-- **Python (`python/ch-1.py`)**: Mirrors the single-pass logic with full type
-  annotations and the same tests implemented via `unittest`.
+- **Perl (`perl/ch-1.pl`)**: Uses Type::Tiny for validation, List::Util for
+  min/max/sum helpers, and carries inline Test::More checks for the five
+  provided examples.
+- **Python (`python/ch-1.py`)**: Type-annotated implementation mirroring the
+  Perl logic with a `unittest` suite of the official examples.
 
-## Task 2: Meeting Point
+## Task 2: Arithmetic Progression
 
-Track a path built from the moves `U`, `D`, `L`, and `R` and determine whether
-you ever return to the origin while following the steps.
+Decide whether the numbers can be reordered so adjacent elements form an
+arithmetic progression.
 
-- **Perl (`perl/ch-2.pl`)**: Streams the instructions with type validation,
-  updating a coordinate accumulator and returning once the origin is revisited;
-  bundled tests assert the supplied scenarios.
-- **Python (`python/ch-2.py`)**: Implements equivalent logic with typed
-  movement deltas and a `unittest` suite containing the specification cases.
+- **Perl (`perl/ch-2.pl`)**: Validates input with Type::Tiny, sorts the list,
+  and checks constant differences with a small floating-point tolerance; tests
+  cover all specification examples.
+- **Python (`python/ch-2.py`)**: Sorted check using `math.isclose` for tolerant
+  comparisons, with `unittest` cases matching the challenge examples.
 
 ## Running the Solutions
 
