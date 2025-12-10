@@ -1,0 +1,8 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@num where @num.elems > 0 && all(@num) ~~ Numeric);
+
+my @sorted     = @num.sort;
+my @difference = (0 .. @sorted.end - 1).map: @sorted[$_+1] - @sorted[$_];
+
+say [==] @difference;
