@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@num where @num.elems > 0 && all(@num) ~~ Numeric);
+
+say [==] (0 .. @num.end - 1).map({ (@num.sort)[$_+1] - (@num.sort)[$_] });
