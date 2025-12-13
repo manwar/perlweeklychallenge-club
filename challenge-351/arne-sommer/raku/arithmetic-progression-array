@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@num where @num.elems > 0 && all(@num) ~~ Numeric,
+                :v(:$verbose));
+
+my @sorted = @num.sort;
+my @difference;
+
+for 0 .. @sorted.end - 1 -> $i
+{
+  @difference.push: @sorted[$i+1] - @sorted[$i];
+}
+
+if $verbose
+{
+  say ":Sorted: { @sorted.join(", ") }";
+  say ":Differences: { @difference.join(", ") }";
+}
+
+say [==] @difference;
