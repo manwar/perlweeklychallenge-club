@@ -1,3 +1,3 @@
-# The Weekly Challenge 350
+# The Weekly Challenge 351
 
-Blog: [Good shuffling](https://dev.to/simongreennet/weekly-challenge-good-shuffling-3cdj)
+Blog: [Average Progression](https://dev.to/simongreennet/weekly-challenge-average-progression-2dd6)
