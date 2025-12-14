@@ -13,15 +13,15 @@ use v5.36;
 use List::MoreUtils qw( minmax );
 use List::Util qw( sum0 );
 
+sub special_average_WRONG( @ints ) {
+    @ints = sort { $a <=> $b } @ints;
+    return sum( @ints[ 1 .. $#ints - 1 ] ) / ( ( @ints - 2 ) || 1 );
+}
+
 sub special_average( @ints ) {
     my ( $min, $max ) = minmax @ints;
     my @stripped = grep $min < $_ < $max, @ints;
     return sum0( @stripped ) / ( scalar @stripped || 1 );
-}
-
-sub special_average( @ints ) {
-    @ints = sort { $a <=> $b } @ints;
-    return sum0( @ints[ 1 .. $#ints - 1 ] ) / ( ( @ints - 2 ) || 1 );
 }
 
 use Test2::V0 qw( -no_srand );
