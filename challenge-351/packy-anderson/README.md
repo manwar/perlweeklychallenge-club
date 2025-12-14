@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Shuffling the Good](https://packy.dardan.com/b/er)
+[Perl Weekly Challenge: A pretty average progression...](https://packy.dardan.com/b/fQ)
