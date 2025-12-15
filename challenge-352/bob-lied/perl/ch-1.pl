@@ -47,33 +47,29 @@ say join(", ", matchString(@ARGV)->@*);
 sub matchString(@words)
 {
     use List::Util qw/any/;
-    my %sub;
+    my %seen;
+    my @match;
     for ( 1 .. @words )
     {
         my $w = shift @words;
-        if ( ! exists $sub{$w} )
-        {
-            $sub{$w} = $_  if any { index($_, $w) >= 0  } @words;
-        }
+        push @match, $w if ( ! $seen{$w}++ && any { index($_, $w) >= 0  } @words );
         push @words, $w;
     }
-    return [ sort { $sub{$a} <=> $sub{$b} } keys %sub ];
+    return \@match;
 }
 
 sub matchRE(@words)
 {
     use List::Util qw/any/;
-    my %sub;
+    my %seen;
+    my @match;
     for ( 1 .. @words )
     {
         my $w = shift @words;
-        if ( ! exists $sub{$w} )
-        {
-            $sub{$w} = $_  if grep /$w/, @words;
-        }
+        push @match, $w if ( ! $seen{$w}++  &&  grep /$w/, @words );
         push @words, $w;
     }
-    return [ sort { $sub{$a} <=> $sub{$b} } keys %sub ];
+    return \@match;
 }
 
 sub runTest
