@@ -1,7 +1,7 @@
 #!/usr/env/perl
 ##############################################################################################################
-#	Perl Challenge 352 - Challenge 1
-#	================================
+#	Perl Weekly Challenge 352 - Task 1
+#	==================================
 #
 #	"Write a script to return all strings that are a substring of another word in the given array
 #   in the order they occur."
