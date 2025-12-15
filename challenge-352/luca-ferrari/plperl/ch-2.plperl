@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 352
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-352>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc352;
+
+CREATE OR REPLACE FUNCTION
+pwc352.task2_plperl( int[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $bits ) = @_;
+
+   my @binaries;
+   for ( 0 .. $bits->@* - 1 ) {
+       push @binaries, join( '', $bits->@[ 0 .. $_ ] );
+   }
+
+   for my $val ( @binaries ) {
+       if ( oct( "0b". $val ) % 5 == 0 ) {
+       	  return_next( $val );
+       }
+   }
+
+   return undef;
+$CODE$
+LANGUAGE plperl;
