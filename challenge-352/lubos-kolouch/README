@@ -1,0 +1,31 @@
+# Perl Weekly Challenge 351 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 351.
+
+## Task 1: Special Average
+
+Compute the average of the list after removing all occurrences of the minimum
+and maximum values; if nothing remains, the result is `0`.
+
+- **Perl (`perl/ch-1.pl`)**: Uses Type::Tiny for validation, List::Util for
+  min/max/sum helpers, and carries inline Test::More checks for the five
+  provided examples.
+- **Python (`python/ch-1.py`)**: Type-annotated implementation mirroring the
+  Perl logic with a `unittest` suite of the official examples.
+
+## Task 2: Arithmetic Progression
+
+Decide whether the numbers can be reordered so adjacent elements form an
+arithmetic progression.
+
+- **Perl (`perl/ch-2.pl`)**: Validates input with Type::Tiny, sorts the list,
+  and checks constant differences with a small floating-point tolerance; tests
+  cover all specification examples.
+- **Python (`python/ch-2.py`)**: Sorted check using `math.isclose` for tolerant
+  comparisons, with `unittest` cases matching the challenge examples.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.
