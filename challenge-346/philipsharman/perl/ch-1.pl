@@ -14,8 +14,6 @@ use 5.36.0;
 use strict;
 
 use boolean qw(true false);
-use feature 'say';
-use feature 'signatures';
 use List::Util;
 use Test::More 'tests' => 8;    # <==  The number of tests. Change as required.
 
@@ -108,7 +106,7 @@ sub examine( $string ) {
 	die "Invalid input: '$string'" unless $string =~ /^[)(]+$/;
 
 	# We look at smaller and smaller sections of the string each time, chopping off the first letter each time.
-	# That way we only need to look for matches that start at position 0.
+	# That way we only need to look for matches that start at the beginning of the substring.
 
 	my @sizesFound    = ( 0 );
 	my @letters       = split( //, $string );
@@ -116,15 +114,17 @@ sub examine( $string ) {
 	while ( @letters ) {
 		my $subString = join( '', @letters );
 		if ( $VERBOSE ) {
-			say "Position: $startPosition";
+			say "Position:  $startPosition";
 			say "Examining: '$subString'";
 		}
 
+		# Step through the substring. Keep track of the parenthesis level.  When it returns to 0, we have a valid match.
 		my $parenthesisLevel = 0;
 		for ( my $i = 0 ; $i < scalar( @letters ) ; $i++ ) {
 			$parenthesisLevel++ if $letters[ $i ] eq '(';
 			$parenthesisLevel-- if $letters[ $i ] eq ')';
 
+			# This is not a valid match if the parenthesis level goes negative. We can stop looking.
 			if ( $parenthesisLevel < 0 ) {
 				last;
 			}
@@ -136,6 +136,7 @@ sub examine( $string ) {
 			}
 
 			if ( $parenthesisLevel == 0 ) {
+				# We have found a match
 				my $match = substr( $subString, 0, $i + 1 );
 				say "Found '$match' at position $startPosition. Size: " . length( $match );
 				push( @sizesFound, length( $match ) );
