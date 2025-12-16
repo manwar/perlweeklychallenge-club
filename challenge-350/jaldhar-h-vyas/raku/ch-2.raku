@@ -10,25 +10,22 @@ sub MAIN(
     for $from .. $to -> $i {
         my $shufflePairs = 0;
         my @digits = $i.comb;
-        if @digits != @digits.unique {
-            next;
-        }
+        my $shortest = @digits.sort.join;
 
-        for @digits.permutations.map({ .join }) -> $j {
-            if $j <= $i {
-                next;
-            }
-
-            if $j %% $i {
-                $shufflePairs++;
-            }
-
-            if $shufflePairs == $count {
-                $total++;
+        for 2 .. ∞ -> $j {
+            my $candidate = $i * $j;
+            if $candidate.chars > $i.chars {
                 last;
             }
-        }
 
+            if $candidate.comb.sort.join eq $shortest {
+                $shufflePairs++;
+                if $shufflePairs == $count {
+                    $total++;
+                    last;
+                }
+            }
+        }
     }
 
     say $total;
