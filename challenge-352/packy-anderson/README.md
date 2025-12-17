@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: A pretty average progression...](https://packy.dardan.com/b/fQ)
+[Perl Weekly Challenge: Doodling with matches and prefixes](https://packy.dardan.com/b/fi)
