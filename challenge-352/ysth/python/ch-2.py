@@ -14,4 +14,3 @@ if __name__ == "__main__":
         '[0,1,1,0,0,1,0,1,1,1]',
         '{"type":"array", "items": {"type": "integer", "minimum": 0, "maximum": 1}}',
     )
-
