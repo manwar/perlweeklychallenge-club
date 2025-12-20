@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴ 🐧
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
+
+constant \BENCH = True;
 
 =begin comment
 May be edited for space.
@@ -25,34 +25,62 @@ Write a script to return an array @answer where $answer[i] is true if x<sub>i</s
 
 =end comment
 
-my (\F, \T) = False, True;
+my @Test = do { 
+     my (\F, \T) = False, True;
 
-my @Test =
-    # input           expect
+    # input                         expect
     (0,1,1,0,0,1,0,1,1,1),          (T, F, F, F, F, T, T, F, F, F),
     (1,0,1,0,1,0),                  (F, F, T, T, F, F),
     (0,0,1,0,1),                    (T, T, F, F, T),
     (1,1,1,1,1),                    (F, F, F, T, F),
     (1,0,1,1,0,1,0,0,1,1),          (F, F, T, F, F, T, T, T, F, F),
-    (0,1,0,1,0,0,0,0,0,0,0,0,0,0,0),(T,F,F,T,T,T,T,T,T,T,T,T,T,T,T),
-;
-plan +@Test ÷ 2;
+    ;
+}
+plan 2 × +@Test ÷ 2;
 
-sub task( @a is copy, $divr = 5  -->Array) {
+# I've been playing with strs vs array, here the substr is efficient…
+sub task-str( @a is copy, $divr = 5  -->Array) {
     my $in = @a.join;
     my @ret;
-    for 1..$in.chars -> $tail {
-       @ret.push( $in.substr(0,$tail).parse-base(2) %% $divr );
+    for 1..$in.chars -> \tail {
+       @ret.push( $in.substr(0, tail).parse-base(2) %% $divr );
     }
     @ret
 }
+# … but math is faster than .parse-base.
+sub task-mult( @a is copy, $divr = 5  -->Array) {
+    my ( $curr, @ret) = 0;
+    @ret.push:  ( $curr = $curr × 2 + $_) %% $divr for @a;
+    @ret;
+}
+
+if BENCH {
+    use Bench;
+    my $b = Bench.new;
+
+    sub get-inputs( @a, $step = 1 -->Array) {
+        return @a  if @a ~~ () or $step == 1;
+        warn "Array is not divisable by step" unless @a.elems %% $step;
+        return @a[0] if @a.end < $step;
+        my $end = 2 × ( @a.end div $step);
+        return @a[0, $step … $end].Array
+    }
+    my @t = get-inputs @Test, 2;
+
+    $b.cmpthese(1000, {
+
+        task-str   => sub { for @t { task-str  $_, 5  } },
+        task-mult  => sub { for @t { task-mult $_, 5  } },
+    });
+}
 
 for @Test -> $in, $exp {
-    is task( $in), $exp, " $in.join()";
+    is task-str( $in), $exp, " $in.join()";
+    is task-mult( $in), $exp, " $in.join()";
 }
 done-testing;
 
-my  @num = (0,1,1,0,0,1,0,1,1,1);
+my  @num = (0,1,0,1,0,0,0,0,0,0,0,0,0,0,0);
 
 say qq{\nInput: @num = (@num.join(','))}
-~ qq{\nOutput: (}, (task( @num)».lc).join( ', '), ')';
+  ~ qq{\nOutput: (}, (task-mult( @num)».lc).join( ', '), ')';

@@ -13,16 +13,16 @@ Write a script to return all strings that are a substring of another word in the
 
 my @Test =
     # @in   @exp
-    ("cat", "cats", "dog", "dogcat", "dogcat", "rat", "ratcatdogcat"),
-            ("cat", "dog", "dogcat", "rat"),
-    ("hello", "hell", "world", "wor", "ellow", "elloworld"),
-            ("hell", "world", "wor", "ellow"),
-    ("a", "aa", "aaa", "aaaa"),
-            ("a", "aa", "aaa"),
-    ("flower", "flow", "flight", "fl", "fli", "ig", "ght"),
-            ("flow", "fl", "fli", "ig", "ght"),
-    ("car", "carpet", "carpenter", "pet", "enter", "pen", "pent"),
-            ("car", "pet", "enter", "pen", "pent"),
+    <cat cats dog dogcat dogcat rat ratcatdogcat>,
+            <cat dog dogcat rat>,
+    <hello hell world wor ellow elloworld>,
+            <hell world wor ellow>,
+    <a aa aaa aaaa>,
+            <a aa aaa>,
+    <flower flow flight fl fli ig ght>,
+            <flow fl fli ig ght>,
+    <car carpet carpenter pet enter pen pent>,
+            <car pet enter pen pent>,
 ;
 plan +@Test ÷ 2;
 
@@ -40,10 +40,6 @@ for @Test -> @in, @exp {
     is task( @in), @exp, "{@exp // @exp.^name()} <- @in.raku()";
 }
 done-testing;
-
-
-#Input: @words = ("hello", "hell", "world", "wor", "ellow", "elloworld")
-#Output: ("hell", "world", "wor", "ellow")
 
 my @word = "hello", "hell", "world", "wor", "ellow", "elloworld";
 say qq{\nInput: @words = ("@word.join('", "')")\nOutput: ("&task(@word).join('", ' )")};
