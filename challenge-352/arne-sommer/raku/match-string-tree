@@ -1,0 +1,47 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@words where @words.elems > 0,
+               :v(:$verbose));
+
+my %h = ();
+
+for @words -> $word
+{
+  my $c := %h;
+
+  for $word.comb -> $letter
+  {
+    $c{$letter} //= {};
+    $c := $c{$letter};
+  }
+}
+
+say ": Hash: { %h.raku }" if $verbose;
+
+my @ok;
+
+WRD:
+for @words -> $word
+{
+  my $c := %h;
+
+  for $word.comb -> $letter
+  {
+    if $c{$letter}
+    {
+      $c := $c{$letter};
+    }
+    else
+    {
+      say ":Not ok: $word" if $verbose;
+      next WRD;
+    }
+  }
+  say ":OK: $word" if $verbose;
+  @ok.push: $word;
+}
+
+say "(" ~ @ok.map({ '"' ~ $_ ~ '"' }).join(", ") ~ ")";
+
+
+
