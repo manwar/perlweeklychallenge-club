@@ -1,3 +1,3 @@
-# The Weekly Challenge 351
+# The Weekly Challenge 352
 
-Blog: [Average Progression](https://dev.to/simongreennet/weekly-challenge-average-progression-2dd6)
+Blog: [Strings and Binaries](https://dev.to/simongreennet/weekly-challenge-strings-and-binaries-d7k)
