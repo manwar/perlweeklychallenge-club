@@ -1,28 +1,27 @@
-# Perl Weekly Challenge 351 Solutions
+# Perl Weekly Challenge 352 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 351.
+Perl and Python implementations for both tasks of Weekly Challenge 352.
 
-## Task 1: Special Average
+## Task 1: Match String
 
-Compute the average of the list after removing all occurrences of the minimum
-and maximum values; if nothing remains, the result is `0`.
+Return all words that appear as substrings of another word in the list,
+preserving the first-occurrence order.
 
-- **Perl (`perl/ch-1.pl`)**: Uses Type::Tiny for validation, List::Util for
-  min/max/sum helpers, and carries inline Test::More checks for the five
-  provided examples.
-- **Python (`python/ch-1.py`)**: Type-annotated implementation mirroring the
-  Perl logic with a `unittest` suite of the official examples.
+- **Perl (`perl/ch-1.pl`)**: Uses Type::Tiny validation and checks each word
+  against all other words via substring matching; includes Test::More coverage
+  for all five examples.
+- **Python (`python/ch-1.py`)**: Type-annotated implementation with a
+  `unittest` suite matching the provided examples.
 
-## Task 2: Arithmetic Progression
+## Task 2: Binary Prefix
 
-Decide whether the numbers can be reordered so adjacent elements form an
-arithmetic progression.
+For each prefix of a binary digit array, determine whether the corresponding
+binary value is divisible by `5`.
 
-- **Perl (`perl/ch-2.pl`)**: Validates input with Type::Tiny, sorts the list,
-  and checks constant differences with a small floating-point tolerance; tests
-  cover all specification examples.
-- **Python (`python/ch-2.py`)**: Sorted check using `math.isclose` for tolerant
-  comparisons, with `unittest` cases matching the challenge examples.
+- **Perl (`perl/ch-2.pl`)**: Maintains the running remainder modulo 5 to avoid
+  big integers, and asserts all examples with Test::More.
+- **Python (`python/ch-2.py`)**: Uses the same modulo approach and verifies
+  the provided cases via `unittest`.
 
 ## Running the Solutions
 
