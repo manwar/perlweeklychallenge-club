@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 352 by Bob Lied
+# Solutions to weekly challenge 353 by Bob Lied
 
-[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-352/)
+[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-353/)
 
-[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-352/bob-lied)
+[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-353/bob-lied)
 
-[The Blog](https://dev.to/boblied/pwc-352-five-is-the-one-liest-number-487e)
+[The Blog](https://dev.to/boblied/pwc-353-to-each-array-his-own-23o8)
