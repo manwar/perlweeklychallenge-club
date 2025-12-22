@@ -3,7 +3,7 @@
 sub MAIN(
     *@args
 ) {
-    my @intervals = @args.map({ $_.split(q{,})>>.Int.minmax });
+    my @intervals = @args.map({ $_.split(q{,})».Int.minmax });
     my @overlaps;
 
     for (1 .. @intervals.end) -> $i {
