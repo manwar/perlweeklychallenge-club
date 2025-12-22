@@ -4,4 +4,4 @@
 
 [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-353/bob-lied)
 
-[The Blog](https://dev.to/boblied/)
+[The Blog](https://dev.to/boblied/pwc-353-to-each-array-his-own-23o8)

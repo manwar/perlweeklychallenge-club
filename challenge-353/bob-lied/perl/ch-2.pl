@@ -33,48 +33,8 @@ my $logger;
             layout => "%d{HH:mm:ss.SSS} %p{1} %m%n" });
     $logger = Log::Log4perl->get_logger();
 }
-#=============================================================================
-
-exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
-
-my $answer = valid( [$ARGV[0]], [$ARGV[1]], [$ARGV[2]] );
-say '(', join(", ", map { $_ ? "true" : "false" } $answer->@*), ')';
 
 #=============================================================================
-sub valid($code, $name, $status)
-{
-    state %ValidName = ( electronics => true, grocery => true, pharmacy => true,
-                         pharmacy => true, restaurant => true );
-    my @valid = (true) x $code->@*;
-
-    for my ($i, $c) ( indexed $code->@* )
-    {
-        $valid[$i] &&= ( $code->[$i] =~ m/^[a-zA-Z0-9_]+$/ );
-        $valid[$i] &&= ( exists $ValidName{$name->[$i]} );
-        $valid[$i] &&= $status->[$i] eq "true";
-    }
-    return \@valid;
-}
-
-sub validEach($code, $name, $status)
-{
-    state %ValidName = ( electronics => true, grocery => true, pharmacy => true,
-                         pharmacy => true, restaurant => true );
-    
-    my @valid;
-
-    use List::MoreUtils qw/each_arrayref/;
-    my $ea = each_arrayref($code, $name, $status);
-    while ( my ($c, $n, $s) = $ea->() )
-    {
-        push @valid, ( $c =~ m/^[a-zA-Z0-9_]+$/ )
-                  && ( exists $ValidName{$n}    )
-                  && ( $s eq "true"             );
-    }
-    return \@valid;
-}
-
 my @case = (
     { id     => 'Example 1',
       codes  => [ 'A123',        'B_456',      'C789',        'D@1',      'E123' ],
@@ -107,6 +67,47 @@ my @case = (
       expect => [ true, true, true, true, false ],
     },
 );
+#=============================================================================
+
+exit(!runTest()) if $DoTest;
+exit( runBenchmark($Benchmark) ) if $Benchmark;
+
+my $answer = valid( [$ARGV[0]], [$ARGV[1]], [$ARGV[2]] );
+say '(', join(", ", map { $_ ? "true" : "false" } $answer->@*), ')';
+
+#=============================================================================
+sub valid($code, $name, $status)
+{
+    state %ValidName = ( electronics => true, grocery => true,
+                         pharmacy => true, restaurant => true );
+    my @valid = (true) x $code->@*;
+
+    for my ($i, $c) ( indexed $code->@* )
+    {
+        $valid[$i] &&= ( $code->[$i] !~ m/[^a-zA-Z0-9_]/ );
+        $valid[$i] &&= ( exists $ValidName{$name->[$i]} );
+        $valid[$i] &&= $status->[$i] eq "true";
+    }
+    return \@valid;
+}
+
+sub validEach($code, $name, $status)
+{
+    state %ValidName = ( electronics => true, grocery => true,
+                         pharmacy => true, restaurant => true );
+    
+    my @valid;
+
+    use List::MoreUtils qw/each_arrayref/;
+    my $ea = each_arrayref($code, $name, $status);
+    while ( my ($c, $n, $s) = $ea->() )
+    {
+        push @valid, ( $c =~ m/^[a-zA-Z0-9_]+$/ )
+                  && ( exists $ValidName{$n}    )
+                  && ( $s eq "true"             );
+    }
+    return \@valid;
+}
 
 sub runTest
 {
