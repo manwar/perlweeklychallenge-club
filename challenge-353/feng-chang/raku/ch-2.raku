@@ -11,5 +11,5 @@ put (^+@codes).map({(
         @codes[$_]  ~~ /^ <[a..zA..Z0..9_]>+ $/                      &&
         @names[$_]  eq <electronics grocery pharmacy restaurant>.any &&
         @status[$_] eq 'true'
-    ).Bool.Str.lc
+    ).Bool.lc
 }).join(', ');
