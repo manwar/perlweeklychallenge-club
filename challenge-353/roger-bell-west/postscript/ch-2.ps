@@ -1,0 +1,177 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/c.isalnum {
+    dup
+    c.isalpha exch
+    c.isdigit
+    or
+} bind def
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+/all { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    true exch
+    {
+        p not {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/c.isalpha {
+    dup c.islower exch c.isupper or
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/validatecoupon {
+    0 dict begin
+    /stts exch def
+    /names exch def
+    /codes exch def
+    /dep [ (electronics) (grocery) (pharmacy) (restaurant) ] toset def
+    [
+        0 1 codes length 1 sub {
+            /i exch def
+            codes i get s2a { dup c.isalnum exch 95 eq or } all
+            dep names i get known and
+            stts i get and
+        } for
+    ]
+    end
+} bind def
+
+(validatecoupon) test.start
+[(A123) (B_456) (C789) (D@1) (E123)] [(electronics) (restaurant) (electronics) (pharmacy) (grocery)] [true false true true true] validatecoupon [true false true false true] deepeq test
+[(Z_9) (AB_12) (G01) (X99) (test)] [(pharmacy) (electronics) (grocery) (electronics) (unknown)] [true true false true true] validatecoupon [true true false true false] deepeq test
+[(_123) (123) () (Coupon_A) (Alpha)] [(restaurant) (electronics) (electronics) (pharmacy) (grocery)] [true true false true true] validatecoupon [true true false true true] deepeq test
+[(ITEM_1) (ITEM_2) (ITEM_3) (ITEM_4)] [(electronics) (electronics) (grocery) (grocery)] [true true true true] validatecoupon [true true true true] deepeq test
+[(CAFE_X) (ELEC_100) (FOOD_1) (DRUG_A) (ELEC_99)] [(restaurant) (electronics) (grocery) (pharmacy) (electronics)] [true true true true false] validatecoupon [true true true true false] deepeq test
+test.end
