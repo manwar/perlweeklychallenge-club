@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 352
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-352>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc352;
+
+CREATE OR REPLACE FUNCTION
+pwc352.task1_plperl( text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $strings ) = @_;
+
+   for my $i ( 0 .. scalar $strings->@* ) {
+     my $current = $strings->[ $i ];
+
+     for my $j ( $i + 1 .. scalar $strings->@* ) {
+     	 return_next( $current ) if ( $strings->[ $j ] =~ / $current /x );
+     }
+   }
+
+   return undef;
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use Test::More;
+
+my @examples = (
+    { in  => [ "Hello world",
+               "This is a test",
+               "Perl is great" ],
+      out => 4,
+    },
+    {
+      in  => [ "Single" ],
+      out => 1,
+    },
+    {
+      in  => [ "Short",
+               "This sentence has seven words in total",
+               "A B C",
+               "Just four words here" ],
+      out => 7,
+    },
+    {
+      in  => [ "One",
+               "Two parts",
+               "Three part phrase",
+               "" ],
+      out => 3,
+    },
+    {
+      in  => [ "The quick brown fox jumps over the lazy dog",
+               "A",
+               "She sells seashells by the seashore",
+               "To be or not to be that is the question" ],
+      out => 10,
+    },
+);
+
+is max_word($_->{in}), $_->{out} for @examples;
+
+done_testing;
+
+sub max_word {
+    my @w = map { scalar split } @{$_[0]};
+    return 0+(@w ? (sort {$b <=> $a} @w)[0] : 0);
+}

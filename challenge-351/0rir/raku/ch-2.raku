@@ -1,8 +1,8 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴ 🐧
 use v6.d;
-INIT die 'Need rakudo version 2022.02 or later for min and max.'
-            unless $*RAKU.compiler.version cmp v2022.01 == More;
+INIT die 'Need rakudo version 2023.08 or later for min and max.'
+            unless $*RAKU.compiler.version cmp v2023.07 == More;
 use Test;
 
 =begin comment

@@ -1,0 +1,139 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/matchstring {
+    0 dict begin
+    /a exch def
+    /s 0 dict def
+    [
+        a {
+            /x exch def
+            s x known not {
+                a {
+                    /y exch def
+                    y length x length gt {
+                        y x search {
+                            pop pop pop
+                            s x true put
+                            x
+                            exit
+                        } {
+                            pop
+                        } ifelse
+                    } if
+                } forall
+            } if
+        } forall
+    ]
+    end
+} bind def
+
+(matchstring) test.start
+[(cat) (cats) (dog) (dogcat) (dogcat) (rat) (ratcatdogcat)] matchstring [(cat) (dog) (dogcat) (rat)] deepeq test
+[(hello) (hell) (world) (wor) (ellow) (elloworld)] matchstring [(hell) (world) (wor) (ellow)] deepeq test
+[(a) (aa) (aaa) (aaaa)] matchstring [(a) (aa) (aaa)] deepeq test
+[(flower) (flow) (flight) (fl) (fli) (ig) (ght)] matchstring [(flow) (fl) (fli) (ig) (ght)] deepeq test
+[(car) (carpet) (carpenter) (pet) (enter) (pen) (pent)] matchstring [(car) (pet) (enter) (pen) (pent)] deepeq test
+test.end
