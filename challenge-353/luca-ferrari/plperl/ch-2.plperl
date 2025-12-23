@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 353
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-353>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc353;
+
+CREATE OR REPLACE FUNCTION
+pwc353.task2_plperl( text[], text[], text[] )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $codes, $names, $status ) = @_;
+
+   for ( 0 .. $codes->@* - 1 ) {
+       my $valid = 1;
+
+       $valid = 0 unless ( $codes->@[ $_ ] =~ / ^ [a-zA-Z0-9_]+ $ /x );
+       $valid = 0 unless ( $status->@[ $_ ] =~ /true/i );
+       $valid = 0 unless ( $names->@[ $_ ] =~ /electronics|grocery|pharmacy|restaurant/i );
+       return_next( $valid ? 'true' : 'false' );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;
