@@ -1,0 +1,94 @@
+{
+   "ch-1" : [
+      {
+         "arguments" : [
+            "Hello world",
+            "This is a test",
+            "Perl is great"
+         ],
+         "function" : "maxwords",
+         "result" : 4
+      },
+      {
+         "arguments" : [
+            "Single"
+         ],
+         "result" : 1
+      },
+      {
+         "arguments" : [
+            "Short",
+            "This sentence has six words in total",
+            "A B C",
+            "Just four words here"
+         ],
+         "result" : 7
+      },
+      {
+         "arguments" : [
+            "One",
+            "Two parts",
+            "Three part phrase",
+            ""
+         ],
+         "result" : 3
+      },
+      {
+         "arguments" : [
+            "The quick brown fox jumps over the lazy dog",
+            "A",
+            "She sells seashells by the seashore",
+            "To be or not to be that is the question"
+         ],
+         "result" : 10
+      }
+   ],
+   "ch-2" : [
+      {
+         "result" : [true, false, true, false, true],
+         "function" : "validatecoupon",
+         "multiarg" : true,
+          "arguments" : [
+              ["A123", "B_456", "C789", "D@1", "E123"],
+              ["electronics", "restaurant", "electronics", "pharmacy", "grocery"],
+              [true, false, true, true, true]
+          ]
+      },
+      {
+         "result" : [true, true, false, true, false],
+         "multiarg" : true,
+          "arguments" : [
+              ["Z_9", "AB_12", "G01", "X99", "test"],
+              ["pharmacy", "electronics", "grocery", "electronics", "unknown"],
+              [true, true, false, true, true]
+          ]
+      },
+      {
+         "multiarg" : true,
+          "arguments" : [
+              ["_123", "123", "", "Coupon_A", "Alpha"],
+              ["restaurant", "electronics", "electronics", "pharmacy", "grocery"],
+              [true, true, false, true, true]
+          ],
+         "result" : [true, true, false, true, true]
+      },
+      {
+         "arguments" : [
+              ["ITEM_1", "ITEM_2", "ITEM_3", "ITEM_4"],
+              ["electronics", "electronics", "grocery", "grocery"],
+              [true, true, true, true]
+          ],
+         "multiarg" : true,
+         "result" : [true, true, true, true]
+      },
+      {
+         "result" : [true, true, true, true, false],
+         "arguments" : [
+              ["CAFE_X", "ELEC_100", "FOOD_1", "DRUG_A", "ELEC_99"],
+              ["restaurant", "electronics", "grocery", "pharmacy", "electronics"],
+              [true, true, true, true, false]
+          ],
+         "multiarg" : true
+      }
+   ]
+}
