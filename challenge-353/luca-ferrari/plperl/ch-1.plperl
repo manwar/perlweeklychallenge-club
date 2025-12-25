@@ -1,0 +1,21 @@
+--
+-- Perl Weekly Challenge 353
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-353>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc353;
+
+CREATE OR REPLACE FUNCTION
+pwc353.task1_plperl( text[] )
+RETURNS int
+AS $CODE$
+
+   my ( $sentences ) = @_;
+
+   my @w = $sentences->@*;
+   return ( sort { $b <=> $a }
+	    map { scalar split /\s+/, $_   } $sentences->@* )[ 0 ];
+   
+$CODE$
+LANGUAGE plperl;
