@@ -1,27 +1,25 @@
-# Perl Weekly Challenge 352 Solutions
+# Perl Weekly Challenge 353 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 352.
+Perl and Python implementations for both tasks of Weekly Challenge 353.
 
-## Task 1: Match String
+## Task 1: Max Words
 
-Return all words that appear as substrings of another word in the list,
-preserving the first-occurrence order.
+Return the maximum number of words that appear in a single sentence.
 
-- **Perl (`perl/ch-1.pl`)**: Uses Type::Tiny validation and checks each word
-  against all other words via substring matching; includes Test::More coverage
-  for all five examples.
-- **Python (`python/ch-1.py`)**: Type-annotated implementation with a
-  `unittest` suite matching the provided examples.
+- **Perl (`perl/ch-1.pl`)**: Splits each sentence on whitespace and tracks the
+  maximum word count; includes Test::More coverage for all examples.
+- **Python (`python/ch-1.py`)**: Uses `str.split()` to count words and verifies
+  the official examples via `unittest`.
 
-## Task 2: Binary Prefix
+## Task 2: Validate Coupon
 
-For each prefix of a binary digit array, determine whether the corresponding
-binary value is divisible by `5`.
+Validate coupon triplets `(code, name, status)` according to the rules in the
+specification and return per-entry validity booleans.
 
-- **Perl (`perl/ch-2.pl`)**: Maintains the running remainder modulo 5 to avoid
-  big integers, and asserts all examples with Test::More.
-- **Python (`python/ch-2.py`)**: Uses the same modulo approach and verifies
-  the provided cases via `unittest`.
+- **Perl (`perl/ch-2.pl`)**: Checks the allowed character set, category, and
+  status flag; includes Test::More assertions for all examples.
+- **Python (`python/ch-2.py`)**: Implements the same validation logic with a
+  `unittest` suite matching the examples.
 
 ## Running the Solutions
 
