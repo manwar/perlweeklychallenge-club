@@ -1,1 +1,29 @@
-Solutions by Lubos Kolouch.
+# Perl Weekly Challenge 322 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 322.
+
+## Task 1: String Format
+
+Remove dashes from the input string and regroup characters into chunks of the
+requested size, grouped from the end (the first group can be shorter).
+
+- **Perl (`perl/ch-1.pl`)**: Removes dashes, slices from the end and joins with
+  dashes, with embedded Test::More tests for the examples.
+- **Python (`python/ch-1.py`)**: Equivalent logic with type annotations and a
+  `unittest` suite containing the official examples.
+
+## Task 2: Rank Array
+
+Return ranks for each integer where the smallest value has rank 1 and ties
+share the same rank.
+
+- **Perl (`perl/ch-2.pl`)**: Builds a value->rank map from the sorted unique
+  values and maps it back to the original list, with Test::More example tests.
+- **Python (`python/ch-2.py`)**: Uses `sorted(set(...))` and a mapping dict,
+  tested via `unittest` with the provided examples.
+
+## Running the Solutions
+
+- **Perl**: `perl perl/ch-1.pl` or `perl perl/ch-2.pl`
+- **Python**: `python3 python/ch-1.py` or `python3 python/ch-2.py`
+- Each script runs only the official example cases as unit tests.
