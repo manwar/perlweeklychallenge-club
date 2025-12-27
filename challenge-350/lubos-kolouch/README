@@ -1,27 +1,26 @@
-# Perl Weekly Challenge 349 Solutions
+# Perl Weekly Challenge 350 Solutions
 
-Perl and Python implementations for both tasks of Weekly Challenge 349.
+Perl and Python implementations for both tasks of Weekly Challenge 350.
 
-## Task 1: Power String
+## Task 1: Good Substrings
 
-Compute the length of the longest run of identical characters inside a string.
+Return the number of good substrings of length three (no repeated characters).
 
-- **Perl (`perl/ch-1.pl`)**: Validates input with Type::Tiny, iterates once
-  over the characters, and reports the maximum run length together with inline
-  Test::More coverage for the five specification examples.
-- **Python (`python/ch-1.py`)**: Mirrors the single-pass logic with full type
-  annotations and the same tests implemented via `unittest`.
+- **Perl (`perl/ch-1.pl`)**: Slides a 3-character window and counts distinct
+  triplets; includes Test::More coverage for all examples.
+- **Python (`python/ch-1.py`)**: Uses a 3-character window and `set()` to test
+  uniqueness, with `unittest` cases from the spec.
 
-## Task 2: Meeting Point
+## Task 2: Shuffle Pairs
 
-Track a path built from the moves `U`, `D`, `L`, and `R` and determine whether
-you ever return to the origin while following the steps.
+Count integers in a range that belong to at least `count` different shuffle
+pairs.
 
-- **Perl (`perl/ch-2.pl`)**: Streams the instructions with type validation,
-  updating a coordinate accumulator and returning once the origin is revisited;
-  bundled tests assert the supplied scenarios.
-- **Python (`python/ch-2.py`)**: Implements equivalent logic with typed
-  movement deltas and a `unittest` suite containing the specification cases.
+- **Perl (`perl/ch-2.pl`)**: Uses a sorted-digit signature and tries witnesses
+  `k` that keep the product within the same digit length; includes Test::More
+  checks for the provided examples.
+- **Python (`python/ch-2.py`)**: Same signature approach and `unittest` cases
+  matching the specification.
 
 ## Running the Solutions
 
