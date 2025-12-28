@@ -1,3 +1,3 @@
-# The Weekly Challenge 352
+# The Weekly Challenge 353
 
-Blog: [Strings and Binaries](https://dev.to/simongreennet/weekly-challenge-strings-and-binaries-d7k)
+Blog: [Validating Words](https://dev.to/simongreennet/weekly-challenge-validating-words-kj7)
