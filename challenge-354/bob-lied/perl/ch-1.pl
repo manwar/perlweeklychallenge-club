@@ -39,27 +39,34 @@ say join(", ", map { "[$_->[0], $_->[1]]" } minAbsDiff(@ARGV)->@* );
 #=============================================================================
 sub minAbsDiff(@ints)
 {
-    my %diff;
-    my $min = abs($ints[0] - $ints[1]);
+    my @pair;
+    return [] if @ints < 2;
 
-    # Sort to get the ordering required
+    # Sorting will guarantee three things: (a) a positive difference between
+    # adjacent numbers; (b) the smallest differences will be between adjacent
+    # numbers; and (c) the output order will be sorted in increasing order
+    # as in the examples. Although the sort might be O(n log n), it will change
+    # O(n^2) search for pairs into a linear O(n) pass over the array.
     @ints = sort { $a <=> $b } @ints;
 
-    while ( defined(my $first = shift @ints) )
+    my $min = $ints[1] - $ints[0];
+
+    my $first = shift @ints;
+    while ( defined(my $second = shift @ints) )
     {
-        for my $second ( @ints )
+        my $d = $second - $first;
+        if ( $d == $min )
         {
-            my $d = $second - $first;   # Sorted, so must be positive
-            $min = $d if $d < $min;
-
-            # If it can't be part of solution, save space and time. Differences
-            # will only get larger because the list is sorted.
-            last if $d > $min;
-
-            push @{$diff{$d}}, [$first, $second];
+            push @pair, [$first, $second];
         }
+        elsif ( $d < $min )
+        {
+            $min = $d;
+            @pair = ( [$first, $second] );
+        }
+        $first = $second;
     }
-    return $diff{$min};
+    return \@pair;
 }
 
 sub runTest
