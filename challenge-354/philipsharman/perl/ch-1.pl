@@ -8,6 +8,10 @@
 # 	See:
 #		https://theweeklychallenge.org/blog/perl-weekly-challenge-354/#TASK1
 #
+#	Note:
+#	- This script assumes the input consists of ASCII numbers, not some of the other Unicode
+#     numbers that are possible. See https://www.fileformat.info/info/unicode/category/Nd/list.htm.
+#
 # 	v 1.0 	- Written by Philip Sharman, 2025-12-29
 ##############################################################################################################
 use 5.36.0;
