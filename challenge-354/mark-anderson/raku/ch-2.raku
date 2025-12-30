@@ -37,5 +37,10 @@ sub shift-grid(@m, $k)
 {
     my $e = @m.head.elems;
     @m   .= flat(:hammer);
-    @m.rotate(-$k mod @m).batch($e)
+
+    # @m.rotate(-$k mod @m).batch($e)
+    # I'm assuming rotate does the '$k mod @m' as there 
+    # doesn't seem to be any difference with huge $k values.
+
+    @m.rotate(-$k).batch($e)
 }
