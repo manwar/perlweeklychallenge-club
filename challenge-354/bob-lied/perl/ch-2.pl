@@ -25,9 +25,9 @@ use v5.42;
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
-my $Benchmark = 0;
+my $K = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchmark);
+GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "k:i" => \$K);
 my $logger;
 {
     use Log::Log4perl qw(:easy);
@@ -38,9 +38,22 @@ my $logger;
 #=============================================================================
 
 exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say $_ for @ARGV;   # TODO command line processing here
+# Command line: pass rows as comma-separated lists
+# -k 1   1,2,3   4,5,6   7,8,9
+my @matrix = map { [ split(",", $_) ] } @ARGV;
+my $answer = shiftGrid(\@matrix, $K);
+say show($answer);
+
+sub show($matrix)
+{
+    my @s;
+    for my $row ( $matrix->@* )
+    {
+        push @s, '[' . join(",", $row->@*) . ']';
+    }
+    return '(' . join(",\n ", @s) . ')';
+}
 
 #=============================================================================
 sub shiftGrid($matrix, $k)
@@ -52,7 +65,7 @@ sub shiftGrid($matrix, $k)
     $k = $k % @v;
 
     # Rotate the right end to left
-    unshift @v, splice(@v, -$k);
+    splice(@v,0,0, splice(@v, -$k));
 
     # Turn the vector back into a matrix of the right dimensions.
     my $col = scalar($matrix->[0]->@*);
@@ -108,13 +121,4 @@ sub runTest
     }
 
     done_testing;
-}
-
-sub runBenchmark($repeat)
-{
-    use Benchmark qw/cmpthese/;
-
-    cmpthese($repeat, {
-            label => sub { },
-        });
 }
