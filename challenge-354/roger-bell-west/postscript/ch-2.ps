@@ -1,0 +1,157 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/shiftgrid {
+    0 dict begin
+    /k exch def
+    /gi exch def
+    /wi gi {
+        aload pop
+    } map def
+    /k k wi length mod def
+    [
+        wi wi length k sub k getinterval aload pop
+        wi 0 wi length k sub getinterval aload pop
+    ] gi 0 get length 0 rotor
+    end
+} bind def
+
+(shiftgrid) test.start
+[[1 2 3] [4 5 6] [7 8 9]] 1 shiftgrid [[9 1 2] [3 4 5] [6 7 8]] deepeq test
+[[10 20] [30 40]] 1 shiftgrid [[40 10] [20 30]] deepeq test
+[[1 2] [3 4] [5 6]] 1 shiftgrid [[6 1] [2 3] [4 5]] deepeq test
+[[1 2 3] [4 5 6]] 5 shiftgrid [[2 3 4] [5 6 1]] deepeq test
+[[1 2 3 4]] 1 shiftgrid [[4 1 2 3]] deepeq test
+test.end
