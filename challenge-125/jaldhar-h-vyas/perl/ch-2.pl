@@ -58,21 +58,21 @@ sub max(@arr) {
     return $highest;
 }
 
-sub getMaxPath($node, $diameter) {
+my $diameter = 0;
+
+sub getMaxPath($node) {
     if (!$node) {
         return 0;
     }
 
-    my $left = getMaxPath($node->left, $diameter);
-    my $right = getMaxPath($node->right, $diameter);
+    my $leftHeight = getMaxPath($node->left);
+    my $rightHeight = getMaxPath($node->right);
 
-    if ($left + $right > $diameter) {
-        $diameter = $left + $right;
-    }
+    $diameter = max($diameter, $leftHeight + $rightHeight);
 
-    return max($left, $right) + 1;
+    return 1 + max($leftHeight, $rightHeight);
 }
 
-my $root = makeTree(@ARGV);
-my $diameter = 0;
-say getMaxPath($root, $diameter) + 1;
+getMaxPath(makeTree(@ARGV));
+
+say $diameter;

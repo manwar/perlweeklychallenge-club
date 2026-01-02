@@ -37,29 +37,28 @@ sub makeTree(@values) {
     return @tree[0];
 }
 
+sub getMaxPath(Node $root) {
+    my $diameter = 0;
 
-sub getMaxPath(Node $node, $diameter is rw) {
-    if !$node {
-        return 0;
+    sub dfs($node) {
+        if !$node {
+            return 0;
+        }
+
+        my $leftHeight = dfs($node.left);
+        my $rightHeight = dfs($node.right);
+
+        $diameter = max($diameter, $leftHeight + $rightHeight);
+
+        return 1 + max($leftHeight, $rightHeight);
     }
 
-    my $left = getMaxPath($node.left, $diameter);
-    my $right = getMaxPath($node.right, $diameter);
-
-    if $left + $right > $diameter {
-        $diameter = $left + $right;
-    }
-
-    return max($left, $right) + 1;
+    dfs($root);
+    return $diameter;
 }
 
 sub MAIN(
     *@nodes
 ) {
-    my Node $root = makeTree(@nodes);
-    my $diameter = 0;
-    my @path = ();
-
-    getMaxPath($root, $diameter);
-    say $diameter;
+    say getMaxPath(makeTree(@nodes));
 }
