@@ -1,3 +1,3 @@
-# The Weekly Challenge 353
+# The Weekly Challenge 354
 
-Blog: [Validating Words](https://dev.to/simongreennet/weekly-challenge-validating-words-kj7)
+Blog: [New Year, New Challenges](https://dev.to/simongreennet/weekly-challenge-new-year-new-challenges-2eab)
