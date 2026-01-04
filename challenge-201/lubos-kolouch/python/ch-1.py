@@ -1,36 +1,41 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+"""Missing Numbers - Perl Weekly Challenge 201 task 1."""
 
-from typing import List
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
 import unittest
 
 
-def find_missing_numbers(arr: List[int]) -> List[int]:
-    """
-    Find all missing numbers in the range 0..n where n is the array size.
-    Args:
-        arr: A list of unique integers.
-    Returns:
-        A list of missing integers in the range 0..n where n is the array size.
-    """
-    n = len(arr)
-    s = set(arr)
-    missing_numbers = []
-    for i in range(n + 1):
-        if i not in s:
-            missing_numbers.append(i)
-    return missing_numbers
+def missing_number(array: Sequence[int]) -> int:
+    """Return the missing number in range 0..n where n = len(array)."""
+    n = len(array)
+    expected = n * (n + 1) // 2
+    return expected - sum(array)
 
 
-# test cases
-class TestMissingNumbers(unittest.TestCase):
+class MissingNumberExamples(unittest.TestCase):
+    """Example-based tests from the specification."""
 
-    def test_example1(self):
-        self.assertEqual(find_missing_numbers([0, 1, 3]), [2])
+    def test_example_1(self) -> None:
+        self.assertEqual(missing_number((0, 1, 3)), 2)
 
-    def test_example2(self):
-        self.assertEqual(find_missing_numbers([0, 1]), [2])
+    def test_example_2(self) -> None:
+        self.assertEqual(missing_number((0, 1)), 2)
 
 
-if __name__ == '__main__':
-    unittest.main()
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    args = list(sys.argv[1:] if argv is None else argv)
+    if not args:
+        unittest.main(argv=[sys.argv[0]])
+        return
+    array = [int(token) for token in args]
+    print(f"Input:  @array = ({', '.join(str(x) for x in array)})")
+    print(f"Output: {missing_number(array)}")
+
+
+if __name__ == "__main__":
+    main()
+
