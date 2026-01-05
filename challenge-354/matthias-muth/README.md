@@ -1,252 +1,481 @@
-# Validate to the Max
+# Min Abs Diff Shift Grid. What??
 
-**Challenge 353 solutions in Perl by Matthias Muth**
+**Challenge 354 solutions in Perl by Matthias Muth**
 
-## Task 1: Max Words
+## Task 1: Min Abs Diff
 
-> You are given an array of sentences.<br/>
-> Write a script to return the maximum number of words that appear in a single sentence.
+> You are given an array of distinct integers.<br/>
+> Write a script to find all pairs of elements with the minimum absolute difference.<br/>
+> Rules (a,b):<br/>
+> 1: a, b are from the given array.<br/>
+> 2: a < b<br/>
+> 3: b - a = min abs diff any two elements in the given array
 >
 > **Example 1**
 >
 > ```text
-> Input: @sentences = ("Hello world", "This is a test", "Perl is great")
-> Output: 4
+> Input: @ints= (4, 2, 1, 3)
+> Output: [1, 2], [2, 3], [3, 4]
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @sentences = ("Single")
-> Output: 1
+> Input: @ints = (10, 100, 20, 30)
+> Output: [10, 20], [20, 30]
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @sentences = ("Short", "This sentence has seven words in total", "A B C", "Just four words here")
-> Output: 7
+> Input: @ints = (-5, -2, 0, 3)
+> Output: [-2, 0]
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @sentences = ("One", "Two parts", "Three part phrase", "")
-> Output: 3
+> Input: @ints = (8, 1, 15, 3)
+> Output: [1, 3]
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @sentences = ("The quick brown fox jumps over the lazy dog", "A", "She sells seashells by the seashore", "To be or not to be that is the question")
-> Output: 10
+> Input: @ints = (12, 5, 9, 1, 15)
+> Output: [9, 12], [12, 15]
 > ```
 
-For this task, my solution is a non-spectacular one-liner:<br/>I let `map` walk through the sentences, with the idea of transforming each sentence into the number of words it contains, which then can be fed into `max` to return the largest number.
+It is not necessary to check *all* possible pairs in order to
+get the minimal difference between any two numbers.
+The minimal difference necessarily has to be between two numbers
+that are next to each other when the numbers are sorted.
+So I'm sorting the numbers first, and from the sorted numbers,
+I directly build a list of pairs of neighboring numbers.
 
-For getting the number of words of a sentence, I use `split` with the special split pattern of `" "`, which splits the string on any sequence of whitespace, also removing leading and trailing whitespace. As I want the number of split elements only, not the list itself, I put the call into a scalar context, which does that job. And as the string to be split is in `$_`, which is the implicit default parameter for `split`, I don't need to add it as a parameter explicitly.
+For conciseness, I use `slide` (from List::MoreUtils)
+to walk through the sorted array to extract the pairs.
+It comes in handy that `slide` assigns the two numbers
+used in each iteration to the `$a` and `$b` special variables,
+similar to the way `sort` does.
 
-So nice and short:
+The pairs are then used for two things:
+firstly, for finding the minimal difference of all pairs,
+and secondly, for using the selection of pairs for the result list
+that match the minimal difference.
 
 ```perl
 use v5.36;
-use List::Util qw( max );
+use List::Util qw( min );
+use List::MoreUtils qw( slide );
 
-sub max_words( @sentences ) {
-    return max( map scalar( split " " ), @sentences );
+sub min_abs_diff( @ints ) {
+    my @pairs = slide { [ $a, $b ] } sort { $a <=> $b } @ints;
+    my $min_diff = min( map $_->[1] - $_->[0], @pairs );
+    return grep $_->[1] - $_->[0] == $min_diff, @pairs;
 }
 ```
 
-## Task 2: Validate Coupon
+I have played around quite a bit with variations of this
+to improve performance,
+and I also ran some benchmarks using the various versions.
 
-> You are given three arrays, @codes, @names and @status.<br/>
-> Write a script to validate codes in the given array.
-> 
-> ```
->A code is valid when the following conditions are true:
-> - codes[i] is non-empty and consists only of alphanumeric characters (a-z, A-Z, 0-9) and underscores (_).
->- names[i] is one of the following four categories: "electronics", "grocery", "pharmacy", "restaurant".
-> - status[i] is true.
->```
-> 
->Return an array of booleans indicating validity: output[i] is true if and only if codes[i], names[i] and status[i] are all valid.
+This here is what I call my 'Schwartzian' version,
+because it reminds me of the
+[Schwartzian transform](https://en.wikipedia.org/wiki/Schwartzian_transform),
+a method of 'tunneling' data through a processing chain
+that was invented by Randal L. Schwartz to improve sorting performance. 
+
+The two numbers of each pair are put into small anonymous arrays,
+together with their difference.
+These triplets are passed through a `grep`
+that uses the difference value to select the matching triplets only,
+and a `map` call that extracts the number pair itself for the returned result:
+
+```perl
+# Schwartzian triplets
+sub min_abs_diff_schw_3( $ints ) {
+    $ints->@* > 1 or return ();
+    my @sorted = sort { $a <=> $b } $ints->@*;
+    my $min_diff = min( slide { $b - $a } @sorted );
+    return
+        map [ $_->@[1,2] ],
+            grep $_->[0] == $min_diff,
+                slide { [ $b - $a, $a, $b ] }
+                    @sorted;
+}
+```
+
+It actually is just a tiny little bit slower than the original version,
+which is a pity, because I very much like the 'tunneling' idea.
+
+I was astonished that my third version,
+which introduces another array variable,
+and which replaces the original's `map` call by another call to `slide`,
+is actually faster.
+Maybe it is because less array indexing has to be done
+in the `slide` or `map` code block on the Perl level,
+as it is done in the underlying C implementation of `slide`.
+
+```perl
+# Double use of 'slide'
+sub min_abs_diff_2_slides( $ints ) {
+    $ints->@* > 1 or return ();
+    my @sorted = sort { $a <=> $b } $ints->@*;
+    my @pairs = slide { [ $a, $b ] } @sorted;
+    my @diffs = slide { $b - $a }    @sorted;
+    my $min_diff = min( @diffs );
+    return map $pairs[$_], grep $diffs[$_] == $min_diff, keys @pairs;
+}
+```
+
+My search for performance was interesting,
+but even if there are slight differences,
+the three presented versions all play in the same league.
+
+I was then blown away by the solution
+[published by James Curtis-Smith](https://www.facebook.com/groups/perlcommunity/permalink/2128053411335607).
+His version is more than 3 times as fast as any of my versions above.
+I rewrote his solution to be a bit more readable
+(basically only giving some useful names to variables),
+and to find out why it is so fast:
+
+```perl 
+# James Curtis-Smith 1 Rewrite
+sub min_abs_diff_jcs_rewrite( $ints ) {
+    $ints->@* > 1 or return ();
+    my ( $prev, @sorted, @results ) = sort  { $a <=> $b } $ints->@*;
+    my $min = $sorted[0] - $prev;
+    (
+        ( $min > $_ - $prev )
+        ? ( $min = $_ - $prev, @results = [ $prev, $_ ] )
+        : ( ( $_ - $prev > $min ) || push @results, [ $prev, $_ ] ),
+        $prev = $_
+    ) for @sorted;
+    return @results;
+}
+```
+
+I think the reason is that apart from the `sort`,
+which all of the solutions have in common,
+James' solution only does *one* pass through the sorted data,
+while all three of my solutions do two or three of them
+(for the pairs, for the diffs, and for the comparison).
+
+While rewriting his solution, I first used a `for ( ) { }` loop,
+and normal, semicolon-separated statements within the loop body.
+I did not manage to get the last few percentage points of performance
+until I changed the `if ... elsif` chain
+to the `:?` conditional expressions that James uses in his original solution,
+and changed the `for ( ) { }` loop
+into an appended `for LIST` statement modifier.
+It seems that there is an overhead involved with at least one of the two.  
+
+I have learned a lot!
+
+## Task 2: Shift Grid
+
+> You are given m x n matrix and an integer, \$k > 0.<br/>
+> Write a script to shift the given matrix \$k times.<br/>
 >
+> ```text
+> Each shift follow the rules:
+> 
+> Rule 1:
+> Element at grid[i][j] moves to grid[i][j + 1]
+> This means every element moves one step to the right within its row.
+> 
+> Rule 2:
+> Element at grid[i][n - 1] moves to grid[i + 1][0]
+> This handles the last column: elements in the last column of row i wrap to the first column of the next row (i+1).
+> 
+> Rule 3:
+> Element at grid[m - 1][n - 1] moves to grid[0][0]
+> This is the bottom-right corner: it wraps to the top-left corner.
+> ```
+> 
 > **Example 1**
->
 > ```text
->Input: @codes  = ("A123", "B_456", "C789", "D@1", "E123")
->        @names  = ("electronics", "restaurant", "electronics", "pharmacy", "grocery")
->        @status = ("true", "false", "true", "true", "true")
-> Output: (true, false, true, false, true)
-> ```
+> Input: @matrix = ([1, 2, 3],
+>                      [4, 5, 6],
+>                      [7, 8, 9],)
+>           $k = 1
+> Output: ([9, 1, 2],
+>             [3, 4, 5],
+>             [6, 7, 8],)
 > 
-> **Example 2**
->
+> Rule 1: grid[i][j] -> grid[i][j+1] for j < n-1.
+> We take elements from the original grid at (i, j) and put them into new_grid[i][j+1].
+> From original:
+> (0,0): 1 -> new_grid[0][1] = 1
+> (0,1): 2 -> new_grid[0][2] = 2
+> (1,0): 4 -> new_grid[1][1] = 4
+> (1,1): 5 -> new_grid[1][2] = 5
+> (2,0): 7 -> new_grid[2][1] = 7
+> (2,1): 8 -> new_grid[2][2] = 8
+> New grid looks after Rule 1:
+> ([?, 1, 2],
+>  [?, 4, 5],
+>  [?, 7, 8],)
+> 
+> Rule 2: grid[i][n-1] -> grid[i+1][0] for i < m-1.
+> Elements from original last column (except last row) go to next row's first column.
+>  From original:
+>  (0,2): 3 -> new_grid[1][0] = 3
+> (1,2): 6 -> new_grid[2][0] = 6
+> Now new grid after Rules 1 + 2:
+> ([?, 1, 2],
+>  [3, 4, 5],
+>  [6, 7, 8],)
+> 
+> Rule 3: grid[m-1][n-1] -> grid[0][0].
+> Original (2,2): 9 -> new_grid[0][0] = 9.
+> Now new_grid is complete:
+> ([9, 1, 2],
+>  [3, 4, 5],
+>  [6, 7, 8],)
+> ```
+>  
+>  **Example 2**
+> 
 > ```text
->Input: @codes  = ("Z_9", "AB_12", "G01", "X99", "test")
->        @names  = ("pharmacy", "electronics", "grocery", "electronics", "unknown")
->        @status = ("true", "true", "false", "true", "true")
-> Output: (true, true, false, true, false)
+> Input: @matrix = ([10, 20],
+>                   [30, 40],)
+>        $k = 1
+> Output: ([40, 10],
+>          [20, 30],)
+> 
+>  Rule 1 (move right in same row if not last column):
+>  (0,0): 10 -> new[0][1] = 10
+> (1,0): 30 -> new[1][1] = 30
+>After Rule 1:
+> ([?, 10],
+> [?, 30],)
+> 
+> Rule 2 (last col -> next row’s first col, except last row):
+>    (0,1): 20 -> new[1][0] = 20
+>    After Rule 2:
+> ([?,  10],
+>     [20, 30],)
+> 
+> Rule 3 (bottom-right to top-left):
+> (1,1): 40 -> new[0][0] = 40
+> After Rule 3:
+> ([40, 10],
+>  [20, 30],)
 > ```
 > 
 > **Example 3**
->
+>  
 > ```text
->Input: @codes  = ("_123", "123", "", "Coupon_A", "Alpha")
->        @names  = ("restaurant", "electronics", "electronics", "pharmacy", "grocery")
->        @status = ("true", "true", "false", "true", "true")
-> Output: (true, true, false, true, true)
+> Input: @matrix = ([1, 2],
+>                   [3, 4],
+>                   [5, 6],)
+>        $k = 1
+> Output: ([6, 1],
+>          [2, 3],
+>          [4, 5],)
+>  
+> Rule 1:
+> (0,0): 1 -> new[0][1] = 1
+> (1,0): 3 -> new[1][1] = 3
+> (2,0): 5 -> new[2][1] = 5
+> After Rule 1:
+> ( [?, 1],
+>  [?, 3],
+>  [?, 5],)
+>  
+> Rule 2:
+>(0,1): 2 -> new[1][0] = 2
+> (1,1): 4 -> new[2][0] = 4
+>After Rule 2:
+> ([?, 1],
+>  [2, 3],
+>     [4, 5],)
+>    
+>    Rule 3:
+> (2,1): 6 -> new[0][0] = 6
+>    After Rule 3:
+>    ([6, 1],
+>  [2, 3],
+>  [4, 5],)
 > ```
 > 
 > **Example 4**
->
+> 
 > ```text
->Input: @codes  = ("ITEM_1", "ITEM_2", "ITEM_3", "ITEM_4")
->        @names  = ("electronics", "electronics", "grocery", "grocery")
->        @status = ("true", "true", "true", "true")
-> Output: (true, true, true, true)
+> Input: @matrix = ([1, 2, 3],
+>                     [4, 5, 6],)
+>          $k = 5
+> Output: ([2, 3, 4],
+>          [5, 6, 1],)
+> 
+> Shift 1
+> 
+> Rule 1
+> 1 -> (0,1)
+>  2 -> (0,2)
+>  4 -> (1,1)
+> 5 -> (1,2)
+> 
+> Rule 2
+> 3 -> (1,0) (last column of row 0)
+> 
+> Rule 3
+>  6 -> (0,0) (bottom-right corner)
+>  
+> Result
+>[6, 1, 2]
+> [3, 4, 5]
+>
+> ----------------------------
+> Shift 2
+>    Starting from the previous matrix:
+>    [6, 1, 2]
+> [3, 4, 5]
+>    
+> Rule 1
+> 6 -> (0,1)
+> 1 -> (0,2)
+> 3 -> (1,1)
+> 4 -> (1,2)
+> 
+> Rule 2
+> 2 -> (1,0)
+> 
+> Rule 3
+> 5 -> (0,0)
+> 
+> Result
+> [5, 6, 1]
+> [2, 3, 4]
+> 
+> ----------------------------
+> Shift 3
+> [5, 6, 1]
+> [2, 3, 4]
+> 
+> Rule 2: 1 -> (1,0)
+> Rule 3: 4 -> (0,0)
+> 
+> Others follow Rule 1
+> 
+> Result
+> [4, 5, 6]
+> [1, 2, 3]
+> 
+> ----------------------------
+> Shift 4
+> [4, 5, 6]
+> [1, 2, 3]
+> 
+> Result
+> [3, 4, 5]
+> [6, 1, 2]
+> 
+> ----------------------------
+> Shift 5
+> [3, 4, 5]
+> [6, 1, 2]
+> 
+> Result
+> [2, 3, 4]
+> [5, 6, 1]
+> 
+> Final Output (after k = 5 shifts)
+> ([2, 3, 4],
+>  [5, 6, 1])
 > ```
 > 
 > **Example 5**
->
+> 
 > ```text
->Input: @codes  = ("CAFE_X", "ELEC_100", "FOOD_1", "DRUG_A", "ELEC_99")
->        @names  = ("restaurant", "electronics", "grocery", "pharmacy", "electronics")
->        @status = ("true", "true", "true", "true", "false")
-> Output: (true, true, true, true, false)
+> Input: @matrix = ([1, 2, 3, 4])
+>        $k = 1
+> Output: ([4, 1, 2, 3])
+> 
+> Rule 1:
+> (0,0): 1 -> new[0][1] = 1
+> (0,1): 2 -> new[0][2] = 2
+> (0,2): 3 -> new[0][3] = 3
+> After Rule 1:
+> ([?, 1, 2, 3])
+> 
+> Rule 2:
+> (0,3): 4 -> new[1][0] ??
+> Wait - but i=0, n-1=3, next row i+1=1 doesn’t exist (m=1).
+> So this is actually a special case where Rule 2 should not apply.
+> because m=1, so (0,3) goes by Rule 3 actually.
+> 
+> The rules say:
+> grid[i][j]     -> grid[i][j+1] for j < n-1.
+> grid[i][n-1]   -> grid[i+1][0] for i < m-1.
+> grid[m-1][n-1] -> grid[0][0].
+> 
+> For m = 1:
+> Elements (0,0),(0,1),(0,2) follow Rule 1 -> (0,1),(0,2),(0,3).
+> Element (0,3) is (m-1, n-1), so follows Rule 3 -> (0,0).
+> 
+> Actually, that means after Rule 1:
+>  We put 1,2,3 in positions 1,2,3, leaving position 0 empty.
+> Then Rule 3 puts 4 in position 0.
+>
+> So final directly:
+>[4, 1, 2, 3]
 > ```
 
-This task is a bit larger, but actually not more complicated. Yet it gives an opportunity to highlight some Perl constructs that can be helpful sometimes.
+I think the most important design decision
+is *not* to do all the operations one by one as the rules would suggest,
+but to simplify the round shift operation:
 
-#### The Validity Lookup
+- Flatten the matrix into one large, one-dimensional array.<br/>
+  This doesn't need a library call.
+  As the rows are actually arrayrefs,
+  mapping each row arrayref into its elements is all we need: 
 
-For deciding whether a coupon is from a valid category, I set up a lookup hash first:
+  ```perl
+      my @array = map $_->@*, $matrix->@*;
+  ```
 
-```perl
-    my @valid_names = qw( electronics grocery pharmacy restaurant );
-    my %name_is_valid = map +( $_ => 1 ), @valid_names;
-```
+- Shift the whole array by `$k` places,
+  by removing `$k` elements at its end
+  (those elements that are 'shifted out'),
+  and reinserting them at the beginning of the array.<br/>
+  Take care of cases where `$k` is greater than the array length,
+  by using `$k % <array_length>` instead of just `$k`.
 
-I like the way the `qw( ... )` quote operator for word lists works, because the data can be put in without any further punctuation, which makes it easily readable, and also easy to write most of the times.
+  ```perl
+      unshift @array, splice( @array, -( $k % @array ) );
+  ```
 
-Another helpful construct is the `+( ... )` expression. The `+` sign makes it clear to the Perl interpreter that the following parentheses is an expression, not a parameter list for the function or operator that precedes it. This makes things unambiguous, again in a readable way.
+  `splice` removes `( $k % @array )` elements from the end of the string,
+  and `unshift` does the reinsertion at the beginning.
 
-If I am given these two options for writing that `map` statement, one that is based on a code block for returning the two-value list, and one that uses the `+( ... )` expression, I prefer the second one for its clarity: 
+- Extract elements from the resulting array row by row,
+  creating a new array of the same size as the original one.<br/>
+  In this implementation, I use an index variable `$i`
+  to point to the next row of elements in the array,
+  and a variable `$w` to contain the row length,
+  determined from the length of the first row in the original matrix.<br/>
+  To make things easier to write,
+  in each iteration I first increment the index variable,
+  then extract the row data by 'looking backwards' from the new index value:
 
-```perl
-    my %name_is_valid = map { ( $_ => 1 ) } @valid_names;		# Option 1
-    my %name_is_valid = map +( $_ => 1 ), @valid_names;         # Option 2, I prefer.
-```
+  ```perl
+      my ( $i, $w ) = ( 0, scalar $matrix->[0]->@* );
+      return map { $i += $w; [ @array[ $i - $w .. $i - 1 ] ] } keys $matrix->@*;
+  ```
 
-#### Combining the Data
-
-But the most interesting part in this task is to find a way to combine corresponding values from the three input arrayrefs.
-
-This is Perl, and it's **TIMTOWTDI** time!
-
-These are the different ways that I considered before choosing my favorite one:
-
-1. A `for` loop over the indices:
-
-   ```perl
-       my @results;
-       for ( keys $codes->@* ) {
-           push @results,
-               $codes->[$_] =~ /^[a-zA-Z0-9_]+$/
-                   && $name_is_valid{ $names->[$_] }
-                   && $status->[$_] && $status->[$_] !~ /^false/i
-       }
-       return @results;
-   ```
-
-   I am using the `keys` operator instead of the more traditional `0..$codes->$#*`, because for me, it clearly expresses what I want, without needing to think about and write down two explicit values, where I also always have to consider possible off-by-one errors and do more typing.
-
-   Using a `for` loop makes it necessary to first declare a results array, to which one result value is pushed in each iteration, and which is returned in the end. So while it is the more traditional, it is not the most concise solution.
-
-2. A *multi-value* `for` loop:
-
-    ```perl
-        use List::Util qw( mesh );
-        my @results;
-        for my ( $code, $name, $stat )( mesh $codes, $names, $status ) {
-            push @results,
-                $code =~ /^[a-zA-Z0-9_]+$/
-                    && $name_is_valid{$name}
-                    && $stat && $stat !~ /^false/i
-        }
-        return @results;
-    ```
-
-    The call to `mesh` merges the three input arrays into a single long list, where every group of three values is a triplet of (code, name, status). The multi-value `for` loop then assigns each group of three consecutive values to the lexical variables defined in the `for` statement.
-
-    The nice thing about this is that now, these values have a name within the loop body. And as they are simple scalars, no indexing is necessary to access the values. This makes the loop body easier to write and easier to read.
-
-    I would prefer this version of a `for` loop when the individual values are used more often within the loop body, because then, repeated indexing into arrays can be avoided. But this is not the case here, and there is merely one single statement inside the loop. That is why in my opinion, the benefit does not merit the complication of using `mesh` and the multi-value `for` loop here.
-
-3. A `map` call over the indexes:
-
-    ```perl
-        return map {
-            $codes->[$_] =~ /^[a-zA-Z0-9_]+$/
-                && $name_is_valid{ $names->[$_] }
-                && $status->[$_] && $status->[$_] !~ /^false/i
-        } keys $codes->@*;
-    ```
-
-    This is the 'functional' version of the `for` loop in alternative 1. The nice thing is that we don't need a result array, because the `map` results can be used directly as the end result. 
-
-    I use a code block `map { ... }` because I like the visual separation of the mapping expression and the driving list of values.
-
-    This is the most concise solution.
-
-4. A `map` call using triplets of values.
-
-    This alternative uses `zip` to combine the values from the three input arrays into a list of triplets. Each entry in that list is an anonymous array containing the three values pertaining to one coupon. This way, we can loop over the coupons themselves instead of any indexes:  
-
-    ```perl
-        use List::Util qw( zip );
-        return map {
-            $_->[0] =~ /^[a-zA-Z0-9_]+$/
-                && $name_is_valid{ $_->[1] }
-                && $_->[2] && $_->[2] !~ /^false/i
-        } zip $codes, $names, $status;
-    ```
-
-    What I like about this version is that the data that are scattered in three different input arrays are combined into entities first (the coupons).
-
-     The downside is that this 'anonymizes' the three values. They can only be referenced by their index (0,1 or 2) into the triplet, and they don't have a name.
-
-    As much as I like the grouping into a data structure, I don't like that additional abstraction level of associating a numeric index (0, 1 or 2 in this case) to what could be referenced by a name ('code', 'name', 'status'). Using numeric indexes to address data within a data structure is very common, but it has a bit of old school feeling for me. The alternative of using a hash for the coupon data structure for a small task like this would seem like too much of a good thing to me.
-
-Of course there are more alternatives, but I think that at this point, I decide that I will be going with number 3.<br/>
-More or less traditional, but with a functional touch that makes it concise enough for me.
-
-#### Boolean `false` or `"false"`?
-
-Maybe I should explain this part of the condition:
-
-```perl
-    ... && $status->[$_] && $status->[$_] !~ /^false/i
-```
-
-What this means is that the condition fails if the status value is a boolean `false` value. But as the examples  use *string* values  `"true"` and `"false"` (which actually both have a boolean value of `true`!), the second part explicitly fails if the string `"false"` is detected. We are safe to do that pattern match, because the second part will only be executed if the first part yields a boolean `true` value, which means that the value is defined, and so we can be sure it has a string representation. 
-
-With this double check, the input parameters can be boolean values `true` or `false` (or whatever is considered true or false in Perl), but also the strings `"true"` and `"false"`, and the result is what is expected.
-
-#### Everything combined
-
-So here is 'my' winner:
+So my complete solution looks like this:
 
 ```perl
 use v5.36;
-sub validate_coupon_map_index( $codes, $names, $status ) {
-    my @valid_names = qw( electronics grocery pharmacy restaurant );
-    my %name_is_valid = map +( $_ => 1 ), @valid_names;
-    return map {
-        $codes->[$_] =~ /^[a-zA-Z0-9_]+$/
-            && $name_is_valid{ $names->[$_] }
-            && $status->[$_] && $status->[$_] !~ /^false/i
-    } keys $codes->@*;
+
+sub shift_grid( $matrix, $k ) {
+    my @array = map $_->@*, $matrix->@*;
+    unshift @array, splice( @array, @array - $k % @array );
+    my ( $i, $w ) = ( 0, scalar $matrix->[0]->@* );
+    return map { $i += $w; [ @array[ $i - $w .. $i - 1 ] ] } keys $matrix->@*;
 }
 ```
 
