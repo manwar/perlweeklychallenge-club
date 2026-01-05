@@ -135,12 +135,13 @@ the three presented versions all play in the same league.
 
 I was then blown away by the solution
 [published by James Curtis-Smith](https://www.facebook.com/groups/perlcommunity/permalink/2128053411335607).
-His version is more than 3 times as fast as any of my versions above.
+His version is around 2.5 times faster than any of my versions above.
 I rewrote his solution to be a bit more readable
-(basically only giving some useful names to variables),
+(basically only giving some useful names to variables,
+for my own understanding),
 and to find out why it is so fast:
 
-```perl 
+```perl
 # James Curtis-Smith 1 Rewrite
 sub min_abs_diff_jcs_rewrite( $ints ) {
     $ints->@* > 1 or return ();
@@ -156,13 +157,34 @@ sub min_abs_diff_jcs_rewrite( $ints ) {
 }
 ```
 
+```text
+                Rate       schw_3 min_abs_diff     2_slides  jcs_rewrite
+schw_3        2955/s           --          -5%         -10%         -71%
+min_abs_diff  3110/s           5%           --          -5%         -69%
+2_slides      3287/s          11%           6%           --         -68%
+jcs_rewrite  10142/s         243%         226%         209%           --
+```
+
 I think the reason is that apart from the `sort`,
 which all of the solutions have in common,
 James' solution only does *one* pass through the sorted data,
 while all three of my solutions do two or three of them
 (for the pairs, for the diffs, and for the comparison).
 
-While rewriting his solution, I first used a `for ( ) { }` loop,
+Why this works is the clever way that the minimum difference is checked
+within the same loop that delivers the results.
+When a new minimum is found,
+the results gathered so far are just discarded on the fly
+and the gathering is restarted,
+while all my solution rely on the minimum difference being available
+already *before* the result loop is started,
+which means one more loop.
+And his solution does not build any pairs before starting the result loop,
+but does the 'pairing' using an extra variable for the previous array value,
+saving yet another loop.
+
+It was also interesting that while I was rewriting his solution,
+I first used a `for ( ) { }` loop,
 and normal, semicolon-separated statements within the loop body.
 I did not manage to get the last few percentage points of performance
 until I changed the `if ... elsif` chain
