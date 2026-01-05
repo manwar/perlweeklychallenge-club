@@ -145,7 +145,7 @@ sub X_min_abs_diff_schw_3_ref( $ints ) {
 }
 
 # James Curtis-Smith 1
-sub min_abs_diff_jcs_1( $ints ) {
+sub X_min_abs_diff_jcs_1( $ints ) {
     $ints->@* > 1 or return ();
     my ( $f, @x, @m ) = sort  { $a <=> $b } $ints->@*;
     my $min = $x[0] - $f;
@@ -214,6 +214,7 @@ sub run_tests( @tests ) {
     # This runs the tests not only for the sub named "$sub_base_name",
     # but also for all variants with any suffix ("$sub_base_name<suffix>").
     use Test2::V0 qw( -no_srand );
+    use Data::Dump qw( pp );
     for my $sub ( @sub_names ) {
         note "\n", "Testing $sub:\n", "\n";
         for ( @tests ) {
