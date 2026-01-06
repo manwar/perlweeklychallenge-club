@@ -1,3 +1,3 @@
-# The Weekly Challenge 354
+# The Weekly Challenge 355
 
-Blog: [New Year, New Challenges](https://dev.to/simongreennet/weekly-challenge-new-year-new-challenges-2eab)
+Blog: [Commify every mountain](https://dev.to/simongreennet/weekly-challenge-commify-every-mountain-1kid)
