@@ -54,6 +54,7 @@ SO WHAT DO YOU THINK ?
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
 
@@ -63,20 +64,25 @@ import (
 type ints []int
 
 func (in ints) process() bool {
-	var mx []int
-	for i, v := range in {
-		switch {
-		case mx == nil:
-			mx = []int{i, v, 1}
-		case mx[1] < v:
-			mx[0] = i
-			mx[1] = v
-			mx[2] = 1
-		case mx[1] == v:
-			mx[2]++
+	var ti []int
+	for i, v := range in[1:] {
+		d := v - in[i]
+		if d == 0 {
+			return false
+		}
+		if ti == nil {
+			if d < 0 {
+				return false
+			}
+			ti = []int{d, 0}
+		} else {
+			if d*ti[0] < 0 {
+				ti[1]++
+			}
+			ti[0] = d
 		}
 	}
-	return mx[2] == 1 && mx[0] != 0 && mx[0] != len(in)-1
+	return ti[1] == 1
 }
 
 func main() {
@@ -89,7 +95,9 @@ func main() {
 		{ints{5, 4, 3, 2, 1}, false},
 		{ints{1, 3, 5, 5, 4, 2}, false},
 		{ints{1, 3, 2}, true},
+		{ints{0, 2, 4, 3, 5, 2, 0}, false},
 	} {
+		fmt.Println(data)
 		io.WriteString(os.Stdout, cmp.Diff(data.input.process(), data.output)) // blank if ok, otherwise show the difference
 	}
 }
