@@ -53,19 +53,25 @@ SO WHAT DO YOU THINK ?
 
 --@param ints table
 local function ma(ints) --@return bool
-	local mx = {}
-	for i, v in ipairs(ints) do
-		if #mx == 0 then
-			mx = {i, v, 1}
-		elseif mx[2] == v then
-			mx[3] = mx[3] + 1
-		elseif mx[2] < v then
-			mx[1] = i
-			mx[2] = v
-			mx[3] = 1
+	local ti = {}
+	for i=2, #ints do
+		local d = ints[i] - ints[i-1]
+		if d == 0 then
+			return false
+		end
+		if #ti == 0 then
+			if d < 0 then
+				return false
+			end
+			ti = {d,0}
+		else
+			if d * ti[1] < 0 then
+				ti[2] = ti[2] + 1
+			end
+			ti[1] = d
 		end
 	end
-	return mx[3] == 1 and mx[1] ~= 1 and mx[1] ~= #ints
+	return ti[2] == 1
 end
 
 local lu = require("luaunit")
@@ -76,7 +82,8 @@ function TestMa()
 		{0, 2, 4, 6, 4, 2, 0}, true,
 		{5, 4, 3, 2, 1}, false,
 		{1, 3, 5, 5, 4, 2}, false,
-		{1, 3, 2}, true
+		{1, 3, 2}, true,
+		{0, 2, 4, 3, 5, 2, 0}, false,
 	}
 	local inpt, otpt
 	for i=2, #data, 2 do
