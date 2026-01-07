@@ -52,7 +52,20 @@ SO WHAT DO YOU THINK ?
 ### solution by pokgopun@gmail.com
 
 def ma(ints: tuple[int]) -> bool:
-    return ((ints[0],)+ints+(ints[-1],)).count(max(ints)) == 1
+    ti: list[int] = []
+    for i in range(1,len(ints)):
+        d = ints[i] - ints[i-1]
+        if d == 0:
+            return False
+        if len(ti) == 0:
+            if d < 0:
+                return False
+            ti = [d,0]
+        else:
+            if d * ti[0] < 0:
+                ti[1] += 1
+            ti[0] = d
+    return ti[1]==1
 
 import unittest
 
@@ -64,6 +77,7 @@ class TestMa(unittest.TestCase):
                 (5, 4, 3, 2, 1): False,
                 (1, 3, 5, 5, 4, 2): False,
                 (1, 3, 2): True,
+                (0, 2, 4, 3, 5, 2, 0): False,
                 }.items():
             self.assertEqual(ma(inpt),otpt)
 
