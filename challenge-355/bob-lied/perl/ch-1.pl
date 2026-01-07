@@ -13,6 +13,13 @@
 # Example 4 Input: $int = 1 Output: "1"
 # Example 5 Input: $int = 12345 Output: "12,345"
 #=============================================================================
+# Benchmark sample:
+#                 Rate  withregex  asinteger withsubstr joinunpack
+# withregex   606061/s         --       -16%       -52%       -64%
+# asinteger   724638/s        20%         --       -42%       -57%
+# withsubstr 1250000/s       106%        72%         --       -25%
+# joinunpack 1666667/s       175%       130%        33%         --
+#=============================================================================
 
 use v5.42;
 
@@ -32,15 +39,45 @@ my $logger;
 }
 #=============================================================================
 
+my @example = (
+    {   id => "Example 1", int =>     123, expect =>       "123" },
+    {   id => "Example 2", int =>    1234, expect =>     "1,234" },
+    {   id => "Example 3", int => 1000000, expect => "1,000,000" },
+    {   id => "Example 4", int =>       1, expect =>         "1" },
+    {   id => "Example 5", int =>   12345, expect =>    "12,345" },
+);
+
+my @task = (
+    { tag => "regex",   func => \&separate },
+    { tag => "integer", func => \&sepint },
+    { tag => "substr",  func => \&sepstr },
+    { tag => "unpack",  func => \&sepjoin },
+    { tag => 'format',  func => \&sepformat },
+);
+
+#=============================================================================
+
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say separate($_) for @ARGV;
+for my $n (@ARGV)
+{
+    foreach ( @task )
+    {
+        say "$_->{tag}: ", $_->{func}->($n);
+    }
+}
 
 #=============================================================================
+sub sepformat($int)
+{
+    use Number::Format qw/:subs/;
+    return format_number($int);
+}
+
 sub separate($int)
 {
-    reverse ( ((reverse $int) =~ s/(\d{1,3})/$1,/gr) =~ s/,$//r);
+    scalar reverse ( (reverse $int) =~ s/(\d{3})(?=\d)/$1,/gr );
 }
 
 sub sepint($int)
@@ -65,27 +102,12 @@ sub sepstr($int)
 
 sub sepjoin($int)
 {
-    return reverse join(",", unpack("(A3)*", reverse $int));
+    return scalar reverse join(",", unpack("(A3)*", reverse $int));
 }
 
 sub runTest
 {
     use Test2::V0;
-
-    my @example = (
-        {   id => "Example 1", int =>     123, expect =>       "123" },
-        {   id => "Example 2", int =>    1234, expect =>     "1,234" },
-        {   id => "Example 3", int => 1000000, expect => "1,000,000" },
-        {   id => "Example 4", int =>       1, expect =>         "1" },
-        {   id => "Example 5", int =>   12345, expect =>    "12,345" },
-    );
-
-    my @task = (
-        { tag => "separate", func => \&separate },
-        { tag => "sepint",   func => \&sepint },
-        { tag => "sepstr",   func => \&sepstr },
-        { tag => "sepstr",   func => \&sepjoin },
-    );
 
     for my $task ( @task )
     {
@@ -102,7 +124,13 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my $n = 12345678901234;
+
     cmpthese($repeat, {
-            label => sub { },
+            withregex  => sub { separate($n) },
+            asinteger  => sub { sepint($n) },
+            withsubstr => sub { sepstr($n) },
+            joinunpack => sub { sepjoin($n) },
+            format     => sub { sepformat($n) },
         });
 }
