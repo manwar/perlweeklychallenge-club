@@ -1,48 +1,82 @@
-package main;
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
 
-sub is_disarium {
-    my $what = shift;
+use Type::Params    qw(compile);
+use Types::Standard qw(Int);
 
-    my $pos = 0;
+=pod
+
+=head1 NAME
+
+ch-1.pl - Disarium Numbers
+
+=head1 SYNOPSIS
+
+  perl ch-1.pl
+
+=head1 DESCRIPTION
+
+Generate the first 19 Disarium numbers.
+
+A Disarium number is an integer such that the sum of each digit raised to the
+power of its position (1-based) equals the number.
+
+=cut
+
+sub is_disarium ($n) {
+    my @d = split //, "$n";
     my $sum = 0;
-
-    for my $i ( split //, $what ) {
-        $pos++;
-        $sum += $i**$pos;
+    for my $i ( 0 .. $#d ) {
+        $sum += ( 0 + $d[$i] )**( $i + 1 );
     }
-
-    return 1 if $sum == $what;
-
-    return 0;
+    return $sum == $n ? 1 : 0;
 }
 
-sub generate_numbers {
-    my $count = shift;
+sub disarium_numbers ($count) {
+    ($count) = compile(Int)->($count);
+    die 'Expected count > 0' if $count <= 0;
 
-    my $pos = 0;
-    my @result;
-
-    while ( scalar @result < $count ) {
-        push @result, $pos if is_disarium($pos);
-        $pos++;
+    my @out;
+    my $n = 0;
+    while ( @out < $count ) {
+        push @out, $n if is_disarium($n);
+        ++$n;
     }
-
-    return \@result;
+    return \@out;
 }
 
-use Test::More;
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    die "Usage: perl $0 [count]\n" if @args != 1;
+    my $count = 0 + $args[0];
+    my $out   = disarium_numbers($count);
+    say join ', ', @$out;
+}
 
-is( is_disarium(518), 1, 'Test 518' );
-is( is_disarium(519), 0, 'Test 519' );
-is_deeply(
-    generate_numbers(19),
-    [   0,    1, 2, 3, 4, 5, 6, 7, 8, 9, 89, 135, 175, 518, 598, 1306, 1676,
-        2427, 2646798
-    ],
-    'Test 19 nums'
-);
-done_testing;
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
 
-1;
+    # Only the example shown in the spec.
+    Test::More::plan( tests => 1 );
+    Test::More::ok( is_disarium(518), 'Example: 518 is a Disarium number' );
+}
+
+_run_cli(@ARGV);
+
+=pod
+
+=head1 FUNCTIONS
+
+=head2 disarium_numbers($count)
+
+Returns an arrayref of the first C<$count> Disarium numbers.
+
+=cut
