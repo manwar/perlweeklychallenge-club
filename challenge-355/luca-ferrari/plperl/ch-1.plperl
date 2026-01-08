@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 355
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-355>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc355;
+
+CREATE OR REPLACE FUNCTION
+pwc355.task1_plperl( int )
+RETURNS text
+AS $CODE$
+
+   my ( $number ) = @_;
+   my $digits = [ reverse split //, $number ];
+   my $result = "";
+   for my $i ( 0 .. $digits->@* - 1 ) {
+       $result .= '.' if ( $i > 0 && $i % 3 == 0 );
+       $result .= $digits->@[ $i ];
+   }
+
+   return reverse $result;
+   
+$CODE$
+LANGUAGE plperl;
