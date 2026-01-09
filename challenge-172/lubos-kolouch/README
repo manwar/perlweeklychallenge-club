@@ -1,1 +1,15 @@
-Solutions by Lubos Kolouch.
+# Perl Weekly Challenge 356 Solutions
+
+## Task 1: Prime Partition
+
+Partitions a positive integer `$m` into exactly `$n` distinct primes using recursive backtracking with prime checks. Outputs one valid ascending partition as comma-separated string or raises error if none found.
+
+- **Perl (`ch-1.pl`)**: Uses optimized `is_prime` function; recursive function builds partition array reference.
+- **Python (`ch-1.py`)**: Similar recursion with list accumulation; raises `ValueError` if invalid.
+
+## Task 2: Five-number Summary
+
+Computes minimum, Q1, median, Q3, maximum for integer array using linear interpolation for quartiles (inclusive method).
+
+- **Perl (`ch-2.pl`)**: Sorts array; `quantile` sub with interpolation; returns list.
+- **Python (`ch-2.py`)**: Sorted list; `quantile` function; returns tuple.
