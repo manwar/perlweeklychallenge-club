@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Ok, swing code... SWING!](https://packy.dardan.com/b/g4)
+[Perl Weekly Challenge: Some Grids](https://packy.dardan.com/b/gR)
