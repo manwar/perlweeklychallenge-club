@@ -1,6 +1,5 @@
 :- use_module(library(dcg/high_order)).
 
-
 task1(Int, Result) :-
         number_chars(Int, Int_Chars),
         length(Int_Chars, Int_Length),
@@ -13,8 +12,3 @@ task1(Int, Result) :-
         foldl([Current_Group, Chars_Before, Chars_After]>>append([Chars_Before, [','], Current_Group], Chars_After), Groups, Prefix, Result_Chars),
         string_chars(Result, Result_Chars).
 
-increase(_), [B] --> [A, B], { A < B }.
-decrease(_), [B] --> [A, B], { A > B }.
-
-task2(Int) :-
-        once(phrase((increase(_), sequence(increase, _), decrease(_), sequence(decrease, _), [_]), Int)).
