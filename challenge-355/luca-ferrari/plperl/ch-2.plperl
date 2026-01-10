@@ -1,0 +1,37 @@
+--
+-- Perl Weekly Challenge 355
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-355>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc355;
+
+CREATE OR REPLACE FUNCTION
+pwc355.task2_plperl( int[] )
+RETURNS boolean
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   my $cmp = sub {
+      my ( $left, $right ) = @_;
+      return 0 if ( $left->@* != $right->@* );
+
+      for my $i ( 0 .. $left->@* - 1 ) {
+      	  return 0 if ( $left->@[ $i ] != $right->@[ $i ] );
+      }
+
+      return 1;
+   };
+
+   for my $i ( 1 .. $numbers->@* - 2 ) {
+       return 1 if ( $cmp->( [ $numbers->@[ 0 .. $i ] ],
+       	      	     	     [ sort $numbers->@[ 0 .. $i ] ] )
+	             && $cmp->( [ $numbers->@[ $i .. $numbers->@* - 1 ] ],
+		                [ sort { $b <=> $a } $numbers->@[ $i .. $numbers->@* - 1 ] ] ) );
+   }
+
+   return 0;
+
+$CODE$
+LANGUAGE plperl;
