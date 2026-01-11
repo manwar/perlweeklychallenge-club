@@ -9,7 +9,6 @@
 #
 
 use v5.36;
-use Dsay;
 
 sub thousand_separator_reverse( $int ) {
     return scalar reverse( reverse( $int ) =~ s/(\d{3})(?=\d)/$1,/gr );
