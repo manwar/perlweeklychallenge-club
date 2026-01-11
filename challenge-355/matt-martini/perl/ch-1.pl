@@ -19,7 +19,6 @@ sub thousand_separator {
     my $result = "$int";
 
     my $thousands_re = qr{\B(?=(\d{3})+(?!\d))};
-    $thousands_re = qr{\B(?<!\.\d{0,254})(?=(\d{3})+(?!\d))};
     $result =~ s{$thousands_re}{,}g;
 
     say 'Output: ' . $result;
