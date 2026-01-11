@@ -218,9 +218,10 @@ sub mountain_array_slide( @ints ) {
 And actually it is only marginally slower than the other solution:
 
 ```text
-                    Rate          slide mountain_array
-slide          5365520/s             --            -4%
-mountain_array 5560630/s             4%             --
+                  Rate          slide mountain_array
+slide          59609/s             --            -3%
+mountain_array 61265/s             3%             --
+
 ```
 
 So as nice as it was to do the optimization exercise for my first solution,
