@@ -54,7 +54,6 @@ sub mountain_array_slide( @ints ) {
 
 use Test2::V0 qw( -no_srand );
 
-my $sub_base_name = "mountain_array";
 my @tests = (
     [ 'Example 1:', [ 1, 2, 3, 4, 5 ],       [ F ] ],
     [ 'Example 2:', [ 0, 2, 4, 6, 4, 2, 0 ], [ T ] ],
@@ -63,9 +62,10 @@ my @tests = (
     [ 'Example 5:', [ 1, 3, 2 ],             [ T ] ],
     [ 'Test 1: Two peaks', [ 1, 3, 5, 4, 5, 4, 2 ], [ F ] ],
 );
-my @benchmark_params = ( [ 0, 2, 4, 6, 4, 2, 0 ] );
-@benchmark_params = ( [ 1..100, reverse 1..99 ] );
 
+my $sub_base_name = "mountain_array";
+
+my @benchmark_params = ( 1..60, reverse 1..59 );
 
 use Getopt::Long;
 my ( $do_tests, $do_benchmark );
@@ -78,7 +78,7 @@ $do_tests //= ! $do_benchmark;
 # Run the tests and/or the benchmark.
 # If tests are run, run the benchmark only if the tests succeed.
 ! $do_tests || run_tests( $sub_base_name, @tests )
-    and $do_benchmark && run_benchmark( $sub_base_name );
+    and $do_benchmark && run_benchmark( $sub_base_name, @benchmark_params );
 
 sub run_tests( $sub_base_name, @tests ) {
     # This runs the tests not only for the sub named "$sub_base_name",
