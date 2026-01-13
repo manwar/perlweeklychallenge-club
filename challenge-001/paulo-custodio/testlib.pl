@@ -1,5 +1,6 @@
 use Modern::Perl;
 use Path::Tiny;
+use Text::Diff;
 
 my $_exe = $^O =~ /msys|cygwin|MSWin32/ ? ".exe" : "";
 
@@ -54,7 +55,9 @@ sub test_block {
             warn "skipped directory $dir\n";
             next;
         }
-        run("diff -w test.out test.exp");
+
+        compare_files("test.out", "test.exp");
+
         unlink("test.in", "test.out", "test.exp");
     }
 }
@@ -94,6 +97,16 @@ sub normalize_path {
         $path =~ s{/+}{\\}g;
     }
     return $path;
+}
+
+sub compare_files {
+    my($got, $exp) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $got_text = path($got)->slurp =~ s/[ \t]+/ /gr;
+    my $exp_text = path($exp)->slurp =~ s/[ \t]+/ /gr;
+
+    is diff(\$got_text, \$exp_text), "", "expected result";
 }
 
 1;
