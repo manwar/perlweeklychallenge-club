@@ -1,3 +1,3 @@
-# The Weekly Challenge 355
+# The Weekly Challenge 356
 
-Blog: [Commify every mountain](https://dev.to/simongreennet/weekly-challenge-commify-every-mountain-1kid)
+Blog: [Winning sequence](https://dev.to/simongreennet/weekly-challenge-winning-sequence-3eic)
