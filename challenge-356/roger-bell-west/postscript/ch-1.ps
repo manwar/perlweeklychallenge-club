@@ -1,0 +1,92 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/magicalstring {
+    0 dict begin
+    /a exch def
+    /s a 2 mul array def
+    s 0 1 put
+    /l 1 def
+    /n 0 def
+    /ic 0 def
+    {
+        ic a lt not {
+            exit
+        } if
+        s n get 2 eq {
+            s ic 1 add l put
+            /ic ic 1 add def
+        } if
+        /l 3 l sub def
+        /ic ic 1 add def
+        s ic l put
+        /n n 1 add def
+    } loop
+    s 0 a getinterval { 1 eq } filter length
+    end
+} bind def
+
+(magicalstring) test.start
+4 magicalstring 2 eq test
+5 magicalstring 3 eq test
+6 magicalstring 3 eq test
+7 magicalstring 4 eq test
+8 magicalstring 4 eq test
+test.end
