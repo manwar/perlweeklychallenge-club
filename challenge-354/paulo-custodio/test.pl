@@ -22,7 +22,7 @@ IN
 OUT
 
 test_block(2, <<'IN', <<'OUT');
-matrix =	10, 20,
+matrix =    10, 20,
             30, 40,
 k = 1
 IN
@@ -31,7 +31,7 @@ IN
 OUT
 
 test_block(2, <<'IN', <<'OUT');
-matrix =	1, 2,
+matrix =    1, 2,
             3, 4,
             5, 6,
 k = 1
@@ -42,7 +42,7 @@ IN
 OUT
 
 test_block(2, <<'IN', <<'OUT');
-matrix = 	1, 2, 3,
+matrix =    1, 2, 3,
             4, 5, 6,
 k = 5
 IN
@@ -51,7 +51,7 @@ IN
 OUT
 
 test_block(2, <<'IN', <<'OUT');
-matrix =	1, 2, 3, 4,
+matrix =    1, 2, 3, 4,
 k = 1
 IN
 4, 1, 2, 3,
