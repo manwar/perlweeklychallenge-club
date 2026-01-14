@@ -78,4 +78,3 @@ $winner[6] = $wins[6] eq 'H' ? $seeded_winners[0] : $seeded_winners[1];
 my $looser = $wins[6] ne 'H' ? $seeded_winners[0] : $seeded_winners[1];
 
 say "Team ".$winner[6]." defeated Team ".$looser;
-
