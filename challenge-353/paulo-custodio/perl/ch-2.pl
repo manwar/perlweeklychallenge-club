@@ -63,5 +63,3 @@ sub check_values {
     return unless $status eq 'true';
     return 1;
 }
-
-

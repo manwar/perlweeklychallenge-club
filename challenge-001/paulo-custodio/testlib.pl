@@ -109,4 +109,14 @@ sub compare_files {
     is diff(\$got_text, \$exp_text), "", "expected result";
 }
 
+sub quote {
+    my($str) = @_;
+    if ($_exe) {
+        return '"'.$str.'"';
+    }
+    else {
+        return "'".$str."'";
+    }
+}
+
 1;
