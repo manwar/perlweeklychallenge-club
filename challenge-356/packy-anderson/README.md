@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Oh to live on Array Mountain…](https://packy.dardan.com/b/hD)
+[Perl Weekly Challenge: Who's Kolakoski?](https://packy.dardan.com/b/hV)
