@@ -119,4 +119,12 @@ sub quote {
     }
 }
 
+sub quote_list {
+    my(@items) = @_;
+    for (@items) {
+        $_ = quote($_);
+    }
+    return join " ", @items;
+}
+
 1;
