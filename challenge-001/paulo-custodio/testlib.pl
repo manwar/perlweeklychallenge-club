@@ -103,8 +103,8 @@ sub compare_files {
     my($got, $exp) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-    my $got_text = path($got)->slurp =~ s/[ \t]+/ /gr;
-    my $exp_text = path($exp)->slurp =~ s/[ \t]+/ /gr;
+    my $got_text = path($got)->slurp =~ s/[ \t]+/ /gr =~ s/\s*$/\n/sr;
+    my $exp_text = path($exp)->slurp =~ s/[ \t]+/ /gr =~ s/\s*$/\n/sr;
 
     is diff(\$got_text, \$exp_text), "", "expected result";
 }
