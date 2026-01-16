@@ -42,6 +42,6 @@ if ($keys eq '') {
     say scalar(@words);
 }
 else {
-    my @can_type = grep {eval "!/[$keys]/i"} @words;
+    my @can_type = grep {! /[$keys]/i} @words;
     say scalar(@can_type);
 }
