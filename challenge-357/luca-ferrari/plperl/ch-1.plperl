@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 357
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-357>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc357;
+
+CREATE OR REPLACE FUNCTION
+pwc357.task1_plperl( int )
+RETURNS int
+AS $CODE$
+
+   my ( $num ) = @_;
+   my $kaprekar = 6174;
+   my $iterations = 0;
+
+   while ( $num != $kaprekar ) {
+   	 my @digits = split //, $num;
+	 $num = join( '', sort( { $b <=> $a } @digits ) ) -
+	        join( '', sort( { $a <=> $b } @digits ) );
+	$iterations++;
+   }
+
+   return $iterations;
+   
+$CODE$
+LANGUAGE plperl;
