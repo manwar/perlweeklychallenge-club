@@ -8,8 +8,8 @@ is kaprekar(1001),  4;
 is kaprekar(9000),  4;
 is kaprekar(1111), -1;
 
-multi kaprekar(UInt $i where [==] $i.comb)     { -1                       }
-multi kaprekar(UInt $i where $i ~~ 1000..9999) { ($i, &k...6174).elems -1 }
+multi kaprekar(UInt $i where [==] $i.comb)     { -1                     }
+multi kaprekar(UInt $i where $i ~~ 1000..9999) { ($i, &k...^6174).elems }
 
 sub k($i is copy)
 {
