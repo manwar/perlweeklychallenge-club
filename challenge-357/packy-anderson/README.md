@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Who's Kolakoski?](https://packy.dardan.com/b/hV)
+[Perl Weekly Challenge: I could drink a case of you...](https://packy.dardan.com/b/hq)
