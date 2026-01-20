@@ -1,8 +1,7 @@
 use 5.036;
 
-# https://theweeklychallenge.org/blog/perl-weekly-challenge-355/#TASK2
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-356/#TASK2
 
-# true if integers in ints monotonically increase then decrease
 sub who_wins($game_results) {
     # teams in seeded order
     # each game eliminates one team, ending with the final winner, so there is one more team than games

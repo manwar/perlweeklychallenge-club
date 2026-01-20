@@ -4,9 +4,10 @@ use 5.036;
 
 sub kolakoski_sequence($length) {
     my @sequence = (1,2,2);
-    for (my $i = 2; $i < $length; ++$i) {
+    for (my $i = 2; @sequence <= $length; ++$i) {
         push @sequence, (3-$sequence[-1]) x $sequence[$i];
     }
+    # if we just added two elements, we may have one too many
     splice @sequence, $length;
 
     return scalar grep $_ == 1, @sequence;
