@@ -12,7 +12,8 @@
 use 5.36.0;
 use strict;
 use List::Util;
-use Test::More 'tests' => 8;
+use Test::Exception;
+use Test::More 'tests' => 9;
 
 ##############################################################################################################
 ###     GLOBALS                                                                                            ###
@@ -30,6 +31,7 @@ test_5();
 test_6();
 test_7();
 test_8();
+test_9();
 
 say "=" x 110;
 say "Done.";
@@ -93,6 +95,11 @@ sub test_8 {
 	is( $result, $expectedResult, 'Test 8' );
 }
 
+sub test_9 {
+	my $input          = '2111x';
+	Test::Exception::throws_ok {  examine( $input ); } qr/Invalid input/, 'Test 9';
+}
+
 ##############################################################################################################
 ##      SUBROUTINES                                                                                        ###
 ##############################################################################################################
@@ -101,6 +108,8 @@ sub test_8 {
 sub examine( $n ) {
 	say "=" x 110;
 	say "Examining '$n' ...";
+	
+	die "Invalid input. n = '$n'." if $n =~ /[^0-9]/;
 
 	# ------------------------------------------------------------------------------------------------------ #
 	if ( $n == $KAPREKARS_CONSTANT ) {
@@ -127,22 +136,20 @@ sub examine( $n ) {
 			return -1;
 		}
 
-		# Get numbers formeed from ascending and descending digits
+		# Get numbers formed from ascending and descending digits
 		my @ascending  = sort @digits;
 		my @descending = reverse sort @digits;
 		my $n1         = join( '', @ascending );
 		my $n2         = join( '', @descending );
-		# 		say "n1: $n1";
-		# 		say "n2: $n2";
 
-		die if $n1 == $n2;
+		die "This should not happen. n1 = n2." if $n1 == $n2;
 
 		if ( $n1 < $n2 ) {
 			$n = $n2 - $n1;
 			say "Result = $n2 - $n1 = $n";
 		} else {
 			$n = $n1 - $n2;
-			say "Rersult = $n1 - $n2 = $n";
+			say "Result = $n1 - $n2 = $n";
 		}
 
 		if ( $n == $KAPREKARS_CONSTANT ) {
