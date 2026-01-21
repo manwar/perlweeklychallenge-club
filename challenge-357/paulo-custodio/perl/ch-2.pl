@@ -53,5 +53,3 @@ sub fracts {
     }
     return @fracts;
 }
-
-
