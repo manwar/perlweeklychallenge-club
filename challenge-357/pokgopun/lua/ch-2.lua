@@ -52,7 +52,7 @@ SO WHAT DO YOU THINK ?
 --# solution by pokgopun@gmail.com
 
 --@param n int
-local function ufc(n) --@return string
+local function ufg(n) --@return string
 	local seen = {}
 	local s = {}
 	for i=1, n do
@@ -73,7 +73,7 @@ end
 
 local lu = require("luaunit")
 
-function TestUfc()
+function TestUfg()
 	local data = {
 		3, "1/3, 1/2, 2/3, 1/1, 3/2, 2/1, 3/1",
 		4, "1/4, 1/3, 1/2, 2/3, 3/4, 1/1, 4/3, 3/2, 2/1, 3/1, 4/1",
@@ -83,7 +83,7 @@ function TestUfc()
 	}
 	for i=2, #data, 2 do
 		local inpt, otpt = data[i-1], data[i]
-		lu.assertEquals(ufc(inpt), otpt)
+		lu.assertEquals(ufg(inpt), otpt)
 	end
 end
 

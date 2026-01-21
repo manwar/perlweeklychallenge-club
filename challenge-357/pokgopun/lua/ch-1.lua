@@ -67,31 +67,49 @@ Task 2: Unique Fraction Generator
 --]]
 --# solution by pokgopun@gmail.com
 
+local FourDigits = {} --table of 4 ints
+
 --@param int
-local function kc(n) --@return int
+function FourDigits:new(n)
 	if n < 0 or n > 9999 then
 		return nil
 	end
+	local o = {}
+	while n > 0 do
+		table.insert(o, n % 10)
+		n = n // 10
+	end
+	table.sort(o)
+	for i=1, 4 - #o do
+		table.insert(o, 1, 0)
+	end
+	setmetatable(o, self)
+	self.__index = self
+	return o
+end
+
+function FourDigits:fr_diff() --@return int
+	local n, j, t = 0, #self, 1
+	for i=1, #self do
+		n = n + t*(self[i] - self[j])
+		t = t * 10
+		j = j - 1
+	end
+	return n
+end
+
+--@param int
+local function kc(n) --@return int
 	local c = 0
 	while c <= 7 do
 		if n == 6174 then
 			break
 		end
-		local ints = {}
-		while n > 0 do
-			table.insert(ints, n % 10)
-			n = n // 10
+		local fd = FourDigits:new(n)
+		if not fd then
+			return nil
 		end
-		table.sort(ints)
-		for i=1, 4 - #ints do
-			table.insert(ints, 1, 0)
-		end
-		local j, t = #ints, 1
-		for i=1, #ints do
-			n = n + t*(ints[i] - ints[j])
-			t = t * 10
-			j = j - 1
-		end
+		n = fd:fr_diff()
 		if n == 0 then
 			return -1
 		end
@@ -102,24 +120,15 @@ local function kc(n) --@return int
 end
 
 local function fullTestSet() --@yield {int,ints}
-	local counts, ints, d
+	local counts, fd
 	for n=0, 9999 do
 		if n == 6174 then
 			counts = {0}
 		else
 			counts = {-1}
-			ints = {}
-			d = n
-			while d > 0 do
-				table.insert(ints, d % 10)
-				d = d // 10
-			end
-			table.sort(ints)
-			for i=1, 4 - #ints do
-				table.insert(ints, 1, 0)
-			end
-			for i=1, #ints-1 do
-				if ints[i] ~= ints[i+1] then
+			fd = FourDigits:new(n)
+			for i=1, #fd-1 do
+				if fd[i] ~= fd[i+1] then
 					counts = {1,2,3,4,5,6,7}
 					break
 				end

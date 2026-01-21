@@ -59,7 +59,7 @@ class Fraction:
     def __str__(self):
         return f'{self.nmrt}/{self.dmnt}'
 
-def ufc(n: int) -> str:
+def ufg(n: int) -> str:
     seen = {}
     lst = []
     for nmrt in range(1,n+1):
@@ -73,7 +73,7 @@ def ufc(n: int) -> str:
 
 import unittest
 
-class TestUfc(unittest.TestCase):
+class TestUfg(unittest.TestCase):
     def test(self):
         for inpt, otpt in {
                 3: "1/3, 1/2, 2/3, 1/1, 3/2, 2/1, 3/1",
@@ -82,6 +82,6 @@ class TestUfc(unittest.TestCase):
                 6: "1/6, 1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 5/6, 1/1, 6/5, 5/4, 4/3, 3/2, 5/3, 2/1, 5/2, 3/1, 4/1, 5/1, 6/1",
                 5: "1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 1/1, 5/4, 4/3, 3/2, 5/3, 2/1, 5/2, 3/1, 4/1, 5/1",
                 }.items():
-            self.assertEqual(ufc(inpt), otpt)
+            self.assertEqual(ufg(inpt), otpt)
 
 unittest.main()

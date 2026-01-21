@@ -82,51 +82,47 @@ import (
 
 const KC = 6174
 
-type Ints []int
+type FourDigits []int
 
-func NewInts(ints ...int) Ints {
-	slices.Sort(ints)
-	return Ints(ints)
+func NewFourDigits(n int) (FourDigits, error) {
+	if n < 0 || n > 9999 {
+		return nil, errors.New("n does not fit 4 digits")
+	}
+	fd := make(FourDigits, 4)
+	i := 0
+	for n > 0 {
+		fd[i] = n % 10
+		n /= 10
+		i++
+	}
+	slices.Sort(fd)
+	return fd, nil
 }
 
-func (in Ints) FRDiff() int {
-	i := len(in)
+func (fd FourDigits) FRDiff() int {
+	i := len(fd)
 	t := 1
 	diff := 0
-	for _, v := range in {
+	for _, v := range fd {
 		i--
-		diff += t * (v - in[i])
+		diff += t * (v - fd[i])
 		t *= 10
 	}
 	return diff
 }
 
-func (in Ints) UniqCount() int {
+func (fd FourDigits) UniqCount() int {
 	c := 0
-	l := len(in)
+	l := len(fd)
 	if l > 1 {
 		c = 1
 		for i := l - 1; i > 0; i-- {
-			if in[i] != in[i-1] {
+			if fd[i] != fd[i-1] {
 				c++
 			}
 		}
 	}
 	return c
-}
-
-func NewFourInts(n int) (Ints, error) {
-	if n < 0 || n > 9999 {
-		return Ints{}, errors.New("n has more than 4 digits")
-	}
-	ints := make(Ints, 4)
-	i := 0
-	for n > 0 {
-		ints[i] = n % 10
-		n /= 10
-		i++
-	}
-	return NewInts(ints...), nil
 }
 
 func Kc(n int) int {
@@ -135,11 +131,11 @@ func Kc(n int) int {
 		if n == KC {
 			break
 		}
-		ints, err := NewFourInts(n)
+		fd, err := NewFourDigits(n)
 		if err != nil {
 			log.Fatal(err.Error())
 		}
-		n = ints.FRDiff()
+		n = fd.FRDiff()
 		if n == 0 {
 			return -1
 		}
@@ -153,14 +149,14 @@ func FullTestSet() iter.Seq2[int, []int] {
 	return func(yield func(int, []int) bool) {
 		var (
 			counts []int
-			ints   Ints
+			fd     FourDigits
 		)
 		for n := range 10000 {
 			if n == KC {
 				counts = []int{0}
 			} else {
-				ints, _ = NewFourInts(n)
-				if ints.UniqCount() == 1 {
+				fd, _ = NewFourDigits(n)
+				if fd.UniqCount() == 1 {
 					counts = []int{-1}
 				} else {
 					counts = []int{1, 2, 3, 4, 5, 6, 7}

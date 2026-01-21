@@ -86,7 +86,7 @@ func (fs fractions) String() string {
 	return b.String()[2:]
 }
 
-func ufc(n int) string {
+func ufg(n int) string {
 	var fs fractions
 	for i := range n {
 		for j := range n {
@@ -99,9 +99,7 @@ func ufc(n int) string {
 	e := 1e-9
 	l := len(fs)
 	c := 0
-	i := l
-	for i > 1 {
-		i--
+	for i := l - 1; i > 1; i-- {
 		a, b := fs[i-1], fs[i]
 		d := a.val() - b.val()
 		if d < 0 {
@@ -130,6 +128,6 @@ func main() {
 		{6, "1/6, 1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 5/6, 1/1, 6/5, 5/4, 4/3, 3/2, 5/3, 2/1, 5/2, 3/1, 4/1, 5/1, 6/1"},
 		{5, "1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 1/1, 5/4, 4/3, 3/2, 5/3, 2/1, 5/2, 3/1, 4/1, 5/1"},
 	} {
-		io.WriteString(os.Stdout, gocmp.Diff(ufc(data.input), data.output)) // blank if ok, otherwise show the difference
+		io.WriteString(os.Stdout, gocmp.Diff(ufg(data.input), data.output)) // blank if ok, otherwise show the difference
 	}
 }
