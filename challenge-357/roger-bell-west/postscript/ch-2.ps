@@ -1,0 +1,315 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/gcd {
+    {
+        dup
+        3 1 roll
+        mod
+        dup 0 eq {
+            pop exit
+        } if
+    } loop
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+
+% end included library code
+
+/uniquefractiongenerator {
+    0 dict begin
+    /a exch def
+    /den 1 def
+    2 1 a {
+        den mul /den exch def
+    } for
+    /f 0 dict def
+    1 1 a {
+        den exch idiv /nd exch def
+        1 1 a {
+            nd mul f exch true put
+        } for
+    } for
+    [
+        f keys quicksort {
+            cvi /n exch def
+            /g n den gcd def
+            /nn n g idiv def
+            /nd den g idiv def
+            [
+                n g idiv alloccvs
+                den g idiv alloccvs
+            ]
+            (/) strjoin
+        } forall
+    ]
+    end
+} bind def
+
+(uniquefractiongenerator) test.start
+3 uniquefractiongenerator [(1/3) (1/2) (2/3) (1/1) (3/2) (2/1) (3/1)] deepeq test
+4 uniquefractiongenerator [(1/4) (1/3) (1/2) (2/3) (3/4) (1/1) (4/3) (3/2) (2/1) (3/1) (4/1)] deepeq test
+1 uniquefractiongenerator [(1/1)] deepeq test
+6 uniquefractiongenerator [(1/6) (1/5) (1/4) (1/3) (2/5) (1/2) (3/5) (2/3) (3/4) (4/5) (5/6) (1/1) (6/5) (5/4) (4/3) (3/2) (5/3) (2/1) (5/2) (3/1) (4/1) (5/1) (6/1)] deepeq test
+5 uniquefractiongenerator [(1/5) (1/4) (1/3) (2/5) (1/2) (3/5) (2/3) (3/4) (4/5) (1/1) (5/4) (4/3) (3/2) (5/3) (2/1) (5/2) (3/1) (4/1) (5/1)] deepeq test
+test.end
