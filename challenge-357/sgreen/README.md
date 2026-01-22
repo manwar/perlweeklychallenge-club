@@ -1,3 +1,3 @@
-# The Weekly Challenge 356
+# The Weekly Challenge 357
 
-Blog: [Winning sequence](https://dev.to/simongreennet/weekly-challenge-winning-sequence-3eic)
+Blog: [Fractional Constant](https://dev.to/simongreennet/weekly-challenge-fractional-constant-2mop)
