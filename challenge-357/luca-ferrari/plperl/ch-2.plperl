@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 357
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-357>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc357;
+
+CREATE OR REPLACE FUNCTION
+pwc357.task2_plperl( int )
+RETURNS SETOF text
+AS $CODE$
+
+   use Set::CrossProduct;
+
+   my ( $num ) = @_;
+   my $fractions = {};
+   my $engine = Set::CrossProduct->new( [ [ 1 .. $num ], [ 1 .. $num ] ] );
+   while ( my $tuple = $engine->get ) {
+   	 my ( $n, $d ) = ( $tuple->[ 0 ], $tuple->[ 1 ] );
+	 push $fractions->{ $n / $d }->@*, "$n/$d";
+   }
+   
+
+   for my $key ( sort keys $fractions->%* ) {
+       my $value = ( sort( $fractions->{ $key }->@* ) )[ 0 ];
+       return_next( $value );
+   }
+
+   return undef;
+
+$CODE$
+LANGUAGE plperlu;
