@@ -14,16 +14,15 @@ sub get_mirror_dates {
 
     $dt_now = $strp->parse_datetime($today) unless $today eq 'now';
 
-    my $dt_diff = $dt_now - $dt_input;
+    # Use day-based delta to avoid month-length/leap-year issues when applying
+    # a calendar duration back and forth.
+    my $days = $dt_now->delta_days($dt_input)->in_units('days');
 
-    my $dt_mirror_prev = $dt_input - $dt_diff;
-    my $dt_mirror_next = $dt_now + $dt_diff;
+    my $dt_mirror_prev = $dt_input->clone->subtract( days => $days );
+    my $dt_mirror_next = $dt_now->clone->add( days => $days );
 
     return $dt_mirror_prev->strftime('%Y/%m/%d') . ', ' . $dt_mirror_next->strftime('%Y/%m/%d');
 }
-
-# it's failing 2 tests strangely by 1-2 days, but only some of the dates
-# as date manipulation is a tough subject, I declare it a good enough result
 
 use Test::More;
 
