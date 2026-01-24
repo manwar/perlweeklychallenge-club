@@ -138,7 +138,7 @@ sub all_unique_fractions{
         "1/1",
         map(
             $_->[2] . "/" . $_->[1],
-            @fractions[reverse(0 .. $#fractions)]
+            reverse(@fractions)
         )
     );
 
