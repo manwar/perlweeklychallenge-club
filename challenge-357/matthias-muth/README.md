@@ -146,13 +146,13 @@ sub kaprekar_constant( $int ) {
 
 My solution follows these thoughts:
 
-* We need to generate all possible combinations of numerators and denominators, each from `1` to `$int`. Probably there's not much that can be optimized here, so a nested loop will do this time (so no of `use Algorithm::Combinatorics` or similar).
-* We are supposed to reduce fractions of the same value to use the smallest possible denominator. For this, we divide both denominator and denominator by their *greatest common divisor* (gcd). `Math::Utils` contains a `gcd` function that makes this as simple as possible.
+* We need to generate all possible combinations of numerators and denominators, each from `1` to `$int`. Probably there's not much that can be optimized here, so a nested loop will do this time (so no of `use Algorithm::Combinatorics` or similar).
+* We are supposed to reduce fractions of the same value to use the smallest possible denominator. For this, we divide both numerator and denominator by their *greatest common divisor* (gcd). `Math::Utils` contains a `gcd` function that makes this as simple as possible.
 * The fractions shall be returned as strings in the end. For eliminating duplicate entries from reduced fractions, I use a hash, with the reduced fractions, in string form, like `"1/2"`, as keys.
 * The function result consists of the keys of that hash. They only need to be sorted 'in ascending order' of the fraction values.
   Instead of splitting up the fraction string again to compute its value, I compute that value already when I create the the hash entry for a fraction, and store it as the hash value.<br/>
   To get the idea, the following would be added as the entry for 1/2: `( "1/2" => 0.5 )`.
-* For the result list, we can sort the hash keys by their associated values, which is easily done in the `sort` code block.
+* For the result list, we can sort the hash keys by their associated values, which is easily done in the `sort` code block.
 
 This is my resulting solution:
 
