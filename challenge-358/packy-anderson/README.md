@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: I could drink a case of you...](https://packy.dardan.com/b/hq)
+[Perl Weekly Challenge: It's What You Value](https://packy.dardan.com/b/iJ)
