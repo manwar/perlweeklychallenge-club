@@ -1,0 +1,113 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/posmod {
+    dup 3 1 roll mod
+    dup 0 lt {
+        add
+    } {
+        exch pop
+    } ifelse
+} bind def
+
+/rotx {
+    0 dict begin
+    /o exch 26 posmod def
+    /a exch def
+    /base 0 def
+    a 97 ge a 122 le and {
+        /base 97 def
+    } {
+        a 65 ge a 90 le and {
+            /base 65 def
+        } if
+    } ifelse
+    base 0 ne {
+        a base sub o add 26 posmod base add
+    } if
+    end
+} bind def
+
+/encryptedstring {
+    0 dict begin
+    /offset exch def
+    s2a { offset rotx } map a2s
+    end
+} bind def
+
+(encryptedstring) test.start
+(abc) 1 encryptedstring (bcd) eq test
+(xyz) 2 encryptedstring (zab) eq test
+(abc) 27 encryptedstring (bcd) eq test
+(hello) 5 encryptedstring (mjqqt) eq test
+(perl) 26 encryptedstring (perl) eq test
+test.end
