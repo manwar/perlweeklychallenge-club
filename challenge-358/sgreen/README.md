@@ -1,3 +1,3 @@
-# The Weekly Challenge 357
+# The Weekly Challenge 358
 
-Blog: [Fractional Constant](https://dev.to/simongreennet/weekly-challenge-fractional-constant-2mop)
+Blog: [Maximum Encryption](https://dev.to/simongreennet/weekly-challenge-maximum-encryption-49a8)

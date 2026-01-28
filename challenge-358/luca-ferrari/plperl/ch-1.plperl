@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 358
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-358>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc358;
+
+CREATE OR REPLACE FUNCTION
+pwc358.task1_plperl( text[] )
+RETURNS int
+AS $CODE$
+
+   my ( $strings ) = @_;
+
+   return (
+	     sort { $b <=> $a }
+	     map { $_ =~ / ^ \d+ $ /x ? int( $_ ) : length( $_ ) }
+	     $strings->@*
+	  )[ 0 ];
+   
+$CODE$
+LANGUAGE plperl;
