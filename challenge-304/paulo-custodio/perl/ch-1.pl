@@ -32,5 +32,3 @@ sub can_arrange {
     }
     return 1;
 }
-
-
