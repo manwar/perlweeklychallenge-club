@@ -1,0 +1,2 @@
+all:
+	perl test.pl
