@@ -40,4 +40,3 @@ use List::Util qw(sum);
 my @nums = @ARGV;
 my @digits = split //, join '', @nums;
 say abs(sum(@nums) - sum(@digits));
-

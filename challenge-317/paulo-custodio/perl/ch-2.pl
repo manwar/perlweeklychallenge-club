@@ -44,5 +44,3 @@ sub is_friendly {
     }
     return 0;
 }
-
-
