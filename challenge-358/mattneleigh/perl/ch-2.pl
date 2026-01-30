@@ -10,14 +10,14 @@ use English;
 
 my @encryption_data_sets = (
     # Given cases
-    [ "abc",            1 ],
-    [ "xyz",            2 ],
-    [ "abc",           27 ],
-    [ "hello",          5 ],
-    [ "perl",          26 ],
+    [ "abc",             1 ],
+    [ "xyz",             2 ],
+    [ "abc",            27 ],
+    [ "hello",           5 ],
+    [ "perl",           26 ],
 
     # Additional test cases
-    [ "CApZ",           5 ],
+    [ "CApZ",            5 ],
     [ "AaBbCc XxYyZz!", 13 ]
 );
 
