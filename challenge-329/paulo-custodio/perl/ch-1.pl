@@ -8,4 +8,3 @@ my $str = $ARGV[0];
 $str =~ s/\D/ /g;
 my @nums = uniq(split ' ', $str);
 say join ", ", @nums;
-
