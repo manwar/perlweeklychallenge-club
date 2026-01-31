@@ -31,4 +31,3 @@ int main(int argc, char* argv[]) {
     printf("%s\n", coded);
     free(coded);
 }
-
