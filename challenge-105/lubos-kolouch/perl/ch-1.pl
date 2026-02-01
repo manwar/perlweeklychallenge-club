@@ -3,8 +3,14 @@ use warnings;
 
 sub nth_root {
     my ( $n, $k ) = @_;
-    return sprintf( "%.2f", $k**( 1 / $n ) );
+    my $s = sprintf( "%.2f", $k**( 1 / $n ) );
+    $s =~ s/\.?0+$//;
+    return $s;
 }
 
-print nth_root( 5, 248832 );    # Output: 12.00
-print nth_root( 5, 34 );        # Output: 2.02
+use Test::More;
+
+is( nth_root( 5, 248832 ), '12',   'Example 1' );
+is( nth_root( 5, 34 ),     '2.02', 'Example 2' );
+
+done_testing;
