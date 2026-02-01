@@ -1,43 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 356
-#
-# Task 1: Kolakoski Sequence
-# Submitted by: Mohammad Sajid Anwar
-# You are given an integer, $int > 3.
-#
-# Write a script to generate the Kolakoski Sequence of given length $int and return the count of 1 in the generated sequence. Please follow the wikipedia page for more informations.
-#
-# Example 1
-# Input: $int = 4
-# Output: 2
-#
-# (1)(22)(11)(2) => 1221
-#
-# Example 2
-# Input: $int = 5
-# Output: 3
-#
-# (1)(22)(11)(2)(1) => 12211
-#
-# Example 3
-# Input: $int = 6
-# Output: 3
-#
-# (1)(22)(11)(2)(1)(22) => 122112
-#
-# Example 4
-# Input: $int = 7
-# Output: 4
-#
-# (1)(22)(11)(2)(1)(22)(1) => 1221121
-#
-# Example 5
-# Input: $int = 8
-# Output: 4
-#
-# (1)(22)(11)(2)(1)(22)(1)(22) => 12211212
-
 use Modern::Perl;
 use Data::Dump 'dump';
 
