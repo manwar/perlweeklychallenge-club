@@ -1,6 +1,6 @@
 #!/usr/local/bin/jconsole
 
-onIdx =: {{u&.:(a:`(n&i.))}}
+onIdx =: [.&.:(a:`(].&i.))
 
 alpha =: 26 (+ i.)~ onIdx a. 'a'
 encrypt =: (#alpha)&|@:+ onIdx alpha

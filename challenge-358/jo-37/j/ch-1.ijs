@@ -1,6 +1,6 @@
 #!/usr/local/bin/jconsole
 
-onIdx =: {{u&.:(a:`(n&i.))}}
+onIdx =: [.&.:(a:`(].&i.))
 digits =: 10 (+ i.)~ onIdx a. '0'
 
 MaxStr =: [: >./ #`".@.([: *./ e.&digits)@>
