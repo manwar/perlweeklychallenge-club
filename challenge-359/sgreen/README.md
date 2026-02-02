@@ -1,3 +1,3 @@
-# The Weekly Challenge 358
+# The Weekly Challenge 359
 
-Blog: [Maximum Encryption](https://dev.to/simongreennet/weekly-challenge-maximum-encryption-49a8)
+Blog: [Digital reduction](https://dev.to/simongreennet/weekly-challenge-digital-reduction-1aci)
