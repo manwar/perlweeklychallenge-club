@@ -57,9 +57,9 @@ sub test_block {
         }
 
         compare_files("test.out", "test.exp");
-
-        unlink("test.in", "test.out", "test.exp");
     }
+
+    unlink("test.in", "test.out", "test.exp");
 }
 
 sub run {
@@ -103,8 +103,8 @@ sub compare_files {
     my($got, $exp) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-    my $got_text = path($got)->slurp =~ s/[ \t]+/ /gr =~ s/\s*$/\n/sr;
-    my $exp_text = path($exp)->slurp =~ s/[ \t]+/ /gr =~ s/\s*$/\n/sr;
+    my $got_text = path($got)->slurp =~ s/\r\n?/\n/gr =~ s/[ \t]+/ /gr =~ s/\s*$/\n/r;
+    my $exp_text = path($exp)->slurp =~ s/\r\n?/\n/gr =~ s/[ \t]+/ /gr =~ s/\s*$/\n/r;
 
     is diff(\$got_text, \$exp_text), "", "expected result";
 }

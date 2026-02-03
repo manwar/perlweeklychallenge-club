@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 358
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-358>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc358;
+
+CREATE OR REPLACE FUNCTION
+pwc358.task2_plperl( text, int )
+RETURNS text
+AS $CODE$
+
+   my ( $string, $value ) = @_;
+
+   my @alphabet = ( 'a' .. 'z' );
+
+   my $index = sub {
+        my ( $letter ) = @_;
+	for my $i ( 0 .. $#alphabet - 1 ) {
+	    return $i if ( $alphabet[ $i ] eq $letter );
+	}
+
+	return -1;
+   };
+
+   return
+	join '', 
+	map { $alphabet[ ( $index->( $_ ) + $value ) % $#alphabet ] }
+	split //, $string;
+   
+$CODE$
+LANGUAGE plperl;
