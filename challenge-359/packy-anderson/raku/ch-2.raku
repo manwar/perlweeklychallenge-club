@@ -1,22 +1,27 @@
 #!/usr/bin/env raku
 use v6;
 
-sub solution(@arr) {
-  say 'Input: @arr = (' ~ @arr.join(', ') ~ ')';
-  say 'Output: (' ~ @arr.join(', ') ~ ')';
+sub stringReduction($word is copy) {
+  while ($word ~~ s:g/(.)$0//) { }
+  $word
+}
+
+sub solution($word) {
+  say "Input: \$word = \"$word\"";
+  say "Output: \"{stringReduction($word)}\"";
 }
 
 say "Example 1:";
-solution();
+solution("aabbccdd");
 
 say "\nExample 2:";
-solution();
+solution("abccba");
 
 say "\nExample 3:";
-solution();
+solution("abcdef");
 
 say "\nExample 4:";
-solution();
+solution("aabbaeaccdd");
 
 say "\nExample 5:";
-solution();
+solution("mississippi");

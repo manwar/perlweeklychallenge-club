@@ -1,27 +1,28 @@
 #!/usr/bin/env python
 
-def distinct_averages(nums):
-  pass
+import re
 
-def int_join(joiner, arr):
-  return joiner.join(map(str, arr))
+def string_reduction(word):
+  while True:
+    word, n = re.subn(r'(.)\1', '', word)
+    if n == 0: break
+  return word
 
-def solution(nums):
-  print(f'Input: @nums = ({int_join(", ", nums)})')
-  count, explain = distinct_averages(nums)
-  print(f'Output: {count}\n\n{explain}')
+def solution(word):
+  print(f'Input: $word = "{word}"')
+  print(f'Output: {string_reduction(word)}')
 
 print('Example 1:')
-solution()
+solution("aabbccdd")
 
 print('\nExample 2:')
-solution()
+solution("abccba")
 
 print('\nExample 3:')
-solution()
+solution("abcdef")
 
 print('\nExample 4:')
-solution()
+solution("aabbaeaccdd")
 
 print('\nExample 5:')
-solution()
+solution("mississippi")

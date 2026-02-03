@@ -1,22 +1,27 @@
 #!/usr/bin/env perl
 use v5.40;
 
-sub solution(@arr) {
-  say 'Input: @arr = (' . join(', ', @arr) . ')';
-  say 'Output: (' . join(', ', @arr) . ')';
+sub stringReduction($word) {
+  while ($word =~ s/(.)\1//g) { }
+  $word
+}
+
+sub solution($word) {
+  say "Input: \$word = \"$word\"";
+  say "Output: \"@{[stringReduction($word)]}\"";
 }
 
 say "Example 1:";
-solution();
+solution("aabbccdd");
 
 say "\nExample 2:";
-solution();
+solution("abccba");
 
 say "\nExample 3:";
-solution();
+solution("abcdef");
 
 say "\nExample 4:";
-solution();
+solution("aabbaeaccdd");
 
 say "\nExample 5:";
-solution();
+solution("mississippi");

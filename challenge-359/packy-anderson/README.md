@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: It's What You Value](https://packy.dardan.com/b/iJ)
+[Perl Weekly Challenge: Root It All You Reduce](https://packy.dardan.com/b/ia)
