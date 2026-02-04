@@ -1,0 +1,135 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/digitalroot {
+    0 dict begin
+    /ct 0 def
+    /value exch def
+    {
+        value 9 le {
+            exit
+        } if
+        /p 0 def
+        {
+            value 0 eq {
+                exit
+            } if
+            /p p value 10 mod add def
+            /value value 10 idiv def
+        } loop
+        /value p def
+        /ct ct 1 add def
+    } loop
+    [ ct value ]
+    end
+} bind def
+
+(digitalroot) test.start
+38 digitalroot [2 2] deepeq test
+7 digitalroot [0 7] deepeq test
+999 digitalroot [2 9] deepeq test
+1999999999 digitalroot [3 1] deepeq test
+101010 digitalroot [1 3] deepeq test
+test.end
