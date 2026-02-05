@@ -77,6 +77,7 @@ sub capture {
     open(my $fh, "<", "test.out") or die "test.out: $!";
     local $/;
     my $got = <$fh>;
+    $got =~ s/\r\n?/\n/g;
     $got =~ s/\s+$//s;
     close $fh;
     unlink "test.out";
