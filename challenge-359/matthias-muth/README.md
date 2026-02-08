@@ -1,162 +1,275 @@
-# "nbyqyyefswbuffyhay"
+# Loops Considered
 
-**Challenge 358 solutions in Perl by Matthias Muth**
+**Challenge 359 solutions in Perl by Matthias Muth**
 
-## Task 1: Max Str Value
+## Task 1: Digital Root
 
-> You are given an array of alphanumeric string, @strings.<br/>
-> Write a script to find the max value of alphanumeric string in the given array. The numeric representation of the string, if it comprises of digits only otherwise length of the string.
+> You are given a positive integer, $int.<br/>
+> Write a function that calculates the additive persistence of a positive integer and also return the digital root.<br/>
+> Digital root is the recursive sum of all digits in a number until a single digit is obtained.<br/>
+> Additive persistence is the number of times you need to sum the digits to reach a single digit.
 >
 > **Example 1**
 >
 > ```text
-> Input: @strings = ("123", "45", "6")
-> Output: 123
+> Input: $int = 38
+> Output: Persistence  = 2
+>         Digital Root = 2
 >
-> "123" -> 123
-> "45"  -> 45
-> "6"   -> 6
+> 38 => 3 + 8 => 11
+> 11 => 1 + 1 => 2
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @strings = ("abc", "de", "fghi")
-> Output: 4
->
-> "abc"  -> 3
-> "de"   -> 2
-> "fghi" -> 4
+> Input: $int = 7
+> Output: Persistence  = 0
+>         Digital Root = 7
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @strings = ("0012", "99", "a1b2c")
-> Output: 99
+> Input: $int = 999
+> Output: Persistence  = 2
+>         Digital Root = 9
 >
-> "0012"  -> 12
-> "99"    -> 99
-> "a1b2c" -> 5
+> 999 => 9 + 9 + 9 => 27
+> 27  => 2 + 7 => 9
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @strings = ("x", "10", "xyz", "007")
-> Output: 10
+> Input: $int = 1999999999
+> Output: Persistence  = 3
+>         Digital Root = 1
 >
-> "x"   -> 1
-> "xyz" -> 3
-> "007" -> 7
-> "10"  -> 10
+> 1999999999 => 1 + 9 + 9 + 9 + 9 + 9 + 9 + 9 + 9 + 9 => 82
+> 82 => 8 + 2 => 10
+> 10 => 1 + 0 => 1
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @strings = ("hello123", "2026", "perl")
-> Output: 2026
+> Input: $int = 101010
+> Output: Persistence  = 1
+>         Digital Root = 3
 >
-> "hello123" -> 8
-> "perl"     -> 4
-> "2026"     -> 2026
+> 101010 => 1 + 0 + 1 + 0 + 1 + 0 => 3
 > ```
 
-Actually this can be solved with one simple line of code.
+We need a counter for the number of reductions
+that we apply to our `$int` input.<br/>
+Its naming is obvious to me, I will call it `$persistence`. 
 
-In a `map` call, a conditional operator (`?:`) with a regular expression of `/^\d+$/` as the condition determines whether there are only digits or not. Depending on that, each string (`$_`) is translated either into its numerical value (just `$_` itself) or into its length (with $_ being the default parameter).
+And we need a formula to build the checksum of a number.<br/>
+For me, this one works well: `sum( split //, $int )`.
 
-That's all, here we go:
+Then, it's a short loop that does all the work:
+
+```perl. But ipsum dolor sit amet...
+    ( $int = sum( split //, $int ), ++$persistence )
+        while $int > 9;
+```
+
+As short as it is,
+there are some things I think are worth considering with this loop:
+
+* The loop is implemented using a `while` *statement modifier*.<br/>
+This is a Perl construct that often is useful
+to produce clear and concise code,
+because it avoids the overhead of writing a full lexical block
+with curly braces around the code and parentheses around
+the `if`, `unless`, `while` or `until` condition.<br/>
+So for a simple statement this can often be preferred.
+
+  But writing a statement
+  using a `while` or `until` statement modifier
+  (which goes *after* the statement) comes with a catch:<br/>
+  Is the loop body executed even when the condition is false
+  from the beginning?<br/>
+  Very clear answer: It depends!
+
+  Normally, the condition is evaluated first,
+  and the statement is skipped if the condition is false,
+  which is the right thing to do in most cases,
+  and helps to write concise code.
+
+  BUT!
+  If the statement is a `do { ... }` block,
+  that block is executed *at least* once
+  before the condition is evaluated
+  (with good reasons explained in
+  [perldoc](https://perldoc.perl.org/perlsyn#Statement-Modifiers)!).
+
+  What that means in our case is that writing
+
+  ```perl
+      do { $int = sum( split //, $int ); ++$persistence }
+          while $int > 9;
+  ```
+
+  would be WRONG,
+  because the `$persistence` counter would  be incremented
+  even if `$int` only has one digit from the start.
+
+* But there is a way to avoid the  `do { ... }`,
+  even if we need several statements within the loop body.<br/>
+  It is based on the fact that in Perl,
+  every statement can also be used as an expression.<br/>
+  We can turn the assignment and the auto-increment *statements*
+  into a *list of expressions*,
+  separating them by commas instead of semicolons.<br/>
+  And to make it clearer that there is more than one expression
+  on that line, we can surround them with parentheses.
+
+In combination, we get a short, 'elegant' loop.
+
+This is how it looks inside the complete code:
 
 ```perl
 use v5.36;
-use List::Util qw( max );
+use List::Util qw( sum );
 
-sub max_str_value( @strings ) {
-    return max( map /^\d+$/ ? $_ : length, @strings );
+sub digital_root( $int ) {
+    my $persistence = 0;
+    ( $int = sum( split //, $int ), ++$persistence )
+        while $int > 9;
+    return ( $persistence, $int );
 }
 ```
 
-## Task 2: Encrypted String
+## Task 2: String Reduction
 
-> You are given a string `$str` and an integer `$int`.<br/>
-> Write a script to encrypt the string using the algorithm - for each character `$char` in `$str`, replace `$char` with the `$int`th character after `$char` in the alphabet, wrapping if needed and return the encrypted string.
+> You are given a word containing only alphabets,<br/>
+> Write a function that repeatedly removes adjacent duplicate characters from a string until no adjacent duplicates remain and return the final word.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "abc", $int = 1
-> Output: "bcd"
+> Input: $word = "aabbccdd"
+> Output: ""
+>
+> Iteration 1: remove "aa", "bb", "cc", "dd" => ""
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "xyz", $int = 2
-> Output: "zab"
+> Input: $word = "abccba"
+> Output: ""
+>
+> Iteration 1: remove "cc" => "abba"
+> Iteration 2: remove "bb" => "aa"
+> Iteration 3: remove "aa" => ""
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "abc", $int = 27
-> Output: "bcd"
+> Input: $word = "abcdef"
+> Output: "abcdef"
+>
+> No duplicate found.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "hello", $int = 5
-> Output: "mjqqt"
+> Input: $word = "aabbaeaccdd"
+> Output: "aea"
+>
+> Iteration 1: remove "aa", "bb", "cc", "dd" => "aea"
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "perl", $int = 26
-> Output: "perl"
+> Input: $word = "mississippi"
+> Output: "m"
+>
+> Iteration 1: Remove "ss", "ss", "pp" => "miiii"
+> Iteration 2: Remove "ii", "ii" => "m"
 > ```
 
-I decided to add some additional requirements to this task:
+For reducing duplicate characters,
+I use a `s///` substitution using a regular expression.
+The regular expression itself uses a *backreference*
+to match a second character when it is equal to the first one,
+which has to be captured for that.
+The substitution part is empty,
+because we want to remove both characters:
 
-* What if there are uppercase letters in the string?<br/>I think they should be encrypted the same way, but to an uppercase substitution.
-* What if the string contains non-letter characters, like blanks or punctuation?<br/>I think they should be passed through without encryption.
+```perl
+    s/(.)\g-1//
+```
 
-My solution is bracketed by `split //` to separate the string into characters, and `join ""` to reassemble the translated characters. Within that bracket, a `map` code block does the translation itself.
+Example 2 contains cases 'nested' pairs of characters.
+A simple `/g` *global* modifier is not enough
+to remove these nested pairs,
+so we have to work 'inside out',
+trying the substitution again
+until no pairs are found anymore.
+We need a loop around the substitution!
 
-For encrypting characters, it is necessary to know the ASCII value of the first alphabet character, which `'a'` and `'A'` for lower case and upper case letters, respectively. I use a variable `$start` for that, and as I don't like hard-coding these values, I use `ord( 'a'` or `'A' )`, depending on which of the regular expressions `/^[a-z]/` or `/^[A-Z]/` matches. If none of the two matcjes, we have a non-letter character, I want `$start` to be zero, to make it easier to *skip* the translation for non-letter characters. As the conditional expression is inside the `ord(...)` parameter list, I use a null character (`"\0"`) in the conditional expression, whose `ord` value is zero (as a number).
+The `s///` returns the number of substitutions actually made.
+This means that it both does the job
+*and* can serve as the condition for when to stop.
+We will have a condition, but no code in the loop body itself.
+Another interesting loop!
 
-If we have a non-zero `$start` value, the translation according to the classical 'Caesar cypher' is this:
+The most explicit way to write an 'empty' loop like that
+probably is this one:
 
-* The current character number is `ord( $_ ) - $start`,
-* which is shifted by the 'key': `... + $int`,
-* limited to the range 0..25: `( ... ) % 26`,
-* added to the ASCII value (`$start`) of the first alphabet letter (`a` or `A`).
-* This new ASCII value will be transformed into a character using `chr(...)`.
+```perl
+    while ( s/(.)\g-1// ) {
+        # Everything is in the loop condition.
+    }
+```
 
-If the `$start` value is zero, we pass through the `$_` character as it is.
+This is self-documenting,
+and helpful for the programmer
+who is supposed to understand this when he or she reads it
+(which is yourself most of the time,
+after some time has passed and your train of thought has faded).
 
-Definitely more than one line of code, but still only one statement (cheating a bit with the `map` code block...):   
+But here, I am using a shortcut.<br/>
+Just like in the previous task,
+I will use a *statement modifier* to write the loop.
+And the statement itself can be anything
+that does not have any effect.
+The shortest form probably is this one:
+
+```perl
+    1 while s/(.)\g-1//;
+```
+
+Now this for me is so short that it already requires
+a second thought again when reading it.<br/>
+I use a *slightly* more self-explaining version in my actual solution:
 
 ```perl
 use v5.36;
 
-sub encrypted_string( $str, $int ) {
-    return join "",
-        map {
-            my $start = ord( /^[a-z]/ ? 'a' : /^[A-Z]/ ? 'A' : "\0" );
-            $start
-            ? chr( $start + ( ord( $_ ) - $start + $int ) % 26 )
-            : $_
-        } split //, $str;
+sub string_reduction( $word ) {
+    do {} while $word =~ s/(.)\g-1//g;
+    return $word;
 }
 ```
 
-And, by the way:
+Note that I also added a tiny optimization
+in adding that `/g` *global* option
+even if it is not strictly necessary.
+It helps to do as many substitutions as possible
+within one execution before looping back again,
+hopefully reducing the startup cost of the regex engine
+if we *don't* have nested pairs of letters.  
 
-**`"nbyqyyefswbuffyhay"`** is `encrypted_string( "theweeklychallenge", 358 )` ...
-
-
+Actually, this solution is exactly identical to my solution of
+'Challenge 340 Task 1: Duplicate Removals'...
+😉
 
 #### **Thank you for the challenge!**
