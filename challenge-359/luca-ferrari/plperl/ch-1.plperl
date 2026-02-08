@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION
+pwc359.task1_plperl( int )
+RETURNS SETOF INT
+AS $CODE$
+
+   my ( $number ) = @_;
+
+   my $root        = $number;
+   my $persistence = 0;
+
+
+   while ( $root > 9 ) {
+        my $sum = 0;
+     for ( split //, $root ) {
+         $sum += $_;
+     }
+
+     $root = $sum;
+     $persistence++;
+   }
+
+   return [ $persistence, $root ];
+
+
+$CODE$
+LANGUAGE plperl;
