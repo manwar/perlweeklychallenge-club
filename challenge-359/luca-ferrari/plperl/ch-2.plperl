@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION
+pwc359.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   $string =~ s/ (.) \1 //gx;
+   return $string;
+
+$CODE$
+LANGUAGE plperl;
