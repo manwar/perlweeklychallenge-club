@@ -1,3 +1,3 @@
-# The Weekly Challenge 359
+# The Weekly Challenge 360
 
-Blog: [Digital reduction](https://dev.to/simongreennet/weekly-challenge-digital-reduction-1aci)
+Blog: [Padding and sorting](https://dev.to/simongreennet/weekly-challenge-padding-and-sorting-3oj8)
