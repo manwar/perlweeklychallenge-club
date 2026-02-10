@@ -1,0 +1,99 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/textjustifier {
+    0 dict begin
+    /width exch def
+    /intxt exch def
+    /working width array def
+    0 1 width 1 sub {
+        working exch 42 put
+    } for
+    /offset width intxt length sub 2 idiv def
+    intxt s2a enumerate.array {
+        aload pop
+        /c exch def
+        /i exch def
+        working i offset add c put
+    } forall
+    working a2s
+    end
+} bind def
+
+(textjustifier) test.start
+(Hi) 5 textjustifier (*Hi**) eq test
+(Code) 10 textjustifier (***Code***) eq test
+(Hello) 9 textjustifier (**Hello**) eq test
+(Perl) 4 textjustifier (Perl) eq test
+(A) 7 textjustifier (***A***) eq test
+() 5 textjustifier (*****) eq test
+test.end
