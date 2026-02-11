@@ -4,4 +4,4 @@
 
 [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-360/bob-lied)
 
-[The Blog](https://dev.to/boblied/)
+[The Blog](https://dev.to/boblied/pwc-360-pertaining-to-a-subtlety-of-sorting-39bs)

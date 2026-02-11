@@ -25,8 +25,9 @@ use v5.42;
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
+my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
+GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchmark);
 my $logger;
 {
     use Log::Log4perl qw(:easy);
@@ -37,14 +38,32 @@ my $logger;
 #=============================================================================
 
 exit(!runTest()) if $DoTest;
+exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 say sorter(@ARGV);
 
 #=============================================================================
-sub sorter($str)
+
+# Simple one-line version
+sub sortLC($str)
 {
     return join " ", sort { lc($a) cmp lc($b) } split(" ", $str);
 }
+
+# Pre-calculate all the lowercase conversions with a Schwartzian transform.
+sub sorter($str)
+{
+    return join " ",
+        map { $_->[0] }
+        sort { $a->[1] cmp $b->[1] }
+        map { [$_, fc($_)] }
+        split(" ", $str);
+}
+
+# Sample benchmark run:
+#            Rate oneline  pre_lc
+# oneline 31847/s      --    -45%
+# pre_lc  58140/s     83%      --
 
 sub runTest
 {
@@ -57,4 +76,29 @@ sub runTest
     is( sorter("I have 2 apples and 3 bananas!"), "2 3 and apples bananas! have I", "Example 5");
 
     done_testing;
+}
+
+
+sub runBenchmark($repeat)
+{
+    use Benchmark qw/cmpthese/;
+    my $text = <<"END_TEXT";
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+faucibus ex sapien vitae pellentesque sem placerat. In id cursus
+mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
+urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
+egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+torquent per conubia nostra inceptos himenaeos.
+END_TEXT
+
+    cmpthese($repeat, {
+            oneline => sub { sorter($text) },
+            pre_lc  => sub { sortLC($text) },
+        });
+    say "Using a very short string:";
+    cmpthese($repeat, {
+            oneline => sub { sorter("Hello, World! How are you?") },
+            pre_lc  => sub { sortLC("Hello, World! How are you?") },
+        });
 }
