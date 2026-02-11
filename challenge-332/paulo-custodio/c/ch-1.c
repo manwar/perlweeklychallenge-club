@@ -37,5 +37,3 @@ int main(int argc, char* argv[]) {
 
     printf("%s-%s-%s\n", yy, mm, dd);
 }
-
-
