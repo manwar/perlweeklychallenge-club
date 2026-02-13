@@ -32,8 +32,8 @@ plan +@Test ÷ 2;
 
 my \OOB = <-1/2>;
 
-multi task( Int:D(Any) $a where * == 1 ) { "1/1" }
-multi task( Int:D(Any) $a where * > 1 ) {
+multi task( Any:D(Int) $a where * == 1 ) { "1/1" }
+multi task( Any:D(Int) $a where * > 1 ) {
     my $prev = OOB;
                 # generate in partial order
     my @ret = hyper do for ( (1...$a) X ($a...1)).map(
