@@ -1,6 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 #define BOARD_SIZE  3
 #define EMPTY       '_'
@@ -58,11 +56,9 @@ bool board_full(Board* board) {
 }
 
 char play_move(Board* board, char player, int r, int c) {
-    if (board->cell[r][c] != EMPTY) {
-        fprintf(stderr, "invalid move (%d,%d), cell already occupied by '%c'\n",
+    if (board->cell[r][c] != EMPTY)
+        die("invalid move (%d,%d), cell already occupied by '%c'",
                 r, c, board->cell[r][c]);
-        exit(EXIT_FAILURE);
-    }
 
     board->cell[r][c] = player;
 

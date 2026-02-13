@@ -1,6 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 typedef struct {
     int **nums;
@@ -9,13 +7,10 @@ typedef struct {
 } Table;
 
 Table* new_table(int rows, int cols) {
-    Table* table = malloc(sizeof(Table));
-    assert(table);
-    table->nums = malloc(rows * sizeof(int*));
-    assert(table->nums);
+    Table* table = xmalloc(sizeof(Table));
+    table->nums = xmalloc(rows * sizeof(int*));
     for (int i = 0; i < rows; i++) {
-        table->nums[i] = calloc(cols, sizeof(int));
-        assert(table->nums[i]);
+        table->nums[i] = xcalloc(cols, sizeof(int));
     }
     table->rows = rows;
     table->cols = cols;
@@ -24,9 +19,9 @@ Table* new_table(int rows, int cols) {
 
 void free_table(Table* table) {
     for (int i = 0; i < table->rows; i++)
-        free(table->nums[i]);
-    free(table->nums);
-    free(table);
+        xfree(table->nums[i]);
+    xfree(table->nums);
+    xfree(table);
 }
 
 Table* parse_table() {

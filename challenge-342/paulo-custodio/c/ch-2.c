@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#include "alloc.h"
 
 int compute_score(const char* binary, int index) {
     int score = 0;
@@ -29,10 +25,8 @@ int get_max_score(const char* binary) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s binary-number\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("Usage: %s binary-number", argv[0]);
 
     int score = get_max_score(argv[1]);
     printf("%d\n", score);

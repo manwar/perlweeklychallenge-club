@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 const char* format_number(int n, char* buffer, size_t size) {
     // 1. Handle the end of the string
@@ -39,10 +38,8 @@ const char* format_number(int n, char* buffer, size_t size) {
 }
 
 int main(int argc, char*argv[]) {
-    if (argc != 2) {
-        fputs("Usage: ch-1 number\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+    if (argc != 2)
+        die("Usage: %s number", argv[0]);
 
     int n = atoi(argv[1]);
     char buffer[BUFSIZ];

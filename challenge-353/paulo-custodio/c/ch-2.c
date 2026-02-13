@@ -1,9 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef struct {
     char* code;
@@ -85,10 +81,8 @@ bool compute_result(const char* code, const char* name, bool status) {
 
 void add_product(const char* code) {
     size_t i = products_size++;
-    products = realloc(products, products_size * sizeof(Product));
-    assert(products != NULL);
-    products[i].code = strdup(code);
-    assert(products[i].code != NULL);
+    products = xrealloc(products, products_size * sizeof(Product));
+    products[i].code = xstrdup(code);
     products[i].name = NULL;
     products[i].status = false;
     products[i].result = false;
@@ -118,8 +112,7 @@ void read_products() {
     size_t i = 0;
     char* name = my_strtok(line, ",\n");
     while (name != NULL && i < products_size) {
-        products[i].name = strdup(trim(name));
-        assert(products[i].name != NULL);
+        products[i].name = xstrdup(trim(name));
         i++;
         name = my_strtok(NULL, ",\n");
     }

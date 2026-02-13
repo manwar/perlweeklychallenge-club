@@ -1,6 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 bool odd_letters(const char* str) {
     // count letters
@@ -20,10 +18,8 @@ bool odd_letters(const char* str) {
 }
 
 int main (int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
 
     bool odd = odd_letters(argv[1]);
     printf("%s\n", odd ? "true" : "false");

@@ -1,11 +1,7 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 char* reverse_prefix(const char* string, char ch) {
-    char* result = strdup(string);
-    assert(result);
+    char* result = xstrdup(string);
 
     char* p = strchr(result, ch);
     if (p == NULL) {    // char not found
@@ -24,11 +20,10 @@ char* reverse_prefix(const char* string, char ch) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s string char\n", argv[0]);
-    }
+    if (argc != 3)
+        die("usage: %s string char\n", argv[0]);
 
     char* result = reverse_prefix(argv[1], argv[2][0]);
     printf("%s\n", result);
-    free(result);
+    xfree(result);
 }

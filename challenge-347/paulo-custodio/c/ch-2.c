@@ -1,7 +1,5 @@
+#include "alloc.h"
 #include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void remove_non_digits(char* num) {
     char* from = num;
@@ -35,10 +33,8 @@ void format_number(const char* from, char* to) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s number\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s number\n", argv[0]);
 
     char buf1[BUFSIZ] = {0};
     for (int i = 1; i < argc; i++)

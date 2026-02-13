@@ -1,15 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 int compare(const void* a, const void* b) {
     return *(int*)a - *(int*)b;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fputs("usage: ch-2 HAHAHA\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+    if (argc != 2)
+        die("usage: %s HAHAHA", argv[0]);
 
     const char* wins = argv[1];
     int round1[3];

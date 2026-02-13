@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 int power_string(const char* str) {
     int max_len = 0;
@@ -17,10 +16,8 @@ int power_string(const char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s str\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s str\n", argv[0]);
 
     int p = power_string(argv[1]);
     printf("%d\n", p);

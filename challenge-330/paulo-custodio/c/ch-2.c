@@ -1,45 +1,32 @@
-#include <assert.h>
+#include "alloc.h"
+#include "utstring.h"
 #include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void capitalize_word(char* p) {
-    if (strlen(p) <= 2) {
-        for ( ; *p; p++)
-            *p = tolower(*p);
-    }
-    else {
-        *p = toupper(*p);
-        for (p++; *p; p++)
-            *p = tolower(*p);
-    }
-}
+    if (strlen(p) <= 2)
+        *p++ = tolower(*p);
+    else
+        *p++ = toupper(*p);
 
-char* capitalize(char* words[], int count) {
-    char* output = malloc(1);
-    assert(output);
-    output[0] = '\0';
-
-    for (int i = 0; i < count; i++) {
-        capitalize_word(words[i]);
-        output = realloc(output, strlen(output) + 1 + strlen(words[i]) + 1);
-        assert(output);
-        if (i > 0)
-            strcat(output, " ");
-        strcat(output, words[i]);
-    }
-    return output;
+    while (*p)
+        *p++ = tolower(*p);
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s sentence\n", argv[0]);
-        return EXIT_FAILURE;
+    if (argc < 2)
+        die("usage: %s sentence", argv[0]);
+
+    UT_string* str;
+    utstring_new(str);
+
+    for (int i = 1; i < argc; i++) {
+        if (i > 1)
+            utstring_printf(str, " ");
+        size_t orig_len = utstring_len(str);
+        utstring_printf(str, "%s", argv[i]);
+        capitalize_word(utstring_body(str) + orig_len);
     }
 
-    argc--; argv++;
-    char* result = capitalize(argv, argc);
-    printf("%s\n", result);
-    free(result);
+    printf("%s\n", utstring_body(str));
+    utstring_free(str);
 }

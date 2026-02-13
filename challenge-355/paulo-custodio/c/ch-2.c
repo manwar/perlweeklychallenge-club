@@ -1,19 +1,17 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
+#include "utarray.h"
 
-bool check_mountain(int* nums, size_t size) {
-    if (size < 3)
+bool check_mountain(UT_array* nums) {
+    if (utarray_len(nums) < 3)
         return false;
-    if (nums[0] >= nums[1])
+    if (*(int*)utarray_eltptr(nums, 0) >= *(int*)utarray_eltptr(nums, 1))
         return false;
     bool climbing = true;
-    for (size_t i = 1; i < size; i++) {
-        if (nums[i] == nums[i-1]) {         // flat
+    for (size_t i = 1; i < utarray_len(nums); i++) {
+        if (*(int*)utarray_eltptr(nums, i) == *(int*)utarray_eltptr(nums, i-1)) {         // flat
             return false;
         }
-        else if (nums[i] > nums[i-1]) {     // climbing
+        else if (*(int*)utarray_eltptr(nums, i) > *(int*)utarray_eltptr(nums, i-1)) {     // climbing
             if (!climbing)
                 return false;
         }
@@ -26,27 +24,17 @@ bool check_mountain(int* nums, size_t size) {
 }
 
 int main(int argc, char*argv[]) {
-    if (argc < 2) {
-        fputs("Usage: ch-1 numbers...\n", stderr);
-        exit(EXIT_FAILURE);
+    if (argc < 2)
+        die("Usage: %s numbers...", argv[0]);
+
+    argc--; argv++;
+    UT_array* nums;
+    utarray_new(nums, &ut_int_icd);
+    for (int i = 0; i < argc; i++) {
+        int num = atoi(argv[i]);
+        utarray_push_back(nums, &num);
     }
-
-    // alloc array
-    size_t size = argc - 1;
-    int* nums = malloc(size * sizeof(int));
-    assert(nums);
-
-    // fill array
-    for (size_t i = 0; i < size; i++) {
-        nums[i] = atoi(argv[i+1]);
-    }
-
-    // check if it is a mountain
-    bool is_mountain = check_mountain(nums, size);
-
-    // free memory
-    free(nums);
-
-    // output
+    bool is_mountain = check_mountain(nums);
     printf("%s\n", is_mountain ? "true" : "false");
+    utarray_free(nums);
 }

@@ -1,8 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "alloc.h"
 
 int get_peek(int count, int* nums) {
     int altitude = 0;
@@ -21,11 +17,10 @@ int main(int argc, char* argv[]) {
     }
 
     argc--; argv++;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
+    int* nums = xmalloc(argc * sizeof(int));
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
     int peek = get_peek(argc, nums);
     printf("%d\n", peek);
-    free(nums);
+    xfree(nums);
 }

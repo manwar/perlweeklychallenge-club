@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+#include "alloc.h"
 
 #define Kaprekar 6174
 
@@ -51,10 +48,8 @@ int num_steps(int n) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: %s n\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("Usage: %s n", argv[0]);
 
     int steps = num_steps(atoi(argv[1]));
     printf("%d\n", steps);

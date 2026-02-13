@@ -1,83 +1,65 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
+#include "utarray.h"
 
-typedef struct {
-    int* nums;
-    int size;
-} Ints;
+void utarray_push_front(UT_array* ints, int* n) {
+    // make space
+    int zero = 0;
+    utarray_push_back(ints, &zero);
 
-void init_ints(Ints* ints) {
-    ints->nums = NULL;
-    ints->size = 0;
+    // move data
+    memmove(utarray_eltptr(ints, 1), utarray_eltptr(ints, 0),
+            (utarray_len(ints) - 1) * sizeof(int));
+
+    // insert data
+    *(int*)utarray_eltptr(ints, 0) = *n;
 }
 
-void free_ints(Ints* ints) {
-    free(ints->nums);
-}
-
-void push_ints(Ints* ints, int n) {
-    ints->size++;
-    ints->nums = realloc(ints->nums, ints->size * sizeof(int));
-    assert(ints->nums);
-    ints->nums[ints->size-1] = n;
-}
-
-void unshift_ints(Ints* ints, int n) {
-    push_ints(ints, 0);     // make space
-    memmove(ints->nums+1, ints->nums, (ints->size-1)*sizeof(int));
-    ints->nums[0] = n;
-}
-
-void last_visitor(const Ints* nums, Ints* ans) {
-    Ints seen;
-    init_ints(&seen);
+void last_visitor(UT_array* nums, UT_array* ans) {
+    UT_array* seen;
+    utarray_new(seen, &ut_int_icd);
 
     int x = 0;  // how many -1s in a row BEFORE this one
-    for (int i = 0; i < nums->size; i++) {
-        int n = nums->nums[i];
+    for (int i = 0; i < utarray_len(nums); i++) {
+        int n = *(int*)utarray_eltptr(nums, i);
         if (n >= 0) {
-            unshift_ints(&seen, n);
+            utarray_push_front(seen, &n);
             x = 0;  // reset streak
         }
         else {
             // use current x
-            if (x < seen.size) {
-                push_ints(ans, seen.nums[x]);
-            }
-            else {
-                push_ints(ans, -1);
-            }
+            int n = (x < utarray_len(seen)) ?
+                    *(int*)utarray_eltptr(seen, x) : -1;
+            utarray_push_back(ans, &n);
             x++;    // increment streak for next -1
         }
     }
 
-    free_ints(&seen);
+    utarray_free(seen);
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...", argv[0]);
 
     argv++; argc--;
-    Ints nums;
-    init_ints(&nums);
-    for (int i = 0; i < argc; i++)
-        push_ints(&nums, atoi(argv[i]));
+    UT_array* nums;
+    utarray_new(nums, &ut_int_icd);
+    for (int i = 0; i < argc; i++) {
+        int num = atoi(argv[i]);
+        utarray_push_back(nums, &num);
+    }
 
-    Ints ans;
-    init_ints(&ans);
-    last_visitor(&nums, &ans);
+    UT_array* ans;
+    utarray_new(ans, &ut_int_icd);
+
+    last_visitor(nums, ans);
 
     const char* separator = "";
-    for (int i = 0; i < ans.size; i++) {
-        printf("%s%d", separator, ans.nums[i]);
+    for (int i = 0; i < utarray_len(ans); i++) {
+        printf("%s%d", separator, *(int*)utarray_eltptr(ans, i));
         separator = ", ";
     }
 
-    free_ints(&nums);
-    free_ints(&ans);
+    utarray_free(nums);
+    utarray_free(ans);
 }

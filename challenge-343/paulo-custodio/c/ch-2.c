@@ -1,8 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef struct {
     bool** results;
@@ -10,15 +7,11 @@ typedef struct {
 } Table;
 
 Table* alloc_table(int size) {
-    Table* table = malloc(sizeof(Table));
-    assert(table);
-
-    table->results = malloc(size * sizeof(bool*));
-    assert(table->results);
+    Table* table = xmalloc(sizeof(Table));
+    table->results = xmalloc(size * sizeof(bool*));
 
     for (int i = 0; i < size; i++) {
-        table->results[i] = calloc(size, sizeof(bool));
-        assert(table->results[i]);
+        table->results[i] = xcalloc(size, sizeof(bool));
     }
 
     table->size = size;
@@ -27,9 +20,9 @@ Table* alloc_table(int size) {
 
 void free_table(Table* table) {
     for (int i = 0; i < table->size; i++)
-        free(table->results[i]);
-    free(table->results);
-    free(table);
+        xfree(table->results[i]);
+    xfree(table->results);
+    xfree(table);
 }
 
 int compress_bool(char* str) {
@@ -95,8 +88,7 @@ int compare(const void* a_, const void* b_) {
 }
 
 int get_champion(Table* table) {
-    Wins* wins = malloc(table->size * sizeof(Wins));
-    assert(wins);
+    Wins* wins = xmalloc(table->size * sizeof(Wins));
     for (int i = 0; i < table->size; i++) {
         wins[i].team = i;
         wins[i].wins = 0;
@@ -116,7 +108,7 @@ int get_champion(Table* table) {
         }
     }
 
-    free(wins);
+    xfree(wins);
     return champion;
 }
 

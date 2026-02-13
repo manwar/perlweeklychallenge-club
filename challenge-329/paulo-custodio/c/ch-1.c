@@ -1,9 +1,11 @@
-#include <assert.h>
+#include "alloc.h"
+#include "uthash.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+typedef struct {
+    int num;
+    UT_hash_handle hh;
+} Nums;
 
 void blank_non_digits(char* str) {
     for (char* p = str; *p ; p++) {
@@ -12,50 +14,47 @@ void blank_non_digits(char* str) {
     }
 }
 
-bool find_number(int* nums, int count, int needle) {
-    for (int i = 0; i < count; i++) {
-        if (nums[i] == needle)
-            return true;
-    }
-    return false;
-}
+Nums* parse_uniq_numbers(char* str) {
+    Nums* nums = NULL;
+    Nums* elem = NULL;
 
-int* append_number(int* nums, int* count, int number) {
-    if (find_number(nums, *count, number))
-        return nums;
-    (*count)++;
-    nums = realloc(nums, (*count)*sizeof(int));
-    assert(nums);
-    nums[(*count)-1] = number;
-    return nums;
-}
-
-int* find_numbers(char* str, int* count) {
-    blank_non_digits(str);
-    int* nums = NULL;
-    *count = 0;
     char* p = strtok(str, " ");
     while (p != NULL) {
         int number = atoi(p);
-        nums = append_number(nums, count, number);
+
+        HASH_FIND_INT(nums, &number, elem);
+        if (elem == NULL) { // not yet found
+            elem = xcalloc(1, sizeof(Nums));
+            elem->num = number;
+            HASH_ADD_INT(nums, num, elem);
+        }
+
         p = strtok(NULL, " ");
     }
     return nums;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
+
+    // collect string, remove non digits
+    char* str = xstrdup(argv[1]);
+    blank_non_digits(str);
+
+    // collect unique integers
+    Nums* nums = parse_uniq_numbers(str);
+
+    const char* separator = "";
+    for (Nums* p = nums; p != NULL; p = p->hh.next) {
+        printf("%s%d", separator, p->num);
+        separator = ", ";
     }
 
-    int count = 0;
-    int* nums = find_numbers(argv[1], &count);
-    for (int i = 0; i < count; i++) {
-        if (i > 0)
-            printf(", ");
-        printf("%d", nums[i]);
+    xfree(str);
+    Nums* elem, *tmp;
+    HASH_ITER(hh, nums, elem, tmp) {
+        HASH_DEL(nums, elem);
+        xfree(elem);
     }
-    printf("\n");
-    free(nums);
 }

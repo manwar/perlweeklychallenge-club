@@ -1,17 +1,12 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 char* common_letters(char* words[], int count) {
     if (count <= 0)
-        return strdup("");
+        return xstrdup("");
     else if (count < 2)
-        return strdup(words[0]);
+        return xstrdup(words[0]);
 
-    char* result = strdup(words[0]);
-    assert(result);
+    char* result = xstrdup(words[0]);
     char* rp = result;
 
     for (int i = 0; words[0][i] != '\0'; i++) {
@@ -34,19 +29,16 @@ char* common_letters(char* words[], int count) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s words...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s words...", argv[0]);
 
     argc--; argv++;
     char* common = common_letters(argv, argc);
-    assert(common);
     for (int i = 0; common[i] != '\0'; i++) {
         if (i > 0 )
             putchar(' ');
         putchar(common[i]);
     }
     putchar('\n');
-    free(common);
+    xfree(common);
 }

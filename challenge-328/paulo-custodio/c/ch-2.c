@@ -1,9 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void remove_dups(char* str) {
     int write = 0;
@@ -18,13 +14,10 @@ void remove_dups(char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
 
-    char* str = strdup(argv[1]);
-    assert(str);
+    char* str = xstrdup(argv[1]);
     remove_dups(str);
     printf("%s\n", str);
     free(str);

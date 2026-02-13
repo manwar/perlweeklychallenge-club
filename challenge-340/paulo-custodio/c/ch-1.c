@@ -1,30 +1,24 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 char* remove_duplicates(const char* input) {
-    char* result = strdup(input);
-    assert(result);
+    char* result = xstrdup(input);
+    int write = 0;
 
-    for (int i = 0; result[i+1] != '\0'; i++) {
-        while (i >= 0 && result[i] == result[i+1]) {
-            // remove duplicates
-            memmove(result+i, result+i+2, strlen(result+i+2)+1);
-            // try again previous position
-            i--;
-        }
+    for (int read = 0; result[read] != '\0'; read++) {
+        if (write > 0 && result[write-1] == result[read])
+            write--;
+        else
+            result[write++] = result[read];
     }
+    result[write] = '\0';
     return result;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
 
     char* result = remove_duplicates(argv[1]);
     printf("%s\n", result);
-    free(result);
+    xfree(result);
 }

@@ -1,28 +1,26 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
+#include "utarray.h"
 
-int special_average(int* nums, size_t size) {
-    if (size == 0)
+int special_average(UT_array* nums) {
+    if (utarray_len(nums) == 0)
         return 0;
 
     // get minimum and maximum
-    int min = nums[0];
-    int max = nums[0];
-    for (size_t i = 0; i < size; i++) {
-        if (nums[i] < min)
-            min = nums[i];
-        if (nums[i] > max)
-            max = nums[i];
+    int min = *(int*)utarray_eltptr(nums, 0);
+    int max = *(int*)utarray_eltptr(nums, 0);
+    for (size_t i = 0; i < utarray_len(nums); i++) {
+        min = MIN(min, *(int*)utarray_eltptr(nums, i));
+        max = MAX(max, *(int*)utarray_eltptr(nums, i));
     }
 
     // compute average
     int count = 0;
     int sum = 0;
-    for (size_t i = 0; i < size; i++) {
-        if (nums[i] != min && nums[i] != max) {
+    for (size_t i = 0; i < utarray_len(nums); i++) {
+        int num = *(int*)utarray_eltptr(nums, i);
+        if (num != min && num != max) {
             count++;
-            sum += nums[i];
+            sum += num;
         }
     }
 
@@ -33,17 +31,18 @@ int special_average(int* nums, size_t size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums != NULL);
-    for (int i = 0; i < argc; i++)
-        nums[i] = atoi(argv[i]);
-    int average = special_average(nums, argc);
+    UT_array* nums;
+    utarray_new(nums, &ut_int_icd);
+    for (int i = 0; i < argc; i++) {
+        int num = atoi(argv[i]);
+        utarray_push_back(nums, &num);
+    }
+    int average = special_average(nums);
+
     printf("%d\n", average);
-    free(nums);
+    utarray_free(nums);
 }
