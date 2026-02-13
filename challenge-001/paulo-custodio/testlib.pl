@@ -18,8 +18,7 @@ sub test_line {
         }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
-            make_exe("gcc -o $dir/ch-$nr$_exe $dir/ch-$nr.c",
-                    "$dir/ch-$nr.c", "$dir/ch-$nr$_exe");
+			build_c("$dir/ch-$nr.c");
             next unless -f "$dir/ch-$nr$_exe";
             capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
         }
@@ -46,8 +45,7 @@ sub test_block {
         }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
-            make_exe("gcc -o $dir/ch-$nr$_exe $dir/ch-$nr.c",
-                    "$dir/ch-$nr.c", "$dir/ch-$nr$_exe");
+			build_c("$dir/ch-$nr.c");
             next unless -f "$dir/ch-$nr$_exe";
             run(normalize_path("$dir/ch-$nr$_exe < test.in > test.out"));
         }
@@ -62,6 +60,15 @@ sub test_block {
     unlink("test.in", "test.out", "test.exp");
 }
 
+sub build_c {
+	my($src) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+	
+	(my $exe = $src) =~ s/\.c$/$_exe/;
+	make_exe("gcc -o $exe $src",
+			$src, $exe);
+}
+	
 sub run {
     my($cmd) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
