@@ -26,7 +26,7 @@ my @Test =
 ;
 plan +@Test ÷ 2;
 
-sub task( Int:D(Any) $a is copy -->Int) {
+sub task( Any:D(Int) $a is copy -->Int) {
     die 'too big' if $a.chars > Digits;
     my $pass = -1;
     while $pass < Pass-ct {
