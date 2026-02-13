@@ -1,8 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#include "alloc.h"
 
 int check_pairs(int a, int b, int c, int d) {
     int diff1 = a*b-c*d;
@@ -34,17 +30,14 @@ int max_diff(int count, int* nums) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argc--; argv++;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
+    int* nums = xmalloc(argc * sizeof(int));
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
     int max = max_diff(argc, nums);
     printf("%d\n", max);
-    free(nums);
+    xfree(nums);
 }

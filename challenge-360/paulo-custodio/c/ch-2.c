@@ -1,17 +1,12 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 int compare(const void* a, const void* b) {
     return stricmp(*(const char**)a, *(const char**)b);
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s words...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s words...", argv[0]);
 
     argc--; argv++;
     qsort(argv, argc, sizeof(char*), compare);

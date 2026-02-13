@@ -1,17 +1,11 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 char* pad_string(const char* str, int size) {
     if (strlen(str) > size) {
-        char* result = strdup(str);
-        assert(result);
-        return result;
+        return xstrdup(str);
     }
 
-    char* result = malloc(size+1);
-    assert(result);
+    char* result = xmalloc(size+1);
     int left = (size - strlen(str)) / 2;
     for (int i = 0; i < left; i++)
         result[i] = '*';
@@ -23,10 +17,8 @@ char* pad_string(const char* str, int size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s string padding\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 3)
+        die("usage: %s string padding", argv[0]);
 
     char* padded = pad_string(argv[1], atoi(argv[2]));
     printf("%s\n", padded);

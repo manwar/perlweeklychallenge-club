@@ -1,13 +1,7 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MAX(a,b) ((a)>(b)?(a):(b))
+#include "alloc.h"
 
 int count_words(const char* sentence_) {
-    char* sentence = strdup(sentence_);
-    assert(sentence != NULL);
+    char* sentence = xstrdup(sentence_);
 
     int words = 0;
     char* p = strtok(sentence, " \t");
@@ -21,10 +15,8 @@ int count_words(const char* sentence_) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s senetences...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s sentences...", argv[0]);
 
     int max_words = 0;
     for (int i = 1; i < argc; i++) {

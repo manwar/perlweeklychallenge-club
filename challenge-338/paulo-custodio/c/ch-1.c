@@ -1,44 +1,36 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
+#include "utarray.h"
 
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-int* read_row(int* count) {
+bool read_row(UT_array* nums) {
     char line[BUFSIZ];
-    int* nums = NULL;
-    *count = 0;
+    utarray_clear(nums);
     if (!fgets(line, sizeof(line), stdin))
-        return NULL;
+        return false;
     char* p = strtok(line, " ");
     while (p != NULL) {
         int n = atoi(p);
-        (*count)++;
-        nums = realloc(nums, *count * sizeof(int));
-        assert(nums);
-        nums[*count-1] = n;
+        utarray_push_back(nums, &n);
         p = strtok(NULL, " ");
     }
-    return nums;
+    return true;
 }
 
-int sum_row(int* nums, int count) {
+int sum_row(UT_array* nums) {
     int sum = 0;
-    for (int i = 0; i < count; i++)
-        sum += nums[i];
+    for (int i = 0; i < utarray_len(nums); i++)
+        sum += *(int*)utarray_eltptr(nums, i);
     return sum;
 }
 
 int max_rows() {
-    int* nums = NULL;
-    int count = 0;
+    UT_array* nums;
+    utarray_new(nums, &ut_int_icd);
     int max = 0;
-    while ((nums = read_row(&count)) != NULL) {
-        int sum = sum_row(nums, count);
+    while (read_row(nums)) {
+        int sum = sum_row(nums);
         max = MAX(max, sum);
-        free(nums);
     }
+    utarray_free(nums);
     return max;
 }
 

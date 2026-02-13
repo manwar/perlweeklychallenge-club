@@ -1,6 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 void smaller(const int* nums, int* result, int size) {
     for (int i = 0; i < size; i++) {
@@ -16,19 +14,15 @@ void smaller(const int* nums, int* result, int size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %0 nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %0 nums...", argv[0]);
 
     argc--; argv++;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
+    int* nums = xmalloc(argc * sizeof(int));
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
 
-    int* result = malloc(argc * sizeof(int));
-    assert(result);
+    int* result = xmalloc(argc * sizeof(int));
     smaller(nums, result, argc);
 
     char* separator = "";
@@ -37,6 +31,6 @@ int main(int argc, char* argv[]) {
         separator = ", ";
     }
 
-    free(nums);
-    free(result);
+    xfree(nums);
+    xfree(result);
 }

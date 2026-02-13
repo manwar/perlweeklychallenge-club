@@ -1,6 +1,4 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 void dup_zeros(const int* from, int* to, int size) {
     int j = 0;
@@ -12,20 +10,16 @@ void dup_zeros(const int* from, int* to, int size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argc--; argv++;
 
-    int* from = malloc(argc * sizeof(int));
-    assert(from);
+    int* from = xmalloc(argc * sizeof(int));
     for (int i = 0; i < argc; i++)
         from[i] = atoi(argv[i]);
 
-    int* to = malloc(argc * sizeof(int));
-    assert(to);
+    int* to = xmalloc(argc * sizeof(int));
 
     dup_zeros(from, to, argc);
 
@@ -35,6 +29,6 @@ int main(int argc, char* argv[]) {
         printf("%d", to[i]);
     }
 
-    free(from);
-    free(to);
+    xfree(from);
+    xfree(to);
 }

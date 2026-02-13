@@ -1,8 +1,5 @@
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 bool first_num = true;
 int last_num = 0;
@@ -26,10 +23,8 @@ void collect_nums(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums/words...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums/words...", argv[0]);
 
     argc--; argv++;
     collect_nums(argc, argv);

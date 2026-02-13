@@ -1,16 +1,11 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 int* scores = NULL;
 int scores_size = 0;
 
 void push_scores(int score) {
     scores_size++;
-    scores = realloc(scores, scores_size * sizeof(int));
-    assert(scores);
+    scores = xrealloc(scores, scores_size * sizeof(int));
     scores[scores_size-1] = score;
 }
 
@@ -51,16 +46,13 @@ int calc_scores(char* ops[], int ops_size) {
     for (int i = 0; i < scores_size; i++)
         score += scores[i];
 
-    free(scores);
-
+    xfree(scores);
     return score;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...", argv[0]);
 
     argc--; argv++;
     int score = calc_scores(argv, argc);

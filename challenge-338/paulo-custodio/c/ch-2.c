@@ -1,53 +1,44 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
+#include "utarray.h"
 
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-int* read_row(int* count) {
+bool read_row(UT_array* nums) {
     char line[BUFSIZ];
-    int* nums = NULL;
-    *count = 0;
+    utarray_clear(nums);
     if (!fgets(line, sizeof(line), stdin))
-        return NULL;
+        return false;
     char* p = strtok(line, " ");
     while (p != NULL) {
         int n = atoi(p);
-        (*count)++;
-        nums = realloc(nums, *count * sizeof(int));
-        assert(nums);
-        nums[*count-1] = n;
+        utarray_push_back(nums, &n);
         p = strtok(NULL, " ");
     }
-    return nums;
+    return true;
 }
 
 int max_distance() {
-    int* a = NULL;
-    int a_count = 0;
-    int* b = NULL;
-    int b_count = 0;
+    UT_array* a;
+    utarray_new(a, &ut_int_icd);
+    UT_array* b;
+    utarray_new(b, &ut_int_icd);
 
-    a = read_row(&a_count);
-    if (a == NULL) {
-        fprintf(stderr, "missing input data\n");
-        exit(EXIT_FAILURE);
-    }
+    if (!read_row(a))
+        die("missing input data");
 
-    b = read_row(&b_count);
-    if (b == NULL) {
-        fprintf(stderr, "missing input data\n");
-        exit(EXIT_FAILURE);
-    }
+    if (!read_row(b))
+        die("missing input data");
 
     int max_dist = 0;
-    for (int i = 0; i < a_count; i++) {
-        for (int j = 0; j < b_count; j++) {
-            int dist = abs(a[i] - b[j]);
+    for (int i = 0; i < utarray_len(a); i++) {
+        for (int j = 0; j < utarray_len(b); j++) {
+            int dist = abs(*(int*)utarray_eltptr(a, i) -
+                           *(int*)utarray_eltptr(b, j));
             max_dist = MAX(max_dist, dist);
         }
     }
+
+    utarray_free(a);
+    utarray_free(b);
+
     return max_dist;
 }
 

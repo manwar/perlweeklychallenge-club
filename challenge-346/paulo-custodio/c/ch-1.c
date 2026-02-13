@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAX(a, b) ((a)>(b)?(a):(b))
+#include "alloc.h"
 
 int get_sequence(const char* str) {
     int nest = 0;
@@ -35,10 +32,8 @@ int get_longest_sequence(const char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s str\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s str", argv[0]);
 
     int longest = get_longest_sequence(argv[1]);
     printf("%d\n", longest);
