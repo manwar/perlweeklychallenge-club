@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 int sum_digits(int n) {
     int sum = 0;
@@ -12,10 +11,8 @@ int sum_digits(int n) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s n\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s n", argv[0]);
 
     int n = atoi(argv[1]);
     int persistence = 0;

@@ -1,12 +1,9 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s binary...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s binary...\n", argv[0]);
+
     argv++; argc--;
 
     int value = 0;

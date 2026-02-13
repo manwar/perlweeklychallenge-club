@@ -1,4 +1,4 @@
-#include <assert.h>
+#include "alloc.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,17 +14,14 @@ int closest_zero(int* nums, int size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...", argv[0]);
 
     argc--; argv++;
-    int* nums = malloc(argc);
-    assert(nums);
+    int* nums = xmalloc(argc);
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
     int closest = closest_zero(nums, argc);
     printf("%d\n", closest);
-    free(nums);
+    xfree(nums);
 }

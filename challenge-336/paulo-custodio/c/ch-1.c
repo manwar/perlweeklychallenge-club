@@ -1,7 +1,4 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 typedef struct {
     int num;
@@ -20,8 +17,7 @@ void count_num(int num) {
     }
 
     freq_size++;
-    freq = realloc(freq, freq_size * sizeof(Freq));
-    assert(freq);
+    freq = xrealloc(freq, freq_size * sizeof(Freq));
     freq[freq_size-1].num = num;
     freq[freq_size-1].count = 1;
 }
@@ -56,18 +52,15 @@ bool can_make_equal_groups(int* nums, int size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...", argv[0]);
 
     argc--; argv++;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
+    int* nums = xmalloc(argc * sizeof(int));
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
     bool ok = can_make_equal_groups(nums, argc);
     printf("%s\n", ok ? "true" : "false");
-    free(nums);
-    free(freq);
+    xfree(nums);
+    xfree(freq);
 }

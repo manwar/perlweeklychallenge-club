@@ -1,10 +1,5 @@
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MAX(a,b) ((a)>(b)?(a):(b))
 
 bool is_number(const char* str) {
     if (*str == '\0')
@@ -17,10 +12,8 @@ bool is_number(const char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fputs("usage: ch-1 strs...\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+    if (argc < 2)
+        die("usage: %s strs...", argv[0]);
 
     int max = 0;
     for (int i = 1; i < argc; i++) {

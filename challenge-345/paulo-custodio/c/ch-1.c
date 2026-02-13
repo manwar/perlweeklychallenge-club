@@ -1,55 +1,45 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
+#include "utarray.h"
 
-int* find_peeks(int* nums, int nums_size) {
-    int* peeks = NULL;
-    int peeks_size = 0;
+UT_array* find_peeks(UT_array* nums) {
+    UT_array* peeks;
+    utarray_new(peeks, &ut_int_icd);
 
-    for (int i = 1; i < nums_size-1; i++) {
-        if (nums[i] > nums[i-1] && nums[i] > nums[i+1]) {
+    for (int i = 1; i < utarray_len(nums)-1; i++) {
+        int peek = *(int*)utarray_eltptr(nums, i);
+        if (peek > *(int*)utarray_eltptr(nums, i - 1) &&
+            peek > *(int*)utarray_eltptr(nums, i + 1)) {
             // found peek
-            peeks_size++;
-            peeks = realloc(peeks, peeks_size * sizeof(int));
-            assert(peeks);
-            peeks[peeks_size-1] = i;
+            utarray_push_back(peeks, &i);
         }
     }
-
-    // add terminator
-    peeks_size++;
-    peeks = realloc(peeks, peeks_size * sizeof(int));
-    assert(peeks);
-    peeks[peeks_size-1] = -1;
-
     return peeks;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
-    for (int i = 0; i < argc; i++)
-        nums[i] = atoi(argv[i]);
+    UT_array* nums;
+    utarray_new(nums, &ut_int_icd);
+    for (int i = 0; i < argc; i++) {
+        int num = atoi(argv[i]);
+        utarray_push_back(nums, &num);
+    }
+    UT_array* peeks = find_peeks(nums);
 
-    int* peeks = find_peeks(nums, argc);
-
-    if (peeks[0] < 0) {
+    if (utarray_len(peeks) == 0) {
         printf("0\n");
     }
     else {
         const char* separator = "";
-        for (int i = 0; peeks[i] >= 0; i++) {
-            printf("%s%d", separator, peeks[i]);
+        for (int i = 0; i < utarray_len(peeks); i++) {
+            printf("%s%d", separator, *(int*)utarray_eltptr(peeks, i));
             separator = ", ";
         }
     }
 
-    free(peeks);
-    free(nums);
+    utarray_free(peeks);
+    utarray_free(nums);
 }

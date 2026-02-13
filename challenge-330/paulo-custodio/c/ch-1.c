@@ -1,38 +1,26 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-char* find_digit(char* str) {
-    for (char* p = str; *p; p++) {
-        if (isdigit(*p))
-            return p;
+void remove_digits(char* str) {
+    int write = 0;
+    for (int read = 0; str[read] != '\0'; read++) {
+        if (isdigit(str[read])) {
+            if (write > 0)
+                write--;        // remove previous char
+        }
+        else {
+            str[write++] = str[read];
+        }
     }
-    return NULL;
-}
-
-char* remove_digits(const char* str_) {
-    char* str = strdup(str_);
-    assert(str);
-
-    char* p = NULL;
-    while ((p = find_digit(str)) != NULL) {
-        if (p > str)
-            memmove(p-1, p+1, strlen(p+1)+1);
-        else
-            memmove(p, p+1, strlen(p+1)+1);
-    }
-    return str;
+    str[write] = '\0';
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[1]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[1]);
 
-    char* str = remove_digits(argv[1]);
+    char* str = xstrdup(argv[1]);
+    remove_digits(str);
     printf("%s\n", str);
     free(str);
 }

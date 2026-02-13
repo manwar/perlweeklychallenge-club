@@ -1,8 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int compare (const void* a, const void* b) {
     return *(char*)a - *(char*)b;
@@ -10,18 +7,15 @@ int compare (const void* a, const void* b) {
 
 char* balance_string(const char* str) {
     // allocate memory
-    char* letters = malloc(strlen(str) + 1);
-    assert(letters);
+    char* letters = xmalloc(strlen(str) + 1);
     letters[0] = '\0';
     char* lp = letters;
 
-    char* digits = malloc(strlen(str) + 1);
-    assert(digits);
+    char* digits = xmalloc(strlen(str) + 1);
     digits[0] = '\0';
     char* dp = digits;
 
-    char* result = malloc(strlen(str) + 1);
-    assert(result);
+    char* result = xmalloc(strlen(str) + 1);
     result[0] = '\0';
     char* rp = result;
 
@@ -68,18 +62,16 @@ char* balance_string(const char* str) {
     }
     *rp = '\0';
 
-    free(letters);
-    free(digits);
+    xfree(letters);
+    xfree(digits);
     return result;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s str\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s str", argv[0]);
 
     char* balanced = balance_string(argv[1]);
     printf("%s\n", balanced);
-    free(balanced);
+    xfree(balanced);
 }

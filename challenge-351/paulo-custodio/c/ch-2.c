@@ -1,7 +1,4 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 #define Epsilon 1e-9
 
@@ -26,14 +23,11 @@ bool is_arithmetic_progression(double* nums, size_t size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    double* nums = malloc(argc * sizeof(double));
-    assert(nums != NULL);
+    double* nums = xmalloc(argc * sizeof(double));
     for (int i = 0; i < argc; i++)
         nums[i] = atof(argv[i]);
     bool is_progression = is_arithmetic_progression(nums, argc);

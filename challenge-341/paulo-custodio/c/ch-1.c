@@ -1,13 +1,8 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 char *make_lower_upper_keys(const char* input) {
-    char* keys = malloc(strlen(input)*2+1);
-    assert(keys);
+    char* keys = xmalloc(strlen(input)*2+1);
     char* kp = keys;
     for (int i = 0; input[i] != '\0'; i++) {
         *kp++ = tolower(input[i]);
@@ -37,13 +32,11 @@ int can_type(char* sentence, const char* keys) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s sentence keys\n", argv[0]);
-    }
+    if (argc != 3)
+        die("usage: %s sentence keys\n", argv[0]);
 
     // make modifieable copy of sentence
-    char* sentence = strdup(argv[1]);
-    assert(sentence);
+    char* sentence = xstrdup(argv[1]);
 
     // make upper and lower case version of each key
     char* keys = make_lower_upper_keys(argv[2]);
@@ -52,6 +45,6 @@ int main(int argc, char* argv[]) {
     int count = can_type(sentence, keys);
     printf("%d\n", count);
 
-    free(sentence);
-    free(keys);
+    xfree(sentence);
+    xfree(keys);
 }

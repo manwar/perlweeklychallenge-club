@@ -1,8 +1,5 @@
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 bool is_vowel(char c) {
     c = tolower(c);
@@ -33,10 +30,8 @@ bool equal_vowels(const char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s str\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s str\n", argv[0]);
 
     bool equal = equal_vowels(argv[1]);
     printf("%s\n", equal ? "true" : "false");

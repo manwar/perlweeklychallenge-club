@@ -1,8 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #define Epsilon 1e-9
 
@@ -16,8 +13,7 @@ Fraction* fractions = NULL;
 size_t fraction_count = 0;
 
 void append_fraction(int numer, int denom) {
-    fractions = (Fraction*)realloc(fractions, (fraction_count + 1) * sizeof(Fraction));
-    assert(fractions != NULL);
+    fractions = xrealloc(fractions, (fraction_count + 1) * sizeof(Fraction));
 
     fractions[fraction_count].numer = numer;
     fractions[fraction_count].denom = denom;
@@ -67,10 +63,8 @@ void print_fractions() {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        printf("Usage: %s n\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("Usage: %s n", argv[0]);
 
     generate_fractions(atoi(argv[1]));
     sort_fractions();

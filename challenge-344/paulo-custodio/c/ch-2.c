@@ -1,8 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef struct {
     int* list;
@@ -20,8 +17,7 @@ void free_list(List* list) {
 
 void push_list(List* list, int n) {
     list->size++;
-    list->list = realloc(list->list, list->size * sizeof(int));
-    assert(list->list);
+    list->list = xrealloc(list->list, list->size * sizeof(int));
     list->list[list->size-1] = n;
 }
 
@@ -43,8 +39,7 @@ void free_lol(LoL* lol) {
 
 void push_lol(LoL* lol, List* list) {
     lol->size++;
-    lol->list = realloc(lol->list, lol->size * sizeof(List));
-    assert(lol->list);
+    lol->list = xrealloc(lol->list, lol->size * sizeof(List));
     lol->list[lol->size-1] = *list;
 }
 
@@ -77,8 +72,7 @@ void parse_lol(LoL* lol, const char* str) {
             push_list(&l, value);
             continue;
         }
-        fprintf(stderr, "invalid character: '%c'\n", *p);
-        exit(EXIT_FAILURE);
+        die("invalid character: '%c'\n", *p);
     }
 
     if (l.size > 0) {
@@ -106,8 +100,7 @@ void parse_list(List* list, const char* str) {
             push_list(list, value);
             continue;
         }
-        fprintf(stderr, "invalid character: '%c'\n", *p);
-        exit(EXIT_FAILURE);
+        die("invalid character: '%c'\n", *p);
     }
 }
 
@@ -124,12 +117,10 @@ bool can_make_list(LoL* lol, List* list) {
             }
         }
         if (is_prefix) { // recurse
-            LoL* sub_lol = malloc(sizeof(LoL));
-            assert(sub_lol);
+            LoL* sub_lol = xmalloc(sizeof(LoL));
             init_lol(sub_lol);
 
-            List* sub_list = malloc(sizeof(List));
-            assert(sub_list);
+            List* sub_list = xmalloc(sizeof(List));
             init_list(sub_list);
 
             // copy lol except entry i
@@ -165,10 +156,8 @@ bool can_make_list(LoL* lol, List* list) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s list_of_list list\n", stderr);
-        return EXIT_FAILURE;
-    }
+    if (argc != 3)
+        die("usage: %s list_of_list list\n", argv[0]);
 
     LoL lol;
     init_lol(&lol);

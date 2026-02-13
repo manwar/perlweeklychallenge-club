@@ -1,7 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 bool find_word(const char* word, int argc, char* argv[]) {
     for (int i = 0; i < argc; i++) {
@@ -12,10 +9,8 @@ bool find_word(const char* word, int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s strs...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s strs...\n", argv[0]);
 
     argv++; argc--;
     const char *separator = "";

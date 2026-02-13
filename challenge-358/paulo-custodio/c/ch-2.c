@@ -1,13 +1,9 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 #define LETTERS ('z'-'a'+1)
 
 char* encrypt(const char* str, int n) {
-    char* coded = strdup(str);
-    assert(coded != NULL);
+    char* coded = xstrdup(str);
 
     for (char* p = coded; *p != '\0'; p++) {
         if (*p >= 'a' && *p <= 'z') {
@@ -18,10 +14,8 @@ char* encrypt(const char* str, int n) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fputs("usage: ch-1 str n\n", stderr);
-        exit(EXIT_FAILURE);
-    }
+    if (argc != 3)
+        die("usage: %s str n\n", argv[0]);
 
     const char* str = argv[1];
     int n = atoi(argv[2]);

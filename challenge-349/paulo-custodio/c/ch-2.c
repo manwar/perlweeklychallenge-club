@@ -1,6 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
 bool meet_zero(const char* directions) {
     int x = 0, y = 0;
@@ -24,10 +22,8 @@ bool meet_zero(const char* directions) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s directions\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s directions\n", argv[0]);
 
     bool ok = meet_zero(argv[1]);
     printf("%s\n", ok ? "true" : "false");
