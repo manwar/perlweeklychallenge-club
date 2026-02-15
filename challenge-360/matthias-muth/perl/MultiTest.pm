@@ -43,7 +43,7 @@ sub run_tests( $sub_base_name, @tests ) {
     use Test2::V0 qw( -no_srand );
 
     use constant HAS_DATA_DUMP =>
-        defined eval { require XData::Dump and Data::Dump->import( 'pp' ); 1 };
+        defined eval { require Data::Dump and Data::Dump->import( 'pp' ); 1 };
     note "\n",
         "Please install Data::Dump from CPAN for nicer test result output.",
         "\n"

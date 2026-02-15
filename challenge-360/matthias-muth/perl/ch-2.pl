@@ -25,5 +25,6 @@ my @tests = (
                     [ "2 3 and apples bananas! have I" ] ],
 );
 
+use lib '.';
 use MultiTest;
 run_tests( "word_sorter", @tests );
