@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Root It All You Reduce](https://packy.dardan.com/b/ia)
+[Perl Weekly Challenge: Word Crimes are Justified](https://packy.dardan.com/b/j8)
