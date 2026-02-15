@@ -1,275 +1,199 @@
-# Loops Considered
+# Justifying TIMTOWTDI
 
-**Challenge 359 solutions in Perl by Matthias Muth**
+**Challenge 360 solutions in Perl by Matthias Muth**
 
-## Task 1: Digital Root
+## Task 1: Text Justifier
 
-> You are given a positive integer, $int.<br/>
-> Write a function that calculates the additive persistence of a positive integer and also return the digital root.<br/>
-> Digital root is the recursive sum of all digits in a number until a single digit is obtained.<br/>
-> Additive persistence is the number of times you need to sum the digits to reach a single digit.
+> You are given a string and a width.<br/>
+> Write a script to return the string that centers the text within that width using asterisks \* as padding.
 >
 > **Example 1**
 >
 > ```text
-> Input: $int = 38
-> Output: Persistence  = 2
->         Digital Root = 2
+> Input: $str = "Hi", $width = 5
+> Output: "*Hi**"
 >
-> 38 => 3 + 8 => 11
-> 11 => 1 + 1 => 2
+> Text length = 2, Width = 5
+> Need 3 padding characters total
+> Left padding: 1 star, Right padding: 2 stars
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $int = 7
-> Output: Persistence  = 0
->         Digital Root = 7
+> Input: $str = "Code", $width = 10
+> Output: "***Code***"
+>
+> Text length = 4, Width = 10
+> Need 6 padding characters total
+> Left padding: 3 stars, Right padding: 3 stars
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $int = 999
-> Output: Persistence  = 2
->         Digital Root = 9
+> Input: $str = "Hello", $width = 9
+> Output: "**Hello**"
 >
-> 999 => 9 + 9 + 9 => 27
-> 27  => 2 + 7 => 9
+> Text length = 5, Width = 9
+> Need 4 padding characters total
+> Left padding: 2 stars, Right padding: 2 stars
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $int = 1999999999
-> Output: Persistence  = 3
->         Digital Root = 1
+> Input: $str = "Perl", $width = 4
+> Output: "Perl"
 >
-> 1999999999 => 1 + 9 + 9 + 9 + 9 + 9 + 9 + 9 + 9 + 9 => 82
-> 82 => 8 + 2 => 10
-> 10 => 1 + 0 => 1
+> No padding needed
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $int = 101010
-> Output: Persistence  = 1
->         Digital Root = 3
+> Input: $str = "A", $width = 7
+> Output: "***A***"
 >
-> 101010 => 1 + 0 + 1 + 0 + 1 + 0 => 3
+> Text length = 1, Width = 7
+> Need 6 padding characters total
+> Left padding: 3 stars, Right padding: 3 stars
+> ```
+>
+> **Example 6**
+>
+> ```text
+> Input: $str = "", $width = 5
+> Output: "*****"
+>
+> Text length = 0, Width = 5
+> Entire output is padding
 > ```
 
-We need a counter for the number of reductions
-that we apply to our `$int` input.<br/>
-Its naming is obvious to me, I will call it `$persistence`. 
+As usual, there are a lot of ways to solve this task. I chose the 'left-then-right' approach: In two steps, first add padding to the left, then add padding to the right.
 
-And we need a formula to build the checksum of a number.<br/>
-For me, this one works well: `sum( split //, $int )`.
+The good thing about this approach is that the computation of how many padding characters need to be added are quite simple. But let's first discuss why this can be a 'problem' at all:
 
-Then, it's a short loop that does all the work:
+Already in the Example 1 (`$str = "Hi", $width = 5`), we learn that the result (`"*Hi**"`)  can have a different number of padding characters on the left and on the right. It seems that if there is an odd number of total padding characters to distribute, the odd character has to go to the right side, not to the left one.
 
-```perl. But ipsum dolor sit amet...
-    ( $int = sum( split //, $int ), ++$persistence )
-        while $int > 9;
+The total number of number of padding characters is easy to compute:
+
+```perl
+    $width - length( $str )
 ```
 
-As short as it is,
-there are some things I think are worth considering with this loop:
+If we split the padding to the left and right, we use half of them for each side:
 
-* The loop is implemented using a `while` *statement modifier*.<br/>
-This is a Perl construct that often is useful
-to produce clear and concise code,
-because it avoids the overhead of writing a full lexical block
-with curly braces around the code and parentheses around
-the `if`, `unless`, `while` or `until` condition.<br/>
-So for a simple statement this can often be preferred.
+```perl
+    '*' x ( ( $width - length( $str ) ) / 2 )
+```
+If the total number is odd,
+the expression `( $width - length( $str ) ) / 2`
+includes a decimal part of 0.5.<br/>
+Fortunately,
+the `x` repetition operator only uses the integer part
+of the second operand.
+The fractional part is cut off implicitly.
+This means that it is unnecessary to use `int( ... )` explicitly.
 
-  But writing a statement
-  using a `while` or `until` statement modifier
-  (which goes *after* the statement) comes with a catch:<br/>
-  Is the loop body executed even when the condition is false
-  from the beginning?<br/>
-  Very clear answer: It depends!
+This also means that the expression above will give us the 'shorter' of the two parts if we have an odd number of padding characters to split. Therefore, it can *always* be used for the left-side padding:
 
-  Normally, the condition is evaluated first,
-  and the statement is skipped if the condition is false,
-  which is the right thing to do in most cases,
-  and helps to write concise code.
+```perl
+    $str = "*" x ( ( $width - length( $str ) ) / 2 ) . $str;
+```
 
-  BUT!
-  If the statement is a `do { ... }` block,
-  that block is executed *at least* once
-  before the condition is evaluated
-  (with good reasons explained in
-  [perldoc](https://perldoc.perl.org/perlsyn#Statement-Modifiers)!).
+After that, for the right side,
+I don't rely on any even or odd computations
+or on rounding up or down.
+Once the left side has been padded, I simply recalculate what is needed for the right side based on the new length of `$str`, and append it:
 
-  What that means in our case is that writing
+```perl
+    return $str . "*" x ( $width - length( $str ) );
+```
+In total, these two statements seem to be the easiest way for me:
+
+```perl
+use v5.36;
+
+# Left-then-right approach.
+sub text_justifier_LR( $str, $width ) {
+    $str = "*" x ( ( $width - length( $str ) ) / 2 ) . $str;
+    return $str . "*" x ( $width - length( $str ) );
+}
+```
+
+In the code, I have also added several other implementations:
+
+- An *iterative* approach, which adds single padding characters to the left or the right (depending on the even or odd current length of the string) until the desired length is reached.<br>Of course, this is the slowest of all approaches.
+
+- An *insertion* approach, which creates a string of *all* padding characters, and then uses a 4-parameter `substr` call to insert the original string in the middle (no `int()` needed ;-) ).
+
+- A *distribution* approach, which also creates a string of all padding characters, then prepends half of them to the original string, using `substr` to remove them from the padding string at the same time, and then appends the rest of the padding on the right.<br/>Maybe not the most clever solution either, shifting around characters multiple times.
+
+- The *'once-and-done'* approach, which is basically the same as my 'left-then-right' solution described above, but only computing the length of the 'smaller' half of the padding, and then combining the left half, the original string and the right half all within the same statement.<br/>It turns out that this is the fastest of my solutions:
 
   ```perl
-      do { $int = sum( split //, $int ); ++$persistence }
-          while $int > 9;
+  # Once-and-done approach.
+  sub text_justifier_in_one( $str, $width ) {
+      my $n = ( $width - length( $str ) ) >> 1;
+      return "*" x $n . $str . "*" x ( $width - length( $str ) - $n );
+  }
   ```
 
-  would be WRONG,
-  because the `$persistence` counter would  be incremented
-  even if `$int` only has one digit from the start.
+## Task 2: Word Sorter
 
-* But there is a way to avoid the  `do { ... }`,
-  even if we need several statements within the loop body.<br/>
-  It is based on the fact that in Perl,
-  every statement can also be used as an expression.<br/>
-  We can turn the assignment and the auto-increment *statements*
-  into a *list of expressions*,
-  separating them by commas instead of semicolons.<br/>
-  And to make it clearer that there is more than one expression
-  on that line, we can surround them with parentheses.
-
-In combination, we get a short, 'elegant' loop.
-
-This is how it looks inside the complete code:
-
-```perl
-use v5.36;
-use List::Util qw( sum );
-
-sub digital_root( $int ) {
-    my $persistence = 0;
-    ( $int = sum( split //, $int ), ++$persistence )
-        while $int > 9;
-    return ( $persistence, $int );
-}
-```
-
-## Task 2: String Reduction
-
-> You are given a word containing only alphabets,<br/>
-> Write a function that repeatedly removes adjacent duplicate characters from a string until no adjacent duplicates remain and return the final word.
+> You are give a sentence.<br/>
+> Write a script to order words in the given sentence alphabetically but keeps the words themselves unchanged.
 >
 > **Example 1**
 >
 > ```text
-> Input: $word = "aabbccdd"
-> Output: ""
->
-> Iteration 1: remove "aa", "bb", "cc", "dd" => ""
+> Input: $str = "The quick brown fox"
+> Output: "brown fox quick The"
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $word = "abccba"
-> Output: ""
->
-> Iteration 1: remove "cc" => "abba"
-> Iteration 2: remove "bb" => "aa"
-> Iteration 3: remove "aa" => ""
+> Input: $str = "Hello    World!   How   are you?"
+> Output: "are Hello How World! you?"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $word = "abcdef"
-> Output: "abcdef"
->
-> No duplicate found.
+> Input: $str = "Hello"
+> Output: "Hello"
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $word = "aabbaeaccdd"
-> Output: "aea"
->
-> Iteration 1: remove "aa", "bb", "cc", "dd" => "aea"
+> Input: $str = "Hello, World! How are you?"
+> Output: "are Hello, How World! you?"
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $word = "mississippi"
-> Output: "m"
->
-> Iteration 1: Remove "ss", "ss", "pp" => "miiii"
-> Iteration 2: Remove "ii", "ii" => "m"
+> Input: $str = "I have 2 apples and 3 bananas!"
+> Output: "2 3 and apples bananas! have I"
 > ```
 
-For reducing duplicate characters,
-I use a `s///` substitution using a regular expression.
-The regular expression itself uses a *backreference*
-to match a second character when it is equal to the first one,
-which has to be captured for that.
-The substitution part is empty,
-because we want to remove both characters:
+This task has a very straightforward 'Perlish' solution, using `split`, `sort` with a special code block, and `join`.
 
-```perl
-    s/(.)\g-1//
-```
-
-Example 2 contains cases 'nested' pairs of characters.
-A simple `/g` *global* modifier is not enough
-to remove these nested pairs,
-so we have to work 'inside out',
-trying the substitution again
-until no pairs are found anymore.
-We need a loop around the substitution!
-
-The `s///` returns the number of substitutions actually made.
-This means that it both does the job
-*and* can serve as the condition for when to stop.
-We will have a condition, but no code in the loop body itself.
-Another interesting loop!
-
-The most explicit way to write an 'empty' loop like that
-probably is this one:
-
-```perl
-    while ( s/(.)\g-1// ) {
-        # Everything is in the loop condition.
-    }
-```
-
-This is self-documenting,
-and helpful for the programmer
-who is supposed to understand this when he or she reads it
-(which is yourself most of the time,
-after some time has passed and your train of thought has faded).
-
-But here, I am using a shortcut.<br/>
-Just like in the previous task,
-I will use a *statement modifier* to write the loop.
-And the statement itself can be anything
-that does not have any effect.
-The shortest form probably is this one:
-
-```perl
-    1 while s/(.)\g-1//;
-```
-
-Now this for me is so short that it already requires
-a second thought again when reading it.<br/>
-I use a *slightly* more self-explaining version in my actual solution:
+The code block for `sort` turns both strings into their 'folded case' versions, so that they can be sorted in lexical order.
 
 ```perl
 use v5.36;
 
-sub string_reduction( $word ) {
-    do {} while $word =~ s/(.)\g-1//g;
-    return $word;
+sub word_sorter( $str ) {
+    return join " ", sort { fc $a cmp fc $b } split " ", $str;
 }
 ```
 
-Note that I also added a tiny optimization
-in adding that `/g` *global* option
-even if it is not strictly necessary.
-It helps to do as many substitutions as possible
-within one execution before looping back again,
-hopefully reducing the startup cost of the regex engine
-if we *don't* have nested pairs of letters.  
+Thanks a lot to fellow Weekly Challenge team members [Niels van Dijke](https://www.facebook.com/groups/theweeklychallengegroup/permalink/1570145197569545/), [Packy Anderson](https://packy.dardan.com/2026/02/12/perl-weekly-challenge-word-crimes-are-justified/) and [Matthew Neleigh](https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-360/mattneleigh/perl), from whose published solutions I have learned that the `fc` (*foldcase*) function is the correct function to use for case-independent character comparisons (I used `lc` *lowercase* before, which according to [perldoc](https://perldoc.perl.org/functions/fc) is not always correct.
 
-Actually, this solution is exactly identical to my solution of
-'Challenge 340 Task 1: Duplicate Removals'...
-😉
+Even with simple tasks, there is always something to learn, especially on the Weekly Challenge!
 
 #### **Thank you for the challenge!**
