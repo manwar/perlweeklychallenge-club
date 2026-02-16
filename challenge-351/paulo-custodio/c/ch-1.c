@@ -1,23 +1,22 @@
 #include "alloc.h"
-#include "utarray.h"
 
-int special_average(UT_array* nums) {
-    if (utarray_len(nums) == 0)
+int special_average(IntArray* nums) {
+    if (nums->size == 0)
         return 0;
 
     // get minimum and maximum
-    int min = *(int*)utarray_eltptr(nums, 0);
-    int max = *(int*)utarray_eltptr(nums, 0);
-    for (size_t i = 0; i < utarray_len(nums); i++) {
-        min = MIN(min, *(int*)utarray_eltptr(nums, i));
-        max = MAX(max, *(int*)utarray_eltptr(nums, i));
+    int min = nums->data[0];
+    int max = nums->data[0];
+    for (int i = 0; i < nums->size; i++) {
+        min = MIN(min, nums->data[i]);
+        max = MAX(max, nums->data[i]);
     }
 
     // compute average
     int count = 0;
     int sum = 0;
-    for (size_t i = 0; i < utarray_len(nums); i++) {
-        int num = *(int*)utarray_eltptr(nums, i);
+    for (int i = 0; i < nums->size; i++) {
+        int num = nums->data[i];
         if (num != min && num != max) {
             count++;
             sum += num;
@@ -35,14 +34,12 @@ int main(int argc, char* argv[]) {
         die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    UT_array* nums;
-    utarray_new(nums, &ut_int_icd);
+    IntArray* nums = intarray_new();
     for (int i = 0; i < argc; i++) {
-        int num = atoi(argv[i]);
-        utarray_push_back(nums, &num);
+        intarray_push_back(nums, atoi(argv[i]));
     }
     int average = special_average(nums);
 
     printf("%d\n", average);
-    utarray_free(nums);
+    intarray_free(nums);
 }

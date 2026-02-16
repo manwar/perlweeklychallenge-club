@@ -34,5 +34,5 @@ int main(int argc, char* argv[]) {
         die("usage: %s str\n", argv[0]);
 
     bool equal = equal_vowels(argv[1]);
-    printf("%s\n", equal ? "true" : "false");
+    printf("%s\n", bool_to_string(equal));
 }
