@@ -29,7 +29,7 @@ exit(0);
 ################################################################################
 # Given a positive integer, compute the Zeckendorf representation of same,
 # which consists of a series of non-consecutive Fibonacci numbers whose sum
-# equal the integer
+# equals the integer
 # Takes one argument:
 # * The integer to examine (e.g. 100)
 # Returns:
