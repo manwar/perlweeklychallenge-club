@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
 use Modern::Perl;
+
 @ARGV==1 or die "usage: $0 '())()()'\n";
 say longest_sequence($ARGV[0]);
 

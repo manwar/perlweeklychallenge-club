@@ -1,8 +1,7 @@
 #include "alloc.h"
-#include "utarray.h"
 #include <ctype.h>
 
-UT_array* output;
+StrArray* output;
 
 void skip_spaces(const char** pp) {
     while (isspace(**pp)) {
@@ -27,7 +26,8 @@ int eval_term(const char** pp) {
         if (**pp == ')') {
             (*pp)++; // skip ')'
         }
-    } else {
+    }
+    else {
         while (isdigit(**pp)) {
             value = value * 10 + (**pp - '0');
             (*pp)++;
@@ -83,7 +83,7 @@ void find_exprs(const char* expr, const char* digits, int target) {
     if (digits[0] == '\0') {    // no more attempts
         int n = eval_expr(expr);
         if (n == target)
-            utarray_push_back(output, &expr);
+            strarray_push_back(output, expr);
         return;
     }
 
@@ -117,24 +117,14 @@ void find_all_exprs(const char* digits, int target) {
     find_exprs("", digits, target);
 }
 
-int compare(const void* a, const void* b) {
-    return strcmp(*(char**)a, *(char**)b);
-}
-
 int main(int argc, char* argv[]) {
     if (argc != 3)
         die("usage: %s digits target\n", argv[0]);
 
-    utarray_new(output, &ut_str_icd);
+    output = strarray_new();
 
     find_all_exprs(argv[1], atoi(argv[2]));
-    utarray_sort(output, compare);
-    const char* separator = "";
-    for (size_t i = 0; i < utarray_len(output); i++) {
-        printf("%s%s", separator, *(char**)utarray_eltptr(output, i));
-        separator = ", ";
-    }
-    printf("\n");
-
-    utarray_free(output);
+    strarray_sort(output);
+    strarray_print(output);
+    strarray_free(output);
 }

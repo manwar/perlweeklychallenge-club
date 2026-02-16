@@ -1,3 +1,6 @@
+Challenge 327
+https://theweeklychallenge.org/blog/perl-weekly-challenge-327/
+
 Task 1: Missing Integers
 Submitted by: Mohammad Sajid Anwar
 You are given an array of n integers.

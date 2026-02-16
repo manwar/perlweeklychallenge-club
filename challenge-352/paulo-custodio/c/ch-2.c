@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
         int digit = atoi(argv[i]) ? 1 : 0;
         value = 2 * value + digit;
         bool divisible = value % 5 == 0;
-        printf("%s%s", separator, divisible ? "true" : "false");
+        printf("%s%s", separator, bool_to_string(divisible));
         separator = ", ";
     }
     printf("\n");

@@ -20,5 +20,5 @@ int main(int argc, char* argv[]) {
     char* str = xstrdup(argv[1]);
     remove_dups(str);
     printf("%s\n", str);
-    free(str);
+    xfree(str);
 }

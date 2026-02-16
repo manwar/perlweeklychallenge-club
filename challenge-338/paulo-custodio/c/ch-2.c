@@ -1,25 +1,22 @@
 #include "alloc.h"
-#include "utarray.h"
 
-bool read_row(UT_array* nums) {
+bool read_row(IntArray* nums) {
     char line[BUFSIZ];
-    utarray_clear(nums);
+    intarray_clear(nums);
     if (!fgets(line, sizeof(line), stdin))
         return false;
     char* p = strtok(line, " ");
     while (p != NULL) {
         int n = atoi(p);
-        utarray_push_back(nums, &n);
+        intarray_push_back(nums, n);
         p = strtok(NULL, " ");
     }
     return true;
 }
 
 int max_distance() {
-    UT_array* a;
-    utarray_new(a, &ut_int_icd);
-    UT_array* b;
-    utarray_new(b, &ut_int_icd);
+    IntArray* a = intarray_new();
+    IntArray* b = intarray_new();
 
     if (!read_row(a))
         die("missing input data");
@@ -28,17 +25,15 @@ int max_distance() {
         die("missing input data");
 
     int max_dist = 0;
-    for (int i = 0; i < utarray_len(a); i++) {
-        for (int j = 0; j < utarray_len(b); j++) {
-            int dist = abs(*(int*)utarray_eltptr(a, i) -
-                           *(int*)utarray_eltptr(b, j));
+    for (int i = 0; i < a->size; i++) {
+        for (int j = 0; j < b->size; j++) {
+            int dist = abs(a->data[i] - b->data[j]);
             max_dist = MAX(max_dist, dist);
         }
     }
 
-    utarray_free(a);
-    utarray_free(b);
-
+    intarray_free(a);
+    intarray_free(b);
     return max_dist;
 }
 
