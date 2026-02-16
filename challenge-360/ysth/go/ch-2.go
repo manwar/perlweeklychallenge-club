@@ -13,7 +13,7 @@ func WordSorter(sentence string) string {
     // eliminate trailing/double spaces
     var keep int
     for _, word := range words {
-        if word != " " {
+        if word != "" {
             words[keep] = word
             keep++
         }
