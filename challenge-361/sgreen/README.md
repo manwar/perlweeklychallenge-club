@@ -1,3 +1,3 @@
-# The Weekly Challenge 360
+# The Weekly Challenge 361
 
-Blog: [Padding and sorting](https://dev.to/simongreennet/weekly-challenge-padding-and-sorting-3oj8)
+Blog: [Representing a celebrity](https://dev.to/simongreennet/weekly-challenge-representing-a-celebrity-1cfe)
