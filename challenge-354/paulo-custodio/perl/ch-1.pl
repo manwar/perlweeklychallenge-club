@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 
 @ARGV>=2 or die "Usage: $0 nums...\n";
 my @pairs = min_diff(@ARGV);

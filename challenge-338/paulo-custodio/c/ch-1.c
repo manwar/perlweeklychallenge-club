@@ -1,44 +1,34 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-int* read_row(int* count) {
+bool read_row(IntArray* nums) {
     char line[BUFSIZ];
-    int* nums = NULL;
-    *count = 0;
+    intarray_clear(nums);
     if (!fgets(line, sizeof(line), stdin))
-        return NULL;
+        return false;
     char* p = strtok(line, " ");
     while (p != NULL) {
         int n = atoi(p);
-        (*count)++;
-        nums = realloc(nums, *count * sizeof(int));
-        assert(nums);
-        nums[*count-1] = n;
+        intarray_push_back(nums, n);
         p = strtok(NULL, " ");
     }
-    return nums;
+    return true;
 }
 
-int sum_row(int* nums, int count) {
+int sum_row(IntArray* nums) {
     int sum = 0;
-    for (int i = 0; i < count; i++)
-        sum += nums[i];
+    for (int i = 0; i < nums->size; i++)
+        sum += nums->data[i];
     return sum;
 }
 
 int max_rows() {
-    int* nums = NULL;
-    int count = 0;
+    IntArray* nums = intarray_new();
     int max = 0;
-    while ((nums = read_row(&count)) != NULL) {
-        int sum = sum_row(nums, count);
+    while (read_row(nums)) {
+        int sum = sum_row(nums);
         max = MAX(max, sum);
-        free(nums);
     }
+    intarray_free(nums);
     return max;
 }
 

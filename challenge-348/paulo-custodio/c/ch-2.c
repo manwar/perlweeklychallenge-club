@@ -1,13 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 int get_minutes(const char* str) {
     const char* colon = strchr(str, ':');
-    if (colon == NULL) {
-        fprintf(stderr, "invalid time %s, expected hh:mm\n", str);
-        exit(EXIT_FAILURE);
-    }
+    if (colon == NULL)
+        die("invalid time %s, expected hh:mm\n", str);
+
     int h = atoi(str);
     int m = atoi(colon+1);
     int min = 60*h+m;
@@ -33,10 +30,8 @@ int get_num_ops(int min1, int min2) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s hh:mm hh:mm\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 3)
+        die("usage: %s hh:mm hh:mm\n", argv[0]);
 
     int t1 = get_minutes(argv[1]);
     int t2 = get_minutes(argv[2]);

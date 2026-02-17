@@ -1,7 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 #define FindLength 3
 
@@ -17,10 +14,8 @@ bool is_good(const char* str, size_t len) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s str\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s str", argv[0]);
 
     const char *str = argv[1];
     size_t len = strlen(str);

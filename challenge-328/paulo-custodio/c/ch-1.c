@@ -1,32 +1,13 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-char prev(const char* str, int i) {
-    int len = strlen(str);
-    if (i == 0 || i >= len)
-        return '\0';
-    else
-        return str[i-1];
-}
-
-char next(const char* str, int i) {
-    int len = strlen(str);
-    if (i < 0 || i >= len-1)
-        return '\0';
-    else
-        return str[i+1];
-}
+#include "alloc.h"
 
 void replace_quest(char* str) {
     int len = strlen(str);
     for (int i=0; i < len; i++) {
         if (str[i] == '?') {
-            char p = prev(str, i);
-            char n = next(str, i);
+            char prev = i == 0 ? '\0' : str[i-1];
+            char next = str[i+1];
             for (char c = 'a'; c <= 'z'; c++) {
-                if (c != p && c != n) {
+                if (c != prev && c != next) {
                     str[i] = c;
                     break;
                 }
@@ -36,14 +17,11 @@ void replace_quest(char* str) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
 
-    char* str = strdup(argv[1]);
-    assert(str);
+    char* str = xstrdup(argv[1]);
     replace_quest(str);
     printf("%s\n", str);
-    free(str);
+    xfree(str);
 }

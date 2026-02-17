@@ -1,9 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef struct {
     int k;
@@ -42,7 +38,6 @@ const char* scan_name_equal(const char* line, const char* name) {
 int* scan_int_list(const char** pptr, size_t* count) {
     const char* p = *pptr;
     int* list = NULL;
-    *count = 0;
     while (true) {
         SKIP_WS(p);
         if (*p == '\0' || (!isdigit(*p) && *p != '-' && *p != '+')) {
@@ -54,10 +49,10 @@ int* scan_int_list(const char** pptr, size_t* count) {
         if (n != 1) {
             break;
         }
+
+        list = xrealloc(list, (*count+1) * sizeof(int));
+        list[*count] = value;
         (*count)++;
-        list = (int*)realloc(list, *count * sizeof(int));
-        assert(list != NULL);
-        list[*count - 1] = value;
 
         // skip digits
         while (*p != '\0' && (isdigit(*p) || *p == '-' || *p == '+')) {
@@ -77,8 +72,7 @@ int* scan_int_list(const char** pptr, size_t* count) {
 Data* scan_data() {
     char line[BUFSIZ];
 
-    Data* data = (Data*)calloc(1, sizeof(Data));
-    assert(data != NULL);
+    Data* data = xcalloc(1, sizeof(Data));
 
     // read one line from stdin
     if (fgets(line, sizeof(line), stdin) == NULL) {
@@ -97,19 +91,18 @@ Data* scan_data() {
 
     // parse matrix
     do {
-        size_t cols = 0;
-        int* row = scan_int_list(&p, &cols);
+        size_t count = 0;
+        int* row = scan_int_list(&p, &count);
         if (data->cols == 0) {
-            data->cols = cols;
+            data->cols = count;
         }
-        else if (cols != data->cols) {
+        else if (data->cols != count) {
             fputs("Inconsistent number of columns in matrix\n", stderr);
             free(row);
             free(data);
             return NULL;
         }
-        data->matrix = (int**)realloc(data->matrix, (data->rows + 1) * sizeof(int*));
-        assert(data->matrix != NULL);
+        data->matrix = xrealloc(data->matrix, (data->rows + 1) * sizeof(int*));
         data->matrix[data->rows] = row;
         data->rows++;
 
@@ -183,5 +176,4 @@ int main() {
     shift_grid_k_times(data->matrix, data->rows, data->cols, data->k);
     print_matrix(data->matrix, data->rows, data->cols);
     free_data(data);
-    return EXIT_SUCCESS;
 }

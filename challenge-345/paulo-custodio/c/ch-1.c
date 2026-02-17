@@ -1,55 +1,35 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
-int* find_peeks(int* nums, int nums_size) {
-    int* peeks = NULL;
-    int peeks_size = 0;
+IntArray* find_peeks(IntArray* nums) {
+    IntArray* peeks = intarray_new();
 
-    for (int i = 1; i < nums_size-1; i++) {
-        if (nums[i] > nums[i-1] && nums[i] > nums[i+1]) {
+    for (int i = 1; i < nums->size - 1; i++) {
+        int peek = nums->data[i];
+        if (peek > nums->data[i - 1] && peek > nums->data[i + 1]) {
             // found peek
-            peeks_size++;
-            peeks = realloc(peeks, peeks_size * sizeof(int));
-            assert(peeks);
-            peeks[peeks_size-1] = i;
+            intarray_push_back(peeks, i);
         }
     }
-
-    // add terminator
-    peeks_size++;
-    peeks = realloc(peeks, peeks_size * sizeof(int));
-    assert(peeks);
-    peeks[peeks_size-1] = -1;
-
     return peeks;
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums);
+    IntArray* nums = intarray_new();
     for (int i = 0; i < argc; i++)
-        nums[i] = atoi(argv[i]);
+        intarray_push_back(nums, atoi(argv[i]));
+    IntArray* peeks = find_peeks(nums);
 
-    int* peeks = find_peeks(nums, argc);
-
-    if (peeks[0] < 0) {
+    if (peeks->size == 0) {
         printf("0\n");
     }
     else {
-        const char* separator = "";
-        for (int i = 0; peeks[i] >= 0; i++) {
-            printf("%s%d", separator, peeks[i]);
-            separator = ", ";
-        }
+        intarray_print(peeks);
     }
 
-    free(peeks);
-    free(nums);
+    intarray_free(peeks);
+    intarray_free(nums);
 }

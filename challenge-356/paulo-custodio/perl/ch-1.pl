@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 
 use Modern::Perl;
-use Data::Dump 'dump';
 
 sub kolakoski {
     my($n) = @_;

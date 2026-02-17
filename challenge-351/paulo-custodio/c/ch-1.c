@@ -1,28 +1,25 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
-int special_average(int* nums, size_t size) {
-    if (size == 0)
+int special_average(IntArray* nums) {
+    if (nums->size == 0)
         return 0;
 
     // get minimum and maximum
-    int min = nums[0];
-    int max = nums[0];
-    for (size_t i = 0; i < size; i++) {
-        if (nums[i] < min)
-            min = nums[i];
-        if (nums[i] > max)
-            max = nums[i];
+    int min = nums->data[0];
+    int max = nums->data[0];
+    for (int i = 0; i < nums->size; i++) {
+        min = MIN(min, nums->data[i]);
+        max = MAX(max, nums->data[i]);
     }
 
     // compute average
     int count = 0;
     int sum = 0;
-    for (size_t i = 0; i < size; i++) {
-        if (nums[i] != min && nums[i] != max) {
+    for (int i = 0; i < nums->size; i++) {
+        int num = nums->data[i];
+        if (num != min && num != max) {
             count++;
-            sum += nums[i];
+            sum += num;
         }
     }
 
@@ -33,17 +30,16 @@ int special_average(int* nums, size_t size) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s nums...\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc < 2)
+        die("usage: %s nums...\n", argv[0]);
 
     argv++; argc--;
-    int* nums = malloc(argc * sizeof(int));
-    assert(nums != NULL);
-    for (int i = 0; i < argc; i++)
-        nums[i] = atoi(argv[i]);
-    int average = special_average(nums, argc);
+    IntArray* nums = intarray_new();
+    for (int i = 0; i < argc; i++) {
+        intarray_push_back(nums, atoi(argv[i]));
+    }
+    int average = special_average(nums);
+
     printf("%d\n", average);
-    free(nums);
+    intarray_free(nums);
 }

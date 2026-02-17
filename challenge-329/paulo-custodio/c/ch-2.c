@@ -1,9 +1,5 @@
-#include <assert.h>
+#include "alloc.h"
 #include <ctype.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 bool is_nice_string(const char* str, int start, int len) {
     bool count[UCHAR_MAX] = {false};
@@ -28,27 +24,19 @@ char* nice_substring(const char* str) {
     for (int i = 0; i < len; i++) {
         for (int sublen = len-i; sublen > 0; sublen--) {
             if (is_nice_string(str, i, sublen)) {
-                char* result = malloc(sublen+1);
-                assert(result);
-                strncpy(result, str+i, sublen);
-                result[sublen] = '\0';
-                return result;
+                return xstrndup(str+i, sublen);
             }
         }
     }
 
-    char* result = strdup("");
-    assert(result);
-    return result;
+    return xstrdup("");
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s string\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 2)
+        die("usage: %s string", argv[0]);
 
     char* result = nice_substring(argv[1]);
     printf("%s\n", result);
-    free(result);
+    xfree(result);
 }

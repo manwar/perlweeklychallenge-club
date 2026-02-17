@@ -1,7 +1,4 @@
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
 bool are_buddies(char* str1, char* str2) {
     int len = strlen(str1);
@@ -19,11 +16,15 @@ bool are_buddies(char* str1, char* str2) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "usage: %s str1 str2\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+    if (argc != 3)
+        die("usage: %s str1 str2", argv[0]);
 
-    bool buddies = are_buddies(argv[1], argv[2]);
+    char* str1 = xstrdup(argv[1]);
+    char* str2 = xstrdup(argv[2]);
+
+    bool buddies = are_buddies(str1, str2);
     printf("%s\n", buddies ? "true" : "false");
+
+    xfree(str1);
+    xfree(str2);
 }

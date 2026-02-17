@@ -1,23 +1,20 @@
-#include <assert.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "alloc.h"
 
-bool check_mountain(int* nums, size_t size) {
-    if (size < 3)
+bool check_mountain(IntArray* nums) {
+    if (nums->size < 3)
         return false;
-    if (nums[0] >= nums[1])
+    if (nums->data[0] >= nums->data[1])
         return false;
     bool climbing = true;
-    for (size_t i = 1; i < size; i++) {
-        if (nums[i] == nums[i-1]) {         // flat
+    for (int i = 1; i < nums->size; i++) {
+        if (nums->data[i] == nums->data[i-1]) {         // flat
             return false;
         }
-        else if (nums[i] > nums[i-1]) {     // climbing
+        else if (nums->data[i] > nums->data[i-1]) {     // climbing
             if (!climbing)
                 return false;
         }
-        else {                              // descending
+        else {                                          // descending
             if (climbing)
                 climbing = false;
         }
@@ -26,27 +23,15 @@ bool check_mountain(int* nums, size_t size) {
 }
 
 int main(int argc, char*argv[]) {
-    if (argc < 2) {
-        fputs("Usage: ch-1 numbers...\n", stderr);
-        exit(EXIT_FAILURE);
+    if (argc < 2)
+        die("Usage: %s numbers...", argv[0]);
+
+    argc--; argv++;
+    IntArray* nums = intarray_new();
+    for (int i = 0; i < argc; i++) {
+        intarray_push_back(nums, atoi(argv[i]));
     }
-
-    // alloc array
-    size_t size = argc - 1;
-    int* nums = malloc(size * sizeof(int));
-    assert(nums);
-
-    // fill array
-    for (size_t i = 0; i < size; i++) {
-        nums[i] = atoi(argv[i+1]);
-    }
-
-    // check if it is a mountain
-    bool is_mountain = check_mountain(nums, size);
-
-    // free memory
-    free(nums);
-
-    // output
-    printf("%s\n", is_mountain ? "true" : "false");
+    bool is_mountain = check_mountain(nums);
+    printf("%s\n", bool_to_string(is_mountain));
+    intarray_free(nums);
 }

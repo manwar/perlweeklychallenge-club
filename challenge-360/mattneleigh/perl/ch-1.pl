@@ -64,7 +64,7 @@ sub center_in_asterisks{
                 :
                 # The remaining width is even
                 '*' x ($length /= 2) . $string . '*' x $length
-    )
+    );
 
 }
 

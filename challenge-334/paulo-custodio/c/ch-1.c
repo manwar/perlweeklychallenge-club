@@ -1,23 +1,15 @@
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "alloc.h"
 
-int* read_nums(int* count) {
+IntArray* read_nums() {
+    IntArray* nums = intarray_new();
+
     char line[BUFSIZ];
     if (!fgets(line, sizeof(line), stdin))
-        return NULL;
+        return nums;
 
-    int* nums = NULL;
-    *count = 0;
     char* p = strtok(line, " ");
     while (p != NULL) {
-        int n = atoi(p);
-        (*count)++;
-        nums = realloc(nums, (*count) * sizeof(int));
-        assert(nums);
-        nums[(*count)-1] = n;
-
+        intarray_push_back(nums, atoi(p));
         p = strtok(NULL, " ");
     }
 
@@ -25,25 +17,25 @@ int* read_nums(int* count) {
 }
 
 int sum_range() {
-    int nums_count = 0;
-    int* nums = read_nums(&nums_count);
-    if (nums == NULL)
+    IntArray* nums = read_nums();
+    if (nums->size == 0) {
+        intarray_free(nums);
         return 0;
+    }
 
-    int range_count = 0;
-    int* range = read_nums(&range_count);
-    if (range == NULL || range_count != 2) {
-        free(nums);
+    IntArray* range = read_nums();
+    if (range->size != 2) {
+        intarray_free(nums);
+        intarray_free(range);
         return 0;
     }
 
     int sum = 0;
-    for (int i = range[0]; i <= range[1]; i++)
-        sum += nums[i];
+    for (int i = range->data[0]; i <= range->data[1] && i < nums->size; i++)
+        sum += nums->data[i];
 
-    free(nums);
-    free(range);
-
+    intarray_free(nums);
+    intarray_free(range);
     return sum;
 }
 
