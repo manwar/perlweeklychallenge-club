@@ -1,5 +1,4 @@
 #include "alloc.h"
-#include "utstring.h"
 #include <ctype.h>
 
 void capitalize_word(char* p) {
@@ -16,17 +15,16 @@ int main(int argc, char* argv[]) {
     if (argc < 2)
         die("usage: %s sentence", argv[0]);
 
-    UT_string* str;
-    utstring_new(str);
+    Str* str = str_new();
 
     for (int i = 1; i < argc; i++) {
         if (i > 1)
-            utstring_printf(str, " ");
-        size_t orig_len = utstring_len(str);
-        utstring_printf(str, "%s", argv[i]);
-        capitalize_word(utstring_body(str) + orig_len);
+            str_append(str, " ");
+        int orig_len = str->size;
+        str_append(str, argv[i]);
+        capitalize_word(str->body + orig_len);
     }
 
-    printf("%s\n", utstring_body(str));
-    utstring_free(str);
+    printf("%s\n", str->body);
+    str_free(str);
 }

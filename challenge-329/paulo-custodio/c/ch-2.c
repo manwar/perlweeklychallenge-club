@@ -38,5 +38,5 @@ int main(int argc, char* argv[]) {
 
     char* result = nice_substring(argv[1]);
     printf("%s\n", result);
-    free(result);
+    xfree(result);
 }

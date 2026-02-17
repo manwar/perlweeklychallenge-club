@@ -1,21 +1,20 @@
 #include "alloc.h"
-#include "utarray.h"
 
-bool check_mountain(UT_array* nums) {
-    if (utarray_len(nums) < 3)
+bool check_mountain(IntArray* nums) {
+    if (nums->size < 3)
         return false;
-    if (*(int*)utarray_eltptr(nums, 0) >= *(int*)utarray_eltptr(nums, 1))
+    if (nums->data[0] >= nums->data[1])
         return false;
     bool climbing = true;
-    for (size_t i = 1; i < utarray_len(nums); i++) {
-        if (*(int*)utarray_eltptr(nums, i) == *(int*)utarray_eltptr(nums, i-1)) {         // flat
+    for (int i = 1; i < nums->size; i++) {
+        if (nums->data[i] == nums->data[i-1]) {         // flat
             return false;
         }
-        else if (*(int*)utarray_eltptr(nums, i) > *(int*)utarray_eltptr(nums, i-1)) {     // climbing
+        else if (nums->data[i] > nums->data[i-1]) {     // climbing
             if (!climbing)
                 return false;
         }
-        else {                              // descending
+        else {                                          // descending
             if (climbing)
                 climbing = false;
         }
@@ -28,13 +27,11 @@ int main(int argc, char*argv[]) {
         die("Usage: %s numbers...", argv[0]);
 
     argc--; argv++;
-    UT_array* nums;
-    utarray_new(nums, &ut_int_icd);
+    IntArray* nums = intarray_new();
     for (int i = 0; i < argc; i++) {
-        int num = atoi(argv[i]);
-        utarray_push_back(nums, &num);
+        intarray_push_back(nums, atoi(argv[i]));
     }
     bool is_mountain = check_mountain(nums);
-    printf("%s\n", is_mountain ? "true" : "false");
-    utarray_free(nums);
+    printf("%s\n", bool_to_string(is_mountain));
+    intarray_free(nums);
 }

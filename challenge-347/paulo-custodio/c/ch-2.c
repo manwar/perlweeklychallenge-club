@@ -36,13 +36,19 @@ int main(int argc, char* argv[]) {
     if (argc < 2)
         die("usage: %s number\n", argv[0]);
 
-    char buf1[BUFSIZ] = {0};
-    for (int i = 1; i < argc; i++)
-        strcat(buf1, argv[i]);
-    remove_non_digits(buf1);
+    Str* buf1 = str_new();
+    for (int i = 1; i < argc; i++) {
+        str_append(buf1, argv[i]);
+    }
+    remove_non_digits(buf1->body);
+    str_sync_size(buf1);
 
-    char buf2[BUFSIZ];
-    format_number(buf1, buf2);
+    Str* buf2 = str_new();
+    str_reserve(buf2, 2 * buf1->size);
+    format_number(buf1->body, buf2->body);
 
-    printf("%s\n", buf2);
+    printf("%s\n", buf2->body);
+
+    str_free(buf1);
+    str_free(buf2);
 }

@@ -1,32 +1,30 @@
 #include "alloc.h"
-#include "utarray.h"
 
-void kolakoski(int n, UT_array* seq, UT_array* count) {
+void kolakoski(int n, IntArray* seq, IntArray* count) {
     // init sequence
-    int num;
-    num = 1; utarray_push_back(seq, &num);
-    num = 2; utarray_push_back(seq, &num);
-    num = 2; utarray_push_back(seq, &num);
+    intarray_push_back(seq, 1);
+    intarray_push_back(seq, 2);
+    intarray_push_back(seq, 2);
 
     // init count
-    num = 1; utarray_push_back(count, &num);
-    num = 2; utarray_push_back(count, &num);
+    intarray_push_back(count, 1);
+    intarray_push_back(count, 2);
 
     // compute sequence
     for (int i = 3; i <= n; i++) {
-        int cnt = *(int*)utarray_eltptr(seq, i-1);
-        int num = 3 - *(int*)utarray_eltptr(seq, utarray_len(seq) - 1);
+        int cnt = seq->data[i - 1];
+        int num = 3 - seq->data[seq->size - 1];
         for (int j = 0; j < cnt; j++) {
-            utarray_push_back(seq, &num);
+            intarray_push_back(seq, num);
         }
-        utarray_push_back(count, &cnt);
+        intarray_push_back(count, cnt);
     }
 }
 
-int count_ones(UT_array* nums) {
+int count_ones(IntArray* nums) {
     int count = 0;
-    for (size_t i = 0; i < utarray_len(nums); i++) {
-        if (*(int*)utarray_eltptr(nums, i) == 1)
+    for (int i = 0; i < nums->size; i++) {
+        if (nums->data[i] == 1)
             count++;
     }
     return count;
@@ -38,15 +36,13 @@ int main(int argc, char* argv[]) {
 
     int n = atoi(argv[1]);
 
-    UT_array* seq;
-    utarray_new(seq, &ut_int_icd);
-    UT_array* count;
-    utarray_new(count, &ut_int_icd);
+    IntArray* seq = intarray_new();
+    IntArray* count = intarray_new();
 
     kolakoski(n, seq, count);
     int ones = count_ones(count);
     printf("%d\n", ones);
 
-    utarray_free(seq);
-    utarray_free(count);
+    intarray_free(seq);
+    intarray_free(count);
 }
