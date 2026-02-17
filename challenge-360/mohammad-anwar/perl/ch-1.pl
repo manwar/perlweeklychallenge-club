@@ -5,22 +5,31 @@ use warnings;
 
 use Test::More;
 
-my @examples = (
-    { in => ["Hi",    5], out => "*Hi**"      },
-    { in => ["Code", 10], out => "***Code***" },
-    { in => ["Hello", 9], out => "**Hello**"  },
-    { in => ["Perl",  4], out => "Perl"       },
-    { in => ["A",     7], out => "***A***"    },
-    { in => ["" ,     5], out => "*****"      },
+my %examples = (
+    4   => "3,1"   ,
+    12  => "8,3,1" ,
+    20  => "13,5,2",
+    96  => "89,5,2",
+    100 => "89,8,3",
 );
 
-is justify_text(@{$_->{in}}), $_->{out} for @examples;
+is zeckendorf($_), $examples{$_} for keys %examples;
 
 done_testing;
 
-sub justify_text {
-    my ($str, $width) = @_;
+sub zeckendorf {
+    my $n = shift;
+    my @f = (1, 2);
 
-    my $pad = $width - length $str;
-    return "*" x int($pad / 2) . $str . "*" x ($pad - int($pad / 2));
+    push(@f, $f[-1] + $f[-2]) while $f[-1] <= $n;
+    pop @f;
+    my @r;
+    for (my $i = $#f; $i >= 0; $i--) {
+        if ($f[$i] <= $n) {
+            push @r, $f[$i];
+            $n -= $f[$i];
+        }
+    }
+
+    return join ",", @r;
 }
