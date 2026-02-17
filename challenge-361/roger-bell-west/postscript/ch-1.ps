@@ -1,0 +1,153 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+
+% end included library code
+
+/zeckendorfrepresentation {
+    0 dict begin
+    /a exch def
+    /fib [ 0 1
+           {
+               dup a gt {
+                   exit
+               } if
+               2 copy add
+           } loop
+           pop ] def
+    [
+        {
+            a 0 le {
+                exit
+            } if
+            fib fib length 1 sub get
+            dup
+            a exch
+            sub
+            /a exch def
+            /fib [
+                fib aload pop
+                pop pop
+            ] def
+            {
+                fib fib length 1 sub get a gt {
+                    /fib fib apop.right pop def
+                } {
+                    exit
+                } ifelse
+            } loop
+        } loop
+    ]
+    end
+} bind def
+
+(zeckendorfrepresentation) test.start
+4 zeckendorfrepresentation [3 1] deepeq test
+12 zeckendorfrepresentation [8 3 1] deepeq test
+20 zeckendorfrepresentation [13 5 2] deepeq test
+96 zeckendorfrepresentation [89 5 2] deepeq test
+100 zeckendorfrepresentation [89 8 3] deepeq test
+test.end
