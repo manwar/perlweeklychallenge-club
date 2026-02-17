@@ -1,0 +1,68 @@
+MODULE Ch2 EXPORTS Main;
+
+IMPORT SIO;
+
+VAR
+  A1 := ARRAY[0..5],[0..5] OF INTEGER{
+  ARRAY[0..5] OF INTEGER{0,0,0,0,1,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,1,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,1,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,1,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,0,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,1,0}};
+  
+  A2 := ARRAY[0..3],[0..3] OF INTEGER{
+  ARRAY[0..3] OF INTEGER{0,1,0,0},
+  ARRAY[0..3] OF INTEGER{0,0,1,0},
+  ARRAY[0..3] OF INTEGER{0,0,0,1},
+  ARRAY[0..3] OF INTEGER{1,0,0,0}};
+  
+  A3 := ARRAY[0..4],[0..4] OF INTEGER{
+  ARRAY[0..4] OF INTEGER{0,0,0,0,0},
+  ARRAY[0..4] OF INTEGER{1,0,0,0,0},
+  ARRAY[0..4] OF INTEGER{1,0,0,0,0},
+  ARRAY[0..4] OF INTEGER{1,0,0,0,0},
+  ARRAY[0..4] OF INTEGER{1,0,0,0,0}};
+  
+  A4 := ARRAY[0..5],[0..5] OF INTEGER{
+  ARRAY[0..5] OF INTEGER{0,1,0,1,0,1},
+  ARRAY[0..5] OF INTEGER{1,0,1,1,0,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,1,1,0},
+  ARRAY[0..5] OF INTEGER{0,0,0,0,0,0},
+  ARRAY[0..5] OF INTEGER{0,1,0,1,0,0},
+  ARRAY[0..5] OF INTEGER{1,0,1,1,0,0}};
+  
+  A5 := ARRAY[0..3],[0..3] OF INTEGER{
+  ARRAY[0..3] OF INTEGER{0,1,1,0},
+  ARRAY[0..3] OF INTEGER{1,0,1,0},
+  ARRAY[0..3] OF INTEGER{0,0,0,0},
+  ARRAY[0..3] OF INTEGER{0,0,0,0}};
+  
+  A6 := ARRAY[0..3],[0..3] OF INTEGER{
+  ARRAY[0..3] OF INTEGER{0,0,1,1},
+  ARRAY[0..3] OF INTEGER{1,0,0,0},
+  ARRAY[0..3] OF INTEGER{1,1,0,1},
+  ARRAY[0..3] OF INTEGER{1,1,0,0}};
+  
+PROCEDURE FindCelebrity(VAR A:ARRAY OF ARRAY OF INTEGER):INTEGER =
+  VAR Cand := 0;
+  BEGIN
+    IF NUMBER(A) = 0 THEN RETURN -1 END;
+    FOR I := FIRST(A)+1 TO LAST(A) DO
+      IF A[Cand,I] = 1 THEN Cand := I END
+    END;
+    FOR I := FIRST(A) TO LAST(A) DO
+      IF I # Cand AND (A[Cand,I] = 1 OR A[I,Cand] # 1) THEN RETURN -1 END
+    END;
+    RETURN Cand
+  END FindCelebrity;
+
+BEGIN
+  SIO.PutInt(FindCelebrity(A1)); SIO.Nl();
+  SIO.PutInt(FindCelebrity(A2)); SIO.Nl();
+  SIO.PutInt(FindCelebrity(A3)); SIO.Nl();
+  SIO.PutInt(FindCelebrity(A4)); SIO.Nl();
+  SIO.PutInt(FindCelebrity(A5)); SIO.Nl();
+  SIO.PutInt(FindCelebrity(A6)); SIO.Nl();
+END Ch2.
+
