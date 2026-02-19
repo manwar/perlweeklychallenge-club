@@ -1,26 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 316
-#
-# Task 1: Circular
-# Submitted by: Mohammad Sajid Anwar
-# You are given a list of words.
-#
-# Write a script to find out whether the last character of each word is the first character of the following word.
-#
-#
-# Example 1
-# Input: @list = ("perl", "loves", "scala")
-# Output: true
-#
-# Example 2
-# Input: @list = ("love", "the", "programming")
-# Output: false
-#
-# Example 3
-# Input: @list = ("java", "awk", "kotlin", "node.js")
-# Output: true
-
 use Modern::Perl;
 
 @ARGV or die "usage: $0 strs...\n";
