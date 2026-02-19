@@ -24,7 +24,7 @@ my @Test =
 ;
 plan +@Test ÷ 2;
 
-sub task( Any:D(Str) $a -->Str) {
+sub task( Str:D(Any) $a -->Str) {
     $a.words.sort( {$^a.fc cmp $^b.fc}).join(' ')
 }
 

@@ -25,8 +25,8 @@ my @Test =
 ;
 plan +@Test ÷ 3;
 
-multi task( Any:D(Str) $a, Any:D(Int) $width where * == $a.chars) { $a}
-multi task( Any:D(Str) $a, Any:D(Int) $width where *  > $a.chars -->Str:D ) {
+multi task( Str:D(Any) $a, Any:D(Int) $width where * == $a.chars) { $a}
+multi task( Str:D(Any) $a, Any:D(Int) $width where *  > $a.chars -->Str:D ) {
     my $fill = ($width - $a.chars) ÷ 2;
     (FILL-CHAR x $fill.floor()) ~  $a ~ (FILL-CHAR x $fill.ceiling);
 }

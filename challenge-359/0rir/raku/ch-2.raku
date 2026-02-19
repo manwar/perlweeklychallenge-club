@@ -22,7 +22,7 @@ my @Test =
 ;
 plan +@Test ÷ 2;
 
-sub task( Any:D(Str) $a is copy where { /^ <:L>* $/ } -->Str:D) {
+sub task( Str:D(Any) $a is copy where { /^ <:L>* $/ } -->Str:D) {
     my $ret;
     repeat {
         $ret = $a;
