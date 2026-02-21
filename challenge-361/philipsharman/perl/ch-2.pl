@@ -26,6 +26,7 @@ test_3();
 test_4();
 test_5();
 test_6();
+test_7();
 
 say "";
 say "Done.";
@@ -110,6 +111,18 @@ sub test_6 {
 	is( $result, $expectedResult, 'Test 6' );
 }
 
+sub test_7 {
+	my @party = (
+		[ 0, 0, 1, 1 ],          # 0 knows 2 and 3
+		[ 0, 0, 1, 1 ],          # 1 knows 2 and 3
+		[ 0, 0, 0, 0 ],          # 2 knows NOBODY
+		[ 0, 0, 0, 0 ],          # 3 knows NOBODY
+	);
+	my $result         = examine( @party );
+	my $expectedResult = -1;
+	is( $result, $expectedResult, 'Test 7' );
+}
+
 ##############################################################################################################
 ##      SUBROUTINES                                                                                        ###
 ##############################################################################################################
@@ -135,13 +148,13 @@ sub examine( @party ) {
 	} elsif ( scalar( @possibleCelebrities ) == 1 ) {
 		say "There is 1 possible celebrity: " . join( ', ', @possibleCelebrities );
 	} else {
-		say "There are " . scalar( @possibleCelebrities ) . " possible celebrities:" . join( ', ', @possibleCelebrities );
+		say "There are " . scalar( @possibleCelebrities ) . " possible celebrities: " . join( ', ', @possibleCelebrities );
 	}
 
 	# ------------------------------------------------------------------------------------------------------ #
 	# 2) See if any of the possible celebrities are actual celebrities. (I.E., check if everyone else knows
 	#    them.)
-	my @actualCelebrities;
+	my $actualCelebrity;
 	for my $possilbeCelebrityIndex ( @possibleCelebrities ) {
 		my $isCelebrity = true;
 
@@ -150,7 +163,7 @@ sub examine( @party ) {
 			my @array = @{ $arrayRef };
 
 			if ( $index != $possilbeCelebrityIndex ) {
-				say "$index: \$array[ $possilbeCelebrityIndex ] =  $array[ $possilbeCelebrityIndex ]";
+				# say "$index: \$array[ $possilbeCelebrityIndex ] =  $array[ $possilbeCelebrityIndex ]";
 				if ( $array[ $possilbeCelebrityIndex ] != 1 ) {
 					$isCelebrity = false;
 					say "$possilbeCelebrityIndex is not a celebrity.";
@@ -162,21 +175,15 @@ sub examine( @party ) {
 
 		if ( $isCelebrity ) {
 			say "$possilbeCelebrityIndex is a celebrity.";
-			push( @actualCelebrities, $possilbeCelebrityIndex );
+			$actualCelebrity = $possilbeCelebrityIndex;
 		}
 	}
 
-	my $n = scalar( @actualCelebrities );
-	if ( $n == 0 ) {
+	if ( not defined( $actualCelebrity ) ) {
 		say "No celebrities found.";
 		return -1;
-	} elsif ( $n == 1 ) {
-		my $celebrity = $actualCelebrities[ 0 ];
-		return $celebrity;
-	} elsif ( $n > 1 ) {
-		die "ERROR: This should not happen. We found $n celebrities.  We expected 0 or 1.";
 	} else {
-		die "ERROR: This should not happen. n = $n.";
+		return $actualCelebrity;
 	}
 
 	# ------------------------------------------------------------------------------------------------------ #
