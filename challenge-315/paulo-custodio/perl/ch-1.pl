@@ -5,7 +5,7 @@ use Modern::Perl;
 my @words = split ' ', <>;
 chomp(my $char = <>);
 
-say join ", ", indices_words($char, @words);
+say "(", join(", ", indices_words($char, @words)), ")";
 
 sub indices_words {
     my($char, @words) = @_;

@@ -43,6 +43,3 @@ int main(int argc, char* argv[]) {
     intarray_print(common);
     intarray_free(common);
 }
-
-
-

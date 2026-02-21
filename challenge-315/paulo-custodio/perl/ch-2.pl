@@ -6,7 +6,7 @@ my @words = split /\W+/, <>;
 chomp(my $first = <>);
 chomp(my $second = <>);
 
-say join ", ", find_third($first, $second, @words);
+say "(", join(", ", find_third($first, $second, @words)), ")";
 
 sub find_third {
     my($first, $second, @words) = @_;

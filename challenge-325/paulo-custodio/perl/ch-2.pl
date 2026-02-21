@@ -3,7 +3,7 @@
 use Modern::Perl;
 
 @ARGV or die "usage: $0 prices...\n";
-say join ", ", final_prices(@ARGV);
+say "(", join(", ", final_prices(@ARGV)), ")";
 
 sub final_prices {
     my(@prices) = @_;

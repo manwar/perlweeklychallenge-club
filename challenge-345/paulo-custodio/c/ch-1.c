@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     IntArray* peeks = find_peeks(nums);
 
     if (peeks->size == 0) {
-        printf("0\n");
+        printf("(0)\n");
     }
     else {
         intarray_print(peeks);
