@@ -4,7 +4,7 @@ use Modern::Perl;
 
 @ARGV or die "usage: $0 nums...\n";
 my @visitors = last_visitor(@ARGV);
-say join ", ", @visitors;
+say "(", join(", ", @visitors), ")";
 
 sub last_visitor {
     my(@nums) = @_;

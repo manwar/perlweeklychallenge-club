@@ -4,9 +4,9 @@ use Modern::Perl;
 use Test::More;
 require "../../challenge-001/paulo-custodio/testlib.pl";
 
-test_line(1, "abccccd",         "cccc");
-test_line(1, "aaabcddddeefff",  "aaa, dddd, fff");
-test_line(1, "abcdd",           "");
+test_line(1, "abccccd",         "(cccc)");
+test_line(1, "aaabcddddeefff",  "(aaa, dddd, fff)");
+test_line(1, "abcdd",           "()");
 
 test_block(2, <<'IN', "true");
 3 2 1 4

@@ -7,4 +7,4 @@ my @output;
 while (my($count, $num) = splice(@ARGV, 0, 2)) {
     push @output, ($num) x $count;
 }
-say join ", ", @output;
+say "(", join(", ", @output), ")";

@@ -4,7 +4,7 @@ use Modern::Perl;
 
 @ARGV or die "usage: $0 nums...\n";
 my @peeks = find_peeks(@ARGV);
-say join ", ", @peeks;
+say "(", join(", ", @peeks), ")";
 
 sub find_peeks {
     my(@n) = @_;

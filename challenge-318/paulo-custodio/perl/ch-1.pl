@@ -3,7 +3,7 @@
 use Modern::Perl;
 
 @ARGV==1 or die "usage: $0 str";
-say join ", ", find_groups($ARGV[0]);
+say "(", join(", ", find_groups($ARGV[0])), ")";
 
 sub find_groups {
     my($str) = @_;

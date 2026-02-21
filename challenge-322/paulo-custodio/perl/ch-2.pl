@@ -4,7 +4,7 @@ use Modern::Perl;
 use List::Util qw(uniq);
 
 @ARGV or die "usage $0 nums...\n";
-say join ", ", rank(@ARGV);
+say "(", join(", ", rank(@ARGV)), ")";
 
 sub rank {
     my(@nums) = @_;
