@@ -7,7 +7,7 @@ use List::Util qw(sum);
 
 my $N = 0+shift;
 my @seq = get_zeckendorf($N);
-say join ", ", @seq;
+say "(", join(", ", @seq), ")";
 
 sub get_fibonacci {
     my ($n) = @_;

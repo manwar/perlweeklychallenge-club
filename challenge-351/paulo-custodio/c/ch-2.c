@@ -1,7 +1,5 @@
 #include "alloc.h"
 
-#define Epsilon 1e-9
-
 int compare(const void* a, const void* b) {
     if (*(double*)a < *(double*)b) return -1;
     if (*(double*)a > *(double*)b) return 1;

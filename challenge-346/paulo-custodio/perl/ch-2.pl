@@ -10,7 +10,7 @@ my($digits, $target) = @ARGV;
 
 my @all_expr = generate_expressions($digits);
 my @result = grep { eval($_) == $target } @all_expr;
-say join ", ", sort @result;
+say "(", join(", ", sort @result), ")";
 
 
 sub generate_expressions {

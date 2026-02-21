@@ -1,15 +1,25 @@
 #pragma once
 
 #include <assert.h>
+#include <ctype.h>
+#include <math.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
+
+#ifdef _MSC_VER
+#define strdup  _strdup
+#define stricmp _stricmp
+#endif
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #define bool_to_string(b) ((b) ? "true" : "false")
+
+#define Epsilon 1.0e-9
+#define double_equal(a, b) (fabs((a) - (b)) < Epsilon)
 
 static void die(const char* fmt, ...) {
     va_list ap;
@@ -70,9 +80,12 @@ static void intarray_grow_capacity(IntArray* arr) {
 }
 
 static void intarray_resize(IntArray* arr, int size) {
+    int old_size = arr->size;
     while (size > arr->capacity)
         intarray_grow_capacity(arr);
     arr->size = size;
+    if (size > old_size)
+        memset(arr->data + old_size, 0, (size - old_size) * sizeof(int));
 }
 
 static int intarray_front(IntArray* arr) {
@@ -125,13 +138,192 @@ static void intarray_reverse(IntArray* arr) {
     }
 }
 
+static void intarray_uniq(IntArray* arr) {
+    intarray_sort(arr);
+    int w = 0;
+    for (int r = 0; r < arr->size; r++) {
+        if (w > 0 && arr->data[w-1] == arr->data[r])
+            continue;
+        arr->data[w++] = arr->data[r];
+    }
+    intarray_resize(arr, w);
+}
+
+static int intarray_find_index(IntArray* arr, int value) {
+    for (int i = 0; i < arr->size; i++) {
+        if (arr->data[i] == value)
+            return i;
+    }
+    return -1;
+}
+
+static void intarray_erase(IntArray* arr, int index) {
+    if (index < 0 || index >= arr->size)
+        return;
+    memmove(arr->data + index, arr->data + index+1, (arr->size - (index+1)) * sizeof(int));
+    arr->size--;
+}
+
+static IntArray* intarray_parse_list(const char* str_) {
+    char* str = xstrdup(str_);
+    const char* separators = " ,\t\r\n";
+    IntArray* list = intarray_new();
+    char* p = strtok(str, separators);
+    while (p != NULL) {
+        intarray_push_back(list, atoi(p));
+        p = strtok(NULL, separators);
+    }
+    xfree(str);
+    return list;
+}
+
 static void intarray_print(IntArray* arr) {
     const char* separator = "";
+    printf("(");
     for (int i = 0; i < arr->size; i++) {
         printf("%s%d", separator, arr->data[i]);
         separator = ", ";
     }
-    printf("\n");
+    printf(")\n");
+}
+
+typedef struct {
+    double* data;
+    int size;
+    int capacity;
+} DoubleArray;
+
+static DoubleArray* doublearray_new() {
+    DoubleArray* arr = xnew(DoubleArray);
+    arr->size = 0;
+    arr->capacity = 8;
+    arr->data = xmalloc(arr->capacity * sizeof(double));
+    return arr;
+}
+
+static void doublearray_free(DoubleArray* arr) {
+    xfree(arr->data);
+    xfree(arr);
+}
+
+static void doublearray_clear(DoubleArray* arr) {
+    arr->size = 0;
+}
+
+static void doublearray_grow_capacity(DoubleArray* arr) {
+    int old_capacity = arr->capacity;
+    arr->capacity = 2 * old_capacity;
+    arr->data = xrealloc(arr->data, arr->capacity * sizeof(double));
+}
+
+static void doublearray_resize(DoubleArray* arr, int size) {
+    int old_size = arr->size;
+    while (size > arr->capacity)
+        doublearray_grow_capacity(arr);
+    arr->size = size;
+    if (size > old_size)
+        memset(arr->data + old_size, 0, (size - old_size) * sizeof(double));
+}
+
+static double doublearray_front(DoubleArray* arr) {
+    assert(arr->size > 0);
+    return arr->data[0];
+}
+
+static double doublearray_back(DoubleArray* arr) {
+    assert(arr->size > 0);
+    return arr->data[arr->size - 1];
+}
+
+static void doublearray_push_back(DoubleArray* arr, double n) {
+    doublearray_resize(arr, arr->size + 1);
+    arr->data[arr->size - 1] = n;
+}
+
+static double doublearray_pop_back(DoubleArray* arr) {
+    assert(arr->size > 0);
+    return arr->data[--arr->size];
+}
+
+static void doublearray_push_front(DoubleArray* arr, double n) { // Note: expensive
+    doublearray_resize(arr, arr->size + 1);
+    memmove(arr->data + 1, arr->data, (arr->size - 1) * sizeof(double));
+    arr->data[0] = n;
+}
+
+static double doublearray_pop_front(DoubleArray* arr) { // Note: expensive
+    assert(arr->size > 0);
+    double ret = arr->data[0];
+    memmove(arr->data, arr->data + 1, (arr->size - 1) * sizeof(double));
+    arr->size--;
+    return ret;
+}
+
+static int double_compare(const void* a, const void* b) {
+    if (*(double*)a < *(double*)b) return -1;
+    if (*(double*)a > *(double*)b) return 1;
+    return 0;
+}
+
+static void doublearray_sort(DoubleArray* arr) {
+    qsort(arr->data, arr->size, sizeof(double), double_compare);
+}
+
+static void doublearray_reverse(DoubleArray* arr) {
+    for (int i = 0; i < arr->size/2; i++) {
+        double t = arr->data[i];
+        arr->data[i] = arr->data[arr->size - 1 - i];
+        arr->data[arr->size - 1 - i] = t;
+    }
+}
+
+static void doublearray_uniq(DoubleArray* arr) {
+    doublearray_sort(arr);
+    int w = 0;
+    for (int r = 0; r < arr->size; r++) {
+        if (w > 0 && double_equal(arr->data[w-1], arr->data[r]))
+            continue;
+        arr->data[w++] = arr->data[r];
+    }
+    doublearray_resize(arr, w);
+}
+
+static int doublearray_find_index(DoubleArray* arr, double value) {
+    for (int i = 0; i < arr->size; i++) {
+        if (double_equal(arr->data[i], value))
+            return i;
+    }
+    return -1;
+}
+
+static void doublearray_erase(DoubleArray* arr, int index) {
+    if (index < 0 || index >= arr->size)
+        return;
+    memmove(arr->data + index, arr->data + index+1, (arr->size - (index+1)) * sizeof(double));
+    arr->size--;
+}
+
+static DoubleArray* doublearray_parse_list(const char* str_) {
+    char* str = xstrdup(str_);
+    const char* separators = " ,\t\r\n";
+    DoubleArray* list = doublearray_new();
+    char* p = strtok(str, separators);
+    while (p != NULL) {
+        doublearray_push_back(list, atof(p));
+        p = strtok(NULL, separators);
+    }
+    xfree(str);
+    return list;
+}
+
+static void doublearray_print(DoubleArray* arr) {
+    const char* separator = "";
+    printf("(");
+    for (int i = 0; i < arr->size; i++) {
+        printf("%s%.2lf", separator, arr->data[i]);
+        separator = ", ";
+    }
+    printf(")\n");
 }
 
 typedef struct {
@@ -169,7 +361,7 @@ static Str* str_new() {
     Str* str = xnew(Str);
     str->size = 0;
     str->capacity = 64;
-    str->body = xmalloc(str->size);
+    str->body = xmalloc(str->capacity);
     str->body[0] = '\0';
     return str;
 }
@@ -248,9 +440,13 @@ static void strarray_grow_capacity(StrArray* arr) {
 }
 
 static void strarray_resize(StrArray* arr, int size) {
+    int old_size = arr->size;
+    if (size < old_size) {
+        for (int i = size; i < old_size; i++)
+            xfree(arr->data[i]);
+    }
     while (size > arr->capacity)
         strarray_grow_capacity(arr);
-    int old_size = arr->size;
     arr->size = size;
     for (int i = old_size; i < arr->size; i++)
         arr->data[i] = NULL;
@@ -313,11 +509,41 @@ static void strarray_reverse(StrArray* arr) {
     }
 }
 
+static int strarray_find_index(StrArray* arr, const char* value) {
+    for (int i = 0; i < arr->size; i++) {
+        if (strcmp(arr->data[i], value) == 0)
+            return i;
+    }
+    return -1;
+}
+
+static void strarray_erase(StrArray* arr, int index) {
+    if (index < 0 || index >= arr->size)
+        return;
+    xfree(arr->data[index]);
+    memmove(arr->data + index, arr->data + index+1, (arr->size - (index+1)) * sizeof(char*));
+    arr->size--;
+}
+
+static StrArray* strarray_parse_list(const char* str_) {
+    char* str = xstrdup(str_);
+    const char* separators = " ,.\t\r\n";
+    StrArray* list = strarray_new();
+    char* p = strtok(str, separators);
+    while (p != NULL) {
+        strarray_push_back(list, p);
+        p = strtok(NULL, separators);
+    }
+    xfree(str);
+    return list;
+}
+
 static void strarray_print(StrArray* arr) {
     const char* separator = "";
+    printf("(");
     for (int i = 0; i < arr->size; i++) {
-        printf("%s%s", separator, arr->data[i]);
+        printf("%s%s", separator, arr->data[i] ? arr->data[i] : "(null)");
         separator = ", ";
     }
-    printf("\n");
+    printf(")\n");
 }
