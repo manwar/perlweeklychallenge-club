@@ -39,6 +39,9 @@ sub test_block {
     while (my $dir = readdir($dh)) {
         next unless -d $dir;
         next if $dir eq "." || $dir eq "..";
+		
+		unlink "test.out";
+		
         if ($dir eq 'perl') {
             next unless -f "$dir/ch-$nr.pl";
             run("perl $dir/ch-$nr.pl < test.in > test.out");
@@ -80,6 +83,7 @@ sub capture {
     my($cmd, $expected) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
+	unlink "test.out";
     run("$cmd > test.out");
     open(my $fh, "<", "test.out") or die "test.out: $!";
     local $/;
