@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Word Crimes are Justified](https://packy.dardan.com/b/j8)
+[Perl Weekly Challenge: Where Everybody Knows Your Name](https://packy.dardan.com/b/jJ)
