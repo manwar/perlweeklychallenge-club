@@ -8,5 +8,5 @@ Solutions by Anthony Rowe (asrowe)
 - 2026-08-02 Solutions for Challenge 359
 - 2026-09-02 Solutions for Challenge 360
 - Skipped Challenge 361 - too busy that week
--2020-23-02 Solutions for Challenge 362
+-2020-02-23 Solutions for Challenge 362
 
