@@ -79,6 +79,8 @@ function Processor:process(n) --@return string
 	end
 	if n < 13 then
 		res = res .. self.l1[n+1]
+	elseif n == 14 then
+		res = res .. "fourteen"
 	elseif n < 20 then
 		res = res .. self.l2[n-11] .. "een"
 	elseif n < 100 then

@@ -89,6 +89,8 @@ func (pc processor) process(n int) string {
 	switch {
 	case n < 13:
 		res += pc.l1[n]
+	case n == 14:
+		res += "fourteen"
 	case n < 20:
 		res += pc.l2[n-12] + "een"
 	case n < 100:
