@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
-def fizz_buzz():
+def fizz_buzz() -> list[int | str]:
+    """Return classic FizzBuzz values from 1 to 20."""
     output = []
     for i in range(1, 21):
         line = ""
