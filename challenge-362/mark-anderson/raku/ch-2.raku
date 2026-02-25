@@ -4,26 +4,21 @@ use Test;
 
 my (@c,@m) := from-json $=finish;
 
-is-deeply spellbound-sort([6,7,8,9,10]),    (8,9,7,6,10);
-is-deeply spellbound-sort([-3,0,1000,99]),  (-3,99,1000,0);
-is-deeply spellbound-sort([1,2,3,4,5]),     (5,4,1,3,2);
-is-deeply spellbound-sort([0,-1,-2,-3,-4]), (-4,-1,-3,-2,0);
-is-deeply spellbound-sort([100,101,102]),   (100,101,102);
+is-deeply (6,7,8,9,10)   .sort({ spellbound-sort($_) }), (8,9,7,6,10);
+is-deeply (-3,0,1000,99) .sort({ spellbound-sort($_) }), (-3,99,1000,0);
+is-deeply (1,2,3,4,5)    .sort({ spellbound-sort($_) }), (5,4,1,3,2);
+is-deeply (0,-1,-2,-3,-4).sort({ spellbound-sort($_) }), (-4,-1,-3,-2,0);
+is-deeply (100,101,102)  .sort({ spellbound-sort($_) }), (100,101,102);
 
 # More Testing
 # use Lingua::EN::Numbers;
 # for ^1000
 # {
 #     my @a = (-1000000000000..1000000000000).pick(100);
-#     is-deeply spellbound-sort(@a), @a.sort: { cardinal($_) }
+#     is-deeply @a.sort({ spellbound-sort($_) }), @a.sort({ cardinal($_) })
 # }
 
-multi spellbound-sort(@n)
-{
-    @n.sort: { spellbound-sort($_) }
-}
-
-multi spellbound-sort($s)
+sub spellbound-sort($s)
 { 
     my $n = abs($s);
     my @n = ($n ~~ /^ (\d ** 1..3) (\d ** 3)* $/).flat;
