@@ -90,7 +90,7 @@ for my $lang (grep {-d} sort keys %LANG) {
                     }
 
                     # run test
-					unlink("in.txt", "out.txt");
+                    unlink("in.txt", "out.txt");
                     run($cmd);
 
                     # compare output
