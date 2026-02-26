@@ -4,4 +4,4 @@
 
 [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-362/bob-lied)
 
-[The Blog](https://dev.to/boblied/)
+[The Blog](https://dev.to/boblied/https://dev.to/boblied/pwc-362-echo-chamber-1dn1)
