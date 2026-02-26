@@ -1,0 +1,339 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.with_keygen { % [ a c b ] { keygen } -> [ a b c ]
+    3 dict begin
+    /kg exch def
+    /arr exch def
+    /kl << arr {
+                dup kg
+            } forall >> def
+    arr {
+        exch kl exch get exch kl exch get quicksort.cmp
+    } quicksort.with_comparator
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+
+% end included library code
+
+/spellboundsorting {
+    { towords }
+    quicksort.with_keygen
+} bind def
+
+/towords {
+    0 dict begin
+    /a exch def
+    [
+        a 0 eq {
+            (zero)
+        } {
+            /b a def
+            a 0 lt {
+                /b a neg def
+                (minus)
+            } if
+            /vw [
+                [1000000000 (milliard)]
+                [1000000 (million)]
+                [1000 (thousand)]
+                [100 (hundred)]
+                [90 (ninety)]
+                [80 (eighty)]
+                [70 (seventy)]
+                [60 (sixty)]
+                [50 (fifty)]
+                [40 (forty)]
+                [30 (thirty)]
+                [20 (twenty)]
+                [19 (nineteen)]
+                [18 (eighteen)]
+                [17 (seventeen)]
+                [16 (sixteen)]
+                [15 (fifteen)]
+                [14 (fourteen)]
+                [13 (thirteen)]
+                [12 (twelve)]
+                [11 (eleven)]
+                [10 (ten)]
+                [9 (nine)]
+                [8 (eight)]
+                [7 (seven)]
+                [6 (six)]
+                [5 (five)]
+                [4 (four)]
+                [3 (three)]
+                [2 (two)]
+                [1 (one)]
+            ] def
+            b cw aload pop
+        } ifelse
+    ]
+    ( ) strjoin
+    end
+} bind def
+
+/cw {
+    0 dict begin
+    /n exch def
+    [
+        vw {
+            aload pop
+            /word exch def
+            /val exch def
+            n val ge {
+                /andflag false def
+                n 100 ge {
+                    /andflag true def
+                    n val idiv cw aload pop
+                } if
+                word
+                /p n val mod def
+                p 0 gt {
+                    andflag {
+                        (and)
+                    } if
+                    p cw aload pop
+                } if
+                exit
+            } if
+        } forall
+    ]
+    end
+} bind def
+
+(spellboundsorting) test.start
+[6 7 8 9 10] spellboundsorting [8 9 7 6 10] deepeq test
+[-3 0 1000 99] spellboundsorting [-3 99 1000 0] deepeq test
+[1 2 3 4 5] spellboundsorting [5 4 1 3 2] deepeq test
+[0 -1 -2 -3 -4] spellboundsorting [-4 -1 -3 -2 0] deepeq test
+[100 101 102] spellboundsorting [100 101 102] deepeq test
+test.end

@@ -2,32 +2,22 @@
 
 use Test;
 
-my %examples = (
-    4   => "3,1"   ,
-    12  => "8,3,1" ,
-    20  => "13,5,2",
-    96  => "89,5,2",
-    100 => "89,8,3",
+my @examples = (
+    { in => ["Hi",    5], out => "*Hi**"      },
+    { in => ["Code", 10], out => "***Code***" },
+    { in => ["Hello", 9], out => "**Hello**"  },
+    { in => ["Perl",  4], out => "Perl"       },
+    { in => ["A",     7], out => "***A***"    },
+    { in => ["" ,     5], out => "*****"      },
 );
 
-sub zeckendorf($n is copy) {
-    my @f = (1, 2);
-
-    push @f, @f[*-1] + @f[*-2] while @f[*-1] <= $n;
-    @f.pop;
-    my @r;
-    loop (my $i = @f.end; $i >= 0; $i--) {
-        if @f[$i] <= $n {
-            push @r, @f[$i];
-            $n -= @f[$i];
-        }
-    }
-
-    return @r.join(",");
-}
-
-for %examples.keys -> $key {
-    is zeckendorf($key), %examples{$key};
+for @examples -> $example {
+    is justify-text(|$example<in>), $example<out>;
 }
 
 done-testing;
+
+sub justify-text(Str $str, Int $width) {
+    my $pad = $width - $str.chars;
+    return "*" x ($pad div 2) ~ $str ~ "*" x ($pad - ($pad div 2));
+}

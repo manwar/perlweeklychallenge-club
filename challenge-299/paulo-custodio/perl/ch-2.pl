@@ -1,35 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 299
-#
-# Task 2: Word Search
-# Submitted by: Mohammad Sajid Anwar
-# You are given a grid of characters and a string.
-#
-# Write a script to determine whether the given string can be found in the given grid of characters. You may start anywhere and take any orthogonal path, but may not reuse a grid cell.
-#
-# Example 1
-# Input: @chars = (['A', 'B', 'D', 'E'],
-#                  ['C', 'B', 'C', 'A'],
-#                  ['B', 'A', 'A', 'D'],
-#                  ['D', 'B', 'B', 'C'])
-#       $str = 'BDCA'
-# Output: true
-# Example 2
-# Input: @chars = (['A', 'A', 'B', 'B'],
-#                  ['C', 'C', 'B', 'A'],
-#                  ['C', 'A', 'A', 'A'],
-#                  ['B', 'B', 'B', 'B'])
-#       $str = 'ABAC'
-# Output: false
-# Example 3
-# Input: @chars = (['B', 'A', 'B', 'A'],
-#                  ['C', 'C', 'C', 'C'],
-#                  ['A', 'B', 'A', 'B'],
-#                  ['B', 'B', 'A', 'A'])
-#       $str = 'CCCAA'
-# Output: true
-
 use Modern::Perl;
 
 my @chars;
