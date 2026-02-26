@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 my @chars = ('0' .. '9', 'A' .. 'Y');
 

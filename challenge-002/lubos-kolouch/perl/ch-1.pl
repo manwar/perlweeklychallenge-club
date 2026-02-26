@@ -33,12 +33,11 @@ Removes leading zeros from the positive number in $num and returns the result.
 sub remove_leading_zeros {
     my $num = shift;
     $num =~ s/^0+//;
-    return $num;
+    return length($num) ? $num : '0';
 }
 
 # Test remove_leading_zeros function
 is(remove_leading_zeros("0001234"), "1234", "Leading zeros removed from number");
-is(remove_leading_zeros("000"), "", "Single zero ");
+is(remove_leading_zeros("000"), "0", "All zeros collapse to 0");
 
 done_testing();
-
