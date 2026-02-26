@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Where Everybody Knows Your Name](https://packy.dardan.com/b/jJ)
+[Perl Weekly Challenge: You Have No Choice](https://packy.dardan.com/b/jd)
