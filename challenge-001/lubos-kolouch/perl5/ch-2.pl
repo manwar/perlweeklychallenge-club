@@ -1,9 +1,9 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
 #===============================================================================
 #
 #         FILE: ch-1.pl
 #
-#        USAGE: ./ch-1.pl  
+#        USAGE: ./ch-1.pl
 #
 #  DESCRIPTION: Perl Weekly Challenge 001
 #               https://perlweeklychallenge.org/blog/perl-weekly-challenge-001/
@@ -20,7 +20,7 @@ sub fizz_buzz {
     my @output;
 
     for (1..20) {
-        
+
         my $line = '';
 
         $line = 'fizz' if $_ % 3 == 0;
