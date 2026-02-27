@@ -1,25 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 295
-#
-# Task 2: Jump Game
-# Submitted by: Mohammad Sajid Anwar
-# You are given an array of integers, @ints.
-#
-# Write a script to find the minimum number of jumps to reach the last element. $ints[$i] represents the maximum length of a forward jump from the index $i. In case last element is unreachable then return -1.
-#
-# Example 1
-# Input: @ints = (2, 3, 1, 1, 4)
-# Output: 2
-#
-# Jump 1 step from index 0 then 3 steps from index 1 to the last element.
-# Example 2
-# Input: @ints = (2, 3, 0, 4)
-# Output: 2
-# Example 3
-# Input: @ints = (2, 0, 0, 4)
-# Output: -1
-
 use Modern::Perl;
 use List::Util qw(min);
 
