@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
+import unittest
 
 
 def fizz_buzz() -> list[int | str]:
@@ -17,26 +18,34 @@ def fizz_buzz() -> list[int | str]:
     return output
 
 
-# Simple test to verify the functionality
-assert fizz_buzz() == [
-    1,
-    2,
-    "fizz",
-    4,
-    "buzz",
-    "fizz",
-    7,
-    8,
-    "fizz",
-    "buzz",
-    11,
-    "fizz",
-    13,
-    14,
-    "fizzbuzz",
-    16,
-    17,
-    "fizz",
-    19,
-    "buzz",
-]
+class TestChallenge001Task2(unittest.TestCase):
+    def test_example(self) -> None:
+        self.assertEqual(
+            fizz_buzz(),
+            [
+                1,
+                2,
+                "fizz",
+                4,
+                "buzz",
+                "fizz",
+                7,
+                8,
+                "fizz",
+                "buzz",
+                11,
+                "fizz",
+                13,
+                14,
+                "fizzbuzz",
+                16,
+                17,
+                "fizz",
+                19,
+                "buzz",
+            ],
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
