@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 362
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-362>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc362;
+
+CREATE OR REPLACE FUNCTION
+pwc362.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   my $i = 0;
+   my $result = "";
+   
+   for my $c ( split //, $string ) {
+       $result .= $c x ( ++$i );
+   }
+
+   return $result;
+   
+$CODE$
+LANGUAGE plperl;

@@ -1,0 +1,33 @@
+# Perl Weekly Challenge 004 Solutions
+
+Perl and Python implementations for both tasks of Weekly Challenge 004.
+
+## Task 1: PI Digits
+
+Print the same number of PI digits as the size of the script.
+
+- `perl/ch-1.pl`: Uses the script byte size (`-s $0`) and prints a PI prefix.
+- `python/ch-1.py`: Uses `os.path.getsize(__file__)` and prints a PI prefix.
+
+Both include the official example test (`size=10 -> 3.141592653`) via `--test`.
+
+## Task 2: Word Match From Letters
+
+Given letters and a one-word-per-line list, print words that can be built from
+those letters (case-insensitive, each letter usable once, duplicates allowed).
+
+- `perl/ch-2.pl`: Reads words from file or stdin and filters by letter counts.
+- `python/ch-2.py`: Same logic using `collections.Counter`.
+
+Both include embedded tests for the challenge rules via `--test`.
+
+## Running
+
+- Perl task 1: `perl perl/ch-1.pl`
+- Perl task 1 tests: `perl perl/ch-1.pl --test`
+- Perl task 2: `perl perl/ch-2.pl abc words.txt`
+- Perl task 2 tests: `perl perl/ch-2.pl --test`
+- Python task 1: `python3 python/ch-1.py`
+- Python task 1 tests: `python3 python/ch-1.py --test`
+- Python task 2: `python3 python/ch-2.py abc words.txt`
+- Python task 2 tests: `python3 python/ch-2.py --test`
