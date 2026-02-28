@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+use Lingua::Number;
+
+unit sub MAIN (*@integers where all(@integers) ~~ Int && @integers.elems > 0,
+               :l(:$language) = "en",
+               :v(:$verbose));
+
+my %spelling = @integers.map({ $_ => cardinal($_, $language) });
+
+@integers.map({ say ": $_ => %spelling{$_}" }) if $verbose;
+
+@integers.sort({ %spelling{$^a} cmp %spelling{$^b} }).join(", ").say;
