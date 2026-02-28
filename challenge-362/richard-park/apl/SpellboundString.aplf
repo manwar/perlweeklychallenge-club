@@ -1,0 +1,37 @@
+ SpellboundString←{
+⍝ Spell out numeric inputer ⍵ as English word phrase
+     ⎕IO←0
+     one←'' 'one' 'two' 'three' 'four' 'five' 'six' 'seven' 'eight' 'nine'
+     teen←'' 'eleven' 'twelve' 'thirteen' 'fourteen' 'fifteen' 'sixteen' 'seventeen' 'eighteen' 'nineteen'
+     ten←'' 'ten' 'twenty' 'thirty' 'fourty' 'fifty' 'sixty' 'seventy' 'eighty' 'ninety'
+     hundred←'' 'hundred'
+     thousand←'' 'thousand' 'million' 'billion' 'trillion'
+
+     (tns bns mns ths hnd)←(5⍴1000)⊤⍵
+     (h t o)←10 10 10⊤hnd
+
+     0=⍵:''
+
+     ones←(t≠1)/o⊃one
+     is_teen←(t=1)∧(o>0)
+     tens←is_teen~⍛/t⊃ten
+     teens←is_teen/o⊃teen
+     hundreds←(0<h)/(h⊃one),' hundred'
+     thousands←(0<ths)/(∇ ths),' thousand',', '/⍨∨/0<h
+     millions ←(0<mns)/(∇ mns), ' million',', '/⍨∨/0<ths h
+     billions ←(0<bns)/(∇ bns), ' billion',', '/⍨∨/0<mns ths h
+     trillions←(0<tns)/(∇ tns),' trillion',', '/⍨∨/0<bns mns ths h
+
+     phrase←trillions,billions,millions,thousands,hundreds
+     phrase,←' and '/⍨(∨/0<t o)∧∨/0<tns bns mns ths h
+     phrase,←tens,teens
+     phrase,←' '/⍨((o>0)∧t>1)
+     phrase,←ones
+
+     max←⌈10⍟0.1+⍵
+     15≥max:phrase
+
+     error_message←'Number ',⍵⍕⍛,' outside supported range 1-999999999999999'
+     ⎕SIGNAL⊂('EN' 16)('Message'error_message)
+
+ }
