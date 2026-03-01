@@ -1,4 +1,4 @@
-**Challenge 361 solutions in Perl by Matthias Muth**
+**Challenge 362 solutions in Perl by Matthias Muth**
 <br/>
 (sorry, no blog post this week...)
 
