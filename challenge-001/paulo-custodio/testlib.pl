@@ -16,6 +16,10 @@ sub test_line {
             next unless -f "$dir/ch-$nr.pl";
             capture("perl $dir/ch-$nr.pl $in", $expected);
         }
+        elsif ($dir eq 'python') {
+            next unless -f "$dir/ch-$nr.py";
+            capture("python $dir/ch-$nr.py $in", $expected);
+        }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
             build_c("$dir/ch-$nr.c");
@@ -39,9 +43,16 @@ sub test_block {
     while (my $dir = readdir($dh)) {
         next unless -d $dir;
         next if $dir eq "." || $dir eq "..";
+
+        unlink "test.out";
+
         if ($dir eq 'perl') {
             next unless -f "$dir/ch-$nr.pl";
             run("perl $dir/ch-$nr.pl < test.in > test.out");
+        }
+        elsif ($dir eq 'python') {
+            next unless -f "$dir/ch-$nr.py";
+            run("python $dir/ch-$nr.py < test.in > test.out");
         }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
@@ -80,6 +91,7 @@ sub capture {
     my($cmd, $expected) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
+    unlink "test.out";
     run("$cmd > test.out");
     open(my $fh, "<", "test.out") or die "test.out: $!";
     local $/;

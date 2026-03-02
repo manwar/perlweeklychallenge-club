@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 362
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-362>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc362;
+
+CREATE OR REPLACE FUNCTION
+pwc362.task2_plperl( int[] )
+RETURNS SETOF text
+AS $CODE$
+
+   use Lingua::EN::Numbers qw(num2en num2en_ordinal);
+   
+   my ( $nums ) = @_;
+
+   my @phonetic;
+
+   for ( $nums->@* ) {
+       push @phonetic, num2en( $_ );
+   }
+
+   @phonetic = sort @phonetic;
+   return \ @phonetic;
+   
+$CODE$
+LANGUAGE plperlu;

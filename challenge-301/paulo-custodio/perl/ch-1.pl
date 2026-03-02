@@ -1,20 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 301
-#
-# Task 1: Largest Number
-# Submitted by: Mohammad Sajid Anwar
-# You are given a list of positive integers, @ints.
-#
-# Write a script to arrange all the elements in the given list such that they form the largest number and return it.
-#
-# Example 1
-# Input: @ints = (20, 3)
-# Output: 320
-# Example 2
-# Input: @ints = (3, 30, 34, 5, 9)
-# Output: 9534330
-
 use Modern::Perl;
 
 @ARGV or die "usage: $0 nums...\n";

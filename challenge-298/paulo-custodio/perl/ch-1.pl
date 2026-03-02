@@ -1,48 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 298
-#
-# Task 1: Maximal Square
-# Submitted by: Mohammad Sajid Anwar
-# You are given an m x n binary matrix with 0 and 1 only.
-#
-# Write a script to find the largest square containing only 1's and return it’s area.
-#
-# Example 1
-# Input: @matrix = ([1, 0, 1, 0, 0],
-#                   [1, 0, 1, 1, 1],
-#                   [1, 1, 1, 1, 1],
-#                   [1, 0, 0, 1, 0])
-# Output: 4
-#
-# Two maximal square found with same size marked as 'x':
-#
-# [1, 0, 1, 0, 0]
-# [1, 0, x, x, 1]
-# [1, 1, x, x, 1]
-# [1, 0, 0, 1, 0]
-#
-# [1, 0, 1, 0, 0]
-# [1, 0, 1, x, x]
-# [1, 1, 1, x, x]
-# [1, 0, 0, 1, 0]
-# Example 2
-# Input: @matrix = ([0, 1],
-#                   [1, 0])
-# Output: 1
-#
-# Two maximal square found with same size marked as 'x':
-#
-# [0, x]
-# [1, 0]
-#
-#
-# [0, 1]
-# [x, 0]
-# Example 3
-# Input: @matrix = ([0])
-# Output: 0
-
 use Modern::Perl;
 use List::Util qw(min max);
 
