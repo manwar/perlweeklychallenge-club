@@ -10,7 +10,7 @@ ok  string-lie-detector('aei - three vowels and zero consonants');
 
 sub string-lie-detector($str)
 {
-    if $str ~~ m:s/^ (.+?) '-' (.+?) vowels? and (.+?) consonants? $/ -> ($s,$v,$c)
+    given $str ~~ m:s/^ (.+?) '-' (.+?) vowels? and (.+?) consonants? $/ -> ($s,$v,$c)
     {
         my $vowels = ($s ~~ m:g/<[aeiou]>/).elems;
         my $consonants = $s.chars - $vowels;
