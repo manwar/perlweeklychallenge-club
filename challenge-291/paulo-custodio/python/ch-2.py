@@ -1,23 +1,5 @@
 #!/usr/bin/env python3
 
-# Challenge 291
-#
-# Task 2: Poker Hand Rankings
-# Submitted by: Robbie Hatley
-# A draw poker hand consists of 5 cards, drawn from a pack of 52: no jokers,
-# no wild cards. An ace can rank either high or low.
-#
-# Write a script to determine the following three things:
-#
-# 1. How many different 5-card hands can be dealt?
-# 2. How many different hands of each of the 10 ranks can be dealt?
-#    See here for descriptions of the 10 ranks of Poker hands:
-#    https://en.wikipedia.org/wiki/List_of_poker_hands#Hand-ranking_categories
-# 3. Check the ten numbers you get in step 2 by adding them together
-#    and showing that they're equal to the number you get in step 1.
-
-# see https://brilliant.org/wiki/math-of-poker/
-
 from math import comb
 from functools import reduce
 
