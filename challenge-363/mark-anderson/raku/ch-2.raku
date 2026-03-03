@@ -8,6 +8,8 @@ ok  subnet-sheriff('172.16.8.9',   '172.16.8.9/32');
 ok  subnet-sheriff('172.16.4.5',   '172.16.0.0/14');
 ok  subnet-sheriff('192.0.2.0',    '192.0.2.0/25');
 
+INIT my @masks = from-json $=finish; 
+
 subset IP   of Str where /^ (\d+ <?{ $/ ~~ ^256 }>) ** 4 % '.' $/;
 subset CIDR of Str where /^ (\d+ <?{ $/ ~~ ^256 }>) ** 4 % '.' '/' (\d+ <?{ $/ ~~ ^33 }>) $/;
 
@@ -16,7 +18,7 @@ multi subnet-sheriff($ip, $cidr) { False }
 multi subnet-sheriff(IP $ip, CIDR $cidr)
 {
     my ($domain, $suffix) = $cidr.comb(/\d+/)[^4,4];    
-    $domain eq $ip.split('.') >>+&<< (from-json $=finish)[$suffix]
+    $domain eq $ip.split('.') >>+&<< @masks[$suffix]
 }
 
 =finish
