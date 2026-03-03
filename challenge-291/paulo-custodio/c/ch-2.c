@@ -81,4 +81,3 @@ int main() {
 
     assert(N == sum);
 }
-
