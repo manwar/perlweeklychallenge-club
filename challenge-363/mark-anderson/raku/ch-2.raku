@@ -15,9 +15,8 @@ multi subnet-sheriff($ip, $cidr) { False }
 
 multi subnet-sheriff(IP $ip, CIDR $cidr)
 {
-    my ($network, $suffix) = $cidr.split('/');
-    my $mask = (from-json $=finish)[$suffix];
-    $network eq .join('.') given $ip.split('.') >>+&<< $mask
+    my ($domain, $suffix) = $cidr.comb(/\d+/)[^4,4];    
+    $domain eq $ip.split('.') >>+&<< (from-json $=finish)[$suffix]
 }
 
 =finish
