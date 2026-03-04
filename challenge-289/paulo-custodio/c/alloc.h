@@ -53,6 +53,24 @@ static char* xstrndup(const char* str, size_t len) {
     return mem;
 }
 
+// pseudo-random numbers
+static uint32_t random_seed = 1;
+
+static void set_seed(uint32_t seed) {
+    if (seed == 0)
+        seed++;
+    random_seed = seed;
+}
+
+uint32_t random() {
+    uint32_t x = random_seed;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    random_seed = x;
+    return x;
+}
+
 // IntArray
 typedef struct {
     int* data;
@@ -142,7 +160,7 @@ static void intarray_reverse(IntArray* arr) {
 
 static void intarray_shuffle(IntArray* arr) {
     for (int i = arr->size - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // random index in [0, i]
+        int j = random() % (i + 1); // random index in [0, i]
         SWAP(int, arr->data[i], arr->data[j]);
     }
 }
@@ -287,7 +305,7 @@ static void doublearray_reverse(DoubleArray* arr) {
 
 static void doublearray_shuffle(DoubleArray* arr) {
     for (int i = arr->size - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // random index in [0, i]
+        int j = random() % (i + 1); // random index in [0, i]
         SWAP(double, arr->data[i], arr->data[j]);
     }
 }
@@ -440,7 +458,7 @@ static void str_reverse(Str* str) {
 
 static void str_shuffle(Str* str) {
     for (int i = str->size - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // random index in [0, i]
+        int j = random() % (i + 1); // random index in [0, i]
         SWAP(int, str->body[i], str->body[j]);
     }
 }
@@ -560,7 +578,7 @@ static void strarray_reverse(StrArray* arr) {
 
 static void strarray_shuffle(StrArray* arr) {
     for (int i = arr->size - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // random index in [0, i]
+        int j = random() % (i + 1); // random index in [0, i]
         SWAP(char*, arr->data[i], arr->data[j]);
     }
 }

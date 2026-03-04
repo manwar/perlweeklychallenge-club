@@ -33,9 +33,10 @@ sub test_line {
 }
 
 sub test_block {
-    my($nr, $in, $expected) = @_;
+    my($nr, $in, $expected, $args) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
+    $args //= "";
     path("test.in")->spew($in);
     path("test.exp")->spew($expected);
 
@@ -48,17 +49,17 @@ sub test_block {
 
         if ($dir eq 'perl') {
             next unless -f "$dir/ch-$nr.pl";
-            run("perl $dir/ch-$nr.pl < test.in > test.out");
+            run("perl $dir/ch-$nr.pl $args < test.in > test.out");
         }
         elsif ($dir eq 'python') {
             next unless -f "$dir/ch-$nr.py";
-            run("python $dir/ch-$nr.py < test.in > test.out");
+            run("python $dir/ch-$nr.py $args < test.in > test.out");
         }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
             build_c("$dir/ch-$nr.c");
             next unless -f "$dir/ch-$nr$_exe";
-            run(normalize_path("$dir/ch-$nr$_exe < test.in > test.out"));
+            run(normalize_path("$dir/ch-$nr$_exe $args < test.in > test.out"));
         }
         else {
             warn "skipped directory $dir\n";
