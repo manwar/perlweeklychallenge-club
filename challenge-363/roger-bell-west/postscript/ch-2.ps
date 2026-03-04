@@ -1,0 +1,119 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/parseaddr {
+    0 dict begin
+    /out 0 def
+    (.) strsplit {
+        cvi /ov exch def
+        ov 0 ge ov 255 le and {
+            /out out 256 mul ov add def
+        } {
+            /out -1 def
+            exit
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/subnetsheriff {
+    0 dict begin
+    /nets exch def
+    /addrs exch def
+    /addr addrs parseaddr def
+    false
+    addr 0 ge {
+        /netsc nets (/) strsplit def
+        /netmask netsc 0 get parseaddr def
+        netmask 0 ge {
+            /netlen netsc 1 get cvi def
+            netlen 0 ge netlen 32 le and {
+                /bits 1 32 netlen sub bitshift 1 sub def
+                /netlo netmask bits not and def
+                /nethi netmask bits or def
+                pop
+                addr netlo ge addr nethi le and
+            } if
+        } if
+    } if
+    end
+} bind def
+
+(subnetsheriff) test.start
+(192.168.1.45) (192.168.1.0/24) subnetsheriff test
+(10.0.0.256) (10.0.0.0/24) subnetsheriff not test
+(172.16.8.9) (172.16.8.9/32) subnetsheriff test
+(172.16.4.5) (172.16.0.0/14) subnetsheriff test
+(192.0.2.0) (192.0.2.0/25) subnetsheriff test
+(172.16.4.5) (172.17.0.0/14) subnetsheriff test
+test.end

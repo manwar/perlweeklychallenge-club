@@ -1,0 +1,206 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/is_vowel {
+    << 97 true
+       101 true
+       105 true
+       111 true
+       117 true >>
+    exch known
+} bind def
+
+/stringliedetector {
+    0 dict begin
+    /words exch ( ) strsplit def
+    /vowels 0 def
+    /consonants 0 def
+    words 0 get s2a {
+        is_vowel {
+            /vowels vowels 1 add def
+        } {
+            /consonants consonants 1 add def
+        } ifelse
+    } forall
+    /w2n <<
+             (zero) 0
+             (one) 1
+             (two) 2
+             (three) 3
+             (four) 4
+             (five) 5
+             (six) 6
+             (seven) 7
+             (eight) 8
+             (nine) 9
+             (ten) 10
+         >> def
+    /valid true def
+    /nc 0 def
+    2 1 words length 1 sub {
+        /w exch words exch get def
+        1 {
+            w2n w known {
+                /mc w2n w get def
+                exit
+            } if
+            w (vowel) deepeq w (vowels) deepeq or {
+                mc vowels ne {
+                    /valid false def
+                } if
+                exit
+            } if
+            w (consonant) deepeq w (consonants) deepeq or {
+                mc consonants ne {
+                    /valid false def
+                } if
+                exit
+            } if
+        } repeat
+        valid not {
+            exit
+        } if
+    } for
+    valid
+    end
+} bind def
+
+(stringliedetector) test.start
+(aa - two vowels and zero consonants) stringliedetector test
+(iv - one vowel and one consonant) stringliedetector test
+(hello - three vowels and two consonants) stringliedetector not test
+(aeiou - five vowels and zero consonants) stringliedetector test
+(aei - three vowels and zero consonants) stringliedetector test
+test.end
