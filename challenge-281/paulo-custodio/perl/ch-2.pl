@@ -1,31 +1,5 @@
 #!/usr/bin/env perl
 
-# Challenge 281
-#
-# Task 2: Knight's Move
-# Submitted by: Peter Campbell Smith
-#
-# A Knight in chess can move from its current position to any square two rows
-# or columns plus one column or row away. So in the diagram below, if it starts
-# a S, it can move to any of the squares marked E.
-#
-# Write a script which takes a starting position and an ending position and
-# calculates the least number of moves required.
-#
-# Example 1
-#
-# Input: $start = 'g2', $end = 'a8'
-# Ouput: 4
-#
-# g2 -> e3 -> d5 -> c7 -> a8
-#
-# Example 2
-#
-# Input: $start = 'g2', $end = 'h2'
-# Ouput: 3
-#
-# g2 -> e3 -> f1 -> h2
-
 use Modern::Perl;
 
 @ARGV==2 or die "Usage: $0 start end\n";
@@ -50,6 +24,7 @@ sub find_path_size {
             if (!defined($min_path) || $min_path > scalar(@path)) {
                 $min_path = scalar(@path);      # found shorter solution
             }
+            next;
         }
 
         # prune the tree
