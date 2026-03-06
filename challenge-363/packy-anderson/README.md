@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: You Have No Choice](https://packy.dardan.com/b/jd)
+[Perl Weekly Challenge: I shot the subnet...](https://packy.dardan.com/b/k8)
