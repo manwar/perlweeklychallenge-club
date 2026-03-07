@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 362 by Bob Lied
+# Solutions to weekly challenge 363 by Bob Lied
 
-[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-362/)
+[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-363/)
 
-[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-362/bob-lied)
+[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-363/bob-lied)
 
-[The Blog](https://dev.to/boblied/https://dev.to/boblied/pwc-362-echo-chamber-1dn1)
+[The Blog](https://dev.to/boblied/https://dev.to/boblied/)
