@@ -1,0 +1,33 @@
+#! /usr/bin/env raku
+
+subset IPv4 where /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/ && all($0,$1,$2,$3) < 256;
+subset CIDR where /^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/ && all($0,$1,$2,$3) < 256 && $4 <= 32;
+
+multi sub MAIN (IPv4 $ipv4, CIDR $cidr, :v(:$verbose))
+{
+  my ($ip, $size) = $cidr.split(/\//);
+
+  say ipv4_2_int($ipv4, $verbose) +& cidr_mask($size.UInt, $verbose) == 
+      ipv4_2_int($ip, $verbose) +& cidr_mask($size.UInt, $verbose);
+}
+
+multi sub MAIN ($ipv4, $cidr, :v(:$verbose))
+{
+  say ": Illegal input" if $verbose;
+
+  say False;
+}
+
+sub ipv4_2_int (IPv4 $ipv4, $verbose)
+{
+  say ": IPv4: $ipv4 \tDecimal: { $ipv4.split('.')>>.fmt('%08b').join.parse-base(2) } - Binary: { $ipv4.split('.')>>.fmt('%08b').join }" if $verbose; 
+  
+  return $ipv4.split('.')>>.fmt('%08b').join.parse-base(2);
+}
+
+sub cidr_mask (UInt $size where 0 <= $size <= 32, $verbose)
+{
+  say ": CIDR size: $size \tDecimal: { (( '1' x $size ) ~ ( '0' x ( 32 - $size ) )).parse-base(2) } - Binary: { ( '1' x $size ) ~ ( '0' x ( 32 - $size ) ) }" if $verbose;
+  return (( '1' x $size ) ~ ( '0' x ( 32 - $size ) )).parse-base(2);
+}
+
