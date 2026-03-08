@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+subset IPv4 where /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/ && all($0,$1,$2,$3) < 256;
+subset CIDR where /^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/ && all($0,$1,$2,$3) < 256 && $4 <= 32;
+
+unit sub MAIN (IPv4 $ipv4, CIDR $cidr, :v(:$verbose));
+
+sub ipv4_2_int (IPv4 $ipv4)
+{
+  say ": IPv4: $ipv4 \tDecimal: { $ipv4.split('.')>>.fmt('%08b').join.parse-base(2) } - Binary: { $ipv4.split('.')>>.fmt('%08b').join }" if $verbose; 
+  
+  return $ipv4.split('.')>>.fmt('%08b').join.parse-base(2);
+}
+
+sub cidr_mask (UInt $size where 0 <= $size <= 32)
+{
+  say ": CIDR size: $size \tDecimal: { (( '1' x $size ) ~ ( '0' x ( 32 - $size ) )).parse-base(2) } - Binary: { ( '1' x $size ) ~ ( '0' x ( 32 - $size ) ) }" if $verbose;
+  return (( '1' x $size ) ~ ( '0' x ( 32 - $size ) )).parse-base(2);
+}
+
+my ($ip, $size) = $cidr.split(/\//);
+
+say ipv4_2_int($ipv4) +& cidr_mask($size.UInt) == 
+    ipv4_2_int($ip) +& cidr_mask($size.UInt);
