@@ -1,3 +1,3 @@
-# The Weekly Challenge 362
+# The Weekly Challenge 363
 
-Blog: [The one liners](https://dev.to/simongreennet/weekly-challenge-the-one-liners-14lo)
+Blog: [The subnet detector](https://dev.to/simongreennet/weekly-challlenge-the-subnet-detector-1d9l)
