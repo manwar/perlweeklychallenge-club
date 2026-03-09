@@ -26,6 +26,18 @@ sub test_line {
             next unless -f "$dir/ch-$nr$_exe";
             capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
         }
+        elsif ($dir eq 'bf') {
+            next unless -f "$dir/ch-$nr.bas";
+            build_bf("$dir/ch-$nr.bas");
+            next unless -f "$dir/ch-$nr.bf";
+            capture("echo -- $in | bf ".normalize_path("$dir/ch-$nr.bf"), $expected);
+        }
+        elsif ($dir eq 'basic') {
+            next unless -f "$dir/ch-$nr.bas";
+            build_basic("$dir/ch-$nr.bas");
+            next unless -f "$dir/ch-$nr$_exe";
+            capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
+        }
         else {
             warn "skipped directory $dir\n";
         }
@@ -59,7 +71,19 @@ sub test_block {
             next unless -f "$dir/ch-$nr.c";
             build_c("$dir/ch-$nr.c");
             next unless -f "$dir/ch-$nr$_exe";
-            run(normalize_path("$dir/ch-$nr$_exe $args < test.in > test.out"));
+            run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
+        }
+        elsif ($dir eq 'bf') {
+            next unless -f "$dir/ch-$nr.bas";
+            build_bf("$dir/ch-$nr.bas");
+            next unless -f "$dir/ch-$nr.bf";
+            run("bf ".normalize_path("$dir/ch-$nr.bf")." < test.in > test.out");
+        }
+        elsif ($dir eq 'basic') {
+            next unless -f "$dir/ch-$nr.bas";
+            build_basic("$dir/ch-$nr.bas");
+            next unless -f "$dir/ch-$nr$_exe";
+            run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
         }
         else {
             warn "skipped directory $dir\n";
@@ -77,8 +101,25 @@ sub build_c {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
     (my $exe = $src) =~ s/\.c$/$_exe/;
-    make_exe("gcc -o $exe $src",
-            $src, $exe);
+    build("gcc -o $exe $src", $src, $exe);
+}
+
+sub build_bf {
+    my($src) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    (my $bfpp = $src) =~ s/\.bas$/.bfpp/;
+    (my $bf = $src) =~ s/\.bas$/.bf/;
+    build("bfbasic $src -o $bfpp", $src, $bfpp);
+    build("bfpp $bfpp -o $bf", $bfpp, $bf);
+}
+
+sub build_basic {
+    my($src) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    (my $exe = $src) =~ s/\.bas$/$_exe/;
+    build("fbc $src", $src, $exe);
 }
 
 sub run {
@@ -104,7 +145,7 @@ sub capture {
     is $got, $expected, "got $expected";
 }
 
-sub make_exe {
+sub build {
     my($cmd, $src, $exe) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
