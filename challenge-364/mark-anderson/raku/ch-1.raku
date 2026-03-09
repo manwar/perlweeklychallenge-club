@@ -9,5 +9,5 @@ is decrypt-string("1910#26#"),  "aijz";
 
 sub decrypt-string($str)
 {
-    $str.trans((flat 1..9, (10..26) >>~>> '#') => 'a'..'z')
+    $str.trans((1..9, (10..26) >>~>> '#') => 'a'..'z')
 }
