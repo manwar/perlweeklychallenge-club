@@ -548,19 +548,6 @@ static void strarray_sort(StrArray* arr) {
     qsort(arr->data, arr->size, sizeof(char*), str_compare);
 }
 
-static void strarray_uniq(StrArray* arr) {
-    strarray_sort(arr);
-    int w = 0;
-    for (int r = 0; r < arr->size; r++) {
-        if (w > 0 && strcmp(arr->data[w-1], arr->data[r]) == 0) {
-            xfree(arr->data[r]);
-            continue;
-        }
-        arr->data[w++] = arr->data[r];
-    }
-    arr->size = w; // later elements are already freed or moved, so just update size
-}
-
 static void strarray_isort(StrArray* arr) {
     qsort(arr->data, arr->size, sizeof(char*), str_icompare);
 }
