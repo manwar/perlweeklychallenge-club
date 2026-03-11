@@ -1,115 +1,100 @@
 #!/usr/bin/env perl
 
-# Challenge 259
-#
-# Task 2: Line Parser
-# Submitted by: Gabor Szabo
-#
-# You are given a line like below:
-#
-# {%  id   field1="value1"    field2="value2"  field3=42 %}
-#
-#
-# Where
-#
-# a) "id" can be \w+.
-# b) There can be 0  or more field-value pairs.
-# c) The name of the fields are \w+.
-# b) The values are either number in which case we don't need double quotes or
-#    string in which case we need double quotes around them.
-#
-#
-# The line parser should return structure like below:
-#
-# {
-#        name => id,
-#        fields => {
-#            field1 => value1,
-#            field2 => value2,
-#            field3 => value3,
-#        }
-# }
-#
-#
-# It should be able to parse the following edge cases too:
-#
-# {%  youtube title="Title \"quoted\" done" %}
-#
-#
-# and
-#
-# {%  youtube title="Title with escaped backslash \\" %}
-#
-#
-# BONUS: Extend it to be able to handle multiline tags:
-#
-# {% id  filed1="value1" ... %}
-# LINES
-# {% endid %}
-#
-#
-# You should expect the following structure from your line parser:
-#
-# {
-#        name => id,
-#        fields => {
-#            field1 => value1,
-#            field2 => value2,
-#            field3 => value3,
-#        }
-#        text => LINES
-# }
-
 use Modern::Perl;
-use Parse::FSM::Lexer;
-use Data::Dump 'dump';
 
-my $text = "@ARGV";
+chomp(my $text = <>);
 my $data = parse($text);
-say dump($data);
+dump_data($data);
 
 sub parse {
     my(@text) = @_;
     my $data = {};
 
-    my $lex = Parse::FSM::Lexer->new;
-    $lex->from_list($text);
+    my @tokens = scan($text);
 
     # start marker
-    (my $token = $lex->get_token()) or die "start marker missing";
-    $token->[0] eq "{" or die "start marker missing, got ", $token->[0];
-    ($token = $lex->get_token()) or die "start marker missing";
-    $token->[0] eq "%" or die "start marker missing, got ", $token->[0];
+    expect(\@tokens, "{", "start marker");
+    expect(\@tokens, "%", "start marker");
 
     # name
-    ($token = $lex->get_token()) or die "name missing";
-    $token->[0] eq 'NAME' or die "name expected";
-    $data->{name} = $token->[1];
+    $data->{name} = expect(\@tokens, "NAME", "name");
 
     # fields
     for (;;) {
+        # possibly end marker
+        last if @tokens && $tokens[0][0] eq "%";
+
         # field name
-        ($token = $lex->get_token()) or die "field or end marker missing";
-        last if $token->[0] eq '%';
-        $token->[0] eq 'NAME' or die "field name expected, got ", $token->[0];
-        my $field_name = $token->[1];
+        my $field_name = expect(\@tokens, "NAME", "field name");
 
         # =
-        ($token = $lex->get_token()) or die "'=' expected";
-        $token->[0] eq '=' or die "'=' expected, got ", $token->[0];
+        expect(\@tokens, "=", "'='");
 
         # value
-        ($token = $lex->get_token()) or die "field value expected";
-        ($token->[0] eq 'NUM' || $token->[0] eq 'STR') or die "field value expected, got ", $token->[0];
-        my $field_value = $token->[1];
+        @tokens && ($tokens[0][0] =~ /STR|NUM/) or die "field value expected, got ", $tokens[0][1], "\n";
+        my $field_value = $tokens[0][1];
+        shift @tokens;
 
         $data->{fields}{$field_name} = $field_value;
     }
 
-    ($token = $lex->get_token()) or die "end marker missing";
-    $token->[0] eq '}' or die "end marker missing, got ", $token->[0];
+    expect(\@tokens, "%", "start marker");
+    expect(\@tokens, "}", "start marker");
 
-    defined($token = $lex->get_token()) and die "extra input, got ", $token->[0];
+    @tokens == 0 or die "extra input, got ", $tokens[0], "\n";
 
     return $data;
+}
+
+sub scan {
+    my($text) = @_;
+
+    my @tokens;
+    for ($text) {
+        while ($_ ne '') {
+            s/^\s+// and next;
+            s/^(\d+)// and do { push @tokens, [NUM => $1]; next; };
+            s/^(\w+)// and do { push @tokens, [NAME => $1]; next; };
+            s/^("((\\.|[^"])*)")// and do { push @tokens, [STR => unescape($2)]; next; };
+            s/^(.)// and do { push @tokens, [$1, $1]; next; };
+            die; # not reached
+        }
+    }
+
+    return @tokens;
+}
+
+sub expect {
+    my($tokens, $id, $text) = @_;
+
+    @$tokens or die "$text expected, got eof\n";
+    $tokens->[0][0] eq $id or die "$text expected, got ".$tokens->[0][1]."\n";
+    my $value = $tokens->[0][1];
+    shift @$tokens;
+    return $value;
+}
+
+sub dump_data {
+    my($data) = @_;
+    say "{";
+    say "  name => \"", $data->{name}, "\",";
+    say "  fields => {";
+    for my $key (sort keys %{$data->{fields}}) {
+        say "    ", $key, " => ", escape($data->{fields}{$key}), ",";
+    }
+    say "  },";
+    say "}";
+}
+
+sub unescape {
+    my($str) = @_;
+    $str =~ s/\\(.)/$1/g;
+    return $str;
+}
+
+sub escape {
+    my($str) = @_;
+    return $str if $str =~ /^\d+$/;
+    $str =~ s/([\\"])/\\$1/g;
+    return '"'.$str.'"';
 }
