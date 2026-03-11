@@ -1,0 +1,92 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/decryptstring {
+    0 dict begin
+    s2a /c exch def
+    /s 0 def
+    [
+        {
+            s c length ge {
+                exit
+            } if
+            c s get 48 sub
+            s 2 add c length lt {
+                c s 2 add get 35 eq {
+                    10 mul c s 1 add get 48 sub add
+                    /s s 2 add def
+                } if
+            } if
+            /s s 1 add def
+            96 add
+        } loop
+    ]
+    a2s
+    end
+} bind def
+
+(decryptstring) test.start
+(10#11#12) decryptstring (jkab) eq test
+(1326#) decryptstring (acz) eq test
+(25#24#123) decryptstring (yxabc) eq test
+(20#5) decryptstring (te) eq test
+(1910#26#) decryptstring (aijz) eq test
+test.end
