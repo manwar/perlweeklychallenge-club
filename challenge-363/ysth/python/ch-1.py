@@ -8,8 +8,8 @@ def string_lie_detector(string: str) -> bool:
     m = regex.match(r'^(?P<string>.*)\s\p{Pd}\s(?P<vowels>.*)\svowels?\sand\s(?P<consonants>.*)\sconsonants?\Z', string)
     if m is None:
         return False
-    vowel_set = set('aeiou')
-    consonant_set = set('bcdfghjklmnpqrstvwxyz')
+    vowel_set = set('aeiouAEIOU')
+    consonant_set = set('bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ')
     vowel_count = 0
     consonant_count = 0
     for character in m['string']:
