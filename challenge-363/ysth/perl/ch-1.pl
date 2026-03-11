@@ -10,8 +10,8 @@ sub string_lie_detector($string) {
         or return false;
 
     my $normalized_target = NFD($target);
-    my $consonant_count = $normalized_target =~ y/bcdfghjklmnpqrstvwxyz//;
-    my $vowel_count = $normalized_target =~ y/aeiou//;
+    my $consonant_count = $normalized_target =~ y/bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ//;
+    my $vowel_count = $normalized_target =~ y/aeiouAEIOU//;
 
     return words2nums($vowels) == $vowel_count && words2nums($consonants) == $consonant_count;
 }
