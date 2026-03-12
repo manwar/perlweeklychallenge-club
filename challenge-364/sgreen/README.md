@@ -1,3 +1,3 @@
-# The Weekly Challenge 363
+# The Weekly Challenge 364
 
-Blog: [The subnet detector](https://dev.to/simongreennet/weekly-challlenge-the-subnet-detector-1d9l)
+Blog: [It's all about the translation](https://dev.to/simongreennet/weekly-challenge-its-all-about-the-translation-17li)
