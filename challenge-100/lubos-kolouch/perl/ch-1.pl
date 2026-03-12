@@ -1,9 +1,9 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
 #===============================================================================
 #
 #         FILE: ch-1.pl
 #
-#        USAGE: ./ch-1.pl  
+#        USAGE: ./ch-1.pl
 #
 #  DESCRIPTION: Perl Weekly Challenge #100
 #               Task 1
@@ -13,16 +13,27 @@
 
 use strict;
 use warnings;
-use DateTime::Format::DateParse;
 
 sub convert_time {
     my $what = shift;
+    (my $normalized = uc $what) =~ s/\s+//g;
 
-    my $pattern = $what =~ /m/ ? '%H:%M' : '%I:%M %P';
+    if ($normalized =~ /\A(\d{1,2}):(\d{2})(AM|PM)\z/) {
+        my ($hour, $minute, $suffix) = ($1, $2, $3);
+        $hour %= 12;
+        $hour += 12 if $suffix eq 'PM';
+        return sprintf '%02d:%02d', $hour, $minute;
+    }
 
-    return DateTime::Format::DateParse
-        -> parse_datetime($what)
-        -> strftime($pattern);
+    if ($normalized =~ /\A(\d{1,2}):(\d{2})\z/) {
+        my ($hour, $minute) = ($1, $2);
+        my $suffix = $hour >= 12 ? 'pm' : 'am';
+        $hour %= 12;
+        $hour = 12 if $hour == 0;
+        return sprintf '%02d:%02d %s', $hour, $minute, $suffix;
+    }
+
+    die "Invalid time format: $what";
 
 }
 

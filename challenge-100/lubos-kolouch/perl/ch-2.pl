@@ -1,4 +1,4 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
 #===============================================================================
 #
 #         FILE: ch_2.pl
@@ -18,36 +18,26 @@ use warnings;
 
 sub min_sums {
     my $what = shift;
+    my @path_sums;
 
-    #
-    # 1
-    # |\
-    # 2 4
-    # |\|\
-    # 6 4 9
-    # |\|\|\
-    # 5 1 7 2
-
-    my $row_counter = 0;
-    my $min_path;
-    my %sums;
     for my $row (@$what) {
-        $row_counter++;
-        my $col_counter = 0;
-        for my $item (@$row) {
-            $col_counter++;
-            my $min_sum;
+        my @next_sums;
 
-            $min_sum = $sums{$row_counter-1, $col_counter} if exists($sums{$row_counter-1,$col_counter});
-            $min_sum = $sums{$row_counter-1, $col_counter-1} if exists($sums{$row_counter-1,$col_counter-1}) and ( (not $min_sum) or ($sums{$row_counter-1,$col_counter-1} < $min_sum) );
-            $min_sum //= 0;
+        for my $index (0 .. $#$row) {
+            my @parents;
+            push @parents, $path_sums[$index] if $index < @path_sums;
+            push @parents, $path_sums[$index - 1] if $index > 0;
 
-            $sums{$row_counter,$col_counter} = $item + $min_sum;
-
-            if ($row_counter == scalar @$what) {
-                $min_path = $item + $min_sum if ( (not $min_path) or ($item + $min_sum < $min_path));
-            }
+            my $parent_sum = @parents ? (@parents == 1 ? $parents[0] : ($parents[0] < $parents[1] ? $parents[0] : $parents[1])) : 0;
+            push @next_sums, $row->[$index] + $parent_sum;
         }
+
+        @path_sums = @next_sums;
+    }
+
+    my $min_path = $path_sums[0];
+    for my $path_sum (@path_sums[1 .. $#path_sums]) {
+        $min_path = $path_sum if $path_sum < $min_path;
     }
 
     return $min_path;
