@@ -1,5 +1,4 @@
-#include "alloc.h"
-#include <time.h>
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define DAY (24*60*60)
 

@@ -87,57 +87,38 @@ IntMatrix* parse_matrix(const char* str) {
     return m;
 }
 
-int first_non_zero_col(IntMatrix* m, int row) {
-    for (int c = 0; c < m->cols; c++) {
-        if (m->data[row][c] != 0)
-            return c;
+int min_col_in_row(IntMatrix* m, int row) {
+    int min_value = INT_MAX;
+    int min_col = -1;
+    for (int col = 0; col < m->cols; col++) {
+        if (m->data[row][col] < min_value) {
+            min_value = m->data[row][col];
+            min_col = col;
+        }
+    }
+    return min_col;
+}
+
+int max_row_in_col(IntMatrix* m, int col) {
+    int max_value = INT_MIN;
+    int max_row = -1;
+    for (int row = 0; row < m->rows; row++) {
+        if (m->data[row][col] > max_value) {
+            max_value = m->data[row][col];
+            max_row = row;
+        }
+    }
+    return max_row;
+}
+
+int get_lucky_number(IntMatrix* m) {
+    for (int row = 0; row < m->rows; row++) {
+        int min_col = min_col_in_row(m, row);
+        int max_row = max_row_in_col(m, min_col);
+        if (max_row == row)
+            return m->data[max_row][min_col];
     }
     return -1;
-}
-
-bool is_one_alone_in_col(IntMatrix* m, int row, int col) {
-    if (m->data[row][col] != 1)
-        return false;
-    for (int r = 0; r < m->rows; r++) {
-        if (r != row) {
-            if (m->data[r][col] != 0)
-                return false;
-        }
-    }
-    return true;
-}
-
-bool is_zero_row(IntMatrix* m, int row) {
-    if (first_non_zero_col(m, row) < 0)
-        return true;
-    else
-        return false;
-}
-
-bool is_reduced_row_echelon(IntMatrix* m) {
-    int last_one_col = -1;
-    bool found_zero_row = false;
-
-    for (int row = 0; row < m->rows; row++) {
-        if (found_zero_row) {
-            if (!is_zero_row(m, row))
-                return false;
-        }
-        else {
-            if (is_zero_row(m, row)) {
-                found_zero_row = true;
-            }
-            else {
-                int one_col = first_non_zero_col(m, row);
-                if (one_col <= last_one_col)
-                    return false;
-                if (!is_one_alone_in_col(m, row, one_col))
-                    return false;
-                last_one_col = one_col;
-            }
-        }
-    }
-    return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -149,8 +130,9 @@ int main(int argc, char* argv[]) {
         str_printf(args, "%s ", argv[i]);
 
     IntMatrix* m = parse_matrix(args->body);
-    bool ok = is_reduced_row_echelon(m);
-    printf("%d\n", ok);
+
+    int lucky = get_lucky_number(m);
+    printf("%d\n", lucky);
 
     str_free(args);
     intmatrix_free(m);

@@ -1,5 +1,10 @@
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
+typedef struct {
+    int row;
+    int num_ones;
+} Row;
+
 void skip_spaces(const char** p) {
     while (isspace(**p))
         (*p)++;
@@ -87,57 +92,43 @@ IntMatrix* parse_matrix(const char* str) {
     return m;
 }
 
-int first_non_zero_col(IntMatrix* m, int row) {
-    for (int c = 0; c < m->cols; c++) {
-        if (m->data[row][c] != 0)
-            return c;
+int count_ones(IntMatrix* m, int row) {
+    int count = 0;
+    for (int col = 0; col < m->cols; col++) {
+        if (m->data[row][col] == 1)
+            count++;
     }
-    return -1;
+    return count;
 }
 
-bool is_one_alone_in_col(IntMatrix* m, int row, int col) {
-    if (m->data[row][col] != 1)
-        return false;
-    for (int r = 0; r < m->rows; r++) {
-        if (r != row) {
-            if (m->data[r][col] != 0)
-                return false;
-        }
-    }
-    return true;
-}
-
-bool is_zero_row(IntMatrix* m, int row) {
-    if (first_non_zero_col(m, row) < 0)
-        return true;
+int compare(const void* a, const void* b) {
+    Row* row_a = (Row*)a;
+    Row* row_b = (Row*)b;
+    if (row_a->num_ones != row_b->num_ones)
+        return row_a->num_ones - row_b->num_ones;
     else
-        return false;
+        return row_a->row - row_b->row;
 }
 
-bool is_reduced_row_echelon(IntMatrix* m) {
-    int last_one_col = -1;
-    bool found_zero_row = false;
-
+IntArray* get_ordered_rows(IntMatrix* m) {
+    // collect row data
+    Row* rows = xmalloc(m->rows * sizeof(Row));
     for (int row = 0; row < m->rows; row++) {
-        if (found_zero_row) {
-            if (!is_zero_row(m, row))
-                return false;
-        }
-        else {
-            if (is_zero_row(m, row)) {
-                found_zero_row = true;
-            }
-            else {
-                int one_col = first_non_zero_col(m, row);
-                if (one_col <= last_one_col)
-                    return false;
-                if (!is_one_alone_in_col(m, row, one_col))
-                    return false;
-                last_one_col = one_col;
-            }
-        }
+        rows[row].row = row;
+        rows[row].num_ones = count_ones(m, row);
     }
-    return true;
+
+    // sort
+    qsort(rows, m->rows, sizeof(Row), compare);
+
+    // collect row ids
+    IntArray* row_ids = intarray_new();
+    for (int row = 0; row < m->rows; row++) {
+        intarray_push_back(row_ids, rows[row].row);
+    }
+
+    xfree(rows);
+    return row_ids;
 }
 
 int main(int argc, char* argv[]) {
@@ -149,9 +140,11 @@ int main(int argc, char* argv[]) {
         str_printf(args, "%s ", argv[i]);
 
     IntMatrix* m = parse_matrix(args->body);
-    bool ok = is_reduced_row_echelon(m);
-    printf("%d\n", ok);
+
+    IntArray* row_ids = get_ordered_rows(m);
+    intarray_print(row_ids);
 
     str_free(args);
     intmatrix_free(m);
+    intarray_free(row_ids);
 }
