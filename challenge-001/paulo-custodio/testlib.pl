@@ -26,7 +26,7 @@ sub test_line {
             next unless -f "$dir/ch-$nr$_exe";
             capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
         }
-        elsif ($dir eq 'bf') {
+        elsif ($dir eq 'brainfuck') {
             next unless -f "$dir/ch-$nr.bas";
             build_bf("$dir/ch-$nr.bas");
             next unless -f "$dir/ch-$nr.bf";
@@ -73,7 +73,7 @@ sub test_block {
             next unless -f "$dir/ch-$nr$_exe";
             run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
         }
-        elsif ($dir eq 'bf') {
+        elsif ($dir eq 'brainfuck') {
             next unless -f "$dir/ch-$nr.bas";
             build_bf("$dir/ch-$nr.bas");
             next unless -f "$dir/ch-$nr.bf";

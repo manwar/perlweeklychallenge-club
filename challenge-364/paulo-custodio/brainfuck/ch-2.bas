@@ -21,15 +21,17 @@ SUB print_decoded(word$)
         PRINT " ";
     ENDIF
     FOR i = 1 TO LEN(word$)
-        IF MID$(word$, i, 2) = "()" THEN
-            PRINT "o";
-            i = i + 1
-        ELSE
-            IF MID$(word$, i, 4) = "(al)" THEN
-                PRINT "al";
-                i = i + 3
+        IF MID$(word$, i, 1) <> """" THEN
+            IF MID$(word$, i, 2) = "()" THEN
+                PRINT "o";
+                i = i + 1
             ELSE
-                PRINT MID$(word$, i, 1);
+                IF MID$(word$, i, 4) = "(al)" THEN
+                    PRINT "al";
+                    i = i + 3
+                ELSE
+                    PRINT MID$(word$, i, 1);
+                ENDIF
             ENDIF
         ENDIF
     NEXT
