@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool unique_occurences(IntArray* nums) {
     intarray_sort(nums);

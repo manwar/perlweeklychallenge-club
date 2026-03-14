@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* count_smaller_than_current(IntArray* nums) {
     IntArray* counts = intarray_new();

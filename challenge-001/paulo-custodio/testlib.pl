@@ -173,7 +173,7 @@ sub compare_files {
 
 sub quote {
     my($str) = @_;
-    if ($_exe) {
+    if ($_exe && $^O ne 'msys') {
         return '"'.$str.'"';
     }
     else {

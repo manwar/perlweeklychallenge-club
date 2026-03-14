@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_pair(const char* s1, const char* s2) {
     int len = strlen(s1);

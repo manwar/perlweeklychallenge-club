@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* merge_strings(const char* s1, const char* s2) {
     int l1 = strlen(s1);
