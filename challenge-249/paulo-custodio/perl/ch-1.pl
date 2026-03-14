@@ -29,5 +29,5 @@ pair:
 
 sub print_pairs {
     my(@pairs) = @_;
-	say "(", join(", ", map {"(".$_->[0].", ".$_->[1].")"} @pairs), ")";
+    say "(", join(", ", map {"(".$_->[0].", ".$_->[1].")"} @pairs), ")";
 }
