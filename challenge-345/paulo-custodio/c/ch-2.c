@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void last_visitor(IntArray* nums, IntArray* ans) {
     IntArray* seen = intarray_new();

@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char* remove_duplicates(const char* input) {
     char* result = xstrdup(input);

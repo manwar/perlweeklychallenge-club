@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void find_next_permutation(IntArray* nums) {
     // Find the longest not increasing suffix

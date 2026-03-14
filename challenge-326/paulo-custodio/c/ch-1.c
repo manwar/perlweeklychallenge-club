@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 #include <time.h>
 
 int main(int argc, char* argv[]) {

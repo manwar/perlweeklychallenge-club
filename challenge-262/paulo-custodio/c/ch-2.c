@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int count_equal_divisible(int k, IntArray* nums) {
     int count = 0;

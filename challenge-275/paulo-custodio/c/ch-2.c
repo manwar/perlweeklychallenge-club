@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* expand_string(const char* input) {
     char last_letter = '\0';

@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void kolakoski(int n, IntArray* seq, IntArray* count) {
     // init sequence

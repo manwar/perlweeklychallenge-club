@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* format_string(const char* input, int group_size) {
     // remove all dashes

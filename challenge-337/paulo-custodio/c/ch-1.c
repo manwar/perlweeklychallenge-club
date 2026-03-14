@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void smaller(const int* nums, int* result, int size) {
     for (int i = 0; i < size; i++) {

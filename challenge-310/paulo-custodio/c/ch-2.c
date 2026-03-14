@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void sort_odd_even(IntArray* nums) {
     IntArray* even = intarray_new();

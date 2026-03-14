@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* rle_encode(const char* str) {
     Str* encoded = str_new();

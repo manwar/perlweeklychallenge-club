@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char* reverse_prefix(const char* string, char ch) {
     char* result = xstrdup(string);

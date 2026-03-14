@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 #include <ctype.h>
 
 bool is_nice_string(const char* str, int start, int len) {

@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* read_nums() {
     IntArray* nums = intarray_new();
