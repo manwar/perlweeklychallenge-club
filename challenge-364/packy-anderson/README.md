@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: I shot the subnet...](https://packy.dardan.com/b/k8)
+[Perl Weekly Challenge: Andrés Cantor Goes West](https://packy.dardan.com/b/kZ)
