@@ -1,0 +1,43 @@
+--
+-- Perl Weekly Challenge 365
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-365>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc365;
+
+CREATE OR REPLACE FUNCTION
+pwc365.task1_plperl( text, int )
+RETURNS int
+AS $CODE$
+
+   my ( $string, $base ) = @_;
+
+   my $alphabet = {};
+   my $index    = 1;
+   for ( 'a' .. 'z' ) {
+       $alphabet->{ $_ } = $index++;
+   }
+
+
+   my $sum = sub {
+      my $v = 0;
+      for ( split //, $_[0] ) {
+         $v += $_;
+      }
+
+      return $v;
+   };
+
+   my $number = join '', 
+                map { $alphabet->{ $_ } }
+                split //, $string;
+
+   while ( $base-- > 0 ) {
+   	 $number = $sum->( $number );
+   }
+
+   return $number;
+   
+$CODE$
+LANGUAGE plperl;

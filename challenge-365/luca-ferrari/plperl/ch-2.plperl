@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 365
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-365>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc365;
+
+CREATE OR REPLACE FUNCTION
+pwc365.task2_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $sentence ) = @_;
+   my @tokens;
+   
+   for ( split /\s+/, $sentence ) {
+       next if /[0-9]/;
+       next if /[A-Z]\-/;
+       next if /\-[A-Z]/;
+       next if /[!.,].+/;
+
+       push @tokens, $_;
+   }
+
+   return scalar @tokens;
+   
+$CODE$
+LANGUAGE plperl;
