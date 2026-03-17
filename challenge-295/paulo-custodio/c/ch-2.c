@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void find_jump(int prev_jumps, int pos, IntArray* nums, int* min_jumps) {
     if (pos >= nums->size-1) {  // reached the targe

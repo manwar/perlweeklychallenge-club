@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int count_words(const char* sentence_) {
     char* sentence = xstrdup(sentence_);

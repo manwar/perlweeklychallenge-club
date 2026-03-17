@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool meet_zero(const char* directions) {
     int x = 0, y = 0;

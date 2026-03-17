@@ -1,7 +1,4 @@
-#include "alloc.h"
-#include <math.h>
-
-#define Epsilon 1e-9
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 typedef struct {
     int numer;

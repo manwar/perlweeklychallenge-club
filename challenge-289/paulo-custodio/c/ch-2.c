@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void shuffle_word(char* p, char* q) {
     p++;    // dont shufle first char

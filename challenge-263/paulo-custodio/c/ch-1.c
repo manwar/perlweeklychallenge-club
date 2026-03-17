@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* target_index(int k, IntArray* nums) {
     IntArray* index = intarray_new();

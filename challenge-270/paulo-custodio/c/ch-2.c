@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int equalize(IntArray* nums, int x, int y) {
     if (nums->size <= 1)

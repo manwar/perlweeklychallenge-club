@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int find_prefix(char* word, int count, char* words[]) {
     for (int i = 0; i < count; i++) {

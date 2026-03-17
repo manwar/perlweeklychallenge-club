@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool find_word(const char* word, int argc, char* argv[]) {
     for (int i = 0; i < argc; i++) {

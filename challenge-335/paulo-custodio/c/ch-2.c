@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define BOARD_SIZE  3
 #define EMPTY       '_'

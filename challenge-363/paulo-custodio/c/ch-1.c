@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int translate_number(const char* long_form) {
     if (strcmp(long_form, "zero" ) == 0) return 0;

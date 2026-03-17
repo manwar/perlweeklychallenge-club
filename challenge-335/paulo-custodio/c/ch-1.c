@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char* common_letters(char* words[], int count) {
     if (count <= 0)

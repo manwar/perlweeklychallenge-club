@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int compare(const void* a, const void* b) {
     return stricmp(*(const char**)a, *(const char**)b);

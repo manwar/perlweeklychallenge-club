@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 #include <ctype.h>
 
 char *make_lower_upper_keys(const char* input) {

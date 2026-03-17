@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_subsequence(const char* str, const char* heap) {
     int target = 0;

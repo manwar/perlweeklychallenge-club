@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int count_max_pos_neg(IntArray* nums) {
     int count_pos = 0;

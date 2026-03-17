@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char first_double_letter(const char* str) {
     int count[UCHAR_MAX] = {0};

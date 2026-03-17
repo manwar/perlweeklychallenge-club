@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* number_game(IntArray* nums) {
     IntArray* output = intarray_new();

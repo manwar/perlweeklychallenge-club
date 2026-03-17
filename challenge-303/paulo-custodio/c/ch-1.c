@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void find_nums_1(IntArray* out, int prefix, const char* digits) {
     if (prefix >= 100 && prefix < 1000 && prefix % 2 == 0) {

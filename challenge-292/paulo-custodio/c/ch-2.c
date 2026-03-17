@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 // check if we have /A[^A]+A/
 bool is_ball_needed_later(char ball, Str* board) {
