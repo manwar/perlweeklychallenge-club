@@ -1,4 +1,4 @@
-Challenge 335
+Perl Weekly Challenge 335
 https://theweeklychallenge.org/blog/perl-weekly-challenge-335/
 
 Task 1: Common Characters

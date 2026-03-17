@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 284 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-284/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void parse_list(IntArray* list, char* text) {

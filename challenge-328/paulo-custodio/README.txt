@@ -1,4 +1,4 @@
-Challenge 328
+Perl Weekly Challenge 328
 https://theweeklychallenge.org/blog/perl-weekly-challenge-328/
 
 Task 1: Replace all ?

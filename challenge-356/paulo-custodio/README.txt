@@ -1,4 +1,4 @@
-Challenge 356
+Perl Weekly Challenge 356
 https://theweeklychallenge.org/blog/perl-weekly-challenge-356/
 
 Task 1: Kolakoski Sequence

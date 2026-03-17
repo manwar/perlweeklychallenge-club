@@ -1,4 +1,4 @@
-Challenge 308
+Perl Weekly Challenge 308
 https://theweeklychallenge.org/blog/perl-weekly-challenge-308/
 
 Task 1: Count Common

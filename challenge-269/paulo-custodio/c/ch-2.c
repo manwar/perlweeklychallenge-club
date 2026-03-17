@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 269 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-269/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void distribute_elements(IntArray* nums) {

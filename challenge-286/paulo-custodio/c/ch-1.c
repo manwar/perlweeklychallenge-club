@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 286 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-286/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 // Challenge 286

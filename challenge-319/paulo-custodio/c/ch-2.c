@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 319 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-319/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* parse_int_list() {

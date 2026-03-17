@@ -1,4 +1,4 @@
-Challenge 287
+Perl Weekly Challenge 287
 https://theweeklychallenge.org/blog/perl-weekly-challenge-287/
 
 Task 1: Strong Password

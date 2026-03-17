@@ -1,4 +1,7 @@
-#!/bin/env perl
+#!/usr/bin/env perl
+
+# Perl Weekly Challenge 308 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-308/
 
 use Modern::Perl;
 

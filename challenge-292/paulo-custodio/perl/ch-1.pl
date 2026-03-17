@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 292 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-292/
+
 use Modern::Perl;
 
 my @nums = sort {$b->[1] <=> $a->[1]} map {[$_, $ARGV[$_]]} 0..$#ARGV;

@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 274 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-274/
+
 use Modern::Perl;
 
 my @routes = map {[split ' ', $_]} split /,/, "@ARGV";

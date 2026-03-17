@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 365 - Task 2 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-365/
+
 Function is_letter(c as String) as Boolean
     is_letter = c >= "a" And c <= "z"
 End Function

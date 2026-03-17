@@ -1,4 +1,4 @@
-Challenge 353
+Perl Weekly Challenge 353
 https://theweeklychallenge.org/blog/perl-weekly-challenge-353/
 
 Task 1: Max Words

@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 301 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-301/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int hamming_distance(int a, int b) {

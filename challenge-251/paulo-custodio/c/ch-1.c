@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 251 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-251/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int get_concatenation_value(IntArray* nums) {

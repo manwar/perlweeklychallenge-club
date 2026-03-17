@@ -1,4 +1,4 @@
-Challenge 253
+Perl Weekly Challenge 253
 https://theweeklychallenge.org/blog/perl-weekly-challenge-253/
 
 Task 1: Split Strings

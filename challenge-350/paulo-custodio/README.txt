@@ -1,4 +1,4 @@
-Challenge 350
+Perl Weekly Challenge 350
 https://theweeklychallenge.org/blog/perl-weekly-challenge-350/
 
 Task 1: Good Substrings

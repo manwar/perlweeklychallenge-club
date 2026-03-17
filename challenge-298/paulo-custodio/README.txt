@@ -1,4 +1,4 @@
-Challenge 298
+Perl Weekly Challenge 298
 https://theweeklychallenge.org/blog/perl-weekly-challenge-298/
 
 Task 1: Maximal Square

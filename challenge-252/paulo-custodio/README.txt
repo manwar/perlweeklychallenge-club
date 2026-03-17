@@ -1,4 +1,4 @@
-Challenge 252
+Perl Weekly Challenge 252
 https://theweeklychallenge.org/blog/perl-weekly-challenge-252/
 
 Task 1: Special Numbers

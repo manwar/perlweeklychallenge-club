@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 259 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-259/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define DAY (24*60*60)

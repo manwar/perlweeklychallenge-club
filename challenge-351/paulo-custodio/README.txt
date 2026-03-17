@@ -1,4 +1,4 @@
-Challenge 351
+Perl Weekly Challenge 351
 https://theweeklychallenge.org/blog/perl-weekly-challenge-351/
 
 Task 1: Special Average

@@ -1,4 +1,4 @@
-Challenge 312
+Perl Weekly Challenge 312
 https://theweeklychallenge.org/blog/perl-weekly-challenge-312/
 
 Task 1: Minimum Time

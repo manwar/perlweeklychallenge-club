@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 347 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-347/
+
 use Modern::Perl;
 
 @ARGV or die "usage: $0 phone-num\n";

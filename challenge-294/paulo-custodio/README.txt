@@ -1,4 +1,4 @@
-Challenge 294
+Perl Weekly Challenge 294
 https://theweeklychallenge.org/blog/perl-weekly-challenge-294/
 
 Task 1: Consecutive Sequence

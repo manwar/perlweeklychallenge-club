@@ -1,4 +1,4 @@
-Challenge 309
+Perl Weekly Challenge 309
 https://theweeklychallenge.org/blog/perl-weekly-challenge-309/
 
 Task 1: Min Gap

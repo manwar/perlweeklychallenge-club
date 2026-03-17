@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 309 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-309/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int smallest_gap(IntArray* nums) {

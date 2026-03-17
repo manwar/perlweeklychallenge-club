@@ -1,4 +1,4 @@
-Challenge 281
+Perl Weekly Challenge 281
 https://theweeklychallenge.org/blog/perl-weekly-challenge-281/
 
 Task 1: Check Color

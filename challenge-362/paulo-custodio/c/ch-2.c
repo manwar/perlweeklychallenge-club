@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 362 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-362/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 // convert number to text

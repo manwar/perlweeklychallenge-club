@@ -1,4 +1,4 @@
-Challenge 321
+Perl Weekly Challenge 321
 https://theweeklychallenge.org/blog/perl-weekly-challenge-321/
 
 Task 1: Distinct Average

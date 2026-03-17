@@ -1,4 +1,4 @@
-Challenge 349
+Perl Weekly Challenge 349
 https://theweeklychallenge.org/blog/perl-weekly-challenge-349/
 
 Task 1: Power String

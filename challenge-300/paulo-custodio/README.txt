@@ -1,4 +1,4 @@
-Challenge 300
+Perl Weekly Challenge 300
 https://theweeklychallenge.org/blog/perl-weekly-challenge-300/
 
 Task 1: Beautiful Arrangement

@@ -1,4 +1,4 @@
-Challenge 319
+Perl Weekly Challenge 319
 https://theweeklychallenge.org/blog/perl-weekly-challenge-319/
 
 Task 1: Word Count

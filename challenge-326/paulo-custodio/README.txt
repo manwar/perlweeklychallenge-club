@@ -1,4 +1,4 @@
-Challenge 326
+Perl Weekly Challenge 326
 https://theweeklychallenge.org/blog/perl-weekly-challenge-326/
 
 Task 1: Day of the Year

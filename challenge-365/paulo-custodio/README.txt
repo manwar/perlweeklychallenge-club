@@ -1,4 +1,4 @@
-Challenge 365
+Perl Weekly Challenge 365
 https://theweeklychallenge.org/blog/perl-weekly-challenge-365/
 
 Task 1: Alphabet Index Digit Sum

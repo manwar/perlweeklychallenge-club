@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 292 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-292/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int get_twice_largest_index(IntArray* nums) {

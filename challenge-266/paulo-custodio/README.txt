@@ -1,4 +1,4 @@
-Challenge 266
+Perl Weekly Challenge 266
 https://theweeklychallenge.org/blog/perl-weekly-challenge-266/
 
 Task 1: Uncommon Words

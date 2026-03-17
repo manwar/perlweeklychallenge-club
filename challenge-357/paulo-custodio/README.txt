@@ -1,4 +1,4 @@
-Challenge 357
+Perl Weekly Challenge 357
 https://theweeklychallenge.org/blog/perl-weekly-challenge-357/
 
 Task 1: Kaprekar Constant

@@ -1,4 +1,4 @@
-Challenge 343
+Perl Weekly Challenge 343
 https://theweeklychallenge.org/blog/perl-weekly-challenge-343/
 
 Task 1: Zero Friend

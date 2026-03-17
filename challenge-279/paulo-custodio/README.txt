@@ -1,4 +1,4 @@
-Challenge 279
+Perl Weekly Challenge 279
 https://theweeklychallenge.org/blog/perl-weekly-challenge-279/
 
 Task 1: Sort Letters

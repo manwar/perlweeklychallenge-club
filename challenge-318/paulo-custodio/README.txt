@@ -1,4 +1,4 @@
-Challenge 318
+Perl Weekly Challenge 318
 https://theweeklychallenge.org/blog/perl-weekly-challenge-318/
 
 Task 1: Group Position

@@ -1,4 +1,4 @@
-Challenge 297
+Perl Weekly Challenge 297
 https://theweeklychallenge.org/blog/perl-weekly-challenge-297/
 
 Task 1: Contiguous Array

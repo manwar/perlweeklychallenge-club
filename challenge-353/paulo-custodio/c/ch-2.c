@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 353 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-353/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 #include <ctype.h>
 

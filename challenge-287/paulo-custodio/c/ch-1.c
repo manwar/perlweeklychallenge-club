@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 287 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-287/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define MIN_LENGTH      6
@@ -94,13 +97,13 @@ int steps_to_strong(const char* pass_) {
 
     int steps = 0;
     while (!is_strong(pass->body)) {
+        str_reserve(pass, 1);           // make space for one more char
         char ch = next_char(pass->body);
         const char* p = repeated_chars(pass->body);
         if (p != NULL) {
             p += MAX_REPEATED;          // must insert char after the second repeated one
-            int pos = p - pass->body;   // str_append may invalidate p
+            int pos = p - pass->body;
             int move_len = strlen(p)+1; // include '\0'
-            str_append(pass, " ");      // make space
             memmove(pass->body+pos+1, pass->body+pos, move_len);
             pass->body[pos] = ch;
         }

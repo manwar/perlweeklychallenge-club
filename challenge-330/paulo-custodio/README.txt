@@ -1,4 +1,4 @@
-Challenge 330
+Perl Weekly Challenge 330
 https://theweeklychallenge.org/blog/perl-weekly-challenge-330/
 
 Task 1: Clear Digits

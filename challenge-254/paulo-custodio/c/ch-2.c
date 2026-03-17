@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 254 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-254/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_vowel(char ch) {

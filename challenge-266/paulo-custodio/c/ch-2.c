@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 266 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-266/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 StrArray* split(const char* str_, const char* separators) {

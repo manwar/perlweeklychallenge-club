@@ -1,4 +1,4 @@
-Challenge 282
+Perl Weekly Challenge 282
 https://theweeklychallenge.org/blog/perl-weekly-challenge-282/
 
 Task 1: Good Integer

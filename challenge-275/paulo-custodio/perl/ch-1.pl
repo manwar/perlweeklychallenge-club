@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 275 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-275/
+
 use Modern::Perl;
 
 my($sentence, $keys) = split /,/, "@ARGV";

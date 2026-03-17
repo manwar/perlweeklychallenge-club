@@ -1,4 +1,4 @@
-Challenge 251
+Perl Weekly Challenge 251
 https://theweeklychallenge.org/blog/perl-weekly-challenge-251/
 
 Task 1: Concatenation Value

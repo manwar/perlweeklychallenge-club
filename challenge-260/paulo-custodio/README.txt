@@ -1,4 +1,4 @@
-Challenge 260
+Perl Weekly Challenge 260
 https://theweeklychallenge.org/blog/perl-weekly-challenge-260/
 
 Task 1: Unique Occurrences

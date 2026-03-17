@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 308 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-308/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 StrArray* parse_list(const char* str_) {

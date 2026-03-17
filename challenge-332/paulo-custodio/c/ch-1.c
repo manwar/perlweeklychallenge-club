@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 332 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-332/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define BIN_SIZE 64

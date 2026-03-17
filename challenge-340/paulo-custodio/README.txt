@@ -1,4 +1,4 @@
-Challenge 340
+Perl Weekly Challenge 340
 https://theweeklychallenge.org/blog/perl-weekly-challenge-340/
 
 Task 1: Duplicate Removals

@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 263 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-263/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* target_index(int k, IntArray* nums) {

@@ -1,4 +1,4 @@
-Challenge 295
+Perl Weekly Challenge 295
 https://theweeklychallenge.org/blog/perl-weekly-challenge-295/
 
 Task 1: Word Break

@@ -1,4 +1,4 @@
-Challenge 329
+Perl Weekly Challenge 329
 https://theweeklychallenge.org/blog/perl-weekly-challenge-329/
 
 Task 1: Counter Integers

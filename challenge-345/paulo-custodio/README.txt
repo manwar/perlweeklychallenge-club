@@ -1,4 +1,4 @@
-Challenge 345
+Perl Weekly Challenge 345
 https://theweeklychallenge.org/blog/perl-weekly-challenge-345/
 
 Task 1: Peak Positions

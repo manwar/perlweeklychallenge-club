@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Challenge - word for the test.pl test case
+
+# Perl Weekly Challenge 286 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-286/
+
 # Challenge 286
 
 import sys

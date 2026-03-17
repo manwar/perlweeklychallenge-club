@@ -1,4 +1,4 @@
-Challenge 256
+Perl Weekly Challenge 256
 https://theweeklychallenge.org/blog/perl-weekly-challenge-256/
 
 Task 1: Maximum Pairs

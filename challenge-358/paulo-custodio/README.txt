@@ -1,4 +1,4 @@
-Challenge 358
+Perl Weekly Challenge 358
 https://theweeklychallenge.org/blog/perl-weekly-challenge-358/
 
 Task 1: Max Str Value

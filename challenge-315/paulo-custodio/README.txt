@@ -1,4 +1,4 @@
-Challenge 315
+Perl Weekly Challenge 315
 https://theweeklychallenge.org/blog/perl-weekly-challenge-315/
 
 Task 1: Find Words

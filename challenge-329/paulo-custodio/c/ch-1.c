@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 329 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-329/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 #include "uthash.h"
 #include <ctype.h>

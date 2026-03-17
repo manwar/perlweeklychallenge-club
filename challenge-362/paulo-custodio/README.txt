@@ -1,4 +1,4 @@
-Challenge 362
+Perl Weekly Challenge 362
 https://theweeklychallenge.org/blog/perl-weekly-challenge-362/
 
 Task 1: Echo Chamber

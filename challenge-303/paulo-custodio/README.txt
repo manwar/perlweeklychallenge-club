@@ -1,4 +1,4 @@
-Challenge 303
+Perl Weekly Challenge 303
 https://theweeklychallenge.org/blog/perl-weekly-challenge-303/
 
 Task 1: 3-digits Even

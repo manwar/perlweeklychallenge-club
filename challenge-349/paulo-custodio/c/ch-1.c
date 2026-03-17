@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 349 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-349/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int power_string(const char* str) {

@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 321 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-321/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void remove_backspace(Str* str) {

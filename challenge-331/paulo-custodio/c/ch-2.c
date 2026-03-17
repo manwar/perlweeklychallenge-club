@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 331 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-331/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool are_buddies(char* str1, char* str2) {

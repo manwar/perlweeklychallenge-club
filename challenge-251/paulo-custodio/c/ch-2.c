@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 251 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-251/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void skip_spaces(const char** p) {

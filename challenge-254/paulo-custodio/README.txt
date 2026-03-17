@@ -1,4 +1,4 @@
-Challenge 254
+Perl Weekly Challenge 254
 https://theweeklychallenge.org/blog/perl-weekly-challenge-254/
 
 Task 1: Three Power

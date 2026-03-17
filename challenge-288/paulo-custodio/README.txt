@@ -1,4 +1,4 @@
-Challenge 288
+Perl Weekly Challenge 288
 https://theweeklychallenge.org/blog/perl-weekly-challenge-288/
 
 Task 1: Closest Palindrome

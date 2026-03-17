@@ -1,4 +1,7 @@
-#!/usr/bin/env pyhton3
+#!/usr/bin/env python
+
+# Perl Weekly Challenge 281 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-281/
 
 import sys
 

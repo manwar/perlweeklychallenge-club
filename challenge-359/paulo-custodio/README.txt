@@ -1,4 +1,4 @@
-Challenge 359
+Perl Weekly Challenge 359
 https://theweeklychallenge.org/blog/perl-weekly-challenge-359/
 
 Task 1: Digital Root

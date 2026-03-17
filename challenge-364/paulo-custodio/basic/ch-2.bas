@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 364 - Task 2 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-364/
+
 dim i as integer, j as integer, word as string, result as string
 
 i = 1

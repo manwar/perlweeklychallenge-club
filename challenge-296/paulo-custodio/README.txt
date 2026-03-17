@@ -1,4 +1,4 @@
-Challenge 296
+Perl Weekly Challenge 296
 https://theweeklychallenge.org/blog/perl-weekly-challenge-296/
 
 Task 1: String Compression

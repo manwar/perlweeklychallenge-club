@@ -1,4 +1,4 @@
-Challenge 332
+Perl Weekly Challenge 332
 https://theweeklychallenge.org/blog/perl-weekly-challenge-332/
 
 Task 1: Binary Date

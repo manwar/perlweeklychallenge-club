@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 310 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-310/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void sort_odd_even(IntArray* nums) {

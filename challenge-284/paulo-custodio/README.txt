@@ -1,4 +1,4 @@
-Challenge 284
+Perl Weekly Challenge 284
 https://theweeklychallenge.org/blog/perl-weekly-challenge-284/
 
 Task 1: Lucky Integer

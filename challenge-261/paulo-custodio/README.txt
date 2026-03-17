@@ -1,4 +1,4 @@
-Challenge 261
+Perl Weekly Challenge 261
 https://theweeklychallenge.org/blog/perl-weekly-challenge-261/
 
 Task 1: Element Digit Sum

@@ -1,4 +1,4 @@
-Challenge 269
+Perl Weekly Challenge 269
 https://theweeklychallenge.org/blog/perl-weekly-challenge-269/
 
 Task 1: Bitwise OR

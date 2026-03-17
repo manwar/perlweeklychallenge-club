@@ -1,4 +1,4 @@
-Challenge 331
+Perl Weekly Challenge 331
 https://theweeklychallenge.org/blog/perl-weekly-challenge-331/
 
 Task 1: Last Word

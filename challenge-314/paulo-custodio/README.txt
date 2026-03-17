@@ -1,4 +1,4 @@
-Challenge 314
+Perl Weekly Challenge 314
 https://theweeklychallenge.org/blog/perl-weekly-challenge-314/
 
 Task 1: Equal Strings

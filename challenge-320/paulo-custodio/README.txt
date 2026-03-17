@@ -1,4 +1,4 @@
-Challenge 320
+Perl Weekly Challenge 320
 https://theweeklychallenge.org/blog/perl-weekly-challenge-320/
 
 Task 1: Maximum Count

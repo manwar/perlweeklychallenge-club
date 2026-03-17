@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 255 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-255/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char* extra_letters(const char* text, const char* letters) {

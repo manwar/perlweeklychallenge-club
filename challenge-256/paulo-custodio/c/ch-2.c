@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 256 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-256/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* merge_strings(const char* s1, const char* s2) {

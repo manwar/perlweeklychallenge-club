@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 297 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-297/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int max_contiguous_01(const char* text) {

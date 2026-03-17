@@ -1,4 +1,4 @@
-Challenge 278
+Perl Weekly Challenge 278
 https://theweeklychallenge.org/blog/perl-weekly-challenge-278/
 
 Task 1: Sort String

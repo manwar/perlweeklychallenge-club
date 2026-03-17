@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 365 - Task 1 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-365/
+
 Function convert_to_digits(text as String) as String
     Dim result as String, i as Integer, c as String
 

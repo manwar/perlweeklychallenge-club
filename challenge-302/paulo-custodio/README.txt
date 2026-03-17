@@ -1,4 +1,4 @@
-Challenge 302
+Perl Weekly Challenge 302
 https://theweeklychallenge.org/blog/perl-weekly-challenge-302/
 
 Task 1: Ones and Zeroes
