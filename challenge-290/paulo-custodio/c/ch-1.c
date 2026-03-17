@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool double_exists(IntArray* nums) {
     for (int i = 0; i < nums->size-1; i++) {

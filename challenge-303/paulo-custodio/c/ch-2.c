@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void find_max_points_1(int points, IntArray* nums, int* max) {
     if (nums->size == 0) {

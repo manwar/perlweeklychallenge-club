@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int string_score(const char* str) {
     int score = 0;

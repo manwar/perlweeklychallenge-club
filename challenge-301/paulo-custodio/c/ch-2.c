@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int hamming_distance(int a, int b) {
     int distance = 0;

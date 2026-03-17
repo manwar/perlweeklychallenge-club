@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_in_network(const char* node_ip, const char* network_ip) {
     int b1, b2, b3, b4, bits;

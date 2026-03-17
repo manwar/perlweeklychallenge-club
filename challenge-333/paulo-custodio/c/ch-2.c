@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void dup_zeros(const int* from, int* to, int size) {
     int j = 0;

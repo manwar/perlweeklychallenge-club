@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* group_digit_sum(const char* input, int n) {
     Str* s1 = str_new();

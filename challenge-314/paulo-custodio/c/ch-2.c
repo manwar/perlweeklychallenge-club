@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool col_is_sorted(StrArray* words, int col) {
     for (int r = 1; r < words->size; r++) {

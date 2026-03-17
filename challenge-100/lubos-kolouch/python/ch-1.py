@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """
 #===============================================================================
 #
@@ -12,20 +12,36 @@
 #      CREATED: 02/20/2021 10:16:51 AM
 #===============================================================================
 """
-from time import strptime, strftime
+
+from datetime import datetime
 
 
 def convert_time(inp_time):
-    """ Convert the time as required """
+    """Convert the time as required"""
 
-    new_time = inp_time.replace(" ", "")
-    parse_pattern = '%H:%M' if 'm' not in inp_time else '%I:%M%p'
-    out_pattern = '%H:%M' if 'm' in inp_time else '%I:%M%p'
+    normalized_time = inp_time.strip().replace(" ", "").upper()
+    has_meridiem = normalized_time.endswith(("AM", "PM"))
+    parse_pattern = "%I:%M%p" if has_meridiem else "%H:%M"
+    out_pattern = "%H:%M" if has_meridiem else "%I:%M%p"
 
-    conv_time = strptime(new_time, parse_pattern)
-    return strftime(out_pattern, conv_time)
+    converted_time = datetime.strptime(normalized_time, parse_pattern)
+    return converted_time.strftime(out_pattern)
 
 
-assert convert_time('05:15pm') == '17:15'
-assert convert_time('05:15 pm') == '17:15'
-assert convert_time('19:15') == '07:15PM'
+def run_tests():
+    """Run basic challenge examples."""
+
+    test_cases = {
+        "05:15pm": "17:15",
+        "05:15 pm": "17:15",
+        "19:15": "07:15PM",
+    }
+
+    for value, expected in test_cases.items():
+        result = convert_time(value)
+        if result != expected:
+            raise ValueError(f"{value} converted to {result}, expected {expected}")
+
+
+if __name__ == "__main__":
+    run_tests()

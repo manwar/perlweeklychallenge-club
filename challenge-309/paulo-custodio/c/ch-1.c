@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int smallest_gap(IntArray* nums) {
     if (nums->size < 2)

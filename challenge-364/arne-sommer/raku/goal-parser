@@ -1,0 +1,26 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($string is copy where $string.chars > 0, :v(:$verbose));
+
+my $tokens := gather
+{
+  while $string.chars
+  {
+    if $string ~~ /^([ "G" | "\(\)" | "\(al\)" ]) (.*)/
+    {
+      say ": '$string' -> '$0' + '$1'" if $verbose;
+      given $0.Str
+      {
+        when "G"    { take "G" }
+        when "()"   { take "o" }
+        when "(al)" { take "al" }
+      }
+      $string = $1.Str // "";
+    }
+    else
+    {
+      die "Illegal input; not a goal";
+    }
+  }
+}
+say $tokens.join;

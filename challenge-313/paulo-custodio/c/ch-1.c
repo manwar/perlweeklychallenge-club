@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_typed(const char* name, const char* typed) {
     int kbd = 0;

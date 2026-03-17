@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int smallest_diff(IntArray* nums) {
     int min_diff = INT_MAX;

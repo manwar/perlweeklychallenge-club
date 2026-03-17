@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #ifdef _MSC_VER
 #define strdup  _strdup
@@ -367,6 +368,24 @@ static void intmatrix_free(IntMatrix* mat) {
     xfree(mat);
 }
 
+static void intmatrix_print(IntMatrix* mat) {
+    for (int r = 0; r < mat->rows; r++) {
+        if (r == 0)
+            printf("[ [");
+        else
+            printf("  [");
+        for (int c = 0; c < mat->cols; c++) {
+            if (c > 0)
+                printf(", ");
+            printf("%3d", mat->data[r][c]);
+        }
+        if (r == mat->rows - 1)
+            printf("] ]\n");
+        else
+            printf(",\n");
+    }
+}
+
 // Str
 typedef struct {
     char* body;
@@ -546,6 +565,19 @@ static int str_icompare(const void* a, const void* b) {
 
 static void strarray_sort(StrArray* arr) {
     qsort(arr->data, arr->size, sizeof(char*), str_compare);
+}
+
+static void strarray_uniq(StrArray* arr) {
+    strarray_sort(arr);
+    int w = 0;
+    for (int r = 0; r < arr->size; r++) {
+        if (w > 0 && strcmp(arr->data[w-1], arr->data[r]) == 0) {
+            xfree(arr->data[r]);
+            continue;
+        }
+        arr->data[w++] = arr->data[r];
+    }
+    arr->size = w; // later elements are already freed or moved, so just update size
 }
 
 static void strarray_isort(StrArray* arr) {

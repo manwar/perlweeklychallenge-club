@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int num_steps(IntArray* nums) {
     if (nums->size == 0)

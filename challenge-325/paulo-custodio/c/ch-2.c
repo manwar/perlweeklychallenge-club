@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int find_discount(int price, IntArray* prices, int first_index) {
     for (int i = first_index; i < prices->size; i++) {

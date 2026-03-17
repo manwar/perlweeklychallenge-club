@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_beautiful(IntArray* nums) {
     for (int i = 1; i <= nums->size; i++) {

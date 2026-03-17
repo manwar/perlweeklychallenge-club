@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool are_buddies(char* str1, char* str2) {
     int len = strlen(str1);

@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool check_mountain(IntArray* nums) {
     if (nums->size < 3)

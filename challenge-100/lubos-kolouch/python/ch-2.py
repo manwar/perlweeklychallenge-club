@@ -17,41 +17,37 @@
 
 
 def min_sums(what):
-    """ Get the min sum as requested """
+    """Get the min sum as requested"""
 
-    #
-    # 1
-    # |\
-    # 2 4
-    # |\|\
-    # 6 4 9
-    # |\|\|\
-    # 5 1 7 2
-
-    row_counter = 0
-    min_path = None
-    sums = {}
+    path_sums = []
     for row in what:
-        row_counter += 1
-        col_counter = 0
-        for item in row:
-            col_counter += 1
+        next_sums = []
+        for index, item in enumerate(row):
+            parents = []
+            if index < len(path_sums):
+                parents.append(path_sums[index])
+            if index > 0:
+                parents.append(path_sums[index - 1])
 
-            min_sum = sums.get((row_counter-1, col_counter), None)
-            if sums.get((row_counter-1, col_counter-1), None):
-                if (not min_sum or sums[(row_counter-1, col_counter-1)] < min_sum):
-                    min_sum = sums[(row_counter-1, col_counter-1)]
+            next_sums.append(item + (min(parents) if parents else 0))
+        path_sums = next_sums
 
-            if not min_sum:
-                min_sum = 0
-
-            sums[(row_counter, col_counter)] = item + min_sum
-
-            if row_counter == len(what):
-                if (not min_path) or (item + min_sum < min_path):
-                    min_path = item + min_sum
-    return min_path
+    return min(path_sums)
 
 
-assert min_sums([[1], [2, 4], [6, 4, 9], [5, 1, 7, 2]]) == 8
-assert min_sums([[3], [3, 1], [5, 2, 3], [4, 3, 1, 3]]) == 7
+def run_tests():
+    """Run basic challenge examples."""
+
+    test_cases = (
+        ([[1], [2, 4], [6, 4, 9], [5, 1, 7, 2]], 8),
+        ([[3], [3, 1], [5, 2, 3], [4, 3, 1, 3]], 7),
+    )
+
+    for triangle, expected in test_cases:
+        result = min_sums(triangle)
+        if result != expected:
+            raise ValueError(f"{triangle} produced {result}, expected {expected}")
+
+
+if __name__ == "__main__":
+    run_tests()

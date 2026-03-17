@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define MIN_LENGTH      6
 #define MAX_REPEATED    2

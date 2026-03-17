@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int get_twice_largest_index(IntArray* nums) {
     if (nums->size < 2)

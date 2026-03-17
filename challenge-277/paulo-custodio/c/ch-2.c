@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_strong_pair(int a, int b) {
     return abs(a - b) > 0 && abs(a - b) < MIN(a, b);

@@ -1,4 +1,4 @@
-#include "alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void distribute_elements(IntArray* nums) {
     if (nums->size < 2)
