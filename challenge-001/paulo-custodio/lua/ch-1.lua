@@ -1,12 +1,8 @@
 #!/usr/bin/env lua
 
 --[[
-Challenge 001
-
-Challenge #1
-Write a script to replace the character ‘e’ with ‘E’ in the string
-‘Perl Weekly Challenge’. Also print the number of times the character ‘e’
-is found in the string.
+Perl Weekly Challenge 001 - Task 1 - solution by Paulo Custodio
+https://theweeklychallenge.org/blog/perl-weekly-challenge-001/
 --]]
 
 count = 0

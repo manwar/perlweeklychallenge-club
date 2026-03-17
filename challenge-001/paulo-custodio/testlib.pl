@@ -26,6 +26,12 @@ sub test_line {
             next unless -f "$dir/ch-$nr$_exe";
             capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
         }
+        elsif ($dir eq 'cpp') {
+            next unless -f "$dir/ch-$nr.cpp";
+            build_cpp("$dir/ch-$nr.cpp");
+            next unless -f "$dir/ch-$nr$_exe";
+            capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
+        }
         elsif ($dir eq 'brainfuck') {
             next unless -f "$dir/ch-$nr.bas";
             build_bf("$dir/ch-$nr.bas");
@@ -73,6 +79,12 @@ sub test_block {
             next unless -f "$dir/ch-$nr$_exe";
             run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
         }
+        elsif ($dir eq 'cpp') {
+            next unless -f "$dir/ch-$nr.cpp";
+            build_cpp("$dir/ch-$nr.cpp");
+            next unless -f "$dir/ch-$nr$_exe";
+            run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
+        }
         elsif ($dir eq 'brainfuck') {
             next unless -f "$dir/ch-$nr.bas";
             build_bf("$dir/ch-$nr.bas");
@@ -102,6 +114,14 @@ sub build_c {
 
     (my $exe = $src) =~ s/\.c$/$_exe/;
     build("gcc -o $exe $src", $src, $exe);
+}
+
+sub build_cpp {
+    my($src) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    (my $exe = $src) =~ s/\.cpp$/$_exe/;
+    build("g++ -o $exe $src", $src, $exe);
 }
 
 sub build_bf {
@@ -179,7 +199,7 @@ sub compare_files {
 
 sub quote {
     my($str) = @_;
-    if ($_exe && $^O ne 'msys') {
+    if ($_exe && $^O !~ /msys|cygwin/) {
         return '"'.$str.'"';
     }
     else {
