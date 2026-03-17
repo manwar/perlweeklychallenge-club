@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Andrés Cantor Goes West](https://packy.dardan.com/b/kZ)
+[Perl Weekly Challenge: I'll be the smartest bird the world has ever seen!](https://packy.dardan.com/b/kv)
