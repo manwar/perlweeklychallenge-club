@@ -1,39 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 248
-#
-# Task 2: Submatrix Sum
-# Submitted by: Jorg Sommrey
-# You are given a NxM matrix A of integers.
-#
-# Write a script to construct a (N-1)x(M-1) matrix B having elements that are the sum over the 2x2 submatrices of A,
-#
-# b[i,k] = a[i,k] + a[i,k+1] + a[i+1,k] + a[i+1,k+1]
-#
-# Example 1
-# Input: $a = [
-#               [1,  2,  3,  4],
-#               [5,  6,  7,  8],
-#               [9, 10, 11, 12]
-#             ]
-#
-# Output: $b = [
-#                [14, 18, 22],
-#                [30, 34, 38]
-#              ]
-# Example 2
-# Input: $a = [
-#               [1, 0, 0, 0],
-#               [0, 1, 0, 0],
-#               [0, 0, 1, 0],
-#               [0, 0, 0, 1]
-#             ]
-#
-# Output: $b = [
-#                [2, 1, 0],
-#                [1, 2, 1],
-#                [0, 1, 2]
-#              ]
+# Perl Weekly Challenge 248 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-248/
 
 use Modern::Perl;
 
@@ -72,9 +40,5 @@ sub sum_submatrices {
 
 sub print_matrix {
     my($matrix) = @_;
-    say "[";
-    for (@$matrix) {
-        say "  [", join(", ", @$_), "],";
-    }
-    say "]";
+    say "[", join(",\n ", map {"[ ".join(", ", @$_)." ]"} @$matrix), "]";
 }

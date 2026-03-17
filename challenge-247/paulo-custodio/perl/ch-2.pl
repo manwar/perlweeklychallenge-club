@@ -1,29 +1,7 @@
-#!/bin/env perl
+#!/usr/bin/env perl
 
-# Challenge 247
-#
-# Task 2: Most Frequent Letter Pair
-# Submitted by: Jorg Sommrey
-#
-# You are given a string S of lower case letters 'a'..'z'.
-#
-# Write a script that finds the pair of consecutive letters in S that appears
-# most frequently. If there is more than one such pair, chose the one that is
-# the lexicographically first.
-# Example 1
-#
-# Input: $s = 'abcdbca'
-# Output: 'bc'
-#
-# 'bc' appears twice in `$s`
-#
-# Example 2
-#
-# Input: $s = 'cdeabeabfcdfabgcd'
-# Output: 'ab'
-#
-# 'ab' and 'cd' both appear three times in $s and 'ab' is lexicographically
-# smaller than 'cd'.
+# Perl Weekly Challenge 247 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-247/
 
 use Modern::Perl;
 
