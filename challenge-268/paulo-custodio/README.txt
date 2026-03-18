@@ -1,4 +1,4 @@
-Challenge 268
+Perl Weekly Challenge 268
 https://theweeklychallenge.org/blog/perl-weekly-challenge-268/
 
 Task 1: Magic Number

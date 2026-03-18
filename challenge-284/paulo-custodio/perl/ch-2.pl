@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 284 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-284/
+
 use Modern::Perl;
 my $input = "@ARGV";
 my($list1, $list2) = split /,/, $input;

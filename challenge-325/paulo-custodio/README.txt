@@ -1,4 +1,4 @@
-Challenge 325
+Perl Weekly Challenge 325
 https://theweeklychallenge.org/blog/perl-weekly-challenge-325/
 
 Task 1: Consecutive One

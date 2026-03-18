@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Perl Weekly Challenge 290 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-290/
+
 def double_exist(n):
     for i in range(len(n) - 1):
         for j in range(i + 1, len(n)):

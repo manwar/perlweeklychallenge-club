@@ -1,4 +1,4 @@
-Challenge 250
+Perl Weekly Challenge 250
 https://theweeklychallenge.org/blog/perl-weekly-challenge-250/
 
 Task 1: Smallest Index

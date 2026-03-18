@@ -1,4 +1,4 @@
-Challenge 307
+Perl Weekly Challenge 307
 https://theweeklychallenge.org/blog/perl-weekly-challenge-307/
 
 Task 1: Check Order

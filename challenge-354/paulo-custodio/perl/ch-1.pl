@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 354 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-354/
+
 use Modern::Perl;
 
 @ARGV>=2 or die "Usage: $0 nums...\n";

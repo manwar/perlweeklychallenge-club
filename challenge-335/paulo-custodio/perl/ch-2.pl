@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 335 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-335/
+
 use Modern::Perl;
 
 my @moves;

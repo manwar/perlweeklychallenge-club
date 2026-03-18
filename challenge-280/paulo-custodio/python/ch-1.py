@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Perl Weekly Challenge 280 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-280/
+
 import sys
 
 def double_letter(s):

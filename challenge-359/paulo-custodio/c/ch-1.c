@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 359 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-359/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int sum_digits(int n) {

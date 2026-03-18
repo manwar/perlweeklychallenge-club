@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 306 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-306/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int compute_odd_sum(IntArray* nums) {

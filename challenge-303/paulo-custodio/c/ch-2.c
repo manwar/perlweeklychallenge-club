@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 303 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-303/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void find_max_points_1(int points, IntArray* nums, int* max) {

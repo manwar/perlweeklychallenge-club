@@ -1,4 +1,4 @@
-Challenge 354
+Perl Weekly Challenge 354
 https://theweeklychallenge.org/blog/perl-weekly-challenge-354/
 
 Task 1: Min Abs Diff

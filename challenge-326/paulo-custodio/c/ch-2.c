@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 326 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-326/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* decompress(IntArray* pairs) {

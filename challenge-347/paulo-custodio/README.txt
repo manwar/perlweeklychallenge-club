@@ -1,4 +1,4 @@
-Challenge 347
+Perl Weekly Challenge 347
 https://theweeklychallenge.org/blog/perl-weekly-challenge-347/
 
 Task 1: Format Date

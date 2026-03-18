@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 365 - Task 2 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-365/
+
 FUNCTION is_letter(c$)
     is_letter = c$ >= "a" AND c$ <= "z"
 ENDFUNCTION

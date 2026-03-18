@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 280 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-280/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 char first_double_letter(const char* str) {

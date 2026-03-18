@@ -1,4 +1,4 @@
-Challenge 293
+Perl Weekly Challenge 293
 https://theweeklychallenge.org/blog/perl-weekly-challenge-293/
 
 Task 1: Similar Dominos

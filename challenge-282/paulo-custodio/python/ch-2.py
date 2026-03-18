@@ -1,4 +1,7 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python
+
+# Perl Weekly Challenge 282 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-282/
 
 import re
 import sys

@@ -1,4 +1,4 @@
-Challenge 324
+Perl Weekly Challenge 324
 https://theweeklychallenge.org/blog/perl-weekly-challenge-324/
 
 Task 1: 2D Array

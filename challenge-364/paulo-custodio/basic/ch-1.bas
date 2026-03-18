@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 364 - Task 1 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-364/
+
 function encode_word(word as string) as string
     dim i as integer, c as string, num as string, result as string
 

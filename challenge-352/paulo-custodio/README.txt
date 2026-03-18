@@ -1,4 +1,4 @@
-Challenge 352
+Perl Weekly Challenge 352
 https://theweeklychallenge.org/blog/perl-weekly-challenge-352/
 
 Task 1: Match String

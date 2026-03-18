@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 270 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-270/
+
 use Modern::Perl;
 
 my($x, $y, @ints) = @ARGV;

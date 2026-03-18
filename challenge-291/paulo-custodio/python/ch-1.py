@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Perl Weekly Challenge 291 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-291/
+
 import sys
 
 def middle_index(n):

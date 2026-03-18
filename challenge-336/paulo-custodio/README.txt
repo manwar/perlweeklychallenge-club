@@ -1,4 +1,4 @@
-Challenge 336
+Perl Weekly Challenge 336
 https://theweeklychallenge.org/blog/perl-weekly-challenge-336/
 
 Task 1: Equal Group

@@ -1,4 +1,4 @@
-Challenge 363
+Perl Weekly Challenge 363
 https://theweeklychallenge.org/blog/perl-weekly-challenge-363/
 
 Task 1: String Lie Detector

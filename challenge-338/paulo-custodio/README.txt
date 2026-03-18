@@ -1,4 +1,4 @@
-Challenge 338
+Perl Weekly Challenge 338
 https://theweeklychallenge.org/blog/perl-weekly-challenge-338/
 
 Task 1: Highest Row

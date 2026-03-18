@@ -1,4 +1,4 @@
-Challenge 342
+Perl Weekly Challenge 342
 https://theweeklychallenge.org/blog/perl-weekly-challenge-342/
 
 Task 1: Balance String

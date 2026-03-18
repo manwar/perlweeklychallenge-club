@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 352 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-352/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool find_word(const char* word, int argc, char* argv[]) {

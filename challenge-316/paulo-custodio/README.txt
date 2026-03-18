@@ -1,4 +1,4 @@
-Challenge 316
+Perl Weekly Challenge 316
 https://theweeklychallenge.org/blog/perl-weekly-challenge-316/
 
 Task 1: Circular

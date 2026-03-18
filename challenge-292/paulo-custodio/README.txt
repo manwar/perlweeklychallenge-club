@@ -1,4 +1,4 @@
-Challenge 292
+Perl Weekly Challenge 292
 https://theweeklychallenge.org/blog/perl-weekly-challenge-292/
 
 Task 1: Twice Largest

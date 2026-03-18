@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 356 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-356/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 void kolakoski(int n, IntArray* seq, IntArray* count) {

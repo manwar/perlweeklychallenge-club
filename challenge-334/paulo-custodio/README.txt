@@ -1,4 +1,4 @@
-Challenge 334
+Perl Weekly Challenge 334
 https://theweeklychallenge.org/blog/perl-weekly-challenge-334/
 
 Task 1: Range Sum

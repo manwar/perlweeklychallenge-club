@@ -1,4 +1,4 @@
-Challenge 361
+Perl Weekly Challenge 361
 https://theweeklychallenge.org/blog/perl-weekly-challenge-361/
 
 Task 1: Zeckendorf Representation

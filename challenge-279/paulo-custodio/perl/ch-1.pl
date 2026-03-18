@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 279 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-279/
+
 use Modern::Perl;
 
 @ARGV > 2 or die "Usage: $0 LETTTERS WEIGHTS...\n";

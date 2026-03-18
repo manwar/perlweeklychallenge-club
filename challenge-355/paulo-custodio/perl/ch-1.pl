@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 355 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-355/
+
 use Modern::Perl;
 
 @ARGV==1 && $ARGV[0] =~ /^\d+$/ or die "Usage: $0 integer\n";

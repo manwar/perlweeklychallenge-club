@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 357 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-357/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define Kaprekar 6174

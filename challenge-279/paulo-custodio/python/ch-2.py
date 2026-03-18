@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Perl Weekly Challenge 279 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-279/
+
 import sys
 
 str_input = " ".join(sys.argv[1:])

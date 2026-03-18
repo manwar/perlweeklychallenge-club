@@ -1,4 +1,4 @@
-Challenge 364
+Perl Weekly Challenge 364
 https://theweeklychallenge.org/blog/perl-weekly-challenge-364/
 
 Task 1: Decrypt String

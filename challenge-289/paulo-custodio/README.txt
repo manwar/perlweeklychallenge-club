@@ -1,4 +1,4 @@
-Challenge 289
+Perl Weekly Challenge 289
 https://theweeklychallenge.org/blog/perl-weekly-challenge-289/
 
 Task 1: Third Maximum

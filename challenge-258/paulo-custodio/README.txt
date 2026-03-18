@@ -1,4 +1,4 @@
-Challenge 258
+Perl Weekly Challenge 258
 https://theweeklychallenge.org/blog/perl-weekly-challenge-258/
 
 Task 1: Count Even Digits Number

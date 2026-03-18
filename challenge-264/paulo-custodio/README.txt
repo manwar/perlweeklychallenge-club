@@ -1,4 +1,4 @@
-Challenge 264
+Perl Weekly Challenge 264
 https://theweeklychallenge.org/blog/perl-weekly-challenge-264/
 
 Task 1: Greatest English Letter

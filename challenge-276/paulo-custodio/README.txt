@@ -1,4 +1,4 @@
-Challenge 276
+Perl Weekly Challenge 276
 https://theweeklychallenge.org/blog/perl-weekly-challenge-276/
 
 Task 1: Complete Day

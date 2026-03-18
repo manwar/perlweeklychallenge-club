@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 275 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-275/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* expand_string(const char* input) {

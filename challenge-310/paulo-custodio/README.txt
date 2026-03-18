@@ -1,4 +1,4 @@
-Challenge 310
+Perl Weekly Challenge 310
 https://theweeklychallenge.org/blog/perl-weekly-challenge-310/
 
 Task 1: Arrays Intersection

@@ -1,24 +1,5 @@
-/*
-Challenge 245
-
-Task 1: Sort Language
-Submitted by: Mohammad S Anwar
-
-You are given two array of languages and its popularity.
-
-Write a script to sort the language based on popularity.
-Example 1
-
-Input: @lang = ('perl', 'c', 'python')
-       @popularity = (2, 1, 3)
-Output: ('c', 'perl', 'python')
-
-Example 2
-
-Input: @lang = ('c++', 'haskell', 'java')
-       @popularity = (1, 3, 2)
-Output: ('c++', 'java', 'haskell')
-*/
+// Perl Weekly Challenge 245 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-245/
 
 #include <algorithm>
 #include <iostream>

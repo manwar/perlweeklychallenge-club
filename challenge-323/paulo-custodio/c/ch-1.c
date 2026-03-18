@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 323 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-323/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int main(int argc, char* argv[]) {

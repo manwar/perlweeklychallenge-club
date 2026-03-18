@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 250 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-250/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int get_smallest_index(IntArray* nums) {

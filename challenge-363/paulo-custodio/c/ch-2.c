@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 363 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-363/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_in_network(const char* node_ip, const char* network_ip) {

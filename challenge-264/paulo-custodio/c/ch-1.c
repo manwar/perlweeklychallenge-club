@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 264 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-264/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 Str* greatest_letter(const char* str) {

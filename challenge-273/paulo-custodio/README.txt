@@ -1,4 +1,4 @@
-Challenge 273
+Perl Weekly Challenge 273
 https://theweeklychallenge.org/blog/perl-weekly-challenge-273/
 
 Task 1: Percentage of Character

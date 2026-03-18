@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 335 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-335/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define BOARD_SIZE  3

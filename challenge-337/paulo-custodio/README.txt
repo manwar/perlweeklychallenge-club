@@ -1,4 +1,4 @@
-Challenge 337
+Perl Weekly Challenge 337
 https://theweeklychallenge.org/blog/perl-weekly-challenge-337/
 
 Task 1: Smaller Than Current

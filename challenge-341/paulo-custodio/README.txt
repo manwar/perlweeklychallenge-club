@@ -1,4 +1,4 @@
-Challenge 341
+Perl Weekly Challenge 341
 https://theweeklychallenge.org/blog/perl-weekly-challenge-341/
 
 Task 1: Broken Keyboard

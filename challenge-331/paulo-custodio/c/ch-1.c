@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 331 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-331/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 #define SEPARATORS " \t\r\n\v\f"

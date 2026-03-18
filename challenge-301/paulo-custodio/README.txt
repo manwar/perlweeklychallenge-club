@@ -1,4 +1,4 @@
-Challenge 301
+Perl Weekly Challenge 301
 https://theweeklychallenge.org/blog/perl-weekly-challenge-301/
 
 Task 1: Largest Number

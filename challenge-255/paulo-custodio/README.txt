@@ -1,4 +1,4 @@
-Challenge 255
+Perl Weekly Challenge 255
 https://theweeklychallenge.org/blog/perl-weekly-challenge-255/
 
 Task 1: Odd Character

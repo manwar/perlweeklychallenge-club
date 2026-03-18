@@ -1,4 +1,4 @@
-Challenge 249
+Perl Weekly Challenge 249
 https://theweeklychallenge.org/blog/perl-weekly-challenge-249/
 
 Task 1: Equal Pairs

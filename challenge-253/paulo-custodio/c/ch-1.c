@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 253 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-253/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 StrArray* split_words(const char* separator_, const char* text_) {

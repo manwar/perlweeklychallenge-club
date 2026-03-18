@@ -1,4 +1,4 @@
-Challenge 339
+Perl Weekly Challenge 339
 https://theweeklychallenge.org/blog/perl-weekly-challenge-339/
 
 Task 1: Max Diff

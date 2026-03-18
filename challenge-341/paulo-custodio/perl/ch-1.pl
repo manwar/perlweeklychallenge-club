@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 341 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-341/
+
 use Modern::Perl;
 
 @ARGV==2 or die "usage: $0 'sentence' keys\n";

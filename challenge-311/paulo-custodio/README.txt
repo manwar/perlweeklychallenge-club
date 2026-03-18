@@ -1,4 +1,4 @@
-Challenge 311
+Perl Weekly Challenge 311
 https://theweeklychallenge.org/blog/perl-weekly-challenge-311/
 
 Task 1: Upper Lower

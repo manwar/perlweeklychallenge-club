@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 273 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-273/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool match_string(const char* str) {

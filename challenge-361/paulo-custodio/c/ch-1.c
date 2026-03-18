@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 361 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-361/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* get_fibonacci(int n) {

@@ -1,4 +1,4 @@
-Challenge 286
+Perl Weekly Challenge 286
 https://theweeklychallenge.org/blog/perl-weekly-challenge-286/
 
 Task 1: Self Spammer

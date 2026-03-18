@@ -1,4 +1,4 @@
-Challenge 290
+Perl Weekly Challenge 290
 https://theweeklychallenge.org/blog/perl-weekly-challenge-290/
 
 Task 1: Double Exist

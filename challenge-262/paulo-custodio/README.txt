@@ -1,4 +1,4 @@
-Challenge 262
+Perl Weekly Challenge 262
 https://theweeklychallenge.org/blog/perl-weekly-challenge-262/
 
 Task 1: Max Positive Negative

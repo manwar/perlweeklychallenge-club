@@ -1,4 +1,4 @@
-Challenge 267
+Perl Weekly Challenge 267
 https://theweeklychallenge.org/blog/perl-weekly-challenge-267/
 
 Task 1: Product Sign

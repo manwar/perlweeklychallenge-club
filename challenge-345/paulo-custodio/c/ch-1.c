@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 345 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-345/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 IntArray* find_peeks(IntArray* nums) {

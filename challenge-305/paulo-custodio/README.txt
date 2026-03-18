@@ -1,4 +1,4 @@
-Challenge 305
+Perl Weekly Challenge 305
 https://theweeklychallenge.org/blog/perl-weekly-challenge-305/
 
 Task 1: Binary Prefix

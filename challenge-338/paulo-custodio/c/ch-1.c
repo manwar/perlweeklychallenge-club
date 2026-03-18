@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 338 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-338/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool read_row(IntArray* nums) {

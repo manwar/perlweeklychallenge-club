@@ -1,4 +1,4 @@
-Challenge 304
+Perl Weekly Challenge 304
 https://theweeklychallenge.org/blog/perl-weekly-challenge-304/
 
 Task 1: Arrange Binary

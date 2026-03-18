@@ -1,4 +1,4 @@
-Challenge 360
+Perl Weekly Challenge 360
 https://theweeklychallenge.org/blog/perl-weekly-challenge-360/
 
 Task 1: Text Justifier

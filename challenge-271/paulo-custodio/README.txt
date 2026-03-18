@@ -1,4 +1,4 @@
-Challenge 271
+Perl Weekly Challenge 271
 https://theweeklychallenge.org/blog/perl-weekly-challenge-271/
 
 Task 1: Maximum Ones

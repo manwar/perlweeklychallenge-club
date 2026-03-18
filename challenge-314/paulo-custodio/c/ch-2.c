@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 314 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-314/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool col_is_sorted(StrArray* words, int col) {

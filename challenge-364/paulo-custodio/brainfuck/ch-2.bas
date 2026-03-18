@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 364 - Task 2 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-364/
+
 DIM word$(20)
 
 end = 0

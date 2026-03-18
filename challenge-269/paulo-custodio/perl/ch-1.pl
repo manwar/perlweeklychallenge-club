@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 269 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-269/
+
 use Modern::Perl;
 
 say trailing_zero(@ARGV) ? 'true' : 'false';

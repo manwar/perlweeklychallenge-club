@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Perl Weekly Challenge 282 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-282/
+
 import re
 import sys
 

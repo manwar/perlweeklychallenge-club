@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 260 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-260/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool unique_occurences(IntArray* nums) {

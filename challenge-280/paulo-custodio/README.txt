@@ -1,4 +1,4 @@
-Challenge 280
+Perl Weekly Challenge 280
 https://theweeklychallenge.org/blog/perl-weekly-challenge-280/
 
 Task 1: Twice Appearance

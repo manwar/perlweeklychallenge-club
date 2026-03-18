@@ -1,4 +1,4 @@
-Challenge 322
+Perl Weekly Challenge 322
 https://theweeklychallenge.org/blog/perl-weekly-challenge-322/
 
 Task 1: String Format

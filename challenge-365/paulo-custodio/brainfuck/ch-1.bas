@@ -1,3 +1,6 @@
+' Perl Weekly Challenge 365 - Task 1 - solution by Paulo Custodio
+' https://theweeklychallenge.org/blog/perl-weekly-challenge-365/
+
 DIM dash$(2), word$(10), digits$(10)
 
 INPUT dash$, word$, k

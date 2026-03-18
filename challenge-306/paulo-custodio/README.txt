@@ -1,4 +1,4 @@
-Challenge 306
+Perl Weekly Challenge 306
 https://theweeklychallenge.org/blog/perl-weekly-challenge-306/
 
 Task 1: Odd Sum

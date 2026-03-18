@@ -1,4 +1,4 @@
-Challenge 348
+Perl Weekly Challenge 348
 https://theweeklychallenge.org/blog/perl-weekly-challenge-348/
 
 Task 1: String Alike

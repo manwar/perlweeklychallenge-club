@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 256 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-256/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool is_pair(const char* s1, const char* s2) {

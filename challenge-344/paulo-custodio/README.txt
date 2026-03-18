@@ -1,4 +1,4 @@
-Challenge 344
+Perl Weekly Challenge 344
 https://theweeklychallenge.org/blog/perl-weekly-challenge-344/
 
 Task 1: Array Form Compute

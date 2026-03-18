@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# Perl Weekly Challenge 268 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-268/
+
 use Modern::Perl;
 
 say "(", join(", ", number_game(@ARGV)), ")";

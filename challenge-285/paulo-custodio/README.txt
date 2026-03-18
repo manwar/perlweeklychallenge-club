@@ -1,4 +1,4 @@
-Challenge 285
+Perl Weekly Challenge 285
 https://theweeklychallenge.org/blog/perl-weekly-challenge-285/
 
 Task 1: No Connection

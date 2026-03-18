@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 290 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-290/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 bool double_exists(IntArray* nums) {

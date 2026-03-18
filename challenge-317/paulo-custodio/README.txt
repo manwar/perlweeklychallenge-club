@@ -1,4 +1,4 @@
-Challenge 317
+Perl Weekly Challenge 317
 https://theweeklychallenge.org/blog/perl-weekly-challenge-317/
 
 Task 1: Acronyms

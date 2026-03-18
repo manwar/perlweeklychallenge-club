@@ -1,4 +1,4 @@
-Challenge 274
+Perl Weekly Challenge 274
 https://theweeklychallenge.org/blog/perl-weekly-challenge-274/
 
 Task 1: Goat Latin

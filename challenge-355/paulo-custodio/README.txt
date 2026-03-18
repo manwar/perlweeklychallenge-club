@@ -1,4 +1,4 @@
-Challenge 355
+Perl Weekly Challenge 355
 https://theweeklychallenge.org/blog/perl-weekly-challenge-355/
 
 Task 1: Thousand Separator
