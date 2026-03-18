@@ -1,37 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 234
-#
-# Task 2: Unequal Triplets
-# Submitted by: Mohammad S Anwar
-#
-# You are given an array of positive integers.
-#
-# Write a script to find the number of triplets (i, j, k) that satisfies
-# num[i] != num[j], num[j] != num[k] and num[k] != num[i].
-# Example 1
-#
-# Input: @ints = (4, 4, 2, 4, 3)
-# Ouput: 3
-#
-# (0, 2, 4) because 4 != 2 != 3
-# (1, 2, 4) because 4 != 2 != 3
-# (2, 3, 4) because 2 != 4 != 3
-#
-# Example 2
-#
-# Input: @ints = (1, 1, 1, 1, 1)
-# Ouput: 0
-#
-# Example 3
-#
-# Input: @ints = (4, 7, 1, 10, 7, 4, 1, 1)
-# Output: 28
-#
-# triplets of 1, 4, 7  = 3x2×2 = 12 combinations
-# triplets of 1, 4, 10 = 3×2×1 = 6  combinations
-# triplets of 4, 7, 10 = 2×2×1 = 4  combinations
-# triplets of 1, 7, 10 = 3x2x1 = 6 combinations
+# Perl Weekly Challenge 234 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-234/
 
 use Modern::Perl;
 
