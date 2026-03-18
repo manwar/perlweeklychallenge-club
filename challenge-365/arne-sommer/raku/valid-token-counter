@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str, :v(:$verbose));
+
+my $valid = 0;
+
+for $str.words -> $word
+{
+  if $word ~~ /\d/
+  {
+    say ": $word -> invalid (digit)" if $verbose;
+  }
+  elsif $word ~~ /<[.,!]>./
+  {
+    say ": $word -> invalid (punctuation not at end)" if $verbose;
+  }
+  elsif $word ~~ /"-" .* "-"/
+  {
+    say ": $word -> invalid (more than one hyphen)" if $verbose;
+  }
+  elsif $word ~~ /<[a..z]> "-" <[a..z]>/
+  {
+    say ": $word -> valid (one hyphen between letters)" if $verbose;
+    $valid++;
+  }
+  elsif $word ~~ / "-" /
+  {
+    say ": $word -> invalid (hyphen not between letters)" if $verbose;
+  }
+  else
+  {
+    say ": $word -> valid" if $verbose;
+    $valid++;
+  }
+}
+
+
+say $valid;
