@@ -21,11 +21,18 @@ CREATE smaller  256 CELLS ALLOT
     arr array_size 1 SWAP +!
 ;
 
+: .nospace ( n -- )
+  DUP S>D <# #S ROT SIGN #> TYPE
+;
+
 : .array ( arr -- )
     { arr }
+    ." ("
     arr array_size @ 0 ?DO
-        arr I array[] @ .
+        I 0 <> IF ." , " THEN
+        arr I array[] @ .nospace
     LOOP
+    ." )" CR
 ;
 
 : collect_args ( -- )

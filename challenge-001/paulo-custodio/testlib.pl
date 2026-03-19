@@ -20,6 +20,10 @@ sub test_line {
             next unless -f "$dir/ch-$nr.py";
             capture("python $dir/ch-$nr.py $in", $expected);
         }
+        elsif ($dir eq 'forth') {
+            next unless -f "$dir/ch-$nr.fs";
+            capture("forth $dir/ch-$nr.fs $in", $expected);
+        }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";
             build_c("$dir/ch-$nr.c");
@@ -72,6 +76,10 @@ sub test_block {
         elsif ($dir eq 'python') {
             next unless -f "$dir/ch-$nr.py";
             run("python $dir/ch-$nr.py $args < test.in > test.out");
+        }
+        elsif ($dir eq 'forth') {
+            next unless -f "$dir/ch-$nr.fs";
+            run("forth $dir/ch-$nr.fs $args < test.in > test.out");
         }
         elsif ($dir eq 'c') {
             next unless -f "$dir/ch-$nr.c";

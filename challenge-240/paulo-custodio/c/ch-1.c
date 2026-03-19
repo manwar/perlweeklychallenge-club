@@ -1,31 +1,5 @@
-/*
-Challenge 240
-
-Task 1: Acronym
-Submitted by: Mohammad S Anwar
-
-You are given an array of strings and a check string.
-
-Write a script to find out if the check string is the acronym of the words in
-the given array.
-Example 1
-
-Input: @str = ("Perl", "Python", "Pascal")
-       $chk = "ppp"
-Output: true
-
-Example 2
-
-Input: @str = ("Perl", "Raku")
-       $chk = "rp"
-Output: false
-
-Example 3
-
-Input: @str = ("Oracle", "Awk", "C")
-       $chk = "oac"
-Output: true
-*/
+// Perl Weekly Challenge 240 - Task 1 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-240/
 
 #include "utarray.h"
 #include "utstring.h"

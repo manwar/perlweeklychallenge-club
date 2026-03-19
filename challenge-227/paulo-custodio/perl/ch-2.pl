@@ -1,24 +1,25 @@
 #!/usr/bin/env perl
 
-# Challenge 227
-#
-# Task 2: Roman Maths
-# Submitted by: Peter Campbell Smith
-# Write a script to handle a 2-term arithmetic operation expressed in Roman numeral.
-#
-# Example
-# IV + V     => IX
-# M - I      => CMXCIX
-# X / II     => V
-# XI * VI    => LXVI
-# VII ** III => CCCXLIII
-# V - V      => nulla (they knew about zero but didn't have a symbol)
-# V / II     => non potest (they didn't do fractions)
-# MMM + M    => non potest (they only went up to 3999)
-# V - X      => non potest (they didn't do negative numbers)
+# Perl Weekly Challenge 227 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-227/
 
 use Modern::Perl;
-use Math::Roman;
+
+my @roman_table = (
+    ["M", 1000],
+    ["CM", 900],
+    ["D", 500],
+    ["CD", 400],
+    ["C", 100],
+    ["XC", 90],
+    ["L", 50],
+    ["XL", 40],
+    ["X", 10],
+    ["IX", 9],
+    ["V", 5],
+    ["IV", 4],
+    ["I", 1],
+);
 
 my $roman_re = qr/[IVXLCDM]+/;
 my $op_re = qr/\*\*|[-+*\/]/;
@@ -26,9 +27,9 @@ my $op_re = qr/\*\*|[-+*\/]/;
 my $expr = "@ARGV";
 $expr =~ /^\s*($roman_re)\s*($op_re)\s*($roman_re)\s*$/ or die "invalid expression\n";
 my($a, $op, $b) = ($1, $2, $3);
-$a = Math::Roman->new($a);
-$b = Math::Roman->new($b);
-my $num_expr = $a->as_number().$op.$b->as_number();
+$a = decode_roman($a);
+$b = decode_roman($b);
+my $num_expr = "$a $op $b";
 my $result = eval($num_expr);
 $@ and die "$num_expr: $@";
 
@@ -45,5 +46,49 @@ elsif ($result > 3999) {
     say "non potest";
 }
 else {
-    say Math::Roman->new($result);
+    say encode_roman($result);
+}
+
+sub decode_roman {
+    my($roman) = @_;
+    my $value = 0;
+DIGIT:
+    while ($roman ne '') {
+        for (@roman_table) {
+            my($t, $v) = @$_;
+            if ($roman =~ s/^$t//) {
+                $value += $v;
+                next DIGIT;
+            }
+        }
+        die $roman; # invalid roman
+    }
+    return $value;
+}
+
+sub encode_roman {
+    my($value) = @_;
+    if ($value < 0 || $value > 3999 || int($value) != $value) {
+        return "non potesta";
+    }
+    elsif ($value == 0) {
+        return "nulla";
+    }
+    else {
+        my $roman = "";
+    DIGIT:
+        while ($value > 0) {
+            for (@roman_table) {
+                my($t, $v) = @$_;
+                if ($value >= $v) {
+                    my $n = int($value / $v);
+                    $value -= $n * $v;
+                    $roman .= $t x $n;
+                    next DIGIT;
+                }
+            }
+            die $value; # bug
+        }
+        return $roman;
+    }
 }

@@ -17,4 +17,4 @@ for my $i (0..$#nums) {
     }
 }
 
-say "@smaller";
+say "(", join(", ", @smaller), ")";
