@@ -1,3 +1,3 @@
-# The Weekly Challenge 364
+# The Weekly Challenge 365
 
-Blog: [It's all about the translation](https://dev.to/simongreennet/weekly-challenge-its-all-about-the-translation-17li)
+Blog: [Counting the index](https://dev.to/simongreennet/weekly-challenge-counting-the-index-oe1)
