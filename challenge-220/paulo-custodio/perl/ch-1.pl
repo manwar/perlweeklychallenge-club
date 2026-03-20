@@ -1,23 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 220
-#
-# Task 1: Common Characters
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of words.
-#
-# Write a script to return the list of common characters (sorted alphabeticall)
-# found in every word of the given list.
-# Example 1
-#
-# Input: @words = ("Perl", "Rust", "Raku")
-# Output: ("r")
-#
-# Example 2
-#
-# Input: @words = ("love", "live", "leave")
-# Output: ("e", "l", "v")
+# Perl Weekly Challenge 220 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-220/
 
 use Modern::Perl;
 

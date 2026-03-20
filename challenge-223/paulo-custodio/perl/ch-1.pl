@@ -1,28 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 223
-#
-# Task 1: Count Primes
-# Submitted by: Mohammad S Anwar
-# You are given a positive integer, $n.
-#
-# Write a script to find the total count of primes less than or equal to the
-# given integer.
-#
-#
-# Example 1
-# Input: $n = 10
-# Output: 4
-#
-# Since there are 4 primes (2,3,5,7) less than or equal to 10.
-# Example 2
-# Input: $n = 1
-# Output: 0
-# Example 3
-# Input: $n = 20
-# Output: 8
-#
-# Since there are 4 primes (2,3,5,7,11,13,17,19) less than or equal to 20.
+# Perl Weekly Challenge 223 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-223/
 
 use Modern::Perl;
 

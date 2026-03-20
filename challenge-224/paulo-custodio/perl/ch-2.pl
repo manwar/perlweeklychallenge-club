@@ -1,40 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 224
-#
-# Task 2: Additive Number
-# Submitted by: Mohammad S Anwar
-# You are given a string containing digits 0-9 only.
-#
-# Write a script to find out if the given string is additive number. An additive
-# number is a string whose digits can form an additive sequence.
-#
-# A valid additive sequence should contain at least 3 numbers. Except the first
-# 2 numbers, each subsequent number in the sequence must be the sum of the
-# preceding two.
-#
-#
-# Example 1:
-# Input: $string = "112358"
-# Output: true
-#
-# The additive sequence can be created using the given string digits: 1,1,2,3,5,8
-# 1 + 1 => 2
-# 1 + 2 => 3
-# 2 + 3 => 5
-# 3 + 5 => 8
-# Example 2:
-# Input: $string = "12345"
-# Output: false
-#
-# No additive sequence can be created using the given string digits.
-# Example 3:
-# Input: $string = "199100199"
-# Output: true
-#
-# The additive sequence can be created using the given string digits: 1,99,100,199
-#  1 +  99 => 100
-# 99 + 100 => 199
+# Perl Weekly Challenge 224 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-224/
 
 use Modern::Perl;
 

@@ -1,32 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 216
-#
-# Task 1: Registration Number
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of words and a random registration number.
-#
-# Write a script to find all the words in the given list that has every letter
-# in the given registration number.
-#
-# Example 1
-#
-# Input: @words = ('abc', 'abcd', 'bcd'), $reg = 'AB1 2CD'
-# Output: ('abcd')
-#
-# The only word that matches every alphabets in the given registration number
-# is 'abcd'.
-#
-# Example 2
-#
-# Input: @words = ('job', 'james', 'bjorg'), $reg = '007 JB'
-# Output: ('job', 'bjorg')
-#
-# Example 3
-#
-# Input: @words = ('crack', 'road', 'rac'), $reg = 'C7 RA2'
-# Output: ('crack', 'rac')
+# Perl Weekly Challenge 216 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-216/
 
 use Modern::Perl;
 

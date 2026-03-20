@@ -1,45 +1,7 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# Challenge 218
-#
-# Task 2: Matrix Score
-# Submitted by: Mohammad S Anwar
-#
-# You are given a m x n binary matrix i.e. having only 1 and 0.
-#
-# You are allowed to make as many moves as you want to get the highest score.
-#
-#     A move can be either toggling each value in a row or column.
-#
-# To get the score, convert the each row binary to dec and return the sum.
-# Example 1:
-#
-# Input: @matrix = [ [0,0,1,1],
-#                    [1,0,1,0],
-#                    [1,1,0,0], ]
-# Output: 39
-#
-# Move #1: convert row #1 => 1100
-#          [ [1,1,0,0],
-#            [1,0,1,0],
-#            [1,1,0,0], ]
-#
-# Move #2: convert col #3 => 101
-#          [ [1,1,1,0],
-#            [1,0,0,0],
-#            [1,1,1,0], ]
-#
-# Move #3: convert col #4 => 111
-#          [ [1,1,1,1],
-#            [1,0,0,1],
-#            [1,1,1,1], ]
-#
-# Score: 0b1111 + 0b1001 + 0b1111 => 15 + 9 + 15 => 39
-#
-# Example 2:
-#
-# Input: @matrix = [ [0] ]
-# Output: 1
+# Perl Weekly Challenge 218 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-218/
 
 use Modern::Perl;
 use List::Util 'sum';

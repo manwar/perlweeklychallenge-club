@@ -1,40 +1,7 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# Challenge 218
-#
-# Task 1: Maximum Product
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of 3 or more integers.
-#
-# Write a script to find the 3 integers whose product is the maximum and return it.
-# Example 1
-#
-# Input: @list = (3, 1, 2)
-# Output: 6
-#
-# 1 x 2 x 3 => 6
-#
-# Example 2
-#
-# Input: @list = (4, 1, 3, 2)
-# Output: 24
-#
-# 2 x 3 x 4 => 24
-#
-# Example 3
-#
-# Input: @list = (-1, 0, 1, 3, 1)
-# Output: 3
-#
-# 1 x 1 x 3 => 3
-#
-# Example 4
-#
-# Input: @list = (-8, 2, -9, 0, -4, 3)
-# Output: 216
-#
-# -9 × -8 × 3 => 216
+# Perl Weekly Challenge 218 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-218/
 
 use Modern::Perl;
 
