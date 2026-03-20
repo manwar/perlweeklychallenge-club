@@ -36,11 +36,12 @@ int main(int argc, char* argv[]) {
 
     UT_array* smaller = calc_smaller(nums);
 
+    printf("(");
     for (size_t i = 0; i < utarray_len(smaller); i++) {
-        if (i != 0) printf(" ");
+        if (i != 0) printf(", ");
         printf("%d", *(int*)utarray_eltptr(smaller, i));
     }
-    printf("\n");
+    printf(")\n");
 
     utarray_free(nums);
     utarray_free(smaller);

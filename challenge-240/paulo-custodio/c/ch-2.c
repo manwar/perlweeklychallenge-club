@@ -1,22 +1,5 @@
-/*
-Challenge 240
-
-Task 2: Build Array
-Submitted by: Mohammad S Anwar
-
-You are given an array of integers.
-
-Write a script to create an array such that new[i] = old[old[i]] where 0 <= i < new.length.
-Example 1
-
-Input: @int = (0, 2, 1, 5, 3, 4)
-Output: (0, 1, 2, 4, 5, 3)
-
-Example 2
-
-Input: @int = (5, 0, 1, 2, 3, 4)
-Output: (4, 5, 0, 1, 2, 3)
-*/
+// Perl Weekly Challenge 240 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-240/
 
 #include "utarray.h"
 #include <stdio.h>

@@ -1,19 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 227
-#
-# Task 1: Friday 13th
-# Submitted by: Peter Campbell Smith
-# You are given a year number in the range 1753 to 9999.
-#
-# Write a script to find out how many dates in the year are Friday 13th, assume
-# that the current Gregorian calendar applies.
-#
-# Example
-# Input: $year = 2023
-# Output: 2
-#
-# Since there are only 2 Friday 13th in the given year 2023 i.e. 13th Jan and 13th Oct.
+# Perl Weekly Challenge 227 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-227/
 
 use Modern::Perl;
 use DateTime;

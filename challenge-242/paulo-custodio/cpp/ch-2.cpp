@@ -1,36 +1,5 @@
-/*
-Challenge 242
-
-Task 2: Flip Matrix
-Submitted by: Mohammad S Anwar
-You are given n x n binary matrix.
-
-Write a script to flip the given matrix as below.
-
-
-1 1 0
-0 1 1
-0 0 1
-
-a) Reverse each row
-
-0 1 1
-1 1 0
-1 0 0
-
-b) Invert each member
-
-1 0 0
-0 0 1
-0 1 1
-
-Example 1
-Input: @matrix = ([1, 1, 0], [1, 0, 1], [0, 0, 0])
-Output: ([1, 0, 0], [0, 1, 0], [1, 1, 1])
-Example 2
-Input: @matrix = ([1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0])
-Output: ([1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1], [1, 0, 1, 0])
-*/
+// Perl Weekly Challenge 242 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-242/
 
 #include <algorithm>
 #include <iostream>
