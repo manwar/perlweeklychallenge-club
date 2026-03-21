@@ -1,37 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 217
-#
-# Task 2: Max Number
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of positive integers.
-#
-# Write a script to concatenate the integers to form the highest possible value.
-# Example 1:
-#
-# Input: @list = (1, 23)
-# Output: 231
-#
-# Example 2:
-#
-# Input: @list = (10, 3, 2)
-# Output: 3210
-#
-# Example 3:
-#
-# Input: @list = (31, 2, 4, 10)
-# Output: 431210
-#
-# Example 4:
-#
-# Input: @list = (5, 11, 4, 1, 2)
-# Output: 542111
-#
-# Example 5:
-#
-# Input: @list = (1, 10)
-# Output: 110
+# Perl Weekly Challenge 217 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-217/
 
 use Modern::Perl;
 

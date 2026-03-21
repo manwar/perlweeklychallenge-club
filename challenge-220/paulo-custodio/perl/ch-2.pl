@@ -1,41 +1,17 @@
 #!/usr/bin/env perl
 
-# Challenge 220
-#
-# Task 2: Squareful
-# Submitted by: Mohammad S Anwar
-#
-# You are given an array of integers, @ints.
-#
-#     An array is squareful if the sum of every pair of adjacent elements is
-#     a perfect square.
-#
-# Write a script to find all the permutations of the given array that are squareful.
-# Example 1:
-#
-# Input: @ints = (1, 17, 8)
-# Output: (1, 8, 17), (17, 8, 1)
-#
-# (1, 8, 17) since 1 + 8 => 9, a perfect square and also 8 + 17 => 25 is perfect square too.
-# (17, 8, 1) since 17 + 8 => 25, a perfect square and also 8 + 1 => 9 is perfect square too.
-#
-# Example 2:
-#
-# Input: @ints = (2, 2, 2)
-# Output: (2, 2, 2)
-#
-# There is only one permutation possible.
+# Perl Weekly Challenge 220 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-220/
 
 use Modern::Perl;
-use Math::Combinatorics;
 
 my @ints = @ARGV;
 
-my $combinat = Math::Combinatorics->new(count => scalar(@ints), data => [@ints]);
 my @result;
 my %found;
 
-while(my @permu = $combinat->next_permutation) {
+for (permutations(@ints)) {
+    my @permu = @$_;
     next if $found{"@permu"}++;
     next unless is_squareful(@permu);
     push @result, \@permu;
@@ -51,4 +27,19 @@ sub is_squareful {
         return 0 unless int($sq) == $sq;
     }
     return 1;
+}
+
+sub permutations {
+    my(@elems) = @_;
+    return [] if @elems == 0;
+
+    my @result;
+    for my $i (0 .. $#elems) {
+        my $pick = $elems[$i];
+        my @sub_perm = permutations(@elems[0 .. $i-1], @elems[$i+1 .. $#elems]);
+        for (@sub_perm) {
+            push @result, [$pick, @$_];
+        }
+    }
+    return @result;
 }
