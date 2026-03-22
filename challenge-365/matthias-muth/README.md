@@ -1,170 +1,187 @@
-#  Decrypted `"715#15#15#112#"`: goooal!
+# Splitting and Summing and Checking and Counting
 
-**Challenge 364 solutions in Perl by Matthias Muth**
+**Challenge 365 solutions in Perl by Matthias Muth**
 
-## Task 1: Decrypt String
+## Task 1: Alphabet Index Digit Sum
 
-> You are given a string formed by digits and ‘#'.<br/>
-> Write a script to map the given string to English lowercase characters following the given rules.
->
-> - Characters 'a' to 'i' are represented by '1' to '9' respectively.
-> - Characters 'j' to 'z' are represented by '10#' to '26#' respectively.
+> You are given a string \$str consisting of lowercase English letters, and an integer \$k.<br/>
+> Write a script to convert a lowercase string into numbers using alphabet positions (a=1 … z=26), concatenate them to form an integer, then compute the sum of its digits repeatedly \$k times, returning the final value.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "10#11#12"
-> Output: "jkab"
-> 
-> 10# -> j
-> 11# -> k
-> 1   -> a
-> 2   -> b
+> Input: $str = "abc", $k = 1
+> Output: 6
+>
+> Conversion: a = 1, b = 2, c = 3 -> 123
+> Digit sum: 1 + 2 + 3 = 6
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "1326#"
-> Output: "acz"
-> 
-> 1   -> a
-> 3   -> c
-> 26# -> z
+> Input: $str = "az", $k = 2
+> Output: 9
+>
+> Conversion: a = 1, z = 26 -> 126
+> 1st sum: 1 + 2 + 6 = 9
+> 2nd sum: 9
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "25#24#123"
-> Output: "yxabc"
-> 
-> 25# -> y
-> 24# -> x
-> 1   -> a
-> 2   -> b
-> 3   -> c
+> Input: $str = "cat", $k = 1
+> Output: 6
+>
+> Conversion: c = 3, a = 1, t = 20 -> 3120
+> Digit sum: 3 + 1 + 2 + 0 = 6
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "20#5"
-> Output: "te"
-> 
-> 20# -> t
-> 5   -> e
+> Input: $str = "dog", $k = 2
+> Output: 8
+>
+> Conversion: d = 4, o = 15, g = 7 -> 4157
+> 1st sum: 4 + 1 + 5 + 7 = 17
+> 2nd sum: 1 + 7 = 8
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "1910#26#"
-> Output: "aijz"
-> 
-> 1   -> a
-> 9   -> i
-> 10# -> j
-> 26# -> z
+> Input: $str = "perl", $k = 3
+> Output: 6
+>
+> Conversion: p = 16, e = 5, r = 18, l = 12 -> 1651812
+> 1st sum: 1 + 6 + 5 + 1 + 8 + 1 + 2 = 24
+> 2nd sum: 2+4 = 6
+> 3rd sum: 6
 > ```
 
-The first task can be solved by a single statement, based on regular expressions.
+In the first step, we turn the letters into numbers, and we concatenate these numbers into a string.<br/>
+In this step, we risk a numeric overflow if we immediately interpret this concatenation of numbers numerically and the resulting number is larger than $2^{63}-1$ (more than about 18 digits, roughly). That's why we keep it as a string for now.
 
-The pattern uses alternations (`|`), matching either a two-digit sequence followed by a '#' character, or a single digit. It is important to put the two-digit pattern first, because otherwise the single-digit pattern would 'steal' the first digit of any two-digit patterns.
+The next step is a loop that reduces the current number to its digit sum. Even after the first operation we are safe if we want to interpret the checksum numerically (it is difficult to find a string of digits whose *sum* is larger than $2^{63}-1$ ...). But it is so much easier to build the checksum letting Perl do the work of separating the digits:
 
-The two-digit pattern should be specific about the number range it covers: 10 to 26. I use alternations again: either a `1` followed by any digit, or a `2` followed by any one of `0` to `6`.
+```perl
+    sum( split "", $number )
+```
 
-Both the two-digit sequence and the single digit are captured, to be used in the second part, which is the substitution of the digits by the corresponding characters. The substitution character is determined the usual way: using the numeric value of the character `"a"`, plus the captured digits as a number, minus 1, and the result transformed back into a character.
+It really helps here that a Perl scalar is not a strongly typed as an entity.
 
-The flags used in the substitution are `/x` for readability, `/e` to use a Perl expression as the replacement, not a string (which is why I also change the delimiters from the typical `s///` to `s<...>{...}`, to highlight the fact that the substitution is code, not a just a string), then `/g` for global (repeated) substitutions, and last, but not least, `/r` to get the resulting string instead of  the number of substitutions done.
+The loop iterates until either there is only one digit left (the length of the number is 1), or the number of operations to do, given as the parameter `$k and auto-decremented in every iteration, was brought down to zero.
 
-Here is my solution:
+The resulting single digit the is returned. 
 
 ```perl
 use v5.36;
+use List::Util qw( sum );
 
-sub decrypt_string( $str ) {
-    return $str =~ s< ( 1\d | 2[0-6] ) \# | ( \d )>{
-        chr( ord( 'a' ) + ( $1 // $2 ) - 1 )
-    }xegr;
+sub alphabet_index_digit_sum( $str, $k ) {
+    # Turn the letters into a string of numbers.
+    my $sum_string = join "", map ord( $_ ) - ord( "a" ) + 1, split "", $str;
+    # Compute the checksum repeatedly until only one digit is left
+    # or the number of operations left do to is down to zero.
+    $sum_string = sum( split "", $sum_string )
+        while length( $sum_string ) > 1 && $k-- > 0;
+    return $sum_string;
 }
 ```
 
-## Task 2: Goal Parser
+## Task 2: Valid Token Counter
 
-> You are given a string, $str.<br/>
-> Write a script to interpret the given string using Goal Parser.<br/>
-> The Goal Parser interprets “G” as the string “G”, “()” as the string “o”, and “(al)” as the string “al”. The interpreted strings are then concatenated in the original order.
+> You are given a sentence.<br/>
+> Write a script to split the given sentence into space-separated tokens and count how many are valid words. A token is valid if it contains no digits, has at most one hyphen surrounded by lowercase letters, and at most one punctuation mark (!, ., ,) appearing only at the end.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "G()(al)"
-> Output: "Goal"
+> Input: $str = "cat and dog"
+> Output: 3
 >
-> G    -> "G"
-> ()   -> "o"
-> (al) -> "al"
+> Tokens: "cat", "and", "dog"
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "G()()()()(al)"
-> Output: "Gooooal"
+> Input: $str = "a-b c! d,e"
+> Output: 2
 >
-> G       -> "G"
-> four () -> "oooo"
-> (al)    -> "al"
+> Tokens: "a-b", "c!", "d,e"
+> "a-b" -> valid (one hyphen between letters)
+> "c!"  -> valid (punctuation at end)
+> "d,e" -> invalid (punctuation not at end)
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "(al)G(al)()()"
-> Output: "alGaloo"
+> Input: $str = "hello-world! this is fun"
+> Output: 4
 >
-> (al) -> "al"
-> G    -> "G"
-> (al) -> "al"
-> ()   -> "o"
-> ()   -> "o"
+> Tokens: "hello-world!", "this", "is", "fun"
+> All satisfy the rules.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "()G()G"
-> Output: "oGoG"
+> Input: $str = "ab- cd-ef gh- ij!"
+> Output: 2
 >
-> () -> "o"
-> G  -> "G"
-> () -> "o"
-> G  -> "G"
+> Tokens: "ab-", "cd-ef", "gh-", "ij!"
+> "ab-"   -> invalid (hyphen not surrounded by letters)
+> "cd-ef" -> valid
+> "gh-"   -> invalid
+> "ij!"   -> valid
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "(al)(al)G()()"
-> Output: "alalGoo"
+> Input: $str = "wow! a-b-c nice."
+> Output: 2
 >
-> (al) -> "al"
-> (al) -> "al"
-> G    -> "G"
-> ()   -> "o"
-> ()   -> "o"
+> Tokens: "wow!", "a-b-c", "nice."
+> "wow!"  -> valid
+> "a-b-c" -> invalid (more than one hyphen)
+> "nice." -> valid
 > ```
 
-The second task, too, can be solved by regular expression substitutions. Here, I chose to deal separately with the two necessary substitutions (only two, because substituting a "G" for a "G" isn't really a substitution).
+The work in this task can be done by `split` to separate the tokens, and by a regular expression to validate them.
 
-Chaining two substitutions in a straight-forward one-liner:
+```perl
+    split " ", $str
+```
+
+returns the list of tokens, no matter how much whitespace was used to separate them.
+
+The regular expression that does the validation is composed of three parts:
+
+* a sequence of one or more lower case letters,
+* an optional second part containing a single hyphen, followed by another sequence of one or more lower case letters,
+* an optional final single punctuation mark (one of `!`, `.`, `,`).
+
+This translates to the following pattern:
+
+```perl
+    /^ [a-z]+ (?: - [a-z]+ )? [!,.]? $/x
+```
+
+Selecting the valid tokens only (using the above pattern) and counting them is a perfect task for `grep`, which in scalar context returns the count of elements passing the filter.
+
+This means that this task only needs one single statement:  
 
 ```perl
 use v5.36;
 
-sub goal_parser( $str ) {
-    return $str =~ s/ \(\) /o/xgr =~ s/ \(al\) /al/xgr;
+sub valid_token_counter( $str ) {
+    return scalar grep /^ [a-z]+ (?: - [a-z]+ )? [!,.]? $/x,
+        split " ", $str;
 }
 ```
 
