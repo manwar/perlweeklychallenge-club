@@ -37,6 +37,6 @@ is alphabet_index_digit_sum( "veeeeeeeeerylongstring", 0 ),
     'Own test 1: no overflow for a very long string ($k=0)';
 is alphabet_index_digit_sum( "veeeeeeeeerylongstring", 3 ),
     2,
-    'Own test 1: no overflow for a very long string ($k=3)';
+    'Own test 2: no overflow for a very long string ($k=3)';
 
 done_testing;
