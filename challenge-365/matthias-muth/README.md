@@ -70,21 +70,20 @@ The next step is a loop that reduces the current number to its digit sum. Even a
     sum( split "", $number )
 ```
 
-It really helps here that a Perl scalar is not a strongly typed as an entity.
+It really helps here that a Perl scalar is not strongly typed.
 
-The loop iterates until either there is only one digit left (the length of the number is 1), or the number of operations to do, given as the parameter `$k and auto-decremented in every iteration, was brought down to zero.
+The loop iterates until either there is only one digit left (the length of the number is 1), or the number of operations to do, given as the parameter `$k and auto-decremented in every iteration, is brought down to zero.
 
-The resulting single digit the is returned. 
+The resulting single digit then is returned.
+
+My solution put together is this: 
 
 ```perl
 use v5.36;
 use List::Util qw( sum );
 
 sub alphabet_index_digit_sum( $str, $k ) {
-    # Turn the letters into a string of numbers.
     my $sum_string = join "", map ord( $_ ) - ord( "a" ) + 1, split "", $str;
-    # Compute the checksum repeatedly until only one digit is left
-    # or the number of operations left do to is down to zero.
     $sum_string = sum( split "", $sum_string )
         while length( $sum_string ) > 1 && $k-- > 0;
     return $sum_string;
@@ -154,13 +153,15 @@ sub alphabet_index_digit_sum( $str, $k ) {
 
 The work in this task can be done by `split` to separate the tokens, and by a regular expression to validate them.
 
+For the first part,
+
 ```perl
     split " ", $str
 ```
 
 returns the list of tokens, no matter how much whitespace was used to separate them.
 
-The regular expression that does the validation is composed of three parts:
+Then, we need a regular expression that does the validation. It is composed of three parts:
 
 * a sequence of one or more lower case letters,
 * an optional second part containing a single hyphen, followed by another sequence of one or more lower case letters,
@@ -174,7 +175,7 @@ This translates to the following pattern:
 
 Selecting the valid tokens only (using the above pattern) and counting them is a perfect task for `grep`, which in scalar context returns the count of elements passing the filter.
 
-This means that this task only needs one single statement:  
+This means that this solution can consist of one single statement:  
 
 ```perl
 use v5.36;
