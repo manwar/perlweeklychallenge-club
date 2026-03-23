@@ -1,3 +1,3 @@
-# The Weekly Challenge 365
+# The Weekly Challenge 366
 
-Blog: [Counting the index](https://dev.to/simongreennet/weekly-challenge-counting-the-index-oe1)
+Blog: [Happy 7th birthday TWC!](https://dev.to/simongreennet/happy-7th-birthday-twc-lpk)
