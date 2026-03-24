@@ -70,17 +70,12 @@ Therefore: 4 valid times
 ### solution by pokgopun@gmail.com
 
 def validTimes(time: str) -> int:
-    wc = ord("?") - 48
-    h0, h1, _, m0, m1 = tuple(ord(c)-48 for c in time)
-    hc = 0
-    for h in range(24):
-        if (h0 == wc or h0 == h//10) and (h1 == wc or h1 == h%10):
-            hc += 1
-    mc = 0
-    for m in range(60):
-        if (m0 == wc or m0 == m//10) and (m1 == wc or m1 == m%10):
-            mc += 1
-    return hc * mc
+    def f(ts: int, d0: int, d1: int) -> int:
+        wc = ord("?") - 48
+        w0, w1 = d0 == wc, d1 == wc
+        return (not w0 and not w1) and 1 or (w0 and w1) and ts or sum(1 for t in range(ts)  if (w0 or d0 == t//10) and (w1 or d1 == t%10))
+    h0, h1, _, m0, m1 = tuple(ord(c) - 48 for c in time)
+    return f(24, h0, h1) * f(60, m0, m1)
 
 import unittest
 
