@@ -71,27 +71,27 @@ Therefore: 4 valid times
 
 --@param string
 local function validTimes(time) --@return int
-	local wc = string.byte("?") - 48
-	local h0, h1, _, m0, m1 = time:byte(1, #time)
-	h0 = h0 - 48
-	h1 = h1 - 48
-	m0 = m0 - 48
-	m1 = m1 - 48
-	local hc, mc = 0, 0
-	local d
-	for h=0, 23 do
-		d = h%10
-		if (h0 == wc or h0 == (h-d)/10) and (h1 == wc or h1 == d) then
-			hc = hc + 1
+	--@param int, int, int
+	local function f(ts, d0, d1) --@return int
+	--local f = function(ts, d0, d1) --this style also works
+		local wc = string.byte("?") - 48
+		local w0, w1 = d0 == wc, d1 == wc
+		local c = 0
+		if not w0 and not w1 then
+			c = 1
+		elseif w0 and w1 then
+			c = ts 
+		else
+			for t=0, ts-1 do
+				if (w0 or d0 == t//10) and (w1 or d1 == t%10) then
+					c = c + 1
+				end
+			end
 		end
+		return c
 	end
-	for m=0, 59 do
-		d = m%10
-		if (m0 == wc or m0 == (m-d)/10) and (m1 == wc or m1 == d) then
-			mc = mc + 1
-		end
-	end
-	return hc * mc
+	h0, h1, _, m0, m1 = time:byte(1, #time)
+	return f(24, h0 - 48, h1 - 48) * f(60, m0 - 48, m1 - 48)
 end
 
 local lu = require("luaunit")
