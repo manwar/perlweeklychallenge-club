@@ -1,0 +1,80 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/countprefixes {
+    0 dict begin
+    /b exch def
+    {
+        b exch anchorsearch {
+            pop pop true
+        } {
+            pop false
+        } ifelse
+    } filter length
+    end
+} bind def
+
+(countprefixes) test.start
+[(a) (ap) (app) (apple) (banana)] (apple) countprefixes 4 eq test
+[(cat) (dog) (fish)] (bird) countprefixes 0 eq test
+[(hello) (he) (hell) (heaven) (he)] (hello) countprefixes 4 eq test
+[() (code) (coding) (cod)] (coding) countprefixes 3 eq test
+[(p) (pr) (pro) (prog) (progr) (progra) (program)] (program) countprefixes 7 eq test
+test.end
