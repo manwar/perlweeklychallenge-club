@@ -1,34 +1,7 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# Challenge 212
-#
-# Task 2: Rearrange Groups
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of integers and group size greater than zero.
-#
-# Write a script to split the list into equal groups of the given size where
-# integers are in sequential order. If it can’t be done then print -1.
-#
-# Example 1:
-#
-# Input: @list = (1,2,3,5,1,2,7,6,3) and $size = 3
-# Output: (1,2,3), (1,2,3), (5,6,7)
-#
-# Example 2:
-#
-# Input: @list = (1,2,3) and $size = 2
-# Output: -1
-#
-# Example 3:
-#
-# Input: @list = (1,2,4,3,5,3) and $size = 2
-# Output: (1,2,3), (3,4,5)
-#
-# Example 4:
-#
-# Input: @list = (1,5,2,6,4,7) and $size = 3
-# Output: -1
+# Perl Weekly Challenge 212 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-212/
 
 use Modern::Perl;
 
