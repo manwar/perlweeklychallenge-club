@@ -2,8 +2,9 @@
 // https://theweeklychallenge.org/blog/perl-weekly-challenge-193/
 
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
+#include <ctype.h>
 
-#define INDEX(c)    (tolower(c)-'a')
+#define INDEX(c)    (tolower((unsigned char)(c)) - 'a')
 
 typedef struct {
     char* text;
