@@ -9,7 +9,7 @@ int find_collision(IntArray* nums) {
             return i;
         }
     }
-    return -1;  // no more colisions
+    return -1;  // no more collisions
 }
 
 void collide_and_explode(IntArray* nums) {
