@@ -1,0 +1,80 @@
+--
+-- Perl Weekly Challenge 366
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-366>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc366;
+
+CREATE OR REPLACE FUNCTION
+pwc366.task2_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   my ( $hours, $minutes ) = split ':', $string;
+
+   my ( $left, $right ) = split '', $hours;
+   my @hours;
+   my ( @a, @b );
+
+   
+   if ( $left eq '?' ) {
+      push @a, $_ for ( 0 .. 2 );
+   }
+   else {
+     push @a, $left;
+   }
+
+   if ( $right eq '?' ) {
+      push @b, $_ for ( 0 .. 9 );
+   }
+   else {
+      push @b, $right;
+   }
+
+   my @valid_hours;
+   for my $l ( @a ) {
+      for my $r ( @b ) {
+      	  my $t = sprintf '%02d', $l, $r;
+         push @valid_hours, $t if ( $t <= 23 );
+      }
+   }
+
+   @a = ();
+   @b = ();	
+    ( $left, $right ) = split '', $minutes;
+    if ( $left eq '?' ) {
+       push @a, $_ for ( 0 .. 5 );
+    }
+    else {
+      push @a, $left;
+    }
+
+    if ( $right eq '?' ) {
+       push @b, $_ for ( 0 .. 9 );
+    }
+    else {
+       push @b, $right;
+    }
+
+    my @valid_minutes;
+    for my $l ( @a ) {
+       for my $r ( @b ) {
+       	  my $t = sprintf '%02d', $l, $r;
+          push @valid_minutes, $t if ( $t <= 59 );
+       }
+    }
+
+    my @valid_times;
+    for my $h ( @valid_hours ) {
+       for my $m ( @valid_minutes ) {
+       	  push @valid_times, "$h:$m";
+       }
+    }
+
+   return scalar @valid_times;
+   
+$CODE$
+LANGUAGE plperl;
