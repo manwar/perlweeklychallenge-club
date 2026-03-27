@@ -35,7 +35,7 @@ You are given an encoded string consisting of a sequence of numeric characters: 
 
 Write a script to find the all valid different decodings in sorted order.
 
-Encoding is simply done by mapping A,B,C,D,… to 1,2,3,4,… etc.
+Encoding is simply done by mapping A,B,C,D,... to 1,2,3,4,... etc.
 
 Example 1
 Input: $s = 11
