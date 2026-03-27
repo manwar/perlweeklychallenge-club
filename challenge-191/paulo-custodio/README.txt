@@ -58,7 +58,7 @@ or
 
 Example
 Input: $n = 2
-Ouput: 2
+Output: 2
 
 Since $n = 2, the list can be made up of two integers only i.e. 1 and 2.
 Therefore we can have two list i.e. (1,2) and (2,1).
