@@ -1,0 +1,27 @@
+--
+-- Perl Weekly Challenge 366
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-366>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc366;
+
+CREATE OR REPLACE FUNCTION
+pwc366.task1_plperl( text[], text )
+RETURNS int
+AS $CODE$
+
+   my ( $prefixes, $string ) = @_;
+
+   my @matches;
+
+   for my $current ( $prefixes->@* ) {
+       if ( $string =~ / ^ $current /x ) {
+       	  push @matches, $current;
+       }
+   }
+
+   return scalar( @matches );
+   
+$CODE$
+LANGUAGE plperl;

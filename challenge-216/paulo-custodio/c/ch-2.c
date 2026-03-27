@@ -1,3 +1,6 @@
+// Perl Weekly Challenge 216 - Task 2 - solution by Paulo Custodio
+// https://theweeklychallenge.org/blog/perl-weekly-challenge-216/
+
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 // Count stickers using multiset logic
