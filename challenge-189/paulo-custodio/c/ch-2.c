@@ -32,7 +32,7 @@ IntArray* smallest_slice(IntArray* nums) {
     int slice_end = nums->size;
     int array_degree = compute_degree(nums, 0, nums->size);
 
-    for (int start = 0; start < nums->size-2; start++) {
+    for (int start = 0; start <= nums->size-2; start++) {
         for (int len = 2; len <= nums->size-start; len++) {
             int end = start + len;
             if (end > nums->size)
