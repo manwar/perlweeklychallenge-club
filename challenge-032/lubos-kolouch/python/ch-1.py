@@ -1,58 +1,46 @@
 #!/usr/bin/env python3
-"""Challenge 032 - Task 1: Count instances.
-
-Read standard input or one or more files and count how many times each line
-appears. Print the summary sorted by count, with ties broken alphabetically.
-Use -csv to emit CSV instead of a padded table.
-"""
+"""Perl Weekly Challenge 032 - Task 1: Count instances."""
 
 from __future__ import annotations
 
+from collections import Counter
 import fileinput
 import sys
-from collections import Counter
-from typing import Iterable
+from typing import Iterable, Mapping, Sequence
 
 
-def count_instances(paths: list[str] | None = None) -> Counter[str]:
-    """Count stripped lines from stdin or the given files."""
-    counter: Counter[str] = Counter()
-    for line in fileinput.input(files=paths):
-        word = line.strip()
-        if word:
-            counter[word] += 1
-    return counter
+def count_instances(lines: Iterable[str]) -> Counter[str]:
+    """Count non-empty stripped entries from an input stream."""
+    counts: Counter[str] = Counter()
+    for line in lines:
+        item = line.strip()
+        if item:
+            counts[item] += 1
+    return counts
 
 
-def format_table(counter: Counter[str]) -> list[str]:
-    """Format counts as a right-aligned table sorted by count desc, label asc."""
-    if not counter:
-        return []
-
-    width = max(len(word) for word in counter)
-    rows = sorted(counter.items(), key=lambda item: (-item[1], item[0]))
-    return [f"{word:<{width}}\t{count}" for word, count in rows]
-
-
-def format_csv(counter: Counter[str]) -> list[str]:
-    """Format counts as CSV sorted by label, matching the extra-credit example."""
-    return [f"{word},{count}" for word, count in sorted(counter.items())]
+def format_counts(counts: Mapping[str, int], csv: bool = False) -> list[str]:
+    """Format counts sorted by frequency descending and name ascending."""
+    separator = "," if csv else "\t"
+    return [
+        f"{item}{separator}{count}"
+        for item, count in sorted(counts.items(), key=lambda pair: (-pair[1], pair[0]))
+    ]
 
 
-def main(argv: list[str]) -> int:
-    """Command-line entry point."""
-    args = argv[1:]
-    csv_mode = False
+def main(argv: Sequence[str] | None = None) -> int:
+    """CLI entry point."""
+    args = list(sys.argv[1:] if argv is None else argv)
+    csv_output = False
     if args and args[0] == "-csv":
-        csv_mode = True
+        csv_output = True
         args = args[1:]
 
-    counter = count_instances(args or None)
-    lines = format_csv(counter) if csv_mode else format_table(counter)
-    for line in lines:
+    counts = count_instances(fileinput.input(files=args or ("-",), encoding="utf-8"))
+    for line in format_counts(counts, csv_output):
         print(line)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv))
+    raise SystemExit(main())

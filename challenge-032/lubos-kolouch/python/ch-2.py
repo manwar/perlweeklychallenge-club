@@ -1,61 +1,72 @@
 #!/usr/bin/env python3
-"""Challenge 032 - Task 2: ASCII bar chart.
-
-Generate a simple bar chart from a mapping of labels to numeric values.
-By default the chart is ordered by labels; pass --order values to sort by
-value descending (with label as a tie-breaker).
-"""
+"""Perl Weekly Challenge 032 - Task 2: ASCII bar chart."""
 
 from __future__ import annotations
 
 import json
 import sys
-from typing import Mapping
+from typing import Mapping, Sequence
+
 
 SAMPLE_DATA: dict[str, float] = {"apple": 3, "cherry": 2, "banana": 1}
 
 
-def generate_bar_graph(data: Mapping[str, float], order: str = "labels") -> list[str]:
-    """Return formatted bar-chart lines for the supplied data."""
+def render_bar_graph(
+    data: Mapping[str, float],
+    *,
+    order_by: str = "value",
+    scale: int = 4,
+) -> str:
+    """Render a simple ASCII bar graph from label/value pairs."""
     if not data:
-        return []
+        return ""
 
-    labels = list(data)
-    width = max(len(label) for label in labels)
-
-    if order == "values":
-        items = sorted(data.items(), key=lambda item: (-item[1], item[0]))
+    if order_by == "value":
+        items = sorted(data.items(), key=lambda pair: (-pair[1], pair[0]))
     else:
-        items = sorted(data.items())
+        items = sorted(data.items(), key=lambda pair: pair[0])
 
-    return [f"{label:>{width}} | {'#' * int(value)}" for label, value in items]
-
-
-def load_data_from_stdin() -> dict[str, float]:
-    """Load a JSON object from stdin, or return the sample data on empty input."""
-    raw = sys.stdin.read().strip()
-    if not raw:
-        return SAMPLE_DATA
-    data = json.loads(raw)
-    if not isinstance(data, dict):
-        raise ValueError("Input must be a JSON object of label -> value")
-    return {str(key): float(value) for key, value in data.items()}
+    width = max(len(label) for label in data)
+    lines = [
+        f"{label:>{width}} | {'#' * max(0, int(round(value * scale)))}"
+        for label, value in items
+    ]
+    return "\n".join(lines)
 
 
-def main(argv: list[str]) -> int:
-    """Command-line entry point."""
-    order = "labels"
-    if len(argv) > 1 and argv[1] == "--order":
-        if len(argv) < 3:
-            print(f"Usage: {argv[0]} [--order labels|values]")
-            return 1
-        order = argv[2]
+def _load_data_from_json(text: str) -> dict[str, float]:
+    payload = json.loads(text)
+    if not isinstance(payload, dict):
+        raise ValueError("JSON input must be an object mapping labels to numbers")
+    data: dict[str, float] = {}
+    for key, value in payload.items():
+        data[str(key)] = float(value)
+    return data
 
-    data = load_data_from_stdin()
-    for line in generate_bar_graph(data, order=order):
-        print(line)
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """CLI entry point."""
+    args = list(sys.argv[1:] if argv is None else argv)
+    order_by = "value"
+    if args[:2] == ["--order", "value"]:
+        order_by = "value"
+        args = args[2:]
+    elif args[:2] == ["--order", "label"]:
+        args = args[2:]
+
+    if args[:2] == ["--json", "-"]:
+        data = _load_data_from_json(sys.stdin.read())
+    elif len(args) >= 2 and args[0] == "--json":
+        with open(args[1], encoding="utf-8") as handle:
+            data = _load_data_from_json(handle.read())
+    else:
+        data = SAMPLE_DATA
+
+    chart = render_bar_graph(data, order_by=order_by)
+    if chart:
+        print(chart)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv))
+    raise SystemExit(main())
