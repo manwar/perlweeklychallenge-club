@@ -3,7 +3,7 @@ https://theweeklychallenge.org/blog/perl-weekly-challenge-367/
 
 Task 1: Max Odd Binary
 Submitted by: Mohammad Sajid Anwar
-You are given a binary string that has at least one ‘1’.
+You are given a binary string that has at least one '1'.
 
 Write a script to rearrange the bits in such a way that the resulting binary number is the maximum odd binary number and return the resulting binary string. The resulting string can have leading zeros.
 
