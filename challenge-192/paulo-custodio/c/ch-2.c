@@ -9,12 +9,11 @@ int equalize(IntArray* nums) {
         return 0;
 
     // check if it is possible to equalize
-    double sum = 0.0;
+    int sum = 0;
     for (int i = 0; i < nums->size; i++) {
-        sum += (double)nums->data[i];
+        sum += nums->data[i];
     }
-    double num = (double)nums->size;
-    if (fabs(floor(sum / num) - sum / num) > Epsilon)
+    if (sum % nums->size != 0)
         return -1;
 
     int moves = 0;

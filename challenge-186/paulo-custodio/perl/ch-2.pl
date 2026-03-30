@@ -1,29 +1,27 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# Challenge 186
-#
-# Task 2: Unicode Makeover
-# Submitted by: Mohammad S Anwar
-#
-# You are given a string with possible unicode characters.
-#
-# Create a subroutine sub makeover($str) that replace the unicode characters with
-# ascii equivalent. For this task, let us assume it only contains alphabets.
-# Example 1
-#
-# Input: $str = 'ÃÊÍÒÙ';
-# Output: 'AEIOU'
-#
-# Example 2
-#
-# Input: $str = 'âÊíÒÙ';
-# Output: 'aEiOU'
+# Perl Weekly Challenge 186 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-186/
 
-use utf8;
 use Modern::Perl;
 use Text::Unidecode;
-use Test::More;
+use Path::Tiny;
 
-is unidecode('ÃÊÍÒÙ'), 'AEIOU';
-is unidecode('ãêíòù'), 'aeiou';
-done_testing;
+open(my $in, "<:utf8", "ch-2.in") or die "open ch-2.in: $!\n";
+open(my $out, ">:raw", "ch-2.out") or die "open ch-2.out: $!\n";
+
+while (<$in>) {
+    $_ = unidecode($_);
+    print $out $_;
+}
+
+close($in);
+close($out);
+
+if (path("ch-2.out")->slurp_raw eq path("ch-2.exp")->slurp_raw) {
+    say "ok";
+    unlink "ch-2.out";
+}
+else {
+    say "not ok";
+}
