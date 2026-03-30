@@ -1,46 +1,64 @@
 #!/usr/bin/env python3
-"""Perl Weekly Challenge 032 - Task 1: Count instances."""
 
-from __future__ import annotations
+"""
+Challenge 032 - Task #1: Count Instances
+Contributed by Neil Bowers
 
-from collections import Counter
-import fileinput
+Create a script that either reads standard input or one or more files
+specified on the command-line. Count the number of times and then print a
+summary, sorted by the count of each entry.
+
+So with the following input in file example.txt:
+
+apple
+banana
+apple
+cherry
+cherry
+apple
+the script would display something like:
+
+apple     3
+cherry    2
+banana    1
+For extra credit, add a -csv option to your script, which would generate:
+
+apple,3
+banana,1
+cherry,2
+"""
+
 import sys
-from typing import Iterable, Mapping, Sequence
+import fileinput
 
 
-def count_instances(lines: Iterable[str]) -> Counter[str]:
-    """Count non-empty stripped entries from an input stream."""
-    counts: Counter[str] = Counter()
-    for line in lines:
-        item = line.strip()
-        if item:
-            counts[item] += 1
-    return counts
-
-
-def format_counts(counts: Mapping[str, int], csv: bool = False) -> list[str]:
-    """Format counts sorted by frequency descending and name ascending."""
-    separator = "," if csv else "\t"
-    return [
-        f"{item}{separator}{count}"
-        for item, count in sorted(counts.items(), key=lambda pair: (-pair[1], pair[0]))
-    ]
-
-
-def main(argv: Sequence[str] | None = None) -> int:
-    """CLI entry point."""
-    args = list(sys.argv[1:] if argv is None else argv)
+def main():
+    # Parse command line arguments
     csv_output = False
+    args = sys.argv[1:]
+
     if args and args[0] == "-csv":
         csv_output = True
-        args = args[1:]
+        args.pop(0)
 
-    counts = count_instances(fileinput.input(files=args or ("-",), encoding="utf-8"))
-    for line in format_counts(counts, csv_output):
-        print(line)
-    return 0
+    # Count instances
+    count = {}
+
+    # Read from files or STDIN
+    with fileinput.input(files=args if args else ("-",)) as f:
+        for line in f:
+            word = line.strip()
+            if word:
+                count[word] = count.get(word, 0) + 1
+
+    # Sort by count (descending), then alphabetically
+    sorted_items = sorted(count.items(), key=lambda x: (-x[1], x[0]))
+
+    # Output
+    sep = "," if csv_output else "\t"
+    for word, count in sorted_items:
+        print(f"{word}{sep}{count}")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
