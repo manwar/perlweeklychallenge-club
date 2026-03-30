@@ -24,7 +24,7 @@ char* make_largest_odd(const char* bin) {
         SWAP(char, *p, result[len-1]);
     }
 
-    // move all '1's except last to replace all '0' comming before
+    // move all '1's except last to replace all '0' coming before
     char* p1;
     while ((p1 = find_last_moveable_one(result)) != NULL) {
         char* p0 = strchr(result, '0');
