@@ -15,8 +15,8 @@ int compute_degree(IntArray* nums, int start, int end) {
     assert(min >= 0);
 
     // compute max frequency
-    int* freq = xcalloc(max+1, sizeof(int));
     max = 0;
+    int* freq = xcalloc(max+1, sizeof(int));
     for (int i = start; i < end; i++) {
         int n = nums->data[i];
         freq[n]++;
@@ -32,7 +32,7 @@ IntArray* smallest_slice(IntArray* nums) {
     int slice_end = nums->size;
     int array_degree = compute_degree(nums, 0, nums->size);
 
-    for (int start = 0; start <= nums->size-2; start++) {
+    for (int start = 0; start < nums->size-2; start++) {
         for (int len = 2; len <= nums->size-start; len++) {
             int end = start + len;
             if (end > nums->size)
