@@ -1,0 +1,8 @@
+⍝ https://arraybox.dev/#qQqq
+
+P1 ⇐ { (⍵↑⍨)¨1+⍳≢⍵ } ⍝ 1st attempt
+P2 ⇐ { (⍮1↑⍵),↓,\⍵ } ⍝ 2nd attempt
+
+P  ⇐ ⍮⍢↑,\      ⍝ Prefixes
+Cp ⇐ { +/⍵∊P⍺ } ⍝ Explicit
+Cp ⇐ +/P⍛(∊⍨)   ⍝ Tacit

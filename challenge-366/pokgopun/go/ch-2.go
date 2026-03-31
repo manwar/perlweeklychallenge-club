@@ -79,21 +79,25 @@ import (
 )
 
 func validTimes(time string) int {
-	wc := byte('?') - 48
-	h0, h1, m0, m1 := time[0]-48, time[1]-48, time[3]-48, time[4]-48
-	hc := 0
-	for h := range byte(24) {
-		if (h0 == wc || h0 == h/10) && (h1 == wc || h1 == h%10) {
-			hc++
+	f := func(ts int, d0, d1 byte) int {
+		wc := byte('?') - 48
+		w0, w1 := d0 == wc, d1 == wc
+		c := 0
+		switch {
+		case !w0 && !w1:
+			c = 1
+		case w0 && w1:
+			c = ts
+		default:
+			for t := range byte(ts) {
+				if (w0 || d0 == t/10) && (w1 || d1 == t%10) {
+					c++
+				}
+			}
 		}
+		return c
 	}
-	mc := 0
-	for m := range byte(60) {
-		if (m0 == wc || m0 == m/10) && (m1 == wc || m1 == m%10) {
-			mc++
-		}
-	}
-	return hc * mc
+	return f(24, time[0]-48, time[1]-48) * f(60, time[3]-48, time[4]-48)
 }
 
 func main() {

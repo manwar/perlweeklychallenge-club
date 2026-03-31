@@ -1,35 +1,7 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# Challenge 215
-#
-# Task 1: Odd one Out
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of words (alphabetic characters only) of same size.
-#
-# Write a script to remove all words not sorted alphabetically and print
-# the number of words in the list that are not alphabetically sorted.
-#
-# Example 1
-#
-# Input: @words = ('abc', 'xyz', 'tsu')
-# Output: 1
-#
-# The words 'abc' and 'xyz' are sorted and can't be removed.
-# The word 'tsu' is not sorted and hence can be removed.
-#
-# Example 2
-#
-# Input: @words = ('rat', 'cab', 'dad')
-# Output: 3
-#
-# None of the words in the given list are sorted.
-# Therefore all three needs to be removed.
-#
-# Example 3
-#
-# Input: @words = ('x', 'y', 'z')
-# Output: 0
+# Perl Weekly Challenge 215 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-215/
 
 use Modern::Perl;
 

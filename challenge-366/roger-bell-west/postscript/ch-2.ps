@@ -1,0 +1,117 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/validtimes {
+    0 dict begin
+    [ exch
+      s2a enumerate.array {
+          aload pop
+          /c exch def
+          /i exch def
+          c c.isdigit {
+              [ c 48 sub ]
+          } {
+              1 {
+                  i 0 eq {
+                      [ 0 1 2 {} for ]
+                      exit
+                  } if
+                  i 1 eq i 4 eq or {
+                      [ 0 1 9 {} for ]
+                      exit
+                  } if
+                  i 3 eq {
+                      [ 0 1 5 {} for ]
+                      exit
+                  } if
+              } repeat
+          } ifelse
+      } forall
+    ] /combinator exch def
+    combinator length 4 ne {
+        0
+    } {
+        /minutes combinator 2 get length combinator 3 get length mul def
+        /ct 0 def
+        combinator 0 get {
+            /ax exch def
+            combinator 1 get {
+                ax 10 mul add 23 le {
+                    /ct ct 1 add def
+                } if
+            } forall
+        } forall
+        ct minutes mul
+    } ifelse
+    end
+} bind def
+  
+(validtimes) test.start
+(?2:34) validtimes 3 eq test
+(?4:?0) validtimes 12 eq test
+(??:??) validtimes 1440 eq test
+(?3:45) validtimes 3 eq test
+(2?:15) validtimes 4 eq test
+test.end

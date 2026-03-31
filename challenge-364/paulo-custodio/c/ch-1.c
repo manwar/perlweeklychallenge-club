@@ -34,6 +34,7 @@ void decode_words(StrArray* words) {
         str_free(decoded);
     }
 }
+
 int main(int argc, char *argv[]) {
     bool encode = false;
     int arg = 1;
