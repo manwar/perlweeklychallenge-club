@@ -21,9 +21,17 @@ Str* get_sparkline(IntArray* nums) {
     }
     assert(min >= 0);
 
+    if (max == 0) {
+        /* All values are zero (and thus equal); emit the lowest block. */
+        for (int i = 0; i < nums->size; i++) {
+            str_append(result, blocks[0]);
+        }
+        return result;
+    }
+
     for (int i = 0; i < nums->size; i++) {
-        int block = (int)((double)nums->data[i] / (double)max * 
-						(sizeof(blocks)/sizeof(blocks[0]) - 1));
+        int block = (int)((double)nums->data[i] / (double)max *
+                          (sizeof(blocks) / sizeof(blocks[0]) - 1));
         str_append(result, blocks[block]);
     }
     return result;
