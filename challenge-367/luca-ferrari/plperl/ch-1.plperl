@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 367
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-367>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc367;
+
+CREATE OR REPLACE FUNCTION
+pwc367.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $binary ) = @_;
+
+   my ( $ones, $zeros ) = ( scalar ( grep { $_ == 1 } split //, $binary ),
+      	       	            scalar ( grep { $_ == 0 } split //, $binary ) );
+
+  $ones--;
+
+  return '1' x $ones . '0' x $zeros . '1';
+   
+$CODE$
+LANGUAGE plperl;
