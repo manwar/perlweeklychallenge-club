@@ -27,27 +27,30 @@ while (<>) {
     #
     if ($straddle1 && $straddle2) {
         say "true";
-        next;
     }
 
     #
     # If one straddles midnight, add 24 hours to each time earlier
     # than the start time of one straddling midnight
     #
-    if ($straddle1) {
-        tcmp ($_, $b1) < 0 && ($$_ [0] += 24) for $e1, $b2, $e2
+    elsif ($straddle1) {
+        #
+        # We have an intersection unless b1 >= e2 and e1 <= b2
+        #
+        say tcmp ($b1, $e2) >= 0 && tcmp ($e1, $b2) <= 0 ? "false" : "true" 
     }
-    if ($straddle2) {
-        tcmp ($_, $b2) < 0 && ($$_ [0] += 24) for $e2, $b1, $e1
+    elsif ($straddle2) {
+        #
+        # We have an intersection unless b2 >= e1 and e2 <= b1
+        #
+        say tcmp ($b2, $e1) >= 0 && tcmp ($e2, $b1) <= 0 ? "false" : "true" 
     }
-
-    #
-    # Times will intersect, unless either
-    #  - The second period finished before the first starts
-    #  - The second period starts   after  the first end
-    #
-    say tcmp ($e2, $b1) <= 0 || tcmp ($b2, $e1) >= 0 ? "false" : "true"
-
+    else {
+        #
+        # We have an intersection unless e2 < b1 or b2 > e1
+        #
+        say tcmp ($e2, $b1) <= 0 || tcmp ($b2, $e1) >= 0 ? "false" : "true"
+    }
 }
 
 __END__

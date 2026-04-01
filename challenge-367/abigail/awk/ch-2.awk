@@ -31,20 +31,24 @@ function tcmp (t1, t2) {
         next
     }
 
-    #
-    # If one straddles midnight, add 24 hours to each time earlier
-    # than the start time of one straddling midnight
-    #
     if (straddle1) {
-        if (tcmp(e1, b1) < 0) {e1 [1] += 24}
-        if (tcmp(b2, b1) < 0) {b2 [1] += 24}
-        if (tcmp(e2, b1) < 0) {e2 [1] += 24}
+        if (tcmp(b1, e2) >= 0 && tcmp(e1, b2) <= 0) {
+            print "false"
+        }
+        else {
+            print "true"
+        }
+        next
     }
 
     if (straddle2) {
-        if (tcmp(e2, b2) < 0) {e2 [1] += 24}
-        if (tcmp(b1, b2) < 0) {b1 [1] += 24}
-        if (tcmp(e1, b2) < 0) {e1 [1] += 24}
+        if (tcmp(b2, e1) >= 0 && tcmp(e2, b1) <= 0) {
+            print "false"
+        }
+        else {
+            print "true"
+        }
+        next
     }
 
     #
