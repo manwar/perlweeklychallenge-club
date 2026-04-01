@@ -1,0 +1,34 @@
+--
+-- Perl Weekly Challenge 367
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-367>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc367;
+
+CREATE OR REPLACE FUNCTION
+pwc367.task2_plperl( text[] )
+RETURNS boolean
+AS $CODE$
+
+   my ( $times ) = @_;
+
+   my @first;
+   my @second;
+
+   for ( 0 .. 1 ) {
+       my @pieces = split /:/, $times->[ $_ ];
+       push @first, $pieces[ 0 ] * 60 + $pieces[ 1 ];
+   }
+
+   for ( 2 .. 3 ) {
+       my @pieces = split /:/, $times->[ $_ ];
+       push @second, $pieces[ 0 ] * 60 + $pieces[ 1 ];
+   }
+
+  return 1 if ( $second[ 0 ] - $first[ 1 ] < 0 || $second[ 1 ] - $first[ 0 ] < 0 );
+  return 0;
+
+   
+$CODE$
+LANGUAGE plperl;
