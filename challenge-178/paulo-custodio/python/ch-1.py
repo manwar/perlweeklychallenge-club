@@ -1,17 +1,9 @@
 #!/usr/bin/env python3
 
-# Challenge 178
-#
-# Task 1: Quater-imaginary Base
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to convert a given number (base 10) to quater-imaginary base
-# number and vice-versa. For more informations, please checkout wiki page.
-#
-# For example,
-#
-# $number_base_10 = 4
-# $number_quater_imaginary_base = 10300
+# Perl Weekly Challenge 178 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-178/
+
+import sys
 
 def dec_to_base2i(n):
     base = -4
@@ -37,5 +29,9 @@ def base2i_to_dec(n2i):
             raise ValueError(f"number {n2i} has imaginary component")
     return result
 
-assert(dec_to_base2i(4) == '10300')
-assert(base2i_to_dec('10300') == 4)
+if len(sys.argv) == 3 and sys.argv[1]=="dec_to_base2i":
+    print(dec_to_base2i(int(sys.argv[2])))
+elif len(sys.argv) == 3 and sys.argv[1]=="base2i_to_dec":
+    print(base2i_to_dec(sys.argv[2]))
+else:
+    print("usage: "+sys.argv[0]+" dec_to_base2i|base2i_to_dec n")

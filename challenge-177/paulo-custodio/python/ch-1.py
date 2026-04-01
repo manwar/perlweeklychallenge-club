@@ -1,24 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 177
-#
-# Task 1: Damm Algorithm
-# Submitted by: Mohammad S Anwar
-#
-# You are given a positive number, $n.
-#
-# Write a script to validate the given number against the included check digit.
-#
-# Please checkout the wikipedia page for information.
-# Example 1
-#
-# Input: $n = 5724
-# Output: 1 as it is valid number
-#
-# Example 2
-#
-# Input: $n = 5727
-# Output: 0 as it is invalid number
+# Perl Weekly Challenge 177 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-177/
 
 # https://en.wikipedia.org/wiki/Damm_algorithm
 
