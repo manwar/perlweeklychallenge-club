@@ -3,7 +3,7 @@ https://theweeklychallenge.org/blog/perl-weekly-challenge-178/
 
 Task 1: Quater-imaginary Base
 Submitted by: Mohammad S Anwar
-Write a script to convert a given number (base 10) to quater-imaginary base number and vice-versa. For more informations, please checkout wiki page.
+Write a script to convert a given number (base 10) to quater-imaginary base number and vice-versa. For more information, please checkout wiki page.
 
 For example,
 
