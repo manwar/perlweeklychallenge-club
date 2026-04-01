@@ -4,18 +4,18 @@
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int index_first_uniq_char(const char* str) {
-    int freq[UCHAR_MAX] = {0};
+    int freq[256] = {0};
 
     // compute frequencies
     int len = strlen(str);
     for (int i = 0; i < len; i++) {
-        char ch = str[i];
+        int ch = (unsigned char)str[i];
         freq[ch]++;
     }
 
     // return index of first char with freq 1
     for (int i = 0; i < len; i++) {
-        char ch = str[i];
+        int ch = (unsigned char)str[i];
         if (freq[ch] == 1)
             return i;
     }

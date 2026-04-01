@@ -15,7 +15,7 @@ Input:
     see the positive, it wasn't anywhere to be seen. The end was
     coming and it wasn't going to be pretty.
 
-Ouput:
+Output:
     about All all could end he how it think was would. a anyone
     basics bit but equation, for in of see still the the There
     there to uncertainty was were. anywhere be he how it matter

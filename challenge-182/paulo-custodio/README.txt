@@ -28,5 +28,5 @@ Input:
     /a/b/c/4/x.pl
     /a/b/c/d/5/x.pl
 
-Ouput:
+Output:
     /a/b/c

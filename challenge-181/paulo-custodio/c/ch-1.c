@@ -67,6 +67,7 @@ char* reorder_sentence(char* sentence) {
     // extract result
     char* result = xstrdup(result_sentence->body);
     strarray_free(words);
+	str_free(result_sentence);
     return result;
 }
 
@@ -78,7 +79,7 @@ void reorder_sentences(StrArray* sentences) {
     }
 }
 
-Str* reflow_paragaph(StrArray* sentences) {
+Str* reflow_paragraph(StrArray* sentences) {
     Str* result = str_new();
     int column = 0;
     for (int i = 0; i < sentences->size; i++) {
@@ -109,7 +110,7 @@ int main() {
     Str* text = read_input();
     StrArray* sentences = split_sentences(text->body);
     reorder_sentences(sentences);
-    Str* reflowed = reflow_paragaph(sentences);
+    Str* reflowed = reflow_paragraph(sentences);
     printf("%s", reflowed->body);
 
     str_free(text);
