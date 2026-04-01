@@ -22,45 +22,40 @@ my @Test =
     "1111",     "1111",
 
     "01",       "01",
-    "",         '',
     "1",        "1",
-    '0',        '0',
-    '000',       '000',
     '111',       '111',
     "101",       "101",
 
     "011",       "101",
     "100",       "001",
 ;
-plan +@Test;
+my @Dead =  '', '0', '000', '2';
 
-multi task-str( Str:D() $a where *.chars ≤ 1 ) { $a }
-multi task-str( Str:D() $a -->Str) {
+plan +@Test + 2 × +@Dead;
+
+# Binary-Not-Zero Str
+subset BNZStr of Str where * ~~ / ^ <[01]>* 1 <[01]>* $/ ;
+
+multi task-str( BNZStr:D() $a -->Str) {
     my $ones-ct = 0;
     my \len = $a.chars;
-    for ^len {
-        $ones-ct += $a.substr( $_,1) eq '1'  ?? 1 !! 0
-    }
-    given $ones-ct -> $c {
-        when $c == 0 or $c == len  { $a }
-        when $c == 1    { '0' x len -1 ~ '1' }
-        default {
-            '1' x --$ones-ct  ~  '0' x $a.chars - ++$ones-ct  ~  '1';
-        }
-    }
+    $ones-ct += $a.substr( $_,1) for ^len;
+    '1' x --$ones-ct  ~  '0' x $a.chars - ++$ones-ct  ~  '1';
 }
 
-multi task-ary( Str:D() $a where *.chars ≤ 1 ) { $a }
-multi task-ary( Str:D() $a -->Str) {
+multi task-ary( BNZStr:D() $a -->Str) {
     my @s = $a.comb.sort.reverse;
-    return @s.join if @s[0] eq '0' or @s[*-1] eq '1';    # all bits same
-    @s = do { @s.push: @s.shift };
-    @s.join if @s[0] eq '0' or @s[*-1] eq '1';
+    @s.push: @s.shift;
+    @s.join;
 }
 
 for @Test -> $in, $exp {
     is task-ary( $in), $exp, "{$exp // $exp.^name()} <- $in.raku()";
     is task-str( $in), $exp, "{$exp // $exp.^name()} <- $in.raku()";
+}
+for @Dead -> $in {
+    dies-ok { task-ary( $in)}, "$in";
+    dies-ok { task-str( $in)}, "$in";
 }
 done-testing;
 
@@ -70,12 +65,8 @@ my $b = Bench.new;
 $b.cmpthese(1000, {
   short-Str  => { for @Test -> $t, $ { task-str $t; } },
   short-Ary  => { for @Test -> $t, $ { task-ary $t; } },
-  semi-colon    => { for @Test -> $t, $ { ;            } },
-#  long-Str => { for @Test -> $t, $ { task-ary $t x 100; } },  # longer inputs …
-#  long-Ary => { for @Test -> $t, $ { task-ary $t x 100; } },  # … remove the time diff
+# do-nothing => { for @Test -> $t, $ {              } },  # about 3% overhead
 });
 
-
 my $str = "100";
-
 say qq{\nInput: \$str = "$str"\nOutput: }, task-str $str;
