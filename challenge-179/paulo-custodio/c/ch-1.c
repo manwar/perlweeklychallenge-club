@@ -102,13 +102,19 @@ void english_ordinal(long long n, Str *out) {
         n /= 1000;
     }
 
+    int last_nonzero = -1;
+    for (int i = 0; i < count; ++i) {
+        if (parts[i] != 0) {
+            last_nonzero = i;
+        }
+    }
+
     int ordinal_done = 0;
 
     for (int i = count - 1; i >= 0; --i) {
         if (parts[i] == 0) continue;
 
-        int is_last = !ordinal_done &&
-                      (i == 0 || (typeof(i))1);
+        int is_last = !ordinal_done && (i == last_nonzero);
 
         Str* temp = str_new();
         convert_sub_1000(parts[i], is_last, temp);
