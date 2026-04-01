@@ -1,17 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 178
-#
-# Task 1: Quater-imaginary Base
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to convert a given number (base 10) to quater-imaginary base
-# number and vice-versa. For more informations, please checkout wiki page.
-#
-# For example,
-#
-# $number_base_10 = 4
-# $number_quater_imaginary_base = 10300
+# Perl Weekly Challenge 178 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-178/
 
 use Modern::Perl;
 
@@ -48,5 +38,7 @@ sub base2i_to_dec {
     return $result;
 }
 
-dec_to_base2i(4) == 10300 or die;
-base2i_to_dec(10300) == 4 or die;
+@ARGV==2 or die "usage: $0 dec_to_base2i|base2i_to_dec n\n";
+if    ($ARGV[0] eq "dec_to_base2i") { say dec_to_base2i($ARGV[1]); }
+elsif ($ARGV[0] eq "base2i_to_dec") { say base2i_to_dec($ARGV[1]); }
+else { die "usage: $0 dec_to_base2i|base2i_to_dec n\n"; }

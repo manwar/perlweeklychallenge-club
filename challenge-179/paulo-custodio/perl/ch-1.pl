@@ -1,19 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 179
-#
-# Task 1: Ordinal Number Spelling
-# Submitted by: Mohammad S Anwar
-#
-# You are given a positive number, $n.
-#
-# Write a script to spell the ordinal number.
-#
-# For example,
-#
-# 11 => eleventh
-# 62 => sixty-second
-# 99 => ninety-ninth
+# Perl Weekly Challenge 179 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-179/
 
 use Modern::Perl;
 use Lingua::EN::Numbers 'num2en_ordinal';
