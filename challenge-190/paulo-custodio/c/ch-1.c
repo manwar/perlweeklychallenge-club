@@ -41,5 +41,5 @@ int main(int argc, char* argv[]) {
         die("usage: %s word", argv[0]);
 
     bool ok = is_caps_ok(argv[1]);
-    printf("%d\n", (int)ok);
+    printf("%d\n", ok);
 }

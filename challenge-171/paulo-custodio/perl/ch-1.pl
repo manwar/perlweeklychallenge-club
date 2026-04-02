@@ -1,25 +1,10 @@
 #!/usr/bin/env perl
 
-# Challenge 171
-#
-# Task 1: Abundant Number
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 20 Abundant Odd Numbers.
-#
-# According to wikipedia,
-#
-#     A number n for which the sum of divisors σ(n) > 2n, or, equivalently, the
-#     sum of proper divisors (or aliquot sum) s(n) > n.
-#
-#
-# For example, 945 is the first Abundant Odd Number.
-#
-# Sum of divisors:
-# 1 + 3 + 5 + 7 + 9 + 15 + 21 + 27 + 35 + 45 + 63 + 105 + 135 + 189 + 315 = 975
+# Perl Weekly Challenge 171 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-171/
 
 use Modern::Perl;
-use List::Util 'sum';
+use List::Util 'sum0';
 
 sub divisors {
     my($n) = @_;
@@ -41,7 +26,7 @@ sub proper_divisors {
 
 sub is_abundant {
     my($n) = @_;
-    return sum(proper_divisors($n)) > $n;
+    return sum0(proper_divisors($n)) > $n;
 }
 
 sub abundant_numbers {
@@ -57,4 +42,4 @@ sub abundant_numbers {
 
 @ARGV==1 or die "usage: ch-1.pl n\n";
 my $N = shift;
-say join ", ", abundant_numbers($N);
+say "(", join(", ", abundant_numbers($N)), ")";

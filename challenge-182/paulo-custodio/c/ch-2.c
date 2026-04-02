@@ -32,15 +32,15 @@ void collect_common(bool first, Str* common, const char* path_) {
         if (len_path == len_common) {
             get_parent(path);
             get_parent(common->body);
-			str_sync_size(common);
+            str_sync_size(common);
         }
         else if (len_path > len_common) {
             get_parent(path);
-		}
+        }
         else {
             get_parent(common->body);
-			str_sync_size(common);
-		}
+            str_sync_size(common);
+        }
     }
 
     xfree(path);

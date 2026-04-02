@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 171
-#
-# Task 1: Abundant Number
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 20 Abundant Odd Numbers.
-#
-# According to wikipedia,
-#
-#     A number n for which the sum of divisors s(n) > 2n, or, equivalently, the
-#     sum of proper divisors (or aliquot sum) s(n) > n.
-#
-#
-# For example, 945 is the first Abundant Odd Number.
-#
-# Sum of divisors:
-# 1 + 3 + 5 + 7 + 9 + 15 + 21 + 27 + 35 + 45 + 63 + 105 + 135 + 189 + 315 = 975
+# Perl Weekly Challenge 171 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-171/
 
 import sys
 import math
@@ -51,4 +36,4 @@ def abundant_numbers(N):
 if len(sys.argv) != 2:
     raise ValueError("usage: script.py n")
 N = int(sys.argv[1])
-print(", ".join(map(str, abundant_numbers(N))))
+print("("+(", ".join(map(str, abundant_numbers(N))))+")")

@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 172
-#
-# Task 2: Five-number Summary
-# Submitted by: Mohammad S Anwar
-#
-# You are given an array of integers.
-#
-# Write a script to compute the five-number summary of the given set of integers.
-#
-# You can find the definition and example in the wikipedia page.
+# Perl Weekly Challenge 172 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-172/
 
 def median(n):
     if len(n) % 2 == 0:
@@ -29,4 +21,4 @@ def five_number_summary(n):
     return (n[0], lower_quartile(n), median(n), upper_quartile(n), n[-1])
 
 import sys
-print(", ".join([f"{x:.1f}" for x in five_number_summary(list(map(float, sys.argv[1:])))]))
+print("("+(", ".join([f"{x:.1f}" for x in five_number_summary(list(map(float, sys.argv[1:])))]))+")")

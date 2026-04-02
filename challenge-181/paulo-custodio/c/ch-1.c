@@ -67,7 +67,7 @@ char* reorder_sentence(char* sentence) {
     // extract result
     char* result = xstrdup(result_sentence->body);
     strarray_free(words);
-	str_free(result_sentence);
+    str_free(result_sentence);
     return result;
 }
 
