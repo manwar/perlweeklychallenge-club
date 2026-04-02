@@ -86,6 +86,7 @@ void parse_input(IntMatrix** a, IntMatrix** b) {
     *a = parse_matrix(lines, &cur_line);
     *b = parse_matrix(lines, &cur_line);
     assert(cur_line == lines->size);
+    strarray_free(lines);
 }
 
 IntMatrix* kronecker_product(IntMatrix* a, IntMatrix* b) {
