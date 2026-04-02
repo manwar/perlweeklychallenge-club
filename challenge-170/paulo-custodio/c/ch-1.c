@@ -25,7 +25,7 @@ int next_prime(int n) {
     }
 }
 
-IntArray* primordial_numbers(int n) {
+IntArray* primorial_numbers(int n) {
     IntArray* nums = intarray_new();
     intarray_push_back(nums, 1);
     for (int p = 2; nums->size < n; p = next_prime(p)) {
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
         die("usage: %s N", argv[0]);
 
     int N = atoi(argv[1]);
-    IntArray* nums = primordial_numbers(N);
+    IntArray* nums = primorial_numbers(N);
     intarray_print(nums);
     intarray_free(nums);
 }

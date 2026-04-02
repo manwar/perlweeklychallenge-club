@@ -4,6 +4,11 @@
 #include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 double median_(DoubleArray* nums, int bot, int top) {
+    if (top - bot == 0)
+        return 0;
+    if (top - bot == 1)
+        return nums->data[bot];
+
     int mid = (top - bot) / 2;
     if ((top - bot) % 2 == 0) {
         return (nums->data[bot+mid-1] + nums->data[bot+mid]) / 2;

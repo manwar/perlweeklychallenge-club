@@ -53,6 +53,8 @@ void index_increment(IntArray* index, int limit) {
             pos--;
         }
     }
+    if (pos < 0)
+        die("no solution");
 }
 
 bool index_has_duplicates(IntArray* index, int limit) {

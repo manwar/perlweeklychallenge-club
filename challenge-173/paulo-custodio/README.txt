@@ -14,10 +14,10 @@ An esthetic number is a positive integer where every adjacent digit differs from
 For example,
 
 5456 is an esthetic number as |5 - 4| = |4 - 5| = |5 - 6| = 1
-120 is not an esthetic numner as |1 - 2| != |2 - 0| != 1
+120 is not an esthetic number as |1 - 2| != |2 - 0| != 1
 
 
-Task 2: Sylvester’s sequence
+Task 2: Sylvester's sequence
 Submitted by: Mohammad S Anwar
 Write a script to generate first 10 members of Sylvester's sequence. For more informations, please refer to the wikipedia page.
 
