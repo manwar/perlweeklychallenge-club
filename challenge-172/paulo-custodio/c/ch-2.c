@@ -40,4 +40,6 @@ int main(int argc, char* argv[]) {
             median(nums),
             upper_quartile(nums),
             nums->data[nums->size-1]);
+    doublearray_free(nums);
+    return 0;
 }
