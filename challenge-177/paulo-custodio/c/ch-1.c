@@ -32,5 +32,5 @@ int main(int argc, char* argv[]) {
         die("usage: %s n", argv[0]);
 
     bool ok = validate(atoi(argv[1]));
-    printf("%d\n", (int)ok);
+    printf("%d\n", ok);
 }

@@ -1,19 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 174
-#
-# Task 1: Disarium Numbers
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 19 Disarium Numbers.
-#
-#     A disarium number is an integer where the sum of each digit raised to the
-#     power of its position in the number, is equal to the number.
-#
-#
-# For example,
-#
-# 518 is a disarium number as (5 ** 1) + (1 ** 2) + (8 ** 3) => 5 + 1 + 512 => 518
+# Perl Weekly Challenge 174 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-174/
 
 import sys
 from typing import List
@@ -33,4 +21,4 @@ def disarium_numbers(N: int) -> List[int]:
 
 if len(sys.argv) != 2:
     raise ValueError("usage: script.py n")
-print(", ".join(map(str, disarium_numbers(int(sys.argv[1])))))
+print("("+(", ".join(map(str, disarium_numbers(int(sys.argv[1])))))+")")

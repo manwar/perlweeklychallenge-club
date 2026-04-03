@@ -1,17 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 175
-#
-# Task 2: Perfect Totient Numbers
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 20 Perfect Totient Numbers. Please checkout
-# wikipedia page for more informations.
-#
-# Output
-#
-# 3, 9, 15, 27, 39, 81, 111, 183, 243, 255, 327, 363, 471, 729,
-# 2187, 2199, 3063, 4359, 4375, 5571
+# Perl Weekly Challenge 175 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-175/
 
 import sys
 
@@ -48,4 +38,4 @@ def perfect_totients(N):
 if len(sys.argv) != 2:
     raise ValueError("usage: ch-2.py N")
 N = int(sys.argv[1])
-print(", ".join(map(str, perfect_totients(N))))
+print("("+(", ".join(map(str, perfect_totients(N))))+")")

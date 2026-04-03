@@ -1,19 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 174
-#
-# Task 1: Disarium Numbers
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 19 Disarium Numbers.
-#
-#     A disarium number is an integer where the sum of each digit raised to the
-#     power of its position in the number, is equal to the number.
-#
-#
-# For example,
-#
-# 518 is a disarium number as (5 ** 1) + (1 ** 2) + (8 ** 3) => 5 + 1 + 512 => 518
+# Perl Weekly Challenge 174 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-174/
 
 use Modern::Perl;
 use List::Util 'sum';
@@ -39,4 +27,4 @@ sub disarium_numbers {
 }
 
 @ARGV==1 or die "usage: ch-1.pl n\n";
-say join ", ", disarium_numbers(shift);
+say "(", join(", ", disarium_numbers(shift)), ")";

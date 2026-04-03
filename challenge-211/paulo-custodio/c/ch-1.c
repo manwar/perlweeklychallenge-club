@@ -71,6 +71,6 @@ bool is_toeplitz(IntMatrix* m) {
 int main() {
     IntMatrix* m = parse_matrix();
     bool ok = is_toeplitz(m);
-    printf("%d\n", (int)ok);
+    printf("%d\n", ok);
     intmatrix_free(m);
 }
