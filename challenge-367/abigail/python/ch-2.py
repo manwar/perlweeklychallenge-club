@@ -33,8 +33,3 @@ for line in sys . stdin:
         intersect = not (tcmp (e2, b1) <= 0 or  tcmp (b2, e1) >= 0)
 
     print ("true" if intersect else "false")
-
-#   if intersect:
-#       print ("true")
-#   else:
-#       print ("false")
