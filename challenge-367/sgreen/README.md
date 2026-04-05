@@ -1,3 +1,3 @@
-# The Weekly Challenge 366
+# The Weekly Challenge 367
 
-Blog: [Happy 7th birthday TWC!](https://dev.to/simongreennet/happy-7th-birthday-twc-lpk)
+Blog: [Maximum conflict](https://dev.to/simongreennet/weekly-challenge-maximum-conflict-5c4n)
