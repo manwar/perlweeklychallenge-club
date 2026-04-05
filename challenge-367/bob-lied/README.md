@@ -4,4 +4,4 @@
 
 [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-367/bob-lied)
 
- - [Blog](https://dev.to/boblied/s
+ - [Blog](https://dev.to/boblied/pwc-367-oddity-ln3)

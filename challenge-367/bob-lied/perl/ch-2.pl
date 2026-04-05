@@ -41,7 +41,7 @@ my $logger;
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say $_ for @ARGV;   # TODO command line processing here
+say isConflict( [@ARGV[0,1]], [@ARGV[2,3]] ) ? "true" : "false";
 
 #=============================================================================
 sub isConflict($event1, $event2)
