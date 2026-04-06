@@ -3,7 +3,7 @@ https://theweeklychallenge.org/blog/perl-weekly-challenge-368/
 
 Task 1: Make it Bigger
 Submitted by: Mohammad Sajid Anwar
-You are given a given a string number and a character digit.
+You are given a string number and a character digit.
 
 Write a script to remove exactly one occurrence of the given character digit from the given string number, resulting the decimal form is maximised.
 

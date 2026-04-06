@@ -27,18 +27,13 @@ int next_prime(int n) {
 
 IntArray* prime_factors(int n) {
     IntArray* factors = intarray_new();
-    if (n < 2) {
-        intarray_push_back(factors, 1);
-    }
-    else {
-        int p = 2;
-        while (n > 1) {
-            while (n % p == 0) {
-                intarray_push_back(factors, p);
-                n /= p;
-            }
-            p = next_prime(p);
+    int p = 2;
+    while (n > 1) {
+        while (n % p == 0) {
+            intarray_push_back(factors, p);
+            n /= p;
         }
+        p = next_prime(p);
     }
     return factors;
 }
