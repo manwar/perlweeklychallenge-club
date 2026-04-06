@@ -15,5 +15,7 @@ test_line(2, "971088  0",   3);
 test_line(2, "63640   1",   6);
 test_line(2, "988841  1",   2);
 test_line(2, "211529  0",   2);
+test_line(2, "1       0",   0);
+test_line(2, "1       1",   0);
 
 done_testing;
