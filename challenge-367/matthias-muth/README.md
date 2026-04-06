@@ -1,236 +1,195 @@
-# Counting Times Without Questions
+# Odd Conflicts
 
-**Challenge 366 solutions in Perl by Matthias Muth**
+**Challenge 367 solutions in Perl by Matthias Muth**
 
-## Task 1: Count Prefixes
+## Task 1: Max Odd Binary
 
-> You are given an array of words and a string (contains only lowercase English letters).<br/>
-> Write a script to return the number of words in the given array that are a prefix of the given string.
+> You are given a binary string that has at least one ‘1’.<br/>
+> Write a script to rearrange the bits in such a way that the resulting binary number is the maximum odd binary number and return the resulting binary string. The resulting string can have leading zeros.
 >
 > **Example 1**
 >
 > ```text
-> Input: @array = ("a", "ap", "app", "apple", "banana"), $str = "apple"
-> Output: 4
+> Input: $str = "1011"
+> Output: "1101"
+> 
+> "1101" is max odd binary (13).
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @array = ("cat", "dog", "fish"), $str = "bird"
-> Output: 0
+> Input: $str = "100"
+> Output: "001"
+> 
+> "001" is max odd binary (1).
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @array = ("hello", "he", "hell", "heaven", "he"), $str = "hello"
-> Output: 4
+> Input: $str = "111000"
+> Output: "110001"
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @array = ("", "code", "coding", "cod"), $str = "coding"
-> Output: 3
+> Input: $str = "0101"
+> Output: "1001"
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @array = ("p", "pr", "pro", "prog", "progr", "progra", "program"), $str = "program"
-> Output: 7
+> Input: $str = "1111"
+> Output: "1111"
 > ```
 
+There are two things that make the a binary number
+with a given number of `1` bits the 'largest odd integer':
 
+* To be odd, the least significant bit has to be `1`.
+* To be the largest, all other `1` bits have to represent as high a value as possible, meaning they have to be the most significant bits.  
 
-#### A regular expression to match prefixes
+So what we need is the number of `1` bits in the input binary string, and its total number of bits. The number of bits is the same as the length of the bit string. The number of `1` bits can be counted using the `tr` operator, like `$str =~ tr/1//`.
 
-I first thought about how to solve this task with regular expressions. A pattern that accepts  only prefixes of the word `"apple"` could look like this:
-
-```perl
-     /^  a? (?:p (?:p (?:l (?:e)? )? )? )? $/x
-```
-
-This pattern would need to be constructed from the input string. With the nested parentheses that all have to be closed at the end we could 'go recursive' , but that seems a bit of an overkill to me for this simple task. Or we could go through the letters of the input string *twice*, once for the opening parentheses and the letters, and once for the closing parentheses with the question marks. It then is easier not to make an exception for the first letter, and do the same for all letters:
-
-```perl
-    my $re = join " ",
-        map( "(?:$_", split( "", $str ) ),
-        map( ")?",    split( "", $str ) );
-```
-
-resulting in `"/^ (?:a (?:p (?:p (?:l (?:e )? )? )? )? )? $/"`.
-
-Applying that regex to the words in the input array and counting the matches for the result is easy, then:
-
-```perl
-    return scalar grep /^ ${re} $/x, $array->@*;
-```
-
-The whole regex-based solution could look like this, then:
+Then we can return the resulting bit string, constructed using the `x` operator for its three parts:
 
 ```perl
 use v5.36;
 
-sub count_prefixes( $array, $str ) {
-    my $re = join " ",
-        map( "(?:$_", split( "", $str ) ),run 
-        map( ")?",    split( "", $str ) );
-    return scalar grep /^ ${re} $/x, $array->@*;
+sub max_odd_binary( $str ) {
+    my ( $n_bits, $n_ones ) = ( length( $str ), $str =~ tr/1// );
+    return "1" x ( $n_ones - 1 )
+        . "0" x ( $n_bits - $n_ones )
+        . "1";
 }
 ```
 
-#### The `substr` solution
+Nice and easy challenge!
 
-It is evident that firing up the regular expression engine for checking each single word has a runtime cost.
+## Task 2: Conflict Events
 
-Also, generating a regular expression and then applying it is a two step process,  with the intermediate result (the regular expression) not really visible in the program after the first step. For anyone reading the code this probably requires more of abstract thinking about what really is going on than necessary.
-
-That is why I wrote a second, simpler solution, in terms of both programming complexity and runtime. It uses `substr` to check each word to be a prefix of the target word. It is so much simpler:
-
-```perl
-use v5.36;
-
-sub count_prefixes( $array, $str ) {
-    return scalar grep $_ eq substr( $str, 0, length( $_ ) ), $array->@*;
-}
-```
-
-As much as I admire the power of regular expressions in Perl, I prefer this simpler solution.
-
-## Task 2: Valid Times
-
-> You are given a time in the form ‘HH:MM’. The earliest possible time is ‘00:00’ and the latest possible time is ‘23:59’. In the string time, the digits represented by the ‘?’ symbol are unknown, and must be replaced with a digit from 0 to 9.<br/>
-> Write a script to return the count different ways we can make it a valid time.
+> You are given two events start and end time.<br/>
+> Write a script to find out if there is a conflict between the two events. A conflict happens when two events have some non-empty intersection.
 >
 > **Example 1**
 >
 > ```text
-> Input: $time = "?2:34"
-> Output: 3
+> Input: @event1 = ("10:00", "12:00")
+>        @event2 = ("11:00", "13:00")
+> Output: true
 >
-> 0 -> "02:34" valid
-> 1 -> "12:34" valid
-> 2 -> "22:34" valid
+> Both events overlap from "11:00" to "12:00".
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $time = "?4:?0"
-> Output: 12
+> Input: @event1 = ("09:00", "10:30")
+>        @event2 = ("10:30", "12:00")
+> Output: false
 >
-> Hours: tens digit ?, ones digit 4 -> can be 04, and 14 (2 possibilities)
-> Minutes: tens digit ?, ones digit 0 -> tens can be 0-5 (6 possibilities)
->
-> Total: 2 × 6 = 12
+> Event1 ends exactly at 10:30 when Event2 starts.
+> Since the problem defines intersection as non-empty, exact boundaries touching is not a conflict.
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $time = "??:??"
-> Output: 1440
+> Input: @event1 = ("14:00", "15:30")
+>        @event2 = ("14:30", "16:00")
+> Output: true
 >
-> Hours: from 00 to 23 -> 24 possibilities
-> Minutes: from 00 to 59 -> 60 possibilities
->
-> Total: 24 × 60 = 1440
+> Both events overlap from 14:30 to 15:30.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $time = "?3:45"
-> Output: 3
+> Input: @event1 = ("08:00", "09:00")
+>        @event2 = ("09:01", "10:00")
+> Output: false
 >
-> If tens digit is 0 or 1 -> any ones digit works, so 03 and 13 are valid
-> If tens digit is 2 -> ones digit must be 0-3, but here ones digit is 3, so 23 is valid
->
-> Therefore: 0,1,2 are all valid -> 3 possibilities
+> There is a 1-minute gap from "09:00" to "09:01".
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $time = "2?:15"
-> Output: 4
+> Input: @event1 = ("23:30", "00:30")
+>        @event2 = ("00:00", "01:00")
+> Output: true
 >
-> Tens digit is 2, so hours can be 20-23
-> Ones digit can be 0,1,2,3 (4 possibilities)
->
-> Therefore: 4 valid times
+> They overlap from "00:00" to "00:30".
 > ```
 
-I decided to separate the validation, extraction and calculation steps.
-
-To **validate** the input string and ensure that invalid times such as `26:??` are rejected, I use a regular expression. It allows only hours from `00` to `23`, and minutes from `00` to `59`, but also allows question marks instead of digits:
-
-```perl     
-    $time =~ /^ ( [?01][?0-9] | 2[?0-3] ) : [?0-5] [?0-9] $/x
-        or return 0;
-```
-
-Next, I **separate** the input string into tens of hours, hours, tens of minutes and minutes. I found `unpack` to be very useful for this: The `A` format extracts one character from the string, and we can use the `x` format to skip over the `:`, like this:
-
-```perl  
-    my ( $h10, $h1, $m10, $m1 ) = unpack "AAxAA", $time;
-```
-
-Normally I would have extracted these already in the regular expression, but the `|` alternation for the hours makes it more complicated than it's worth. That's why I declared the separation of validation and extraction a feature ;-).
-
-**Calculating** the number of possible (and valid!) substitutions for question marks can be done by a multiplication of factors. Digits themselves don't have a degree of freedom, so the factor is `1`. Question marks can be substituted by one digit out of a range of digits, so the factor is greater than `1`.  
-
-For the tens of minutes and minutes, determining the factor is easy, because their range of digits is fixed. They simply are these:
+It's not too difficult to translate times given in `HH:MM` form into minutes since midnight. As this has to be done four times, I use a `map` call, in combination with a `/^(\d+):(\d+)/` regular expression:
 
 ```perl
-    ( $m10 eq "?" ? 6 : 1 )     # 0 to 5
-    ( $m1  eq "?" ? 10 : 1 )    # 0 to 9
+    my @times =
+        map { /^(\d+):(\d+)/; $1 * 60 + $2 } $event1->@*, $event2->@*;
 ```
 
-For the hours , it's a bit more complicated:
+This translates the four event times into `$times[0]` to `$times[3]`.
 
-| `$h10`      | `$h1` | Factor | Comment |
-| --------- | --- | ------ | --------- |
-|   ?       | ? | 24 | All possible hours 00-23 |
-|  ?  | 0-3 | 3 | One each of 00-03, 10-13 and 20-23 |
-| ? | 4-9 | 2 | One of 04-09 and one of 14-19 (but not 24-29!) |
-| 0, 1 | ? | 10 | All hours 00-09 or 10-19 |
-| 2 | ? | 4 | All hours 20-23 |
-| 0-2 | 0-9 | 1 | A single valid hour already |
-
-With a bit of rearrangement, I found this expression for the number of possible hours:
+I want to be sure that the ending time of an event is greater than (or equal to) its starting time. For an event like `( "23:00", "00:30" )` that spans midnight, I therefore add one day (24 * 60 minutes) to its ending time.<br/>
+Doing this for both events separately:
 
 ```perl
-        $h10 eq "?"
-            ? ( $h1 eq "?"
-                ? 24
-                : $h1 <= 3 ? 3 : 2 )
-            : $h1 eq "?"
-                ? ( $h10 == 2 ? 4 : 10 )
-                : 1
+    $times[1] += 24 * 60
+        if $times[1] < $times[0];
+    $times[3] += 24 * 60
+        if $times[3] < $times[2];
 ```
 
-Combining it all, this is my solution:
+Now for the difficult part: the overlap detection.<br/>
+I started with the criteria for two events A and B to *not* overlap. This is the case when either of these is true:
+
++ event A starts *after* event B ends,
++ or event A ends *before* event B starts.
+
+A logical inversion results in these criteria for two *conflicting* events:
+
+* event A starts before event B ends,
+* *and* event A ends after event B starts. 
+
+Translated into code it looks like this:
+
+```perl
+    $times[0] < $times[3] && $times [1] > $times[2]
+```
+
+Very well, but this does not consider events that might conflict *after midnight*.
+
+These are the events from Example 5, together with the minutes since midnight of their respective starting and ending times:
+
+* Event 1: `("23:30", "00:30")`, minutes `1410` to `1470`<br/>
+  (that is 23 * 60 + 30, and 0 * 60 + 30 + 24 * 60, remember we add one day to span midnight),
+* Event 2: `("00:00", "01:00")`, minutes `0` to `60`.
+
+Strictly speaking, they do not overlap. But apparently, they should be considered overlapping.<br/>To achieve this, I added two more checks:
+
+* check whether Event 1 collides with Event 2 *tomorrow*,
+* and as the events might be in opposite order:<br/>
+  check whether Event 1 *tomorrow* collides with Event 2 as it is.
+
+An interesting challenge, but definitely no one-line solution for me this time!
 
 ```perl
 use v5.36;
 
-sub valid_times( $time ) {
-    $time =~ /^ ( [?01][?0-9] | 2[?0-3] ) : [?0-5] [?0-9] $/x
-        or return 0;
-    my ( $h10, $h1, $m10, $m1 ) = unpack "AAxAA", $time;
-    return
-        ( $h10 eq "?"
-            ? ( $h1 eq "?"
-                ? 24
-                : $h1 <= 3 ? 3 : 2 )
-            : $h1 eq "?"
-                ? ( $h10 == 2 ? 4 : 10 )
-                : 1 )
-        * ( $m10 eq "?" ? 6 : 1 )
-        * ( $m1  eq "?" ? 10 : 1 );
+sub conflict_events( $event1, $event2 ) {
+    my @times =
+        map { /^(\d+):(\d+)/; $1 * 60 + $2 } $event1->@*, $event2->@*;
+    $times[1] += 24 * 60
+        if $times[1] < $times[0];
+    $times[3] += 24 * 60
+        if $times[3] < $times[2];
+    return $times[0] < $times[3] && $times [1] > $times[2]
+        || $times[0] + 24 * 60 < $times[3] && $times [1] + 24 * 60 > $times[2]
+        || $times[0] < $times[3] + 24 * 60 && $times [1] > $times[2] + 24 * 60;
 }
 ```
 

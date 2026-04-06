@@ -1,0 +1,99 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/maxoddbinary {
+    0 dict begin
+    /ones 0 def
+    /zeroes 0 def
+    s2a {
+        dup 48 eq {
+            /zeroes zeroes 1 add def
+            pop
+        } {
+            49 eq {
+                /ones ones 1 add def
+            } if
+        } ifelse
+    } forall
+    ones 1 lt {
+        ()
+    } {
+        [
+            ones 1 sub {
+                49
+            } repeat
+            zeroes {
+                48
+            } repeat
+            49
+        ]
+        a2s
+    } ifelse
+    end
+} bind def
+
+(maxoddbinary) test.start
+(1011) maxoddbinary (1101) eq test
+(100) maxoddbinary (001) eq test
+(111000) maxoddbinary (110001) eq test
+(0101) maxoddbinary (1001) eq test
+(1111) maxoddbinary (1111) eq test
+test.end

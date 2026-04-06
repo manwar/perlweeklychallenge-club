@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: The Times They Are A-Countin'](https://packy.dardan.com/b/mG)
+[Perl Weekly Challenge: Conflicting Every Odd](https://packy.dardan.com/b/m_)

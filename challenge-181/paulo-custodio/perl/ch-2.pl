@@ -1,34 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 181
-#
-# Task 2: Hot Day
-# Submitted by: Mohammad S Anwar
-#
-# You are given file with daily temperature record in random order.
-#
-# Write a script to find out days hotter than previous day.
-# Example
-#
-# Input File: (temperature.txt)
-#
-# 2022-08-01, 20
-# 2022-08-09, 10
-# 2022-08-03, 19
-# 2022-08-06, 24
-# 2022-08-05, 22
-# 2022-08-10, 28
-# 2022-08-07, 20
-# 2022-08-04, 18
-# 2022-08-08, 21
-# 2022-08-02, 25
-#
-# Output:
-# 2022-08-02
-# 2022-08-05
-# 2022-08-06
-# 2022-08-08
-# 2022-08-10
+# Perl Weekly Challenge 181 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-181/
 
 use Modern::Perl;
 use DateTime;

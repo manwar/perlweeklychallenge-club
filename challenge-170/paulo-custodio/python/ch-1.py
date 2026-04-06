@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 170
-#
-# Task 1: Primorial Numbers
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to generate first 10 Primorial Numbers.
-#
-#     Primorial numbers are those formed by multiplying successive prime numbers.
-#
-#
-# For example,
-#
-# P(0) = 1    (1)
-# P(1) = 2    (1x2)
-# P(2) = 6    (1x2x3)
-# P(3) = 30   (1x2x3x5)
-# P(4) = 210  (1x2x3x5x7)
+# Perl Weekly Challenge 170 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-170/
 
 import sys
 
@@ -49,4 +34,4 @@ def primorial_numbers(n):
 if len(sys.argv) != 2:
     raise ValueError("usage: ch-1.py n")
 n = int(sys.argv[1])
-print(", ".join(map(str, primorial_numbers(n))))
+print("("+(", ".join(map(str, primorial_numbers(n))))+")")

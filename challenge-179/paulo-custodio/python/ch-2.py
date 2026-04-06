@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 179
-#
-# Task 2: Unicode Sparkline
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of positive numbers, @n.
-#
-# Write a script to print sparkline in Unicode for the given list of numbers.
+# Perl Weekly Challenge 179 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-179/
 
 import sys
 

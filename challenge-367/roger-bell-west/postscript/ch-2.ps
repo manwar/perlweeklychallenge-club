@@ -1,0 +1,118 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/parsetime {
+    (:) strsplit
+    aload pop
+    cvi exch cvi 60 mul add
+} bind def
+
+/conflictevents {
+    0 dict begin
+    /b exch def
+    /a exch def
+    /r [
+        [ a b ] {
+            /t exch def
+            /st t 0 get parsetime def
+            /en t 1 get parsetime def
+            st en lt {
+                [ [ st en 1 sub ] ]
+            } {
+                [
+                    [ st 1440 1 sub ]
+                    [ 0 en 1 sub ]
+                ]
+            } ifelse
+        } forall
+    ] def
+    false
+    r 0 get {
+        /ra exch def
+        r 1 get {
+            /rb exch def
+            ra 0 get rb 1 get le rb 0 get ra 1 get le and {
+                pop true
+                exit
+            } if
+        } forall
+    } forall
+    end
+} bind def
+
+(conflictevents) test.start
+[(10:00) (12:00)] [(11:00) (13:00)] conflictevents test
+[(09:00) (10:30)] [(10:30) (12:00)] conflictevents not test
+[(14:00) (15:30)] [(14:30) (16:00)] conflictevents test
+[(08:00) (09:00)] [(09:01) (10:00)] conflictevents not test
+[(23:30) (00:30)] [(00:00) (01:00)] conflictevents test
+test.end
