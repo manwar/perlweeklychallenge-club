@@ -1,33 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 174
-#
-# Task 2: Permutation Ranking
-# Submitted by: Mohammad S Anwar
-#
-# You are given a list of integers with no duplicates, e.g. [0, 1, 2].
-#
-# Write two functions, permutation2rank() which will take the list and determine
-# its rank (starting at 0) in the set of possible permutations arranged in
-# lexicographic order, and rank2permutation() which will take the list and a rank
-# number and produce just that permutation.
-#
-# Please checkout this post for more informations and algorithm.
-#
-# Given the list [0, 1, 2] the ordered permutations are:
-#
-# 0: [0, 1, 2]
-# 1: [0, 2, 1]
-# 2: [1, 0, 2]
-# 3: [1, 2, 0]
-# 4: [2, 0, 1]
-# 5: [2, 1, 0]
-#
-# and therefore:
-#
-# permutation2rank([1, 0, 2]) = 2
-#
-# rank2permutation([0, 1, 2], 1) = [0, 2, 1]
+# Perl Weekly Challenge 174 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-174/
 
 use Modern::Perl;
 use Test::More;

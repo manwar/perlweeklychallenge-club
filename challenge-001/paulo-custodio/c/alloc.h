@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <ctype.h>
+#include <inttypes.h>
 #include <math.h>
 #include <stdarg.h>
 #include <stdbool.h>
@@ -560,7 +561,12 @@ static int str_compare(const void* a, const void* b) {
 }
 
 static int str_icompare(const void* a, const void* b) {
-    return stricmp(*(char**)a, *(char**)b);
+    const char *sa = *(const char **)a;
+    const char *sb = *(const char **)b;
+
+    int r = stricmp(sa, sb);
+    if (r != 0) return r;
+    return strcmp(sa, sb);
 }
 
 static void strarray_sort(StrArray* arr) {

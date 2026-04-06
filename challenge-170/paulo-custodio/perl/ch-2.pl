@@ -1,38 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 170
-#
-# Task 2: Kronecker Product
-# Submitted by: Mohammad S Anwar
-#
-# You are given 2 matrices.
-#
-# Write a script to implement Kronecker Product on the given 2 matrices.
-#
-# For more information, please refer wikipedia page.
-#
-# For example,
-#
-# A = [ 1 2 ]
-#     [ 3 4 ]
-#
-# B = [ 5 6 ]
-#     [ 7 8 ]
-#
-# A x B = [ 1 x [ 5 6 ]   2 x [ 5 6 ] ]
-#         [     [ 7 8 ]       [ 7 8 ] ]
-#         [ 3 x [ 5 6 ]   4 x [ 5 6 ] ]
-#         [     [ 7 8 ]       [ 7 8 ] ]
-#
-#       = [ 1x5 1x6 2x5 2x6 ]
-#         [ 1x7 1x8 2x7 2x8 ]
-#         [ 3x5 3x6 4x5 4x6 ]
-#         [ 3x7 3x8 4x7 4x8 ]
-#
-#       = [  5  6 10 12 ]
-#         [  7  8 14 16 ]
-#         [ 15 18 20 24 ]
-#         [ 21 24 28 32 ]
+# Perl Weekly Challenge 170 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-170/
 
 use Modern::Perl;
 
@@ -80,12 +49,14 @@ sub kronecker_product {
 
 sub print_matrix {
     my(@a) = @_;
-    for (@a) {
+    for my $i (0 .. $#a) {
+        my $row = $a[$i];
+        print $i==0 ? "[" : " ";
         print "[ ";
-        for (@$_) {
-            printf("%2d ", $_);
-        }
-        print "]\n";
+        print join(", ", map {sprintf("%2d", $_)} @$row);
+        print " ]";
+        print $i==$#a ? "]" : ",";
+        print "\n";
     }
 }
 

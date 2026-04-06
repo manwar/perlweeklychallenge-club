@@ -1,38 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 170
-#
-# Task 2: Kronecker Product
-# Submitted by: Mohammad S Anwar
-#
-# You are given 2 matrices.
-#
-# Write a script to implement Kronecker Product on the given 2 matrices.
-#
-# For more information, please refer wikipedia page.
-#
-# For example,
-#
-# A = [ 1 2 ]
-#     [ 3 4 ]
-#
-# B = [ 5 6 ]
-#     [ 7 8 ]
-#
-# A x B = [ 1 x [ 5 6 ]   2 x [ 5 6 ] ]
-#         [     [ 7 8 ]       [ 7 8 ] ]
-#         [ 3 x [ 5 6 ]   4 x [ 5 6 ] ]
-#         [     [ 7 8 ]       [ 7 8 ] ]
-#
-#       = [ 1x5 1x6 2x5 2x6 ]
-#         [ 1x7 1x8 2x7 2x8 ]
-#         [ 3x5 3x6 4x5 4x6 ]
-#         [ 3x7 3x8 4x7 4x8 ]
-#
-#       = [  5  6 10 12 ]
-#         [  7  8 14 16 ]
-#         [ 15 18 20 24 ]
-#         [ 21 24 28 32 ]
+# Perl Weekly Challenge 170 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-170/
 
 import sys
 import re
@@ -57,8 +26,11 @@ def parse_input():
     return a, b
 
 def print_matrix(mx):
-    for row in mx:
-        print("[ "+ " ".join([str(x) for x in row]) +" ]")
+    for i in range(len(mx)):
+        row = mx[i]
+        pfx = "[" if i==0 else " "
+        sfx = "," if i<len(mx)-1 else "]"
+        print(pfx+"[ "+ ", ".join([str(x) for x in row]) +" ]"+sfx)
 
 def kronecker_product(a, b):
     wa = len(a[0])

@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
         doublearray_push_back(nums, strtod(argv[i], NULL));
 
     bool ok = same_average(nums);
-    printf("%d\n", (int)ok);
+    printf("%d\n", ok);
 
     doublearray_free(nums);
 }

@@ -1,22 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 172
-#
-# Task 1: Prime Partition
-# Submitted by: Mohammad S Anwar
-#
-# You are given two positive integers, $m and $n.
-#
-# Write a script to find out the Prime Partition of the given number. No
-# duplicates allowed.
-#
-# For example,
-#
-# Input: $m = 18, $n = 2
-# Output: 5, 13 or 7, 11
-#
-# Input: $m = 19, $n = 3
-# Output: 3, 5, 11
+# Perl Weekly Challenge 172 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-172/
 
 use Modern::Perl;
 use List::Util 'sum';
@@ -89,4 +74,4 @@ sub prime_partition {
 
 @ARGV==2 or die "usage: ch-1.pl m n\n";
 my($m, $n) = @ARGV;
-say join ", ", prime_partition($m, $n);
+say "(", join(", ", prime_partition($m, $n)), ")";

@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 183
-#
-# Task 1: Unique Array
-# Submitted by: Mohammad S Anwar
-#
-# You are given list of arrayrefs.
-#
-# Write a script to remove the duplicate arrayrefs from the given list.
-# Example 1
-#
-# Input: @list = ([1,2], [3,4], [5,6], [1,2])
-# Output: ([1,2], [3,4], [5,6])
-#
-# Example 2
-#
-# Input: @list = ([9,1], [3,7], [2,5], [2,5])
-# Output: ([9, 1], [3,7], [2,5])
+# Perl Weekly Challenge 183 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-183/
 
 def remove_dups(a):
     seen = set()
