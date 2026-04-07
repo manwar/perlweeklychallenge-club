@@ -5,10 +5,10 @@
 # Loop over each line of input
 #
 {
-    line  = $1
+    input = $1
     digit = $2
 
-    n = split (line, chars, "")
+    n = split (input, chars, "")
 
     matched = 0
     #
