@@ -7,7 +7,7 @@ Write a script to generate first 20 Brilliant Numbers.
 
 Brilliant numbers are numbers with two prime factors of the same length.
 
-The number should have exactly two prime factors, i.e. it’s the product of two primes of the same length.
+The number should have exactly two prime factors, i.e. it's the product of two primes of the same length.
 
 For example,
 

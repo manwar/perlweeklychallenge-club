@@ -72,7 +72,7 @@ int ipow(int base, int exp) {
 bool is_perfect(int n) {
     if (n == 1)
         return true;
-    for (int exp = 2; exp <= n; exp++) {
+    for (int exp = 2; ipow(2, exp) <= n; exp++) {
         int power;
         for (int base = 2; (power = ipow(base, exp)) <= n; base++) {
             if (power == n)
