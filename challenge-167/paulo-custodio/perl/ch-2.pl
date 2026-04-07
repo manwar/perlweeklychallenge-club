@@ -1,22 +1,7 @@
 #!/usr/bin/env perl
 
-# Challenge 167
-#
-# Task 2: Gamma Function
-# Submitted by: Mohammad S Anwar
-#
-# Implement subroutine gamma() using the Lanczos approximation method.
-#
-# [2022-05-31]
-#
-# Ryan Thompson wrote an interesting blog explaining the subject in details.
-# Highly recommended if you are looking for more information. BLOG.
-#
-# Example
-#
-# print gamma(3); # 1.99
-# print gamma(5); # 24
-# print gamma(7); # 719.99
+# Perl Weekly Challenge 167 - Task 2 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-167/
 
 use Modern::Perl;
 use Math::Complex qw( :pi Re Im );

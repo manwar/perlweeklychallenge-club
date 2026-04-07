@@ -1,0 +1,50 @@
+Perl Weekly Challenge 166
+https://theweeklychallenge.org/blog/perl-weekly-challenge-166/
+
+Task 1: Hexadecimal Words
+Submitted by: Ryan J Thompson
+As an old systems programmer, whenever I needed to come up with a 32-bit number, I would reach for the tired old examples like 0xDeadBeef and 0xC0dedBad. I want more!
+
+Write a program that will read from a dictionary and find 2- to 8-letter words that can be "spelled" in hexadecimal, with the addition of the following letter substitutions:
+
+o -> 0 (e.g., 0xf00d = "food")
+l -> 1
+i -> 1
+s -> 5
+t -> 7
+You can use your own dictionary or you can simply open ../../../data/dictionary.txt (relative to your script's location in our GitHub repository) to access the dictionary of common words from Week #161.
+
+Optional Extras (for an 0xAddedFee, of course!)
+Limit the number of "special" letter substitutions in any one result to keep that result at least somewhat comprehensible. (0x51105010 is an actual example from my sample solution you may wish to avoid!)
+
+Find phrases of words that total 8 characters in length (e.g., 0xFee1Face), rather than just individual words.
+
+
+Task 2: K-Directory Diff
+Submitted by: Ryan J Thompson
+Given a few (three or more) directories (non-recursively), display a side-by-side difference of files that are missing from at least one of the directories. Do not display files that exist in every directory.
+
+Since the task is non-recursive, if you encounter a subdirectory, append a /, but otherwise treat it the same as a regular file.
+
+Example
+Given the following directory structure:
+
+dir_a:
+Arial.ttf  Comic_Sans.ttf  Georgia.ttf  Helvetica.ttf  Impact.otf  Verdana.ttf  Old_Fonts/
+
+dir_b:
+Arial.ttf  Comic_Sans.ttf  Courier_New.ttf  Helvetica.ttf  Impact.otf  Tahoma.ttf  Verdana.ttf
+
+dir_c:
+Arial.ttf  Courier_New.ttf  Helvetica.ttf  Impact.otf  Monaco.ttf  Verdana.ttf
+
+The output should look similar to the following:
+
+dir_a          | dir_b           | dir_c
+-------------- | --------------- | ---------------
+Comic_Sans.ttf | Comic_Sans.ttf  |
+               | Courier_New.ttf | Courier_New.ttf
+Georgia.ttf    |                 |
+               |                 | Monaco.ttf
+Old_Fonts/     |                 |
+               | Tahoma.ttf      |
