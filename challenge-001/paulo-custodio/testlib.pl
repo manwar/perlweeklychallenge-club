@@ -48,6 +48,10 @@ sub test_line {
             next unless -f "$dir/ch-$nr$_exe";
             capture(normalize_path("$dir/ch-$nr$_exe")." $in", $expected);
         }
+        elsif ($dir eq 'test') {
+            # test data
+            next;
+        }
         else {
             warn "skipped directory $dir\n";
         }
@@ -104,6 +108,10 @@ sub test_block {
             build_basic("$dir/ch-$nr.bas");
             next unless -f "$dir/ch-$nr$_exe";
             run(normalize_path("$dir/ch-$nr$_exe")." $args < test.in > test.out");
+        }
+        elsif ($dir eq 'test') {
+            # test data
+            next;
         }
         else {
             warn "skipped directory $dir\n";

@@ -21,7 +21,7 @@ for my $dir (<challenge-*/paulo-custodio>) {
 sub untabify {
     my($file) = @_;
     my $text = path($file)->slurp_raw;
-    my @lines = expand(map {s/\s+$//r} split(/\n/, $text));
+    my @lines = expand(split(/\n/, $text));
     my $new_text = join "\n", (@lines, "");
     if ($text ne $new_text) {
         path($file)->copy("$file~");

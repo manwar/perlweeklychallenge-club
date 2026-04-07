@@ -1,22 +1,7 @@
 #!/usr/bin/env python3
 
-# Challenge 167
-#
-# Task 1: Circular Prime
-# Submitted by: Mohammad S Anwar
-#
-# Write a script to find out first 10 circular primes having at least 3 digits
-# (base 10).
-#
-# Please checkout wikipedia for more information.
-#
-#     A circular prime is a prime number with the property that the number
-#     generated at each intermediate step when cyclically permuting its (base 10)
-#     digits will also be prime.
-#
-# Output
-#
-# 113, 197, 199, 337, 1193, 3779, 11939, 19937, 193939, 199933
+# Perl Weekly Challenge 167 - Task 1 - solution by Paulo Custodio
+# https://theweeklychallenge.org/blog/perl-weekly-challenge-167/
 
 def is_prime(n):
     if n <= 1:
@@ -78,4 +63,4 @@ while len(cprimes) < n:
     cp = next_circular_prime(cp)
     if cp >= 100:
         cprimes.append(cp)
-print(", ".join(map(str, cprimes)))
+print("("+(", ".join(map(str, cprimes)))+")")
