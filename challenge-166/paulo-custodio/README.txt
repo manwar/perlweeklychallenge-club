@@ -7,12 +7,12 @@ As an old systems programmer, whenever I needed to come up with a 32-bit number,
 
 Write a program that will read from a dictionary and find 2- to 8-letter words that can be "spelled" in hexadecimal, with the addition of the following letter substitutions:
 
-o ? 0 (e.g., 0xf00d = "food")
-l ? 1
-i ? 1
-s ? 5
-t ? 7
-You can use your own dictionary or you can simply open ../../../data/dictionary.txt (relative to your script’s location in our GitHub repository) to access the dictionary of common words from Week #161.
+o -> 0 (e.g., 0xf00d = "food")
+l -> 1
+i -> 1
+s -> 5
+t -> 7
+You can use your own dictionary or you can simply open ../../../data/dictionary.txt (relative to your scriptâ€™s location in our GitHub repository) to access the dictionary of common words from Week #161.
 
 Optional Extras (for an 0xAddedFee, of course!)
 Limit the number of "special" letter substitutions in any one result to keep that result at least somewhat comprehensible. (0x51105010 is an actual example from my sample solution you may wish to avoid!)
