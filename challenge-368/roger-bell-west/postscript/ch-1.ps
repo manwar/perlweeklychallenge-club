@@ -1,0 +1,129 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/makeitbigger {
+    0 dict begin
+    /ch exch s2a 0 get def
+    /cc exch s2a def
+    /cl cc length def
+    [
+        0 1 cl 1 sub {
+            /i exch def
+            cc i get ch eq {
+                [
+                    i 0 gt {
+                        cc 0 i getinterval aload pop
+                    } if
+                    i cl 1 sub lt {
+                        cc i 1 add cl i sub 1 sub getinterval aload pop
+                    } if
+                ]
+                a2s cvi
+            } if
+        } for
+    ] listmax alloccvs
+    end
+} bind def
+
+(makeitbigger) test.start
+(15456) (5) makeitbigger (1546) eq test
+(7332) (3) makeitbigger (732) eq test
+(2231) (2) makeitbigger (231) eq test
+(543251) (5) makeitbigger (54321) eq test
+(1921) (1) makeitbigger (921) eq test
+test.end
