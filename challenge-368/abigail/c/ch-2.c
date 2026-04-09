@@ -36,7 +36,7 @@ int main (int argc, char ** argv) {
         }
 
         /*
-         * And this point, number is either 1 or a large prime, not encountered
+         * At this point, number is either 1 or a large prime, not encountered
          * before. In the later case, add one of the number of factors and
          * unique factors.
          */
