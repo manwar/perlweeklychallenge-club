@@ -59,5 +59,15 @@ sub runTest
     $h = compose( sub { $_[0] * 2 }, sub { $_[0] + 5 } );
     is( $h->(3), 16, , "h(3) = *2(+5)");
 
+    sub add($x,$y) { $x + $y };
+    sub sq($x) { $x * $x };
+    sub mult($x,$y) { $x * $y };
+    
+    is( compose( \&sq, \&add)->(3,4), 49, "Add then square");
+    is( compose( \&sq, \&mult)->(3,4), 144, "Mult then square");
+
+    $h = compose( sub { $_[0] x 2 }, sub { $_[0] x 5 } );
+    is( $h->("A"), "AAAAAAAAAA", "String functions");
+
     done_testing;
 }
