@@ -1,0 +1,41 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str is copy where $str  ~~ /^ <[0..9]>+ $/,
+               $char        where $char ~~ /^ <[0..9]>  $/,
+               :v(:$verbose));
+
+my $count  = $str.comb.grep( * eq $char ).elems;
+my $length = $str.chars;
+
+say ": Count: $count" if $verbose;
+
+if $count == 0
+{
+  ;
+}
+elsif $count == 1
+{
+  $str.=trans({ $char => '' });
+}
+elsif $count > 1
+{
+  for ^$length -> $i
+  {
+    say ": str[$i]: { $str.substr($i,1) }" if $verbose;
+
+    if $str.substr($i,1) == $char && ($i == $length -1 || $str.substr($i+1,1) > $char)
+    {
+      say ": Removal to a greater overall value at str[$i]" if $verbose;
+      $str.substr-rw($i,1) = "";
+      last;
+    }
+  }
+
+  if $str.chars == $length
+  {
+    say ": All removals are bad (value wise), use the last one; the 'lesser bad'" if $verbose;
+    $str.substr-rw($str.rindex($char), 1) = "";
+  }
+}
+
+say $str;
