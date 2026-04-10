@@ -10,7 +10,7 @@ sub f {
 
 print f( @$_{'str', 'char'} ) eq $$_{expected_output}
 ? "ok\n"
-: "ERROR \n".f( @$_{'str', 'char'} )
+: "ERROR \n"
   for
   { str => "15456",  char => "5", expected_output => "1546"  },
   { str => "7332",   char => "3", expected_output => "732"   },
