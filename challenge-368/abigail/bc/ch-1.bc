@@ -1,0 +1,56 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+while (1) {
+    input = read ()
+    if (input == 0) {
+        break
+    }
+    digit = read ()
+
+    #
+    # Put the individual digits of the input into an array 'a'.
+    # Least significant digit first
+    #
+    n = 0   # Number of digits
+    while (input > 0) {
+        a [n]  = input % 10
+        input /= 10
+        n     += 1
+    }
+
+    #
+    # Find the first occurrence of the digit which is followed by
+    # a larger one; record its position
+    #
+    index = -1
+    for (i = n - 1; i > 0; i --) {
+        if (a [i] == digit && a [i - 1] > a [i]) {
+            index = i
+            break
+        }
+    }
+
+    #
+    # If we didn't find a match above, find the index of the last
+    # occurrence of the digit
+    #
+    if (index == -1) {
+        for (i = 0; i < n; i ++) {
+            if (a [i] == digit) {
+                index = i
+                break
+            }
+        }
+    }
+
+    #
+    # Print the digits, skipping the marked one
+    #
+    for (i = n - 1; i >= 0; i --) {
+        if (i != index) {
+            print a [i]
+        }
+    }
+    print "\n"
+                
+}
