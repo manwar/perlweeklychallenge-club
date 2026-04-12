@@ -1,195 +1,164 @@
-# Odd Conflicts
+# Big, Big and Little
 
-**Challenge 367 solutions in Perl by Matthias Muth**
+**Challenge 368 solutions in Perl by Matthias Muth**
 
-## Task 1: Max Odd Binary
+## Task 1: Make it Bigger
 
-> You are given a binary string that has at least one ‘1’.<br/>
-> Write a script to rearrange the bits in such a way that the resulting binary number is the maximum odd binary number and return the resulting binary string. The resulting string can have leading zeros.
+> You are given a given a string number and a character digit.<br/>
+> Write a script to remove exactly one occurrence of the given character digit from the given string number, resulting the decimal form is maximised.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "1011"
-> Output: "1101"
-> 
-> "1101" is max odd binary (13).
+> Input: $str = "15456", $char = "5"
+> Output: "1546"
+>
+> Removing the second "5" is better because the digit following it (6) is
+> greater than 5. In the first case, 5 was followed by 4 (a decrease),
+> which makes the resulting number smaller.
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "100"
-> Output: "001"
-> 
-> "001" is max odd binary (1).
+> Input: $str = "7332", $char = "3"
+> Output: "732"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "111000"
-> Output: "110001"
+> Input: $str = "2231", $char = "2"
+> Output: "231"
+>
+> Removing either "2" results in the same string here. By removing a "2",
+> we allow the "3" to move up into a higher decimal place.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "0101"
-> Output: "1001"
+> Input: $str = "543251", $char = "5"
+> Output: "54321"
+>
+> If we remove the first "5", the number starts with 4. If we remove the
+> second "5", the number still starts with 5. Keeping the largest possible
+> digit in the highest place value is almost always the priority.
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "1111"
-> Output: "1111"
+> Input: $str = "1921", $char = "1"
+> Output: "921"
 > ```
 
-There are two things that make the a binary number
-with a given number of `1` bits the 'largest odd integer':
+To explain the reasoning behind my solution, let's assume that one occurrence of the digit `5` is to be removed, for example.
 
-* To be odd, the least significant bit has to be `1`.
-* To be the largest, all other `1` bits have to represent as high a value as possible, meaning they have to be the most significant bits.  
+* If there is a `5` that is followed by a *larger* digit (`6`to `9`), it is best to remove that `5`, because the larger digit will take its place, resulting in a bigger number.
+* If there are several `5`s followed by a larger digit, it is best to remove the first one. This is because replacing a `5` with a larger digit in a position of greater significance is always better than replacing it in a position of lesser significance, regardless of the values of the digits involved. This is what is described in the explanation of Example 4.
+* If there is no `5` that is followed by a larger digit, there are only lower digits to take the place of a `5`. In that case, it is best to let this happen in the position with the *lowest* significance. In other words, the *last* possible `5` should be removed. Actually this also covers the case where the `5` is the last digit overall.
 
-So what we need is the number of `1` bits in the input binary string, and its total number of bits. The number of bits is the same as the length of the bit string. The number of `1` bits can be counted using the `tr` operator, like `$str =~ tr/1//`.
+So there are only two steps needed to get the biggest possible number with `$char` removed:
 
-Then we can return the resulting bit string, constructed using the `x` operator for its three parts:
+1. Remove the first occurrence of `$char` that is followed by a digit that is larger than `$char`.
+2. If no such occurrence exists, remove `$char` at the last possible position.
+
+I use regular expressions to translate these two steps into Perl.
+
+1. For removing an occurrence of `$char` followed by a larger digit, I use a little trick: I construct a character range from `0` to $char, which includes all digits that are *not* larger, and use that in a negative lookahead:
+
+   ```perl
+       s/ $char (?! [0-${char}] ) //x
+   ```
+
+2. If that fails, removing the last occurrence of `$char` can be done with the following pattern, which finds `$char`,  followed by any number of characters that are *not* `$char`, up to the end of the string:
+
+   ```perl
+       s/ ${char} (?= [^${char}]* $ )//x
+   ```
+
+Putting it together results in a concise solution: 
 
 ```perl
 use v5.36;
 
-sub max_odd_binary( $str ) {
-    my ( $n_bits, $n_ones ) = ( length( $str ), $str =~ tr/1// );
-    return "1" x ( $n_ones - 1 )
-        . "0" x ( $n_bits - $n_ones )
-        . "1";
+sub make_it_bigger( $str, $char ) {
+    $str =~ s/ $char (?! [0-${char}] ) //x
+        || $str =~ s/ ${char} (?= [^${char}]* $ )//x;
+    return $str;
 }
 ```
 
-Nice and easy challenge!
+## Task 2: Big and Little Omega
 
-## Task 2: Conflict Events
-
-> You are given two events start and end time.<br/>
-> Write a script to find out if there is a conflict between the two events. A conflict happens when two events have some non-empty intersection.
+> You are given a positive integer \$number and a mode flag \$mode. If the mode flag is zero, calculate little omega (the count of all distinct prime factors of that number). If it is one, calculate big omega (the count of all prime factors including duplicates).
 >
 > **Example 1**
 >
 > ```text
-> Input: @event1 = ("10:00", "12:00")
->        @event2 = ("11:00", "13:00")
-> Output: true
+> Input: $number = 100061
+>        $mode = 0
+> Output: 3
 >
-> Both events overlap from "11:00" to "12:00".
+> Prime factors are 13, 43, 179. Count is 3.
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @event1 = ("09:00", "10:30")
->        @event2 = ("10:30", "12:00")
-> Output: false
+> Input: $number = 971088
+>        $mode = 0
+> Output: 3
 >
-> Event1 ends exactly at 10:30 when Event2 starts.
-> Since the problem defines intersection as non-empty, exact boundaries touching is not a conflict.
+> Prime factors are 2, 2, 2, 2, 3, 20231. Count of distinct numbers is 3.
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @event1 = ("14:00", "15:30")
->        @event2 = ("14:30", "16:00")
-> Output: true
+> Input: $number = 63640
+>        $mode = 1
+> Output: 6
 >
-> Both events overlap from 14:30 to 15:30.
+> Prime factors are 2, 2, 2, 5, 37, 43. Count including duplicates is 6.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @event1 = ("08:00", "09:00")
->        @event2 = ("09:01", "10:00")
-> Output: false
->
-> There is a 1-minute gap from "09:00" to "09:01".
+> Input: $number = 988841
+>        $mode = 1
+> Output: 2
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @event1 = ("23:30", "00:30")
->        @event2 = ("00:00", "01:00")
-> Output: true
->
-> They overlap from "00:00" to "00:30".
+> Input: $number = 211529
+>        $mode = 0
+> Output: 2
 > ```
 
-It's not too difficult to translate times given in `HH:MM` form into minutes since midnight. As this has to be done four times, I use a `map` call, in combination with a `/^(\d+):(\d+)/` regular expression:
+Another one-statement solution, but with a big help from `Math::Prime::Util` and `List::Util`.
 
-```perl
-    my @times =
-        map { /^(\d+):(\d+)/; $1 * 60 + $2 } $event1->@*, $event2->@*;
-```
+Getting the prime factors of `$number` is delegated to the `factor` function from `Math::Prime::Util`. Actually, that function already returns the number of prime factors when it is called in scalar context, so we get the Big Omega without even counting ourselves, and possibly with some optimization within the function itself.
 
-This translates the four event times into `$times[0]` to `$times[3]`.
+For Little Omega, we do produce the list of prime factors using the same function, and pass it through `uniq` to remove duplicates, and the use the number of elements in the list as returned by `scalar`.
 
-I want to be sure that the ending time of an event is greater than (or equal to) its starting time. For an event like `( "23:00", "00:30" )` that spans midnight, I therefore add one day (24 * 60 minutes) to its ending time.<br/>
-Doing this for both events separately:
-
-```perl
-    $times[1] += 24 * 60
-        if $times[1] < $times[0];
-    $times[3] += 24 * 60
-        if $times[3] < $times[2];
-```
-
-Now for the difficult part: the overlap detection.<br/>
-I started with the criteria for two events A and B to *not* overlap. This is the case when either of these is true:
-
-+ event A starts *after* event B ends,
-+ or event A ends *before* event B starts.
-
-A logical inversion results in these criteria for two *conflicting* events:
-
-* event A starts before event B ends,
-* *and* event A ends after event B starts. 
-
-Translated into code it looks like this:
-
-```perl
-    $times[0] < $times[3] && $times [1] > $times[2]
-```
-
-Very well, but this does not consider events that might conflict *after midnight*.
-
-These are the events from Example 5, together with the minutes since midnight of their respective starting and ending times:
-
-* Event 1: `("23:30", "00:30")`, minutes `1410` to `1470`<br/>
-  (that is 23 * 60 + 30, and 0 * 60 + 30 + 24 * 60, remember we add one day to span midnight),
-* Event 2: `("00:00", "01:00")`, minutes `0` to `60`.
-
-Strictly speaking, they do not overlap. But apparently, they should be considered overlapping.<br/>To achieve this, I added two more checks:
-
-* check whether Event 1 collides with Event 2 *tomorrow*,
-* and as the events might be in opposite order:<br/>
-  check whether Event 1 *tomorrow* collides with Event 2 as it is.
-
-An interesting challenge, but definitely no one-line solution for me this time!
+So the whole solution can be as short as this:
 
 ```perl
 use v5.36;
 
-sub conflict_events( $event1, $event2 ) {
-    my @times =
-        map { /^(\d+):(\d+)/; $1 * 60 + $2 } $event1->@*, $event2->@*;
-    $times[1] += 24 * 60
-        if $times[1] < $times[0];
-    $times[3] += 24 * 60
-        if $times[3] < $times[2];
-    return $times[0] < $times[3] && $times [1] > $times[2]
-        || $times[0] + 24 * 60 < $times[3] && $times [1] + 24 * 60 > $times[2]
-        || $times[0] < $times[3] + 24 * 60 && $times [1] > $times[2] + 24 * 60;
+use Math::Prime::Util qw( factor );
+use List::Util qw( uniq );
+
+sub big_and_little_omega( $number, $mode ) {
+    return
+        $mode == 1
+        ? scalar factor( $number )
+        : scalar uniq factor( $number );
 }
 ```
 
