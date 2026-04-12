@@ -1,3 +1,3 @@
-# The Weekly Challenge 367
+# The Weekly Challenge 368
 
-Blog: [Maximum conflict](https://dev.to/simongreennet/weekly-challenge-maximum-conflict-5c4n)
+Blog: [Little, Big and Bigger](https://dev.to/simongreennet/weekly-challenge-little-big-and-bigger-jpe)
