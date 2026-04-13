@@ -1,3 +1,4 @@
+find . -name "*.R" -delete
 find . -name "*.tinyapl" -delete
 find . -name "*.cu" -delete
 find . -name "*.retro" -delete
