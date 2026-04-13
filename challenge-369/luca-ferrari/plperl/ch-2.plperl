@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 369
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-369>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc369;
+
+CREATE OR REPLACE FUNCTION
+pwc369.task2_plperl( text, int, text )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $string, $size, $filler ) = @_;
+
+   while ( length( $string ) % $size != 0 ) {
+   	 $string .= $filler;
+   }
+
+   my $index = 0;
+   my @chars = split //, $string;
+   while ( $index <= length( $string ) ) {
+   	 return_next( join( '', @chars[ $index .. $index + $size - 1 ] ) );
+	 $index += $size;
+   }
+
+   return undef;   
+$CODE$
+LANGUAGE plperl;
