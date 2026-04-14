@@ -3,7 +3,7 @@
 import sys
 import re
 
-def tolower (match):
+def toupper (match):
     return match . group (1) . upper ()
 
 for input in sys . stdin:
@@ -12,7 +12,7 @@ for input in sys . stdin:
                                                        # non space characters
     input = re . sub (r'\s+$',         "",      input) # Remove trailing spaces
     input = input . lower ()                           # Lower case string
-    input = re . sub (r'\s+([a-z])',   tolower, input) # Upper case each letter
+    input = re . sub (r'\s+([a-z])',   toupper, input) # Upper case each letter
                                                        # following white space,
                                                        # removing the space
     input = "#" + input                                # Add leading hash
