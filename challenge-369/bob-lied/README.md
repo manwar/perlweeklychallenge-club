@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 368 by Bob Lied
+# Solutions to weekly challenge 369 by Bob Lied
 
-[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-368/)
+[The Task](https://perlweeklychallenge.org/blog/perl-weekly-challenge-369/)
 
-[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-368/bob-lied)
+[The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-369/bob-lied)
 
  - [Blog](https://dev.to/boblied/)
