@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 369
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-369>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc369;
+
+CREATE OR REPLACE FUNCTION
+pwc369.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $string ) = @_;
+   my @tag;
+
+
+   for my $word ( split /\s+/, lc $string )  {
+       next if $word !~ / [a-zA-Z\-] /x;
+       my @letters = split //, $word;
+       
+       $word = uc( $letters[ 0 ] ) . join( '', @letters[ 1 .. $#letters ] );
+       push @tag, $word;
+   }
+
+   return '#' . join( '', @tag );
+$CODE$
+LANGUAGE plperl;
