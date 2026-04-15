@@ -3,7 +3,7 @@ https://theweeklychallenge.org/blog/perl-weekly-challenge-369/
 
 Task 1: Valid Tag
 Submitted by: Mohammad Sajid Anwar
-You are given a given a string caption for a video.
+You are given a string caption for a video.
 
 Write a script to generate tag for the given string caption in three steps as mentioned below:
 
@@ -40,7 +40,7 @@ Task 2: Group Division
 Submitted by: Mohammad Sajid Anwar
 You are given a string, group size and filler character.
 
-Write a script to divide the string into groups of given size. In the last group if the string doesn’t have enough characters remaining fill with the given filler character.
+Write a script to divide the string into groups of given size. In the last group if the string doesnâ€™t have enough characters remaining fill with the given filler character.
 
 Example 1
 Input: $str = "RakuPerl", $size = 4, $filler = "*"
