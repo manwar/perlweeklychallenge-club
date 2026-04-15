@@ -1,3 +1,3 @@
-# The Weekly Challenge 368
+# The Weekly Challenge 369
 
-Blog: [Little, Big and Bigger](https://dev.to/simongreennet/weekly-challenge-little-big-and-bigger-jpe)
+Blog: [Group Tag](https://dev.to/simongreennet/weekly-challenge-group-tag-k56)
