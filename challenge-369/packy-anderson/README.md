@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: And the 2013 Tony Award for Best Coding Challenge goes to...](hhttps://packy.dardan.com/b/n5)
+[Perl Weekly Challenge: Strings Will Tear Us Apart](https://packy.dardan.com/b/nR)
