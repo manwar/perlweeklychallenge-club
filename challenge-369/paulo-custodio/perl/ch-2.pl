@@ -5,7 +5,7 @@
 
 use Modern::Perl;
 
-@ARGV==3 or die "usage: $0 title...\n";
+@ARGV==3 or die "usage: $0 word size filler\n";
 my @words = map {'"'.$_.'"'} split_and_fill(@ARGV);
 if (@words == 1) {
     say $words[0];
