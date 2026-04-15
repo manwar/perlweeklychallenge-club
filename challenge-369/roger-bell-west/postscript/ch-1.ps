@@ -1,0 +1,109 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/c.isalpha {
+    dup c.islower exch c.isupper or
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/validtag {
+    0 dict begin
+    [ exch
+      35 exch
+      /up false def
+      s2a {
+          /c exch def
+          c c.isalpha {
+              up {
+                  /c c 32 not and def
+                  /up false def
+              } {
+                  /c c 32 or def
+              } ifelse
+              c
+          } {
+              c 32 eq counttomark 2 gt and {
+                  /up true def
+              } if
+          } ifelse
+      } forall
+    ] a2s /out exch def
+    out length 100 gt {
+        /out out 0 100 getinterval def
+    } if
+    out
+    end
+} bind def
+
+(validtag) test.start
+(Cooking with 5 ingredients!) validtag (#cookingWithIngredients) eq test
+(the-last-of-the-mohicans) validtag (#thelastofthemohicans) eq test
+(  extra spaces here) validtag (#extraSpacesHere) eq test
+(iPhone 15 Pro Max Review) validtag (#iphoneProMaxReview) eq test
+(Ultimate 24-Hour Challenge: Living in a Smart Home controlled entirely by Artificial Intelligence and Voice Commands in the year 2026!) validtag (#ultimateHourChallengeLivingInASmartHomeControlledEntirelyByArtificialIntelligenceAndVoiceCommandsIn) eq test
+test.end
