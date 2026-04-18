@@ -124,7 +124,7 @@ my @strings = @ARGV ? eval($ARGV[0]) :
 $"=', ';
 for my $string (@strings) {
    say '';
-   say "Original string = $string";
+   say "Original string = \"$string\"";
    my $c = camel($string);
-   say "Camel    string = $c";
+   say "Camel    string = \"$c\"";
 }
