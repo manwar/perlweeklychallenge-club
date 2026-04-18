@@ -43,7 +43,7 @@ Chop and fill. The replacement version of Perl's "substr" function will be very 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
-single-quoted array of arrays, with each inner array considing of a double-quoted string, a small positive
+single-quoted array of arrays, with each inner array consisting of a double-quoted string, a small positive
 integer, and a double-quoted fill character, in proper Perl syntax, like so:
 
 ./ch-2.pl '(["pseudopseudohypoparathyroidism", 4, "~"],["Floccinaucinihilipilification", 5, "#"])'
@@ -60,13 +60,15 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
    # Divide a given string into groups of a given size
    # And right-fill final group with a given filler:
-   sub divide ( $str, $siz, $fil ) {
+   sub divide ( $str , $siz , $fil ) {
       my @groups = ();
       while ( length($str) > 0 ) {
-         push(@groups, substr($str, 0, $siz, ''));
+         push @groups, substr($str, 0, $siz, '');
       }
       my $ll = length $groups[-1];
-      if ($ll < $siz) {$groups[-1] .= $fil x ($siz - $ll)}
+      if ($ll < $siz) {
+         $groups[-1] .= $fil x ($siz - $ll);
+      }
       return @groups;
    }
 
