@@ -77,7 +77,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    # Convert a string to a camel-case hashtag:
    sub camel ( $x ) {
       # Remove leading and trailing non-word chars:
-      $x =~ s/^\[^a-zA-Z-]*(.+)[^a-zA-Z-]*$/$1/;
+      $x =~ s/^[^a-zA-Z-]*(.+)[^a-zA-Z-]*$/$1/;
       # Split into (possibly-hyphenated) words:
       my @words = split /[^a-zA-Z-]+/, $x;
       # Remove all non-letter characters:
