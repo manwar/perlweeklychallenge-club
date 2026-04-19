@@ -3,9 +3,9 @@
 shopt -s extglob
 
 while read input
-do    input=${input/#+([[:space:]])}            # Remove leading white space
-      input=${input//+([^[:space:][:alpha:]])}  # Remove all non letters,
+do    input=${input//+([^[:space:][:alpha:]])}  # Remove all non letters,
                                                 # but keep the spaces
+      input=${input/#+([[:space:]])}            # Remove leading white space
       input=${input/%+([[:space:]])}            # Remove trailing white space
       input=${input@L}                          # Lower case entire string
 
