@@ -4,9 +4,9 @@
 . createInterface ({input: process . stdin})
 . on              ('line', input => {
       console . log (
-        input . replace     (/^\s+/, "")               // Remove leading space
-              . replaceAll  (/[^\sa-zA-Z]+/g, "")      // Remove non-letters,
+        input . replaceAll  (/[^\sa-zA-Z]+/g, "")      // Remove non-letters,
                                                        // but keep spaces
+              . replace     (/^\s+/, "")               // Remove leading space
               . replace     (/\s+$/, "")               // Remove trailing space
               . toLowerCase ()                         // Lower case all`
               . replaceAll  (/\s+([a-z])/g, ((_, x) => // Upper case letters

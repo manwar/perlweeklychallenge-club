@@ -7,9 +7,9 @@ def toupper (match):
     return match . group (1) . upper ()
 
 for input in sys . stdin:
-    input = re . sub (r'^\s+',         "",      input) # Remove leading spaces
     input = re . sub (r'[^\sa-zA-Z]+', "",      input) # Remove non-letter,
                                                        # non space characters
+    input = re . sub (r'^\s+',         "",      input) # Remove leading spaces
     input = re . sub (r'\s+$',         "",      input) # Remove trailing spaces
     input = input . lower ()                           # Lower case string
     input = re . sub (r'\s+([a-z])',   toupper, input) # Upper case each letter

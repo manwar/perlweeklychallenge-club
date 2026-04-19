@@ -7,9 +7,9 @@
 #
 {
     input = $0
-    input = gensub (/^\s+/,             "",  1,  input) # Remove leading spaces
     input = gensub (/[^ \t[:alpha:]]+/, "", "g", input) # Remove non-letters,
                                                         # but keep spaces & tabs
+    input = gensub (/^\s+/,             "",  1,  input) # Remove leading spaces
     input = gensub (/\s+$/,             "",  1,  input) # Remove trailing spaces
     input = tolower (input)                             # Lower case all
     for (i = ord("a"); i <= ord("z"); i ++) {           # Upper case each letter

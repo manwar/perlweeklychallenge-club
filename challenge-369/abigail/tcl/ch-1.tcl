@@ -6,8 +6,8 @@ while {[gets stdin input] >= 0} {
     # * Remove non-letters, but keep space
     # * Remove trailing white space
     #
-    regsub               {^\s+}            $input {}               input
     regsub -all          {[^[:alpha:]\s]+} $input {}               input
+    regsub               {^\s+}            $input {}               input
     regsub               {\s+$}            $input {}               input
 
     #

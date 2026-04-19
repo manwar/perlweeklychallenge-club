@@ -36,9 +36,9 @@ func main () {
             break
         }
 
-        input = sub (input, "^\\s+", "")             // Remove leading space
         input = sub (input, "[^[:alpha:]\\s]+", "")  // Remove non-letters,
                                                      // but keep spaces
+        input = sub (input, "^\\s+", "")             // Remove leading space
         input = sub (input, "\\s+$", "")             // Remove trailing space
         input = strings . ToLower (input)            // Lower case string
 

@@ -8,9 +8,9 @@ repeat {
         break
     }
 
-    input <-  sub ("^\\s+", "", input)               # Remove leading space
     input <- gsub ("[^[:space:][:alpha:]]+",         # Remove non-letters, but
                             "", input)               # keep spaces
+    input <-  sub ("^\\s+", "", input)               # Remove leading space
     input <-  sub ("\\s+$", "", input)               # Remove trailing space
     input <- tolower (input)                         # Lower case entire string
 

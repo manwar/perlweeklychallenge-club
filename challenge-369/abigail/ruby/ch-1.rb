@@ -2,8 +2,8 @@
 
 ARGF . each_line {
     |input|
-    input .  sub!  /^\s+/,            ""   # Remove leading white space
     input . gsub!  /[^\s\p{L}]+/,     ""   # Remove non-letters, but keep space
+    input .  sub!  /^\s+/,            ""   # Remove leading white space
     input .  sub!  /\s+$/,            ""   # Remove trailing white space
     input . downcase!                      # Lower case entire string
     input . gsub! (/\s+\p{L}/) {           # Upper case each letter following

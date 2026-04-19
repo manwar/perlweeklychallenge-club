@@ -3,8 +3,8 @@
  
 for line in io . lines () do
     local input = line
-    input = input : gsub  ("^%s+", "")     -- Remove leading white space
-                  : gsub  ("[^%s%a]+", "") -- Remove non-letters, but keep space
+    input = input : gsub  ("[^%s%a]+", "") -- Remove non-letters, but keep space
+                  : gsub  ("^%s+", "")     -- Remove leading white space
                   : gsub  ("%s+$", "")     -- Remove trailing white space
                   : lower ()               -- Lower case entire input
 
