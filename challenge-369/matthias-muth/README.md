@@ -1,164 +1,223 @@
-# Big, Big and Little
+# Good Tags and Good Chunks
 
-**Challenge 368 solutions in Perl by Matthias Muth**
+**Challenge 369 solutions in Perl by Matthias Muth**
 
-## Task 1: Make it Bigger
+## Task 1: Valid Tag
 
-> You are given a given a string number and a character digit.<br/>
-> Write a script to remove exactly one occurrence of the given character digit from the given string number, resulting the decimal form is maximised.
+> You are given a given a string caption for a video.<br/>
+> Write a script to generate tag for the given string caption in three steps as mentioned below:<br/>
+> 1. Format as camelCase<br/>
+> Starting with a lower-case letter and capitalising the first letter of each subsequent word.<br/>
+> Merge all words in the caption into a single string starting with a #.<br/>
+> 2. Sanitise the String<br/>
+> Strip out all characters that are not English letters (a-z or A-Z).<br/>
+> 3. Enforce Length<br/>
+> If the resulting string exceeds 100 characters, truncate it so it is<br/>
+> exactly 100 characters long.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str = "15456", $char = "5"
-> Output: "1546"
->
-> Removing the second "5" is better because the digit following it (6) is
-> greater than 5. In the first case, 5 was followed by 4 (a decrease),
-> which makes the resulting number smaller.
+> Input: $caption = "Cooking with 5 ingredients!"
+> Output: "#cookingWithIngredients"
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str = "7332", $char = "3"
-> Output: "732"
+> Input: $caption = "the-last-of-the-mohicans"
+> Output: "#thelastofthemohicans"
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str = "2231", $char = "2"
-> Output: "231"
->
-> Removing either "2" results in the same string here. By removing a "2",
-> we allow the "3" to move up into a higher decimal place.
+> Input: $caption = "  extra spaces here"
+> Output: "#extraSpacesHere"
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str = "543251", $char = "5"
-> Output: "54321"
->
-> If we remove the first "5", the number starts with 4. If we remove the
-> second "5", the number still starts with 5. Keeping the largest possible
-> digit in the highest place value is almost always the priority.
+> Input: $caption = "iPhone 15 Pro Max Review"
+> Output: "#iphoneProMaxReview"
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str = "1921", $char = "1"
-> Output: "921"
+> Input: $caption = "Ultimate 24-Hour Challenge: Living in a Smart Home controlled entirely by Artificial Intelligence and Voice Commands in the year 2026!"
+> Output: "#ultimateHourChallengeLivingInASmartHomeControlledEntirelyByArtificialIntelligenceAndVoiceCommandsIn"
 > ```
 
-To explain the reasoning behind my solution, let's assume that one occurrence of the digit `5` is to be removed, for example.
+### Think international: Not every tag is based on English
 
-* If there is a `5` that is followed by a *larger* digit (`6`to `9`), it is best to remove that `5`, because the larger digit will take its place, resulting in a bigger number.
-* If there are several `5`s followed by a larger digit, it is best to remove the first one. This is because replacing a `5` with a larger digit in a position of greater significance is always better than replacing it in a position of lesser significance, regardless of the values of the digits involved. This is what is described in the explanation of Example 4.
-* If there is no `5` that is followed by a larger digit, there are only lower digits to take the place of a `5`. In that case, it is best to let this happen in the position with the *lowest* significance. In other words, the *last* possible `5` should be removed. Actually this also covers the case where the `5` is the last digit overall.
+For tags that are based on phrases in foreign languages,
+I don't find it sufficient to simply remove all non-ASCII letters,
+because there may be language-specific characters
+that are esssential to the meaning.
 
-So there are only two steps needed to get the biggest possible number with `$char` removed:
+Consider this caption in French as an example: 
 
-1. Remove the first occurrence of `$char` that is followed by a digit that is larger than `$char`.
-2. If no such occurrence exists, remove `$char` at the last possible position.
+> Élégance à Noël : Où déguster des pâtés, bœufs rôtis et crèmes brûlées à l’ancienne ?
 
-I use regular expressions to translate these two steps into Perl.
+Blindly removing all non-ASCII characters would result in this tag, which doesn't make any sense to the reader:
 
-1. For removing an occurrence of `$char` followed by a larger digit, I use a little trick: I construct a character range from `0` to $char, which includes all digits that are *not* larger, and use that in a negative lookahead:
+> `#lganceNolODgusterDesPtsBufsRtisEtCrmesBrlesLancienne`
 
-   ```perl
-       s/ $char (?! [0-${char}] ) //x
-   ```
+The `Text::Unidecode` module contains a `unidecode` function
+that does a plain ASCII transliteration of Unicode texts.
+For example, `unidecode( "The α and ω" )`
+results in `"The a and o"`,
+and the tag for the French caption above then becomes much mode useful:
 
-2. If that fails, removing the last occurrence of `$char` can be done with the following pattern, which finds `$char`,  followed by any number of characters that are *not* `$char`, up to the end of the string:
+> `#eleganceANoelOuDegusterDesPatesBoeufsRotisEtCremesBruleesALancienne`
 
-   ```perl
-       s/ ${char} (?= [^${char}]* $ )//x
-   ```
+### My One-Statement (but multi-line) solution
 
-Putting it together results in a concise solution: 
+I constructed a one-liner (or, to be exact: a one-statement solution).<br/>
+Here it is:
 
 ```perl
 use v5.36;
+use utf8::all;
+use Text::Unidecode;
 
-sub make_it_bigger( $str, $char ) {
-    $str =~ s/ $char (?! [0-${char}] ) //x
-        || $str =~ s/ ${char} (?= [^${char}]* $ )//x;
-    return $str;
+sub valid_tag( $caption ) {
+    return substr(
+        "#" . lcfirst( join "",
+            map ucfirst,
+                split " ",
+                    lc unidecode( $caption ) =~ s/[^[:alpha:]\s]//igr ),
+        0, 100 );
 }
 ```
 
-## Task 2: Big and Little Omega
+### I'd better be able to understand what I wrote
 
-> You are given a positive integer \$number and a mode flag \$mode. If the mode flag is zero, calculate little omega (the count of all distinct prime factors of that number). If it is one, calculate big omega (the count of all prime factors including duplicates).
+If you have a little difficulty to understand what it does,
+don't worry, it also happened to me
+when I came back to it after three days.
+
+The problem is that it's a mix of a non-trivial pipeline
+and a subroutine call
+with the final parameters located far away
+from the subroutine name itself,
+which is not easy to grasp visually.
+Then it also switches back and forth between different data types:
+a string, a list of words, and then a string again.
+
+There's no way that I could call that 'easy to maintain'.
+
+So I tried again:
+
+```perl
+use v5.36;
+use utf8::all;
+use Text::Unidecode;
+
+sub valid_tag( $caption ) {
+    # Convert all non-ASCII UNICODE characters into an ASCII transliteration.
+    $caption = unidecode( $caption );
+
+    # Remove everything that is not a letter or whitespace.
+    $caption =~ s/[^[:alpha:]\s]//ig;
+
+    # Transform the whole string into lower case,
+    # then split into words on any sequence of whitespace.
+    # Uppercase the first letter of each word.
+    my @words = map ucfirst, split " ", lc $caption;
+
+    # Combine the words into a hash tag,
+    # lowercasing the first letter of the result.
+    my $hash_tag = "#" . lcfirst join "", @words;
+
+    # Return the first 100 characters.
+    return substr( $hash_tag, 0, 100 );
+}
+```
+
+This looks more structured, more readable and more maintainable to me,
+with the comments hopefully providing enough explanation
+of what is happening.
+
+## Task 2: Group Division
+
+> You are given a string, group size and filler character.<br/>
+> Write a script to divide the string into groups of given size. In the last group if the string doesn’t have enough characters remaining fill with the given filler character.
 >
 > **Example 1**
 >
 > ```text
-> Input: $number = 100061
->        $mode = 0
-> Output: 3
->
-> Prime factors are 13, 43, 179. Count is 3.
+> Input: $str = "RakuPerl", $size = 4, $filler = "*"
+> Output: ("Raku", "Perl")
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $number = 971088
->        $mode = 0
-> Output: 3
->
-> Prime factors are 2, 2, 2, 2, 3, 20231. Count of distinct numbers is 3.
+> Input: $str = "Python", $size = 5, $filler = "0"
+> Output: ("Pytho", "n0000")
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $number = 63640
->        $mode = 1
-> Output: 6
->
-> Prime factors are 2, 2, 2, 5, 37, 43. Count including duplicates is 6.
+> Input: $str = "12345", $size = 3, $filler = "x"
+> Output: ("123", "45x")
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $number = 988841
->        $mode = 1
-> Output: 2
+> Input: $str = "HelloWorld", $size = 3, $filler = "_"
+> Output: ("Hel", "loW", "orl", "d__")
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $number = 211529
->        $mode = 0
-> Output: 2
+> Input: $str = "AI", $size = 5, $filler = "!"
+> Output: "AI!!!"
 > ```
 
-Another one-statement solution, but with a big help from `Math::Prime::Util` and `List::Util`.
+For this task, too, I wrote a one-line solution, but it is much less complex. It consists of two operations only:
 
-Getting the prime factors of `$number` is delegated to the `factor` function from `Math::Prime::Util`. Actually, that function already returns the number of prime factors when it is called in scalar context, so we get the Big Omega without even counting ourselves, and possibly with some optimization within the function itself.
+* Add `( $size - 1 )` filler characters to `$str`.
 
-For Little Omega, we do produce the list of prime factors using the same function, and pass it through `uniq` to remove duplicates, and the use the number of elements in the list as returned by `scalar`.
+  To illustrate the effect that this has, consider the following examples, all using `$size = 4` and `$filler = "F"`.
 
-So the whole solution can be as short as this:
+  > `$str = "1234"    `   fillers appended: `"1234FFF"    `  chunks: **`1234`** *`FFF`*
+  >
+  > `$str = "12345"   `   fillers appended: `"12345FFF"   `  chunks: **`1234` `5FFF`**
+  >
+  > `$str = "123456"  `   fillers appended: `"123456FFF"  `  chunks: **`1234` `56FF`** *`F`*
+  >
+  > `$str = "1234567" `   fillers appended: `"1234567FFF" `  chunks: **`1234` `567F`** *`FF`*
+  >
+  > `$str = "12345678"`   fillers appended: `"12345678FFF"`  chunks: **`1234` `5678`** *`FFF`*
+
+  Note that returning all *complete* chunks of `$size` characters
+  (highlighted in **bold** in these examples)
+  delivers the correct result for this task.
+
+* For splitting up that extended string into chunks of  `$size` characters,
+  I use a regular expression.
+  Using `$size` as a quantifier does the trick,
+  and the `/g` *global* flag makes it work repetitively,
+  returning the list of all matches found:
+
+  ```perl
+      /.{$size}/g
+  ```
+
+This time I don't see any need for restructuring it, so here is a real one-liner:
 
 ```perl
 use v5.36;
 
-use Math::Prime::Util qw( factor );
-use List::Util qw( uniq );
-
-sub big_and_little_omega( $number, $mode ) {
-    return
-        $mode == 1
-        ? scalar factor( $number )
-        : scalar uniq factor( $number );
+sub group_division( $str, $size, $filler ) {
+    return ( $str . $filler x ( $size - 1 ) ) =~ /.{$size}/g;
 }
 ```
 
