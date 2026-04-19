@@ -91,8 +91,12 @@ sub run_tests ($examples, $tests) {
     }) : pass 'skip examples';
 
     $tests ? subtest_streamed(tests => sub {
-        plan 1;
-        pass 'no tests';
+        my @tests = (
+            [["one-two"], "#onetwo", 'one word'],
+            [["one+two"], "#oneTwo", 'two words'],
+        );
+        plan scalar @tests;
+        run_example @$_ for @tests;
     }) : pass 'skip tests';
 
     exit;
