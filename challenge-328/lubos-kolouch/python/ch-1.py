@@ -5,6 +5,7 @@ Task: Replace all ? (Weekly Challenge 328)
 Replace every '?' in a lowercase string with a letter so that no two
 consecutive characters match. Any valid result is acceptable.
 """
+
 from __future__ import annotations
 
 import string

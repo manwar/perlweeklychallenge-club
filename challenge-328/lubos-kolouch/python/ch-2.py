@@ -5,6 +5,7 @@ Task: Good String (Weekly Challenge 328)
 Remove adjacent pairs of the same letter in opposite cases until none
 remain. Return the resulting good string.
 """
+
 from __future__ import annotations
 
 import unittest
