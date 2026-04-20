@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use Test;
 
-is popular-word("Bob hit a ball, the hit BALL flew far after it was hit.", [< hit >],),       "ball";
+is popular-word("Bob hit a ball, the hit BALL flew far after it was hit.", [< hit >]),        "ball";
 is popular-word("Apple? apple! Apple, pear, orange, pear, apple, orange.", < apple pear >),   "orange";
 is popular-word("A. a, a! A. B. b. b.", [< b >]),                                             "a";
 is popular-word("Ball.ball,ball:apple!apple.banana", [< ball >]),                             "apple";

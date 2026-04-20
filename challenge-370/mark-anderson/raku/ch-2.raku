@@ -9,9 +9,6 @@ nok scramble-string("abcd", "bdac");
 
 sub scramble-string($a, $b)
 {
-    return True if all($a.chars == 1, $a eq $b);
-    return False unless $a.comb.Bag eqv $b.comb.Bag;
-
     my $c = $b.flip;
 
     for 1..^$a.chars -> $i
