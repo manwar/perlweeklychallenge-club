@@ -5,19 +5,19 @@ Task: MAD (Weekly Challenge 327)
 Given distinct integers, find all pairs with the minimum absolute
 difference. Return pairs sorted.
 """
+
 from __future__ import annotations
 
-from typing import List, Tuple
 import unittest
 
 
-def mad_pairs(ints: List[int]) -> List[Tuple[int, int]]:
+def mad_pairs(ints: list[int]) -> list[tuple[int, int]]:
     """Return pairs of values with minimum absolute difference."""
     if len(ints) < 2:
         return []
     sorted_ints = sorted(ints)
     min_diff = float("inf")
-    result: List[Tuple[int, int]] = []
+    result: list[tuple[int, int]] = []
     for a, b in zip(sorted_ints, sorted_ints[1:]):
         diff = b - a
         if diff < min_diff:

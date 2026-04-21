@@ -4,13 +4,13 @@ Task: Missing Integers (Weekly Challenge 327)
 
 Given n integers, return the missing integers from the range 1..n.
 """
+
 from __future__ import annotations
 
-from typing import List
 import unittest
 
 
-def missing_integers(ints: List[int]) -> List[int]:
+def missing_integers(ints: list[int]) -> list[int]:
     """Return integers missing from 1..n (n == len(ints))."""
     n = len(ints)
     present = set(ints)
