@@ -5,6 +5,7 @@ Task: Nice String (Weekly Challenge 329)
 Return the longest substring where every present letter appears in both
 lowercase and uppercase. If none exists, return the empty string.
 """
+
 from __future__ import annotations
 
 import unittest
