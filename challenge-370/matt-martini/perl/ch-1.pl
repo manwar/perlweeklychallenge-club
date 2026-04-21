@@ -11,6 +11,7 @@ use 5.018;
 use strict;
 use warnings;
 use Test2::V0;
+use JSON::MaybeXS qw (decode_json);
 
 plan tests => 5;
 
@@ -21,11 +22,8 @@ sub popular_word {
         $paragraph,
         join( '", "' => @banned );
 
-    $paragraph = lc $paragraph;
-    $paragraph =~ s/[^\s\pL]+/ /g;    # remove non-letters except spaces
-
     my %words;
-    $words{ $_ }++ for split '\s+' => $paragraph;         # count occurrences
+    $words{ $_ }++ for split '[^a-z]+', lc $paragraph;    # count occurrences
     delete $words{ $_ } for @banned;
 
     my @keys   = sort { $words{ $b } <=> $words{ $a } } keys(%words);
@@ -35,34 +33,9 @@ sub popular_word {
     return $result;
 }
 
-my @examples
-    = (
-        {  in =>
-           [ "Bob hit a ball, the hit BALL flew far after it was hit.", ["hit"] ],
-           out  => "ball",
-           name => 'example 1'
-        },
-        {  in => [ "Apple? apple! Apple, pear, orange, pear, apple, orange.",
-                   [ "apple", "pear" ]
-                 ],
-           out  => "orange",
-           name => 'example 2'
-        },
-        {  in   => [ "A. a, a! A. B. b. b.", ["b"] ],
-           out  => "a",
-           name => 'example 3'
-        },
-        {  in   => [ "Ball.ball,ball:apple!apple.banana", ["ball"] ],
-           out  => "apple",
-           name => 'example 4'
-        },
-        {  in => [
-                   "The dog chased the cat, but the dog was faster than the cat.",
-                   [ "the", "dog" ]
-                 ],
-           out  => "cat",
-           name => 'example 5'
-        },
-      );
+my $examples_ref = decode_json(<DATA>);
+is( popular_word( $_->{ in } ), $_->{ out }, $_->{ name } )
+    for @{ $examples_ref };
 
-is( popular_word( $_->{ in } ), $_->{ out }, $_->{ name } ) for @examples;
+__DATA__
+[ { "name": "example 1", "in": [ "Bob hit a ball, the hit BALL flew far after it was hit.", [ "hit" ] ], "out": "ball" }, { "out": "orange", "name": "example 2", "in": [ "Apple? apple! Apple, pear, orange, pear, apple, orange.", [ "apple", "pear" ] ] }, { "out": "a", "name": "example 3", "in": [ "A. a, a! A. B. b. b.", [ "b" ] ] }, { "out": "apple", "in": [ "Ball.ball,ball:apple!apple.banana", [ "ball" ] ], "name": "example 4" }, { "out": "cat", "name": "example 5", "in": [ "The dog chased the cat, but the dog was faster than the cat.", [ "the", "dog" ] ] } ]
