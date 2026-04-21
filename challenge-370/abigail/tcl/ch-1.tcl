@@ -14,7 +14,7 @@ while {[gets stdin line] >= 0} {
     # tcl will split the string on white space, and the result as the list.
     #
     set banned [dict create]
-    foreach ban $banned_str {
+    foreach ban [string tolower $banned_str] {
         dict set banned $ban 1
     }
 
