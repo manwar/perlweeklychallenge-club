@@ -27,13 +27,11 @@ use List::Util qw(max);
 sub popularWord ($paragraph,@banned) {
   my %words;
   # Do frequency analysis of words in paragraph
-  $words{$_}++ for (map { lc } grep /\S/, $paragraph =~ m#\b(\S+?)\b#g);
+  $words{$_}++ for (lc($paragraph) =~ m#[a-zA-Z]+#g);
   # Delete banned words
   delete @words{@banned};
-  # Find max frequency
-  my $m = max(values %words);
-  # Return word with max frequency
-  return (grep { $words{$_} == $m } keys %words)[0];
+  # Sort on frequency reversed and return first key
+  return (sort { $words{$b} <=> $words{$a} } keys(%words))[0];
 }
 
 is(popularWord('Bob hit a ball, the hit BALL flew far after it was hit.',
