@@ -1,7 +1,7 @@
 // Perl Weekly Challenge 163 - Task 2 - solution by Paulo Custodio
 // https://theweeklychallenge.org/blog/perl-weekly-challenge-163/
 
-#include "../../../challenge-001\paulo-custodio\c\alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 int summation(IntArray* nums) {
     if (nums->size < 1)
