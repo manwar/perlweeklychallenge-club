@@ -78,7 +78,7 @@ Words* read_words() {
     char line[BUFSIZ];
     if (!fgets(line, sizeof(line), stdin))
         return words;
-    const char* separators = " \t\r\n.,?!-";
+    const char* separators = " \t\r\n.,?!:-";
     char* p = strtok(line, separators);
     while (p != NULL) {
         lower(p);
