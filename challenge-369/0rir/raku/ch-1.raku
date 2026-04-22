@@ -5,7 +5,7 @@ use Test;
 
 =begin comment
 May be edited for space.
-369-Task 1: Valid Tag   Submitted by: Mohammad Sajid Anwar
+369-1: Valid Tag   Submitted by: Mohammad Sajid Anwar
 You are given a given a string caption for a video.
 
 Write a script to generate tag for the given string caption in three steps as mentioned below:
@@ -48,7 +48,7 @@ sub task( Str:D $_ is copy -->Str:D) {
 
     .=trim-leading;                 #
     s:g/<reject>+//;                # just letters and whitespace
-    .=lc;                           
+    .=lc;
      s:g/ \s+ (<[a..z]>) /{$0.uc}/; # connect words w/ camelcase
      .=substr(0,MAX-LENGTH);
      '#' ~ $_
