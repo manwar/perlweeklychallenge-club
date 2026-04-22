@@ -1,7 +1,7 @@
 // Perl Weekly Challenge 370 - Task 1 - solution by Paulo Custodio
 // https://theweeklychallenge.org/blog/perl-weekly-challenge-370/
 
-#include "../../../challenge-001\paulo-custodio\c\alloc.h"
+#include "../../../challenge-001/paulo-custodio/c/alloc.h"
 
 typedef struct {
     char* word;
