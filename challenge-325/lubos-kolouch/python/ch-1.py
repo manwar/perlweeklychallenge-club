@@ -4,13 +4,13 @@ Task: Consecutive One (Weekly Challenge 325)
 
 Return the longest run of consecutive 1s in a binary array.
 """
+
 from __future__ import annotations
 
 import unittest
-from typing import List
 
 
-def consecutive_one(binary: List[int]) -> int:
+def consecutive_one(binary: list[int]) -> int:
     best = current = 0
     for bit in binary:
         if bit == 1:
