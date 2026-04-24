@@ -81,13 +81,14 @@ sub isScramble($str1, $str2, $depth = "")
 
     for ( 1 .. $len-1 )
     {
+        # $_ is the length of the left substring (head), $len-$_ is length of right (tail)
         my (  $head,   $tail) = ( substr($str1, 0, $_), substr($str1, $_) );
         my ($s2head, $s2tail) = ( substr($str2, 0, $_), substr($str2, $_) );
 
-        my $s2front = substr($str2, 0, $len-$_);   # length of $tail
-        my $s2back  = substr($str2, -$_);     # length of $head
+        my $s2front = substr($str2, 0, $len-$_);   # length of $tail, on left side
+        my $s2back  = substr($str2, -$_);          # length of $head, on right side
 
-        $logger->debug("${depth}Compare [$head $tail] [$s2head $s2tail] [$s2front $s2back]");
+        $logger->debug("${depth}Compare [$head/$tail] <> s2head/$s2tail] ($s2front/$s2back)");
 
         if ( "$tail$head" eq $str2 )
         {
@@ -96,27 +97,27 @@ sub isScramble($str1, $str2, $depth = "")
         }
         elsif ( $head eq $s2head )
         {
-            $logger->debug("${depth}HH, compare $tail : $s2tail");
-            return $remember{$key} = true if isScramble($tail, $s2tail, "  $depth");
+            $logger->debug("${depth}HH, compare $tail :: $s2tail");
+            return true if $remember{$key} = isScramble($tail, $s2tail, "  $depth");
         }
         elsif ( $head eq $s2back )
         {
-            $logger->debug("${depth}HT, compare $tail : $s2front");
-            return $remember{$key} = true if isScramble($tail, $s2front, "  $depth");
+            $logger->debug("${depth}HB, compare $tail <> s2front");
+            return true if $remember{$key} = isScramble($tail, $s2front, "  $depth");
         }
         elsif ( $tail eq $s2tail )
         {
-            $logger->debug("${depth}TT, compare $head : $s2head");
-            return $remember{$key} = true if isScramble($head, $s2head, "  $depth");
+            $logger->debug("${depth}TT, compare $head <> s2head");
+            return true if $remember{$key} = isScramble($head, $s2head, "  $depth");
         }
         elsif ( $tail eq $s2front )
         {
-            $logger->debug("${depth}TH, compare $head : $s2back");
-            return $remember{$key} = true if isScramble($head, $s2back, "  $depth");
+            $logger->debug("${depth}TF, compare $head <> s2back");
+            return true if $remember{$key} = isScramble($head, $s2back, "  $depth");
         }
         else
         {
-            $logger->debug("${depth}No pairs, recurse with $head:$s2head and $tail:$s2tail");
+            $logger->debug("${depth}No pairs, recurse with $head<>$s2head and $tail<>$s2tail");
             return $remember{$key} = true if ( 
                    ( isScramble($head, $s2head, "  $depth")
                   && isScramble($tail, $s2tail, "  $depth") )
