@@ -4,13 +4,13 @@ Task: 2D Array (Weekly Challenge 324)
 
 Reshape a flat list into r x c rows filled row-wise.
 """
+
 from __future__ import annotations
 
-from typing import List
 import unittest
 
 
-def make_2d_array(r: int, c: int, ints: List[int]) -> List[List[int]]:
+def make_2d_array(r: int, c: int, ints: list[int]) -> list[list[int]]:
     """Return a 2D array with r rows and c columns using ints row-wise."""
     return [ints[i * c : (i + 1) * c] for i in range(r)]
 
