@@ -6,6 +6,16 @@ use strict;
 use warnings;
 no  warnings 'syntax';
 
+#
+# Two words are anagrams if we sort the letters, rejoin them,
+# and end up with equal strings
+#
+sub are_anagrams ($str1, $str2) {
+    my $s_str1 = join "" => sort split // => $str1;
+    my $s_str2 = join "" => sort split // => $str2;
+    return $s_str1 eq $s_str2
+}
+
 sub can_scramble ($input, $target) {
     #
     # We're done if the input matches the target
@@ -18,12 +28,10 @@ sub can_scramble ($input, $target) {
     return 0 if length ($input) != length ($target);
 
     #
-    # Each character in the input should occur as many times in 
-    # either string. This may check some letters more than once.
+    # There is no solution if the strings don't contain the 
+    # same sets of letters (aka, being anagrams)
     #
-    for my $ch (split // => $input) {
-        return 0 unless eval "\$input =~ y/$ch/$ch/ == \$target =~ y/$ch/$ch/";
-    }
+    return 0 unless are_anagrams ($input, $target);
 
     #
     # Try each split length
