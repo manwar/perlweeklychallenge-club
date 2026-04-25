@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Strings Will Tear Us Apart](https://packy.dardan.com/b/nR)
+[Perl Weekly Challenge: The scramble can not stop you / from becoming popu-ler... lar](https://packy.dardan.com/b/nb)
