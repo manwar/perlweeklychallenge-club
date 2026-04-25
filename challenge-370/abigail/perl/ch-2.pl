@@ -11,9 +11,8 @@ no  warnings 'syntax';
 # and end up with equal strings
 #
 sub are_anagrams ($str1, $str2) {
-    my $s_str1 = join "" => sort split // => $str1;
-    my $s_str2 = join "" => sort split // => $str2;
-    return $s_str1 eq $s_str2
+    join ("" => sort split // => $str1) eq
+    join ("" => sort split // => $str2)
 }
 
 sub can_scramble ($input, $target) {
