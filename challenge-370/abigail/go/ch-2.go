@@ -17,13 +17,6 @@ func are_anagrams (str1 string, str2 string) bool {
     a_str2 := [] rune (str2)
 
     //
-    // Not anagrams if not of equal length
-    //
-    if len (a_str1) != len (a_str2) {
-        return false
-    }
-
-    //
     // Sort the arrays
     //
     slices . SortFunc (a_str1, func (a, b rune) int {
