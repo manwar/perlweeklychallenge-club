@@ -4,13 +4,13 @@ Task: Increment Decrement (Weekly Challenge 323)
 
 Apply ++/-- operations starting from 0 and return the final value.
 """
+
 from __future__ import annotations
 
 import unittest
-from typing import List
 
 
-def final_value(ops: List[str]) -> int:
+def final_value(ops: list[str]) -> int:
     value = 0
     for op in ops:
         if "++" in op:
