@@ -42,9 +42,8 @@ use v5.42;
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
-my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchmark);
+GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 my $logger;
 {
     use Log::Log4perl qw(:easy);
@@ -55,7 +54,6 @@ my $logger;
 #=============================================================================
 
 exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 say isScramble(@ARGV) ? "true" : "false";
 
@@ -68,6 +66,8 @@ sub splits($str)
 sub isScramble($str1, $str2, $depth = "")
 {
     state %remember;
+    %remember = () if $depth eq "";
+
     my $key = ":$str1:$str2:";
     if ( exists $remember{$key} )
     {
@@ -97,7 +97,7 @@ sub isScramble($str1, $str2, $depth = "")
         }
         elsif ( $head eq $s2head )
         {
-            $logger->debug("${depth}HH, compare $tail :: $s2tail");
+            $logger->debug("${depth}HH, compare $tail <> $s2tail");
             return true if $remember{$key} = isScramble($tail, $s2tail, "  $depth");
         }
         elsif ( $head eq $s2back )
@@ -121,8 +121,8 @@ sub isScramble($str1, $str2, $depth = "")
             return $remember{$key} = true if ( 
                    ( isScramble($head, $s2head, "  $depth")
                   && isScramble($tail, $s2tail, "  $depth") )
-                || ( isScramble($head, $s2tail, "  $depth")
-                  && isScramble($tail, $s2head, "  $depth") ) );
+                || ( isScramble($head, $s2back, "  $depth")
+                  && isScramble($tail, $s2front, "  $depth") ) );
         }
     }
 
@@ -157,13 +157,4 @@ sub runTest
 
     done_testing;
     return;
-}
-
-sub runBenchmark($repeat)
-{
-    use Benchmark qw/cmpthese/;
-
-    cmpthese($repeat, {
-            label => sub { },
-        });
 }
