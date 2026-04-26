@@ -4,7 +4,7 @@ import Data.Char
 import Data.List
 import Data.Ord
 
--- popularWord :: String -> [String] -> String
+popularWord :: String -> [String] -> String
 popularWord paragraph banned = Map.difference (tally twords) (tally banned)
                              & Map.toList
                              & maximumBy (comparing snd)
