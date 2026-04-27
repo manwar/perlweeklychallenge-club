@@ -4,14 +4,14 @@ Task: Final Price (Weekly Challenge 325)
 
 For each price, subtract the first subsequent price that is <= it; if none, keep the original price.
 """
+
 from __future__ import annotations
 
-from typing import List
 import unittest
 
 
-def final_price(prices: List[int]) -> List[int]:
-    result: List[int] = []
+def final_price(prices: list[int]) -> list[int]:
+    result: list[int] = []
     n = len(prices)
     for i, price in enumerate(prices):
         discount = 0

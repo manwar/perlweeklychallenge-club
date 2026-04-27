@@ -1,0 +1,64 @@
+#!/opt/perl/bin/perl
+
+use 5.042;
+
+use strict;
+use warnings;
+no  warnings 'syntax';
+
+my ($input, $nr) = @ARGV;
+
+sub scramble;
+sub scramble ($input) {
+    my %out = ($input => 1);
+
+    for (my $l = 1; $l < length ($input); $l ++) {
+        my $s1 = substr $input, 0, $l;
+        my $s2 = substr $input, $l;
+
+        my @o1 = scramble $s1;
+        my @o2 = scramble $s2;
+
+        foreach my $c1 (@o1) {
+            foreach my $c2 (@o2) {
+                $out {"$c1$c2"} = 1;
+                $out {"$c2$c1"} = 1;
+            }
+        }
+    }
+
+    keys %out;
+}
+
+sub permutate;
+sub permutate ($input) {
+    my %out;
+    if (length $input == 1) {
+        $out {$input} = 1;
+    }
+    else {
+        for (my $i = 0; $i < length ($input); $i ++) {
+            my $pivot  = substr $input, $i,  1;
+            my $before = substr $input,  0, $i;
+            my $after  = substr $input, $i + 1;
+            $out {$_}  = 1 for map {"$pivot$_"} permutate "$before$after";
+        }
+    }
+    keys %out;
+}
+
+my $input_f = "input-$nr";
+my $exp_f   = "exp-$nr";
+
+open my $i_fh, ">", $input_f or die "open: $!";
+open my $e_fh, ">", $exp_f   or die "open: $!";
+
+my %scrambled;
+   $scrambled {$_} = 1 for scramble $input;
+
+for my $p (sort {$a cmp $b} permutate $input) {
+    say $i_fh "$input $p";
+    say $e_fh $scrambled {$p} ? "true" : "false";
+}
+
+__END__

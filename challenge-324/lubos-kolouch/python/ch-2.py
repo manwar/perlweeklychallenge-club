@@ -4,13 +4,13 @@ Task: Total XOR (Weekly Challenge 324)
 
 Return the sum of XOR values for every non-empty subset of the list.
 """
+
 from __future__ import annotations
 
-from typing import List
 import unittest
 
 
-def total_xor(ints: List[int]) -> int:
+def total_xor(ints: list[int]) -> int:
     n = len(ints)
     total = 0
     for mask in range(1, 1 << n):

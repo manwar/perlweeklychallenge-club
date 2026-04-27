@@ -4,15 +4,15 @@ Task: Decompressed List (Weekly Challenge 326)
 
 Given pairs (count, value), build the decompressed list.
 """
+
 from __future__ import annotations
 
-from typing import List
 import unittest
 
 
-def decompress_list(ints: List[int]) -> List[int]:
+def decompress_list(ints: list[int]) -> list[int]:
     """Decompress adjacent pairs (count, value)."""
-    out: List[int] = []
+    out: list[int] = []
     for i in range(0, len(ints), 2):
         count, value = ints[i], ints[i + 1]
         out.extend([value] * count)

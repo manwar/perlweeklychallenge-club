@@ -4,10 +4,10 @@ Task: Day of the Year (Weekly Challenge 326)
 
 Return the day-of-year number for a date in YYYY-MM-DD format.
 """
+
 from __future__ import annotations
 
 import unittest
-from typing import Tuple
 
 
 def is_leap(year: int) -> bool:

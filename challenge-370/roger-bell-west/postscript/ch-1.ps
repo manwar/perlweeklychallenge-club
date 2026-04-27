@@ -1,0 +1,251 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/c.islower {
+    dup 97 ge exch 122 le and
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/c.isupper {
+    dup 65 ge exch 90 le and
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/c.isalpha {
+    dup c.islower exch c.isupper or
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.with_keygen { % [ a c b ] { keygen } -> [ a b c ]
+    3 dict begin
+    /kg exch def
+    /arr exch def
+    /kl << arr {
+                dup kg
+            } forall >> def
+    arr {
+        exch kl exch get exch kl exch get quicksort.cmp
+    } quicksort.with_comparator
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/popularword {
+    0 dict begin
+    /banned exch def
+    s2a
+    [ exch
+      [ exch
+        {
+            dup
+            c.isalpha {
+                32 or
+            } {
+                pop
+            ]
+            [
+            } ifelse
+        } forall
+      ]
+    ]
+    { length 0 gt } filter
+    /words 0 dict def
+    {
+        a2s /w exch def
+        words w 2 copy 0 dget 1 add put
+    } forall
+    banned {
+        words exch undef
+    } forall
+    /k words keys def
+    /v words values def
+    /i [ 0 1 v length 1 sub {} for ]
+    { v exch get neg } quicksort.with_keygen def
+    k i 0 get get
+    end
+} bind def
+
+(popularword) test.start
+(Bob hit a ball, the hit BALL flew far after it was hit.) [(hit)] popularword (ball) eq test
+(Apple? apple! Apple, pear, orange, pear, apple, orange.) [(apple) (pear)] popularword (orange) eq test
+(A. a, a! A. B. b. b.) [(b)] popularword (a) eq test
+(Ball.ball,ball:apple!apple.banana) [(ball)] popularword (apple) eq test
+(The dog chased the cat, but the dog was faster than the cat.) [(the) (dog)] popularword (cat) eq test
+test.end
