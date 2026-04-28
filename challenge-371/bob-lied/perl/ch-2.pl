@@ -54,37 +54,35 @@ my $logger;
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-my $result = sseq(@ARGV);
-my @answer;
-for my $list ( $result->@* )
-{
-    push @answer, "(" . join(", ", $list->@*) . ")";
-}
-say join(", ", @answer);
+say join ", ", map { "(" . join(", ", $_->@*) . ")" } sseq(@ARGV)->@*;
 
 #=============================================================================
 sub sseq(@nums)
 {
     use Algorithm::Combinatorics qw/subsets/;
     use List::Util qw/sum0/;
-    my @answer;
+    my @result;
 
     my $s = subsets( [0 .. $#nums] );
     while ( my $position = $s->next() )
     {
         # Only proper subsets of size 2 or more
-        next if scalar(@$position) == scalar(@nums) || scalar(@$position) < 2;
+        my $size = scalar(@$position);
+        next if $size == scalar(@nums) || $size < 2;
 
-        my $sumPosition = scalar(@$position) + sum0  $position->@*;
+        # Subsets are indexed at zero, but positions at 1, so compensate in sum
+        my $sumPosition = $size + sum0  $position->@*;
+
         my $sumNumbers = sum0 @nums[ @$position ];
         $logger->debug("Positions: (@$position) num=$sumNumbers pos=$sumPosition");
+
         if ( $sumNumbers == $sumPosition )
         {
-            $logger->debug("ANSWER $sumNumbers num[@$position] = (@nums[@$position])");
-            push @answer, [@nums[@$position]]
+            $logger->debug("RESULT $sumNumbers num[@$position] = (@nums[@$position])");
+            push @result, [@nums[@$position]]
         }
     }
-    return \@answer;
+    return \@result;
 }
 
 

@@ -4,4 +4,4 @@
 
 - [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-371/bob-lied)
 
-- [Blog](https://dev.to/boblied)
+- [Blog](https://dev.to/boblied/pwc-371-subset-equilibrium-just-nod-if-you-can-hear-me-14im)
