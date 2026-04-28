@@ -35,13 +35,19 @@ class DistinctAverageExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
-        self.assertEqual(distinct_average_count([Fraction(x) for x in (1, 2, 4, 3, 5, 6)]), 1)
+        self.assertEqual(
+            distinct_average_count([Fraction(x) for x in (1, 2, 4, 3, 5, 6)]), 1
+        )
 
     def test_example_2(self) -> None:
-        self.assertEqual(distinct_average_count([Fraction(x) for x in (0, 2, 4, 8, 3, 5)]), 2)
+        self.assertEqual(
+            distinct_average_count([Fraction(x) for x in (0, 2, 4, 8, 3, 5)]), 2
+        )
 
     def test_example_3(self) -> None:
-        self.assertEqual(distinct_average_count([Fraction(x) for x in (7, 3, 1, 0, 5, 9)]), 2)
+        self.assertEqual(
+            distinct_average_count([Fraction(x) for x in (7, 3, 1, 0, 5, 9)]), 2
+        )
 
 
 def main(argv: Sequence[str] | None = None) -> None:
