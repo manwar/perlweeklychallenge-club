@@ -1,0 +1,166 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/c.isspace {
+    dup
+    9 eq exch
+    dup
+    10 eq
+    3 -1 roll or exch
+    dup
+    11 eq
+    3 -1 roll or exch
+    dup
+    12 eq
+    3 -1 roll or exch
+    dup
+    13 eq
+    3 -1 roll or exch
+    32 eq
+    or
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/missingletter {
+    0 dict begin
+    s2a
+    { c.isspace not } filter
+    /c exch def
+    /d [
+        c 2 -1 rotor {
+            /i exch def
+            i 0 get 63 eq i 1 get 63 eq or {
+                0
+            } {
+                i 1 get i 0 get sub
+            } ifelse
+        } forall
+    ] def
+    0
+    d enumerate.array {
+        aload pop
+        /delta exch def
+        /n exch def
+        delta 0 eq {
+            pop
+            n 2 lt {
+                c n 2 add get d n 2 add get sub
+            } {
+                c n get d n 2 sub get add
+            } ifelse
+            exit
+        } if
+    } forall
+    [ exch ]
+    a2s
+    end
+} bind def
+
+(missingletter) test.start
+(a c ? g i) missingletter (e) eq test
+(a d ? j m) missingletter (g) eq test
+(a e ? m q) missingletter (i) eq test
+(a c f ? k) missingletter (h) eq test
+(b e g ? l) missingletter (j) eq test
+test.end
