@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: The scramble can not stop you / from becoming popu-ler... lar](https://packy.dardan.com/b/nb)
+[Perl Weekly Challenge: My subset is-a missing a letter...](https://packy.dardan.com/b/of)
