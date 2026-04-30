@@ -37,12 +37,7 @@ sub is_alt_seq {
     return if @aseq < 2;
     my $cum = $aseq[0];
     for my $n ( 1 .. $#aseq ) {
-        if ( $n % 2 ) {
-            return unless $aseq[$n] == $cum + $step1;
-        }
-        else {
-            return unless $aseq[$n] == $cum + $step2;
-        }
+        return unless $aseq[$n] == $cum + ( $n % 2 ? $step1 : $step2 );
         $cum = $aseq[$n];
     }
     return 1;
@@ -55,17 +50,9 @@ sub missing_letter {
 
     my @nums = map { $char_to_num{ $_ } } @seq;
 
-    my $missing;
-    for ( 0 .. $#nums ) {
-        if ( !defined $nums[$_] ) {
-            $missing = $_;
-        }
-    }
+    my $missing = ( grep { !defined $nums[$_] } ( 0 .. $#nums ) )[0];
 
-    my $lo = $nums[ $missing - 1 ];
-    my $hi = $nums[ $missing + 1 ];
-
-    for ( $lo .. $hi ) {
+    for ( $nums[ $missing - 1 ] .. $nums[ $missing + 1 ] ) {
         my @testnums = @nums;
         $testnums[$missing] = $_;
         my $step  = $testnums[1] - $testnums[0];
