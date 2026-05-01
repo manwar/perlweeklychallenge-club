@@ -13,9 +13,6 @@ for line in sys . stdin:
                 sum = sum + val - index - 1
                 set . append (val)
         if sum == 0 and len (set) > 1:
-            for i, val in enumerate (set):
-                print (val, end = '')
-                if i == len (set) - 1:
-                    print (";", end = '')
-                print (" ", end = '')
+            print (" " . join (list (map (lambda i: str (i), set))) + "; ", \
+                   end = '')
     print ("")

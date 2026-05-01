@@ -33,12 +33,7 @@ for line in io . lines () do
         -- print the set
         --
         if sum == 0 and #set > 1 then
-            for i, val in ipairs (set) do
-                io . write (val)
-                if i == #set then io . write ("; ")
-                else              io . write (" ")
-                end
-            end
+            io . write (table . concat (set, " ") .. "; ")
         end
     end
     io . write ("\n")
