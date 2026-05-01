@@ -10,7 +10,7 @@ sub f_almost_readable {
 }
 
 #same golfed:
-sub f{map[map$_[$_-1],@$_],grep sum(@$_)==sum(map$_[$_-1],@$_),grep@_>@$_>1,subsets[1..@_]}
+sub f{map[@_[@$_]],grep@$_+sum(@$_)==sum(@_[@$_]),grep @_>@$_>1,subsets[0..$#_]}
 
 
 
