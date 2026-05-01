@@ -30,8 +30,6 @@ int main (int argc, char ** argv) {
             }
             numbers [count ++] = atoi (ptr);
 
-            printf ("Parsed %d\n", numbers [count - 1]);
-
             /*
              * Skip over the number, including leading white space
              */
@@ -39,9 +37,34 @@ int main (int argc, char ** argv) {
             while (* ptr && !isspace (* ptr)) {ptr ++;}
         }
 
-        for (int i = 1; i < pow (2, count) - 1; i ++) {
-            printf ("i = %d\n", i);
+        /*
+         * Allocate room for the set. Note that we can, and will, reuse
+         * the set. 
+         */
+        int * set;
+        if ((set = (int *) malloc (count * sizeof (int))) == NULL) {
+            perror ("Malloc failed");
+            exit (1);
         }
+
+        for (int mask = 1; mask < pow (2, count) - 1; mask ++) {
+            int sum       = 0;
+            int set_count = 0;
+            for (int index = 0; index < count; index ++) {
+                if (mask & (1 << index)) {
+                    set [set_count ++] = numbers [index];
+                    sum += numbers [index] - index - 1;
+                }
+            }
+            if (sum == 0 && set_count > 1) {
+                for (int i = 0; i < set_count; i ++) {
+                    printf ("%d%s", set [i], i == set_count - 1 ? "; " : " ");
+                }
+            }
+        }
+        printf ("\n");
+        free (set);
     }
+    free (line);
     exit (0);
 }
