@@ -8,14 +8,29 @@ no  warnings 'syntax';
 
 while (<>) {
     my @numbers = split;
+    #
+    # Iterate over all masks, except all 0s and all 1s
+    #
     foreach my $mask (1 .. 2 ** @numbers - 2) {
         my $sum;
+        my @set;
         while (my ($index, $val) = each @numbers) {
-            $sum += $val - $index - 1 if $mask & (1 << $index);
+            #
+            # If the position is in the mask, add the difference between
+            # the number and its position to the sum, and add the number
+            # to the current set
+            #
+            if ($mask & (1 << $index)) {
+                $sum += $val - $index - 1;
+                push @set => $val;
+            }
         }
-        if ($sum == 0) {
-            my @set = @numbers [grep {$mask & (1 << $_)} keys @numbers];
-            print "@set; " if @set > 1;
+        #
+        # If the sum is 0, and we have more than one element in the set,
+        # print the set
+        #
+        if ($sum == 0 && @set > 1) {
+            print "@set; ";
         }
     }
     print "\n";
