@@ -5,7 +5,7 @@ use Test;
 
 =begin comment
 May be edited for space.
-369-Task 2: Group Division      Submitted by: Mohammad Sajid Anwar
+369-2: Group Division      Submitted by: Mohammad Sajid Anwar
 You are given a string, group size and filler character.
 
 Write a script to divide the string into groups of given size. In the last group if the string doesn’t have enough characters remaining fill with the given filler character.
@@ -44,7 +44,7 @@ done-testing;
 
 my $str = "HelloWorld";
 my $size = 3;
-my $filler = "_";
+my $filler = "∘";
 
 sub show-task( $str, $size, $filler ) {
     my @ary = task( $str, $size, $filler );
@@ -52,4 +52,4 @@ sub show-task( $str, $size, $filler ) {
     qq{"@ary[0]"}
 }
 say qq{\nInput: \$str = "$str", \$size = $size, \$filler = "$filler"},
-   ~qq{\nOutput: }, show-task( $str, $size, $filler);
+  ~ qq{\nOutput: }, show-task( $str, $size, $filler);
