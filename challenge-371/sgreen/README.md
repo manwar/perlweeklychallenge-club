@@ -1,3 +1,3 @@
-# The Weekly Challenge 370
+# The Weekly Challenge 371
 
-Blog: [Popular Scrambling](https://dev.to/simongreennet/weekly-challenge-popular-scrambling-2bba)
+Blog: [Question the bits](https://dev.to/simongreennet/weekly-challenge-question-the-bits-4lnd)
