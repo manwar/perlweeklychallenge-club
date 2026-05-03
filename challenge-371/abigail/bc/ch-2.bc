@@ -1,0 +1,57 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+#
+# Return true if bits1 and bits2 share any bits
+#
+define and (bits1, bits2) {
+    #
+    # Record the scale, then set the scale to 0. This allows us
+    # to do integer division
+    #
+    auto z, h_bits1, h_bits2
+    z = scale 
+    scale = 0
+
+    #
+    # If either number is 0, they will not have any bits in common
+    #
+    if (bits1 == 0 || bits2 == 0) {return 0}
+
+    #
+    # If both last bits are 1, they have a bit in common
+    #
+    if (bits1 % 2  && bits2 % 2)  {return 1}
+
+    h_bits1 = bits1 / 2                # Chop off the last bit
+    h_bits2 = bits2 / 2                # Chop off the last bit
+    scale = z                          # Restore the scale
+    return and (bits1 / 2, bits2 / 2)  # And recurse
+}
+
+nr_of_lines = read ()
+for (l = 0; l < nr_of_lines; l ++) {
+    count = read ()
+    for (i = 0; i < count; i ++) {
+        numbers [i] = read ()
+    }
+    for (mask = 1; mask < 2 ^ count - 1; mask ++) {
+        sum   = 0
+        set_c = 0
+        for (index = 0; index < count; index ++) {
+            if (and (mask, 2 ^ index)) {
+                sum += numbers [index] - index - 1
+                set [set_c ++] = numbers [index]
+            }
+        }
+        if (sum == 0 && set_c > 1) {
+            for (i = 0; i < set_c; i ++) {
+                print set [i]
+                if (i == set_c - 1) {
+                    print ";"
+                }
+                print " "
+            }
+        }
+    }
+    print "\n"
+}

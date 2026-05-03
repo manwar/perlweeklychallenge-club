@@ -1,0 +1,86 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+ibase = 36
+
+/*
+ * Get a number 10 .. 35 (in base 36, so A .. Z), and print
+ * the corresponding letter
+ */
+define print_chr (ch) {
+    if (ch == A) {print "a\n"}
+    if (ch == B) {print "b\n"}
+    if (ch == C) {print "c\n"}
+    if (ch == D) {print "d\n"}
+    if (ch == E) {print "e\n"}
+    if (ch == F) {print "f\n"}
+    if (ch == G) {print "g\n"}
+    if (ch == H) {print "h\n"}
+    if (ch == I) {print "i\n"}
+    if (ch == J) {print "j\n"}
+    if (ch == K) {print "k\n"}
+    if (ch == L) {print "l\n"}
+    if (ch == M) {print "m\n"}
+    if (ch == N) {print "n\n"}
+    if (ch == O) {print "o\n"}
+    if (ch == P) {print "p\n"}
+    if (ch == Q) {print "q\n"}
+    if (ch == R) {print "r\n"}
+    if (ch == S) {print "s\n"}
+    if (ch == T) {print "t\n"}
+    if (ch == U) {print "u\n"}
+    if (ch == V) {print "v\n"}
+    if (ch == W) {print "w\n"}
+    if (ch == X) {print "x\n"}
+    if (ch == Y) {print "y\n"}
+    if (ch == Z) {print "z\n"}
+}
+
+while (1) {
+    /*
+     * Read in five entries; if the first is smaller than 0, this
+     * signals the end of input. Because the ibase was set to 36,
+     * all letters are accepted, as they are seen as numbers in base 36.
+     * But ? isn't a number, hence it is read as 0.
+     */
+    letters [0] = read ()
+    if (letters [0] < 0) {
+        break
+    }
+    letters [1] = read ()
+    letters [2] = read ()
+    letters [3] = read ()
+    letters [4] = read ()
+
+    /*
+     * Find the position of the question mark
+     */
+    for (i = 0; i < 5; i ++) {
+        if (letters [i] == 0) {
+            qi = i
+        }
+    }
+
+    /*
+     * Get the values required to calculate the missing character
+     */
+    if (qi <  2) {
+        base = letters [qi + 1]
+        from = letters [qi + 3]
+        to   = letters [qi + 2]
+    }
+    if (qi == 2) {
+        base = letters [qi + 1]
+        from = letters [qi - 1]
+        to   = letters [qi - 2]
+    }
+    if (qi >  2) {
+        base = letters [qi - 1]
+        from = letters [qi - 3]
+        to   = letters [qi - 2]
+    }
+
+    /*
+     * Calculate the missing character and print it
+     */
+    skip = print_chr (base - from + to)
+}
