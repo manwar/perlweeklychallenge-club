@@ -18,7 +18,8 @@ sub subset_equilibrium( @nums ) {
     # (using 1-based position numbers).
     # If the sum of elements is equal to the sum of their positions,
     # the sum of these differences must be zero.
-    # This will save us half of the additions.
+    # We then need only one array for summing up, and only half the
+    # number of additions.
     my @diffs = map $nums[$_] - ( $_ + 1 ), keys @nums;
     my @results;
     for my $subset_size ( 2 .. @nums - 1 ) {
