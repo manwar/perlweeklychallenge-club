@@ -1,3 +1,3 @@
-# The Weekly Challenge 371
+# The Weekly Challenge 372
 
-Blog: [Question the bits](https://dev.to/simongreennet/weekly-challenge-question-the-bits-4lnd)
+Blog: [Distant spaces](https://dev.to/simongreennet/weekly-challenge-distant-spaces-2839)
