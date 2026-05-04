@@ -13,14 +13,16 @@ use v5.36;
 sub missing_letter( @seq ) {
     my @nums = map ord, @seq;
     my $qm_index = ( grep $seq[$_] eq "?", keys @seq )[0];
+    my @hardcoded_indices = (
+        [ 1, 2, 3 ],
+        [ 0, 3, 2 ],
+        [ 3, 0, 1 ],
+    );
     my ( $base, $add, $subtract ) =
         map { $nums[$_] }
-            $qm_index == 0
-            ? ( 1, 3, 2 )
-            : map { $qm_index + $_ }
-                $qm_index + 2 <= $#nums
-                ? ( -1, +2, +1 )
-                : ( -1, -2, -3 );
+            exists $hardcoded_indices[$qm_index]
+            ? $hardcoded_indices[$qm_index]->@*
+            : map { $qm_index + $_ } ( -1, -2, -3 );
     return chr( $base + $add - $subtract );
 }
 
@@ -36,5 +38,14 @@ is missing_letter( qw(a c f ? k) ), "h",
     'Example 4: missing_letter( qw(a c f ? k) ) eq "h"';
 is missing_letter( qw(b e g ? l) ), "j",
     'Example 5: missing_letter( qw(b e g ? l) ) eq "j"';
+
+is missing_letter( qw(? b c d) ), "a",
+    'Own Test 1: missing_letter( qw(? b c d) ) eq "a"';
+is missing_letter( qw(a ? c d) ), "b",
+    'Own Test 1: missing_letter( qw(a ? c d) ) eq "b"';
+is missing_letter( qw(a b ? d) ), "c",
+    'Own Test 1: missing_letter( qw(a b ? d) ) eq "c"';
+is missing_letter( qw(a b c ?) ), "d",
+    'Own Test 1: missing_letter( qw(a b c ?) ) eq "d"';
 
 done_testing;
