@@ -23,7 +23,7 @@ multi list-division($l, $n)
     $l.rotor(flat ($b+1 xx $a), ($b xx $n-$a))
 }
 
-# This is a regex solution but it's unusable for long lists.
+# This is a regex solution but it's unusable for large $l and large $n.
 sub list-division-v2($l, $n)
 {
     my $c = $l div $n;
