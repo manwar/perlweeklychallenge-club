@@ -1,0 +1,33 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@seq where @seq.elems == 5 && @seq.join ~~ /^<[a..z]>*\?<[a..z]>*$/,
+               :v(:$verbose));
+
+my @trans = @seq.map({ $_ eq '?' ?? '?' !! $_.ord - 'a'.ord + 1 });
+
+my ($a, $b, $c, $d, $e) = @trans;
+
+my $index = @seq.first('?', :k);
+
+my $x;
+my $y;
+my $letter;
+
+given $index
+{
+  when 0 { $letter = $b - $d + $c; $x = $d - $c; $y = $e - $d; } # $a
+  when 1 { $letter = $a + $d - $c; $x = $d - $c; $y = $e - $d; } # $b
+  when 2 { $letter = $b + $e - $d; $x = $b - $a; $y = $e - $d; } # $c
+  when 3 { $letter = $c + $b - $a; $x = $b - $a; $y = $c - $b; } # $d
+  when 4 { $letter = $d + $c - $b; $x = $b - $a; $y = $c - $b; } # $e
+}
+
+if $verbose
+{
+  say ": Translated: { @trans.join(", ") }";
+  say ": Question mark at index: $index";
+  say ": Pattern: $x, $y, $x, $y";
+  say ": New letter: $letter";
+}
+
+say  chr('a'.ord + $letter -1);

@@ -23,7 +23,7 @@ def is_acronym(words: list[str], target: str) -> bool:
     if not words or not target:
         return False
 
-    acronym = ''.join(word[0] for word in words if word)
+    acronym = "".join(word[0] for word in words if word)
     return acronym == target
 
 
@@ -31,7 +31,6 @@ def is_acronym(words: list[str], target: str) -> bool:
 
 
 class TestAcronym(unittest.TestCase):
-
     def test_example1(self):
         """Test case from Example 1"""
         self.assertTrue(is_acronym(["Perl", "Weekly", "Challenge"], "PWC"))
@@ -62,5 +61,5 @@ class TestAcronym(unittest.TestCase):
         self.assertFalse(is_acronym(["", "Weekly"], "PWC"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

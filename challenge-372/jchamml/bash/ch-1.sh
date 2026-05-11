@@ -1,0 +1,1 @@
+perl -e 'for $s(@ARGV){my @w=split(" ",$s);my $x=$s;my $sC=$x=~s/\s//g;my $wG=(@w-1);my $sB=($wG==0)?0:int($sC/$wG);my $sA=$sC-$sB*$wG;my $rS=join(" "x$sB,@w).(" "x$sA);print "\"$s\" becomes \"$rS\"\n";} ' "  challenge  " "coding  is  fun" "a b c  d" "  team      pwc  " "   the  weekly  challenge  "

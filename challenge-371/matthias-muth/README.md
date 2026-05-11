@@ -1,407 +1,290 @@
-# Scrambling Back and Forth
+# The Missing Equilibrium
 
-**Challenge 370 solutions in Perl by Matthias Muth**
+**Challenge 371 solutions in Perl by Matthias Muth**
 
-## Task 1: Popular Word
+## Task 1: Missing Letter
 
-> You are given a string paragraph and an array of the banned words.<br/>
-> Write a script to return the most popular word that is not banned. It is guaranteed there is at least one word that is not banned and the answer is unique. The words in paragraph are case-insensitive and the answer should be in lowercase. The words can not contain punctuation symbols.
+> You are given a sequence of 5 lowercase letters, with one letter replaced by ‘?’. Each letter maps to its position in the alphabet (‘a = 1’, ‘b = 2’, …, ‘z = 26’). The sequence follows a repeating pattern of step sizes between consecutive letters. The pattern is either a constant step (e.g., ‘+2, +2, +2, +2’) or a simple alternating pattern of two distinct steps (e.g., ‘+2, +3, +2, +3’).
 >
 > **Example 1**
 >
 > ```text
-> Input: $paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
->        @banned = ("hit")
-> Output: "ball"
+> Input: $seq = qw(a c ? g i)
+> Output: e
 >
-> After removing punctuation and converting to lowercase, the word "hit" appears 3 times, and "ball" appears 2 times.
-> Since "hit" is on the banned list, we ignore it.
+> The pattern of the sequence is +2,+2,+2,+2.
+> 1: a
+> 3: c
+> 5: e
+> 7: g
+> 9: i
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $paragraph = "Apple? apple! Apple, pear, orange, pear, apple, orange."
->        @banned = ("apple", "pear")
-> Output: "orange"
+> Input: $seq = qw(a d ? j m)
+> Output: g
 >
-> "apple"  appears 4 times.
-> "pear"   appears 2 times.
-> "orange" appears 2 times.
->
-> "apple" and "pear" are both banned.
-> Even though "orange" has the same frequency as "pear", it is the only non-banned word with the highest frequency.
+> The pattern of the sequence is +3,+3,+3,+3.
+> 1: a
+> 4: d
+> 7: g
+> 10: j
+> 13: m
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $paragraph = "A. a, a! A. B. b. b."
->        @banned = ("b")
-> Output: "a"
+> Input: $seq = qw(a e ? m q)
+> Output: i
 >
-> "a" appears 4 times.
-> "b" appears 3 times.
->
-> The input has mixed casing and heavy punctuation.
-> The normalised, "a" is the clear winner, since "b" is banned, "a" is the only choice.
+> The pattern of the sequence is +4,+4,+4,+4.
+> 1: a
+> 5: e
+> 9: i
+> 13: m
+> 17: q
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $paragraph = "Ball.ball,ball:apple!apple.banana"
->        @banned = ("ball")
-> Output: "apple"
+> Input: $seq = qw(a c f ? k)
+> Output: h
 >
-> Here the punctuation acts as a delimiter.
-> "ball"   appears 3 times.
-> "apple"  appears 2 times.
-> "banana" appears 1 time.
+> The pattern of the sequence is +2,+3,+2,+3.
+> 1: a
+> 3: c
+> 6: f
+> 8: h
+> 11: k
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $paragraph = "The dog chased the cat, but the dog was faster than the cat."
->        @banned = ("the", "dog")
-> Output: "cat"
+> Input: $seq = qw(b e g ? l)
+> Output: j
 >
-> "the" appears 4 times.
-> "dog" appears 2 times.
-> "cat" appears 2 times.
->
-> "chased", "but", "was", "faster", "than" appear 1 time each.
-> "the" is the most frequent but is banned.
-> "dog" is the next most frequent but is also banned.
-> The next most frequent non-banned word is "cat".
+> The pattern of the sequence is +3,+2,+3,+2.
+> 2: b
+> 5: e
+> 7: g
+> 10: j
+> 12: l
 > ```
 
-I was looking for an effective way of walking through the words only once,
-counting the number of occurrences of each word
-and remembering the highest number at the same time.
+My approach does not try to find both parts of the pattern. Instead, I try to determine the missing letter from one of the neighbors to the left or right of the question mark, and from an existing pair at a position that is *relative* to that of the question mark.
 
-I found that `max_by` from `List::UtilsBy` can do exactly that.
-With the help of a 'frequency hash',
-incremented for the current word within each iteration,
-it selects the highest value and then returns the corresponding word
-in just one elegant call:
+These are the five possible question mark positions:
 
-```perl
-    my %n_occurences;
-    return max_by { ++$n_occurences{$_} } @words;
+```text
+0: ( ? b c d e )
+1: ( a ? c d e )
+2: ( a b ? d e )
+3: ( a b c ? e )
+4: ( a b c d ? )
 ```
 
-As the rest of my solution has several steps,
-I have put in comments into it as I would for a production program.
-So I let the code and comments stand for themselves:
+The missing character can be found either by adding the correct step size to the question mark's left neighbor, or by subtracting the correct  step size from its right neighbor.
+
+The 'correct' step size in both cases is the difference between the values of the preceding pair, which is the same as the one of the following pair. The following graphics tries to illustrate that:
+
+```text
+0: ( ? <-- b ) ( c <-- d  )  e      ? = b - ( d - c )
+                                      = b + c - d
+                                      = $nums[1] + $nums[2] - $nums[3]
+1: ( a --> ? ) ( c --> d  )  e      ? = a + ( d - c )
+                                      = a + d - c
+                                      = $nums[0] + $nums[3] - $nums[2]
+2: ( a <-- b ) ( ? <-- d  )  e      ? = d - ( b - a )
+                                      = d + a - b
+                                      = $nums[3] + $nums[0] - $nums[1]
+```
+
+From then on, we always have at least three elements to the left of the question mark. We can use a generalized rule, by always using the left neighbor, and adding the preceding pair's step size to it:
+
+If the question mark's index is in `$i`, this is the rule:
+
+```text
+3: ( a --> b ) ( c --> ?  )  e      ? = c + ( b - a )
+                                      = c + b - a
+                                      = $nums[ $i-1 ] + $nums[ $i-2 ] - $nums[ i-3 ]
+4:   a  (  b --> c ) ( d --> ? )      = d + ( c - b )
+                                      = d + c - b
+                                      = $nums[ $i-1 ] + $nums[ $i-2 ] - $nums[ i-3 ]
+                                        (The same!)
+```
+
+For the implementation, I use `$qm_index` instead of `$i` for clarity.
+
+I use three variables `( $base, $add, $subtract )`
+because the calculation always has the same form: <br/>
+`$base + $add - $subtract`.
+
+For the first three cases, I hard-code the three index values. For rules 2 and 3, I extract only the relative positions, and let `map` add them to `$qm_index`.
+
+I also use `map` to map all those indices to the ASCII values in `@nums`.
+
+We then can use that simple 'plus-minus' formula, and translate the result back into an ASCII character:
 
 ```perl
 use v5.36;
-use List::UtilsBy qw( max_by );
 
-sub popular_word( $paragraph, $banned ) {
-    # Create a lookup for banned words.
-    my %is_banned = map { $_ => 1 } $banned->@*;
-
-    # Replace everything non-alpha and non-whitespace by whitespace.
-    $paragraph =~ s/[^[:alpha:]\s]+/ /g;
-
-    # Split up in words, filtering out banned words.
-    my @words = grep ! $is_banned{$_}, split " ", lc $paragraph;
-
-    # Find the word with the highest number of occurrences,
-    # counting as we walk through all the words.
-    my %n_occurences;
-    return max_by { ++$n_occurences{$_} } @words;
+sub missing_letter( @seq ) {
+    my @nums = map ord, @seq;
+    my $qm_index = ( grep $seq[$_] eq "?", keys @seq )[0];
+    my @hardcoded_indices = (
+        [ 1, 2, 3 ],
+        [ 0, 3, 2 ],
+        [ 3, 0, 1 ],
+    );
+    my ( $base, $add, $subtract ) =
+        map { $nums[$_] }
+            exists $hardcoded_indices[$qm_index]
+            ? $hardcoded_indices[$qm_index]->@*
+            : map { $qm_index + $_ } ( -1, -2, -3 );
+    return chr( $base + $add - $subtract );
 }
 ```
+This works well even with sequences as short as four characters.
 
-## Task 2: Scramble String
+## Task 2: Subset Equilibrium
 
-> You are given two strings A and B of the same length.<br/>
-> Write a script to return true if string B is a scramble of string A otherwise return false.<br/>
-> String B is a scramble of string A if A can be transformed into B by a single (recursive) scramble operation.<br/>
-> A scramble operation is:<br/>
->
-> - If the string consists of only one character, return the string.<br/>
-> - Divide the string X into two non-empty parts.<br/>
-> - Optionally, exchange the order of those parts.<br/>
-> - Optionally, scramble each of those parts.<br/>
-> - Concatenate the scrambled parts to return a single string.
+> You are given an array of numbers.<br/>
+> Write a script to find all subsets where the sum of elements equals the sum of their indices.
 >
 > **Example 1**
 >
 > ```text
-> Input: $str1 = "abc", $str2 = "acb"
-> Output: true
+> Input: @nums = (2, 1, 4, 3)
+> Output: (2, 1), (1, 4), (4, 3), (2, 3)
 > 
-> "abc"
-> split: ["a", "bc"]
-> split: ["a", ["b", "c"]]
-> swap: ["a", ["c", "b"]]
-> concatenate: "acb"
+> Subset 1: (2, 1)
+> Values: 2 + 1 = 3
+> Positions: 1 + 2 = 3
+> 
+> Subset 2: (1, 4)
+> Values: 1 + 4 = 5
+> Positions: 2 + 3 = 5
+> 
+> Subset 3: (4, 3)
+> Values: 4 + 3 = 7
+> Positions: 3 + 4 = 7
+> 
+> Subset 4: (2, 3)
+> Values: 2 + 3 = 5
+> Positions: 1 + 4 = 5
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $str1 = "abcd", $str2 = "cdba"
-> Output: true
+> Input: @nums = (3, 0, 3, 0)
+> Output: (3, 0), (3, 0, 3)
 > 
-> "abcd"
-> split: ["ab", "cd"]
-> swap: ["cd", "ab"]
-> split: ["cd", ["a", "b"]]
-> swap: ["cd", ["b", "a"]]
-> concatenate: "cdba"
+> Subset 1: (3, 0)
+> Values: 3 + 0 = 3
+> Positions: 1 + 2 = 3
+> 
+> Subset 2: (3, 0, 3)
+> Values: 3 + 0 + 3 = 6
+> Positions: 1 + 2 + 3 = 6
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $str1 = "hello", $str2 = "hiiii"
-> Output: false
+> Input: @nums = (5, 1, 1, 1)
+> Output: (5, 1, 1)
 > 
-> A fundamental rule of scrambled strings is that they must be anagrams.
+> Subset 1: (5, 1, 1)
+> Values: 5 + 1 + 1 = 7
+> Positions: 1 + 2 + 4 = 7
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $str1 = "ateer", $str2 = "eater"
-> Output: true
+> Input: @nums = (3, -1, 4, 2)
+> Output: (3, 2), (3, -1, 4)
 > 
-> "ateer"
-> split: ["ate", "er"]
-> split: [["at", "e"], "er"]
-> swap: [["e", "at"], "er"]
-> concatenate: "eater"
+> Subset 1: (3, 2)
+> Values: 3 + 2 = 5
+> Positions: 1 + 4 = 5
+> 
+> Subset 2: (3, -1, 4)
+> Values: 3 + (-1) + 4 = 6
+> Positions: 1 + 2 + 3 = 6
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: $str1 = "abcd", $str2 = "bdac"
-> Output: false
+> Input: @nums = (10, 20, 30, 40)
+> Output: ()
 > ```
 
-There are two approaches to solve this task:
+Thinking about the sum of the values and the sum of the indices of a given subset, their difference has to be equal (note that the indices are 1-based in this task!):
 
-* Create all possible scrambles of `$str1`, and check whether `$str2` is one of them.
-* Directly check whether `$str2` is a 'scramble' of `$str1`,
-  by trying to reverse the operations that led to `$str2`.
-
-Even if for the examples given it may be less of a problem,
-the first method ('brute force') can easily exceed acceptable runtime limits.
-The number of permutations grows fast with the number of letters in `$str1`.
-
-At the same time, finding a 'reverse scramble' might be faster,
-but could also be a quite non-trivial task to implement.
-
-This is what I developed:
-
-#### The idea of 'reverse scrambling':
-
-The objective is to find a direct check,
-without generating all possible scrambles first.
-
-If `$str2` is a scramble of `$str1`,
-there must be a sequence of flipping operations and recombinations
-that lead back to the original sequence in `$str1`.
-This is like a kind of 'sort' operation to recreate the original order.
-
-It os much easier to sorting a sequence of numbers into a given order
-than sorting random letters into their original positions.
-So my first step is to replace the letters in `$str1` by their index,
-and then replace the letters in `$str2`
-by the index of the same letter in `$str1`.
-
-Here is an example to illustrate the idea:
-
-```text
-$str1 = "abcdef", $str2 = "cdfeba"
-$str1 in numbers: ( 0, 1, 2, 3, 4, 5 )
-$str2 in numbers: ( 2, 3, 5, 4, 1, 0 )
+```math
+@indices = \{ 1 \dots n \} \:\big{|} n \in \mathbb{N} \\
+    \quad @nums = \{ nums_1 \dots nums_n \} = \{ nums_i | i \in @indices \} \\
+S \subseteq @indices \\
+\\
+                 \sum_{i \in S} {i} = \sum_{i \in S}{nums_i} \\
 ```
 
-Next, I combine adjacent numbers to form 'streaks' of contiguous numbers.
-Every streak is then sorted.
-This is done repetitively,
-combining adjacent streaks if they can form a contiguous new streak.
+This is equivalent to computing the difference of the value and the index of each element in the subset and then summing up those. This sum then has to be zero:
 
-Starting with streaks containing each single number
-of the original `$str2` sequence:
-
-```text   
-Starting sequence:
-    ( 2 ) ( 3 ) ( 5 ) ( 4 ) ( 1 ) ( 0 )
-Combining ( 2 ) and ( 3 ):
-    ( 2, 3 ) ( 5 ) ( 4 ) ( 1 ) ( 0 )
-( 5 ) cannot be combined with ( 2, 3 ),
-so we work with ( 5 ) as a new streak.
-Combining ( 5 ) and ( 4 ), then sorting the new streak:
-    ( 2, 3 ) ( 4, 5 ) ( 1 ) ( 0 )
-( 1 ) cannot be combined with ( 4, 5 ),
-so we work with ( 1 ) as a new streak:
-Combining ( 1 ) and ( 0 ), then sorting the new streak:
-    ( 2, 3 ) ( 4, 5 ) ( 0, 1 )
-
-Reaching the end, starting a new pass:
-Combining ( 2, 3 ) and ( 4, 5 ), then sorting the new streak:
-    ( 2, 3, 4, 5 ) ( 0, 1 )
-Combining ( 2, 3, 4, 5 ) and ( 0, 1 ), then sorting the new streak:
-    ( 0, 1, 2, 3, 4, 5 )
+```math
+\begin{align*}
+                 & \sum_{i \in S} {i} = \sum_{i \in S}{nums_i} \\
+    \equiv \qquad & \sum_{i \in S} {i} - \sum_{i \in S}{nums_i} = 0 \\
+    \equiv \qquad & \sum_{i \in S} { ( i - nums_i ) } = 0 \\    
+\end{align*}
 ```
 
-In the end only one single streak is left, so we know that we have just found a correct reverse scramble!
+As we will be building a lot of subsets and testing a lot of sums, we can therefore pre-compute the difference between each element's value and index. We then only need to build one sum instead of two, and only check whether this sum is zero in the end.
 
-Let's try Example 5 as an example for a *non*-correct scramble. We should not be able to find a correct reverse scramble:
+For checking all the subsets, it did not take me long to decide that `Algorithm::Combinatorics` is my friend again.
+It is written in C (via XS), is memory-friendly (not using recursion or a stack) and generates tuples in lexicographic order. Its `subsets` function returns an iterator, which is a good way to keep memory usage limited with larger sets.
 
-```text
-$str1 = "abcd", $str2 = "bdac"
-Starting sequence:
-    ( 1 ) ( 3 ) ( 0 ) ( 2 )
-```
+It has a parameter to select the size of the subsets to be returned,
+so there is a loop over the subset size
+(from 2 to the number of elements minus 1,
+because neither the empty subset nor subsets of size one
+or the subset that contains the complete set itself shall be considered).
 
-Actually there is not a single possibility to combine two adjacent single-number streaks into a contiguous sequence, which means that there is no way that this sequence was produced by a correct scramble.
-
-#### Limitations
-
-The approach shown works well as long as `$str1` does not contain duplicate letters.
-If it does, we might or might not be able to find a reverse scramble,
-because the numbers representing the duplicate letters
-might or might not be in a place where we can reorder them correctly.
-In any case, if there are duplicate letters,
-they need to have the number representations of their specific positions
-in the original string, not all the same number.
-Probably we would then need to permute
-the numbers representing the duplicates
-and try to find reverse scrambles for all of the permutations. 
-
-For Example 4, that looks like this:
-
-```text
-$str1 = "ateer", $str2 = "eater"
-$str1 in numbers: ( 0, 1, 2, 3, 4 )
-Duplicate "e" at positions 2 and 3.
-$str2 in numbers: ( 2, 0, 1, 3, 4 )
-            *or*: ( 3, 0, 1, 2, 4 )
-```
-
-This can become a bit complicated if there are several different letters appearing more than once.
-
-Actually it turns out that for Example 4, both permuted sequences can correctly be reverse-scrambled, so  for the time being I did not  implement that permutation.
-
-#### Preparing tests for the reverse scrambling method
-
-For a complete test of the reverse scrambling method
-for a string `$str1` of a given length,
-I need to compare all possible permutations of the letters in `$str1`
-against a the list of all possible scrambles of `$str1`.
-
-This means that for testing the 'fast' method of reverse scrambling,
-we are back to creating the 'brute force' method first
-that creates all permutations,
-just for getting correct expectations for the tests.
-
-Actually this is what happens sometimes in test driven development:
-you do a complete second implementation
-to create the tests for what you actually plan to implement,
-*before* you implement what is your main target.
-
-So I start with implementing a `scrambles` subroutine
-that returns all possible scrambles of a string, just for creating test data for the future implementation:
+The list of zero-based indices (`keys @nums`) is passed into the `subsets` function as a parameter. We then get a subset of indices back that can be used to index the `@diffs` array for the sum of differences, and to create an arrayref with the subset of the `@nums` array for the result set.
 
 ```perl
 use v5.36;
 
-sub scrambles( $str ) {
-    return $str
-        if length( $str ) == 1;
-    my %results;
-    for ( 1 .. length( $str ) - 1 ) {
-        my @part1_scrambles = scrambles( substr( $str, 0, $_ ) );
-        my @part2_scrambles = scrambles( substr( $str, $_ ) );
-        for my $a ( @part1_scrambles ) {
-            for my $b ( @part2_scrambles ) {
-                ++$results{"$a$b"};
-                ++$results{"$b$a"};
-            }
+use Algorithm::Combinatorics qw( subsets );
+use List::Util qw( sum );
+
+sub subset_equilibrium( @nums ) {
+    # Pre-compute the difference between each element and its position
+    # (using 1-based position numbers).
+    # If the sum of elements is equal to the sum of their positions,
+    # the sum of these differences must be zero.
+    # We then need only one array for summing up, and only half the
+    # number of additions.
+    my @diffs = map $nums[$_] - ( $_ + 1 ), keys @nums;
+    my @results;
+    for my $subset_size ( 2 .. @nums - 1 ) {
+        my $iter = subsets( [ keys @nums ], $subset_size );
+        while ( my $indices = $iter->next ) {
+            push @results, [ map $nums[$_], $indices->@* ]
+                if sum( map $diffs[$_], $indices->@* ) == 0;
         }
     }
-    return keys %results;
+    return @results;
 }
 ```
 
-#### Shortcut to Version 1.0
 
-Obviously, this already  implements the main part of the 'brute force' solution.
-I just added a short subroutine to run the challenge task examples,
-and I call this my 'Solution Version 1.0'.
-
-```perl
-# Challenge task solution v1.0 (brute force):
-use List::Util qw( any );
-sub is_scramble( $str1, $str2 ) {
-    return any { $_ eq $str2 } scrambles( $str1 );
-}
-```
-
-#### Version 2.0, the 'Reverse Scramble' 
-
-This is the implementation in Perl of the 'Reverse Scramble' checking algorithm:
-```perl
-# Challenge task solution v2.0 ('Reverse Scramble'):
-sub is_reverse_scramble( $str1, $str2 ) {
-
-    # Convert the strings into sequences of index numbers,
-    # taking care of assigning different numbers to duplicate
-    # characters.
-    my %indexes;
-    for my ( $index, $letter ) ( indexed split "", $str1 ) {
-        push $indexes{$letter}->@*, $index;
-    }
-
-    # Create single number streaks.
-    my @streaks =
-        map [ shift $indexes{$_}->@* // return false ],
-            split "", $str2;
-
-    # Repetitively combine adjacent streaks if they form a contiguous
-    # new streak.
-    while ( @streaks > 1 ) {
-        # Use a separate array for building the combined streaks,
-        # because manipulating the @streaks array within the loop
-        # is too dangerous.
-        my @new_streaks = ( $streaks[0] );
-        my $could_combine = false;
-        for ( @streaks[ 1 .. $#streaks ] ) {
-            if ( $_->[0] == $new_streaks[-1][-1] + 1 ) {
-                # Combine in current order.
-                $could_combine = true;
-                push $new_streaks[-1]->@*, $_->@*;
-            }
-            elsif ( $new_streaks[-1][0] == $_->[-1] + 1 )
-            {
-                # Combine in exchanged order.
-                $could_combine = true;
-                unshift $new_streaks[-1]->@*, $_->@*;
-            }
-            else {
-                # No combination.
-                push @new_streaks, $_;
-            }
-        }
-        # No combinations were possible. Return failure.
-        return false
-            if ! $could_combine;
-
-        # Prepare the next iteration.
-        @streaks = @new_streaks;
-    }
-    return true;
-}
-```
-
-#### **Thank you for the challenge!**
+**Thank you for the challenge!**

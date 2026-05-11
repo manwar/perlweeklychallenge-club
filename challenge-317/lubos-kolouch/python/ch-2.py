@@ -28,9 +28,9 @@ def is_friendly_string(str1: str, str2: str) -> bool:
         return True
 
     # Find positions where strings differ
-    diff_positions: list[tuple[int, str, str]] = [(i, str1[i], str2[i])
-                                                  for i in range(len(str1))
-                                                  if str1[i] != str2[i]]
+    diff_positions: list[tuple[int, str, str]] = [
+        (i, str1[i], str2[i]) for i in range(len(str1)) if str1[i] != str2[i]
+    ]
 
     # If exactly two positions differ, check if swapping them works
     if len(diff_positions) == 2:
@@ -42,7 +42,6 @@ def is_friendly_string(str1: str, str2: str) -> bool:
 
 
 class TestFriendlyStrings(unittest.TestCase):
-
     def test_example1(self):
         """Test case from Example 1"""
         self.assertTrue(is_friendly_string("desc", "dsec"))
@@ -73,5 +72,5 @@ class TestFriendlyStrings(unittest.TestCase):
         self.assertTrue(is_friendly_string("hello", "hello"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
