@@ -7,9 +7,9 @@ use Test;
 # https://rosettacode.org/wiki/Rosetta_Code/Find_unimplemented_tasks#Raku
 
 is-deeply list-division((1..5),  2),  ((1,2,3), (4,5));
-is-deeply list-division((1..6),  3),  ((1,2),(3,4),(5,6));
+is-deeply list-division((1..6),  3),  ((1,2), (3,4), (5,6));
 is-deeply list-division((1..3),  2),  ((1,2), (3,));
-is-deeply list-division((1..10), 5),  ((1,2),(3,4),(5,6),(7,8),(9,10));
+is-deeply list-division((1..10), 5),  ((1,2), (3,4), (5,6), (7,8), (9,10));
 is        list-division((1..3),  4),  -1;
 is-deeply list-division((72,57,89,55,36,84,10,95,99,35), 7), ((72,57), (89,55), (36,84), (10,), (95,), (99,), (35,));
 
