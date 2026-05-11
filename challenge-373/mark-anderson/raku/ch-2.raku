@@ -27,5 +27,6 @@ multi list-division($l, $n)
 sub list-division-v2($l, $n)
 {
     my $c = $l div $n;
-    gist .<result> given $l ~~ m/[$<result> = [\d+] ** {$c..$c+1} % \s] ** {$n} % \s/
+    $l ~~ m/[$<result> = [\d+] ** {$c..$c+1} % \s] ** {$n} % \s/; 
+    $<result>
 }
