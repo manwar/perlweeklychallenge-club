@@ -30,7 +30,8 @@ use v5.42;
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
-my $N = 1;
+
+my $N = 1;  # How many chunks? 1 seems like a reasonable default.
 
 GetOptions("n:i" => \$N, "test" => \$DoTest, "verbose" => \$Verbose);
 my $logger;
@@ -41,18 +42,30 @@ my $logger;
     $logger = Log::Log4perl->get_logger();
 }
 #=============================================================================
+# Alternative implementations
+my @func = (
+    { name => "listDiv", ptr => \&listDiv },
+    { name => "ld2", ptr => \&ld2 },
+); 
+#=============================================================================
 
 exit(!runTest()) if $DoTest;
 
-my $div = listDiv([@ARGV], $N);
-say ref($div) ?  ( '(', join(',', map { '('.join(',', $_->@*).')' } $div->@*), ')' )
-              : $div;
+try        { say showAofA( listDiv([@ARGV], $N) ); }
+catch ($e) { say "-1" }
+
+#=============================================================================
+sub showAofA($ref)
+{
+    return '('. join(',', map { '('.join(',', $_->@*).')' } $ref->@*) .')';
+}
 
 #=============================================================================
 sub listDiv($list, $n)
 {
     my $size = @$list;
-    return -1 if $n > $size;
+    die "N out of range (must be <= $size)" if $n > $size;
+
     my $chunk = floor($size / $n);
     my $extra = $size % $n;
     my @answer;
@@ -64,10 +77,12 @@ sub listDiv($list, $n)
     return \@answer;
 }
 
+#=============================================================================
 sub ld2($list, $n)
 {
     my $size = @$list;
-    return -1 if $n > $size;
+    die "N out of range (must be <= $size)" if $n > $size;
+
     my $chunk = floor($size / $n);
     my $extra = $size % $n;
     my @answer;
@@ -77,9 +92,15 @@ sub ld2($list, $n)
     return \@answer;
 }
 
+#=============================================================================
 sub runTest
 {
     use Test2::V0;
+    use Test2::Tools::Exception;
+
+    is( showAofA([[1]]), "((1))", "Show AofA simple");
+    is( showAofA([[1,2]]), "((1,2))", "Show AofA one list");
+    is( showAofA([[1,2],[3,4]]), "((1,2),(3,4))", "Show AofA two list");
 
     my @case = (
     { name => "Example 1",
@@ -98,10 +119,6 @@ sub runTest
       list => [1,2,3,4,5,6,7,8,9,10], n => 5,
       expect => [[1,2], [3,4], [5,6], [7,8], [9,10]]
     },
-    { name => "Example 5",
-      list => [1,2,3], n => 4,
-      expect => -1
-    },
     { name => "Example 6",
       list => [72,57,89,55,36,84,10,95,99,35], n => 7,
       expect => [[72,57], [89,55], [36,84], [10], [95], [99], [35]]
@@ -116,11 +133,6 @@ sub runTest
     },
     );
 
-    my @func = (
-        { name => "listDiv", ptr => \&listDiv },
-        { name => "ls2", ptr => \&ld2 },
-    ); 
-
     for my $f ( @func )
     {
         for my $tc ( @case )
@@ -128,11 +140,16 @@ sub runTest
             is( $f->{ptr}( [ $tc->{list}->@* ], $tc->{n} ), $tc->{expect}, "$f->{name} $tc->{name}" ); 
         }
     }
-
+    # Test cases that throw exceptions
+    for my $f ( @func )
+    {
+        like ( dies { $f->{ptr}( [1,2,3], 4 ) },  qr/out of range/, "$f->{name} Example 5 throws for n too large")
+    }
 
     done_testing;
 }
 
+#=============================================================================
 sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
@@ -141,4 +158,3 @@ sub runBenchmark($repeat)
             label => sub { },
         });
 }
-
