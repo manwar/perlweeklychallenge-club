@@ -1,3 +1,3 @@
-# The Weekly Challenge 372
+# The Weekly Challenge 373
 
-Blog: [Distant spaces](https://dev.to/simongreennet/weekly-challenge-distant-spaces-2839)
+Blog: [Joining and splitting lists](https://dev.to/simongreennet/weekly-challenge-joining-and-splitting-lists-18gh)

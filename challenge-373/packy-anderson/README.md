@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Empty Substrings and Empty Spaces](https://packy.dardan.com/b/p3)
+[Perl Weekly Challenge: Because your list, your list I can't resist](https://packy.dardan.com/b/pU)
