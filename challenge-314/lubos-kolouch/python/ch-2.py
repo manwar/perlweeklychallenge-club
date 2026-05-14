@@ -1,54 +1,33 @@
 #!/usr/bin/env python3
-"""Sort Column - Perl Weekly Challenge 314 task 2."""
-
-from __future__ import annotations
-
-from collections.abc import Sequence
-import sys
-import unittest
+"""Solution for Perl Weekly Challenge 314 Task 2: Sort Column"""
 
 
-def sort_column_deleted(rows: Sequence[str]) -> int:
-    """Return number of columns that must be deleted to make columns sorted."""
-    if len(rows) <= 1:
+def delete_columns(str_list):
+    """Return the number of columns to delete so that each column is sorted lexicographically."""
+    if not str_list:
         return 0
-    length = len(rows[0])
-    if any(len(row) != length for row in rows):
-        raise ValueError("All strings must have the same length")
-
-    deleted = 0
-    for col in range(length):
-        for r in range(1, len(rows)):
-            if rows[r - 1][col] > rows[r][col]:
-                deleted += 1
+    n_cols = len(str_list[0])
+    delete_count = 0
+    for col in range(n_cols):
+        # Check if column is sorted
+        for row in range(1, len(str_list)):
+            if str_list[row - 1][col] > str_list[row][col]:
+                delete_count += 1
                 break
-    return deleted
+    return delete_count
 
 
-class SortColumnExamples(unittest.TestCase):
-    """Example-based tests from the specification."""
-
-    def test_example_1(self) -> None:
-        self.assertEqual(sort_column_deleted(("swpc", "tyad", "azbe")), 2)
-
-    def test_example_2(self) -> None:
-        self.assertEqual(sort_column_deleted(("cba", "daf", "ghi")), 1)
-
-    def test_example_3(self) -> None:
-        self.assertEqual(sort_column_deleted(("a", "b", "c")), 0)
-
-
-def main(argv: Sequence[str] | None = None) -> None:
-    """Command-line interface."""
-    args = list(sys.argv[1:] if argv is None else argv)
-    if not args:
-        unittest.main(argv=[sys.argv[0]])
-        return
-
-    quoted = '", "'.join(args)
-    print(f'Input:  @list = ("{quoted}")')
-    print(f"Output: {sort_column_deleted(args)}")
-
-
+# Test cases from the blog
 if __name__ == "__main__":
-    main()
+    test_cases = [
+        (["swpc", "tyad", "azbe"], 2),
+        (["cba", "daf", "ghi"], 1),
+        (["a", "b", "c"], 0),
+    ]
+
+    for str_list, expected in test_cases:
+        result = delete_columns(str_list)
+        status = (
+            "OK" if result == expected else f"FAILED: got {result}, expected {expected}"
+        )
+        print(f"delete_columns({str_list}) = {result} [{status}]")
