@@ -1,0 +1,67 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+nr_of_lines = read ()
+
+for (l = 0; l < nr_of_lines; l ++) {
+    #
+    # Number of words on the line
+    #
+    nr_of_words = read ()
+
+    #
+    # First word is n
+    #
+    n           = read ()
+
+    #
+    # Read the list of words
+    #
+    list_c      = nr_of_words - 1
+    for (w = 0; w < list_c; w ++) {
+        list [w] = read ()
+    }
+
+    #
+    # Special case if n exceeds the number of elements in the list
+    #
+    if (n > list_c) {
+        print "-1;\n"
+        continue
+    }
+
+    #
+    # Calculate the set size, and the number of sets which 
+    # get one more element
+    #
+    per_set  = list_c / n
+    overflow = list_c - n * per_set
+
+    #
+    # Print the sets
+    #
+    ptr = 0
+    for (i = 1; i <= n; i ++) {
+        #
+        # Calculate the size of the current set
+        #
+        set_size = per_set
+        if (i <= overflow) {
+            set_size += 1
+        }
+
+        #
+        # Print the current set
+        #
+        for (j = 1; j <= set_size; j ++) {
+            print list [ptr]
+            if (j == set_size) {
+                print "; "
+            } else {
+                print " "
+            }
+            ptr += 1
+        }
+    }
+    print "\n"
+}
+    
