@@ -38,7 +38,7 @@ my $logger;
 
 #=============================================================================
 use enum qw(BITMASK:V_ A E I O U);
-my $ALLV = V_A|V_E|V_I|V_O|V_U;
+my $ALL_VOWELS = V_A|V_E|V_I|V_O|V_U;
 my %V = (a => V_A, e => V_E, i => V_I, o => V_O, u => V_U );
 #=============================================================================
 
@@ -49,7 +49,6 @@ say '(', join(",", countVowel($_)->@*), ')' for @ARGV;
 #=============================================================================
 sub countVowel($str)
 {
-
     my @answer;
 
     my @c = split(//, lc($str));
@@ -62,16 +61,13 @@ sub countVowel($str)
         my $have = $V{$first};
 
         my $i = 0;
-        $logger->debug("$first|@c]");
         while ( $i <= $#c && isVowel(my $next = $c[$i++]) )
         {
             $span .= $next;
             $have |= $V{$next};
-            $logger->debug("$first|$next |$span $have");
-            if ( $have == $ALLV )
+            if ( $have == $ALL_VOWELS )
             {
                 push @answer, $span;
-                $logger->debug("Complete, span=$span");
             }
         }
     }
