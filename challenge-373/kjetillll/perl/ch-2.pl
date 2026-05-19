@@ -1,4 +1,4 @@
-sub f1 {
+sub f1 {  # solution 1
     my @a = @{ shift() };
     my $n = shift;
     return -1 if $n > @a;
@@ -8,7 +8,7 @@ sub f1 {
     \@p
 }
 
-sub f2 {
+sub f2 {  # solution 2
     my($a, $n) = @_;
     $n > @$a ? -1 : $n ? [ reverse [ splice @$a, -@$a / $n ], reverse @{ f2( $a, $n-1 ) } ] : () 
 }
