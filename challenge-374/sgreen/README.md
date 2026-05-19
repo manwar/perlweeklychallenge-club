@@ -1,3 +1,3 @@
-# The Weekly Challenge 373
+# The Weekly Challenge 374
 
-Blog: [Joining and splitting lists](https://dev.to/simongreennet/weekly-challenge-joining-and-splitting-lists-18gh)
+Blog: [Vowels and numbers](https://dev.to/simongreennet/weekly-challenge-vowels-and-numbers-dg8)
