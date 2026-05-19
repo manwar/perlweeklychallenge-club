@@ -1,0 +1,82 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/largestsubstring {
+    0 dict begin
+    /cc exch s2a def
+    /off 0 def
+    /break false def
+    cc length 1 sub -1 1 {
+        /offset exch def
+        break not {
+            0 1 cc length offset sub 1 sub {
+                /x exch def
+                cc x get cc x offset add get eq {
+                    /off offset 1 sub def
+                    /break true def
+                    exit
+                } if
+            } for
+        } if
+        break {
+            exit
+        } if
+    } for
+    off
+    end
+} bind def
+
+(largestsubstring) test.start
+(aaaaa) largestsubstring 3 eq test
+(abcdeba) largestsubstring 5 eq test
+(abbc) largestsubstring 0 eq test
+(abcaacbc) largestsubstring 4 eq test
+(laptop) largestsubstring 2 eq test
+test.end

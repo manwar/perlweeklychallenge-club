@@ -1,0 +1,176 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/c.isspace {
+    dup
+    9 eq exch
+    dup
+    10 eq
+    3 -1 roll or exch
+    dup
+    11 eq
+    3 -1 roll or exch
+    dup
+    12 eq
+    3 -1 roll or exch
+    dup
+    13 eq
+    3 -1 roll or exch
+    32 eq
+    or
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+
+% end included library code
+
+/rearrangespaces {
+    0 dict begin
+    /spaces 0 def
+    [ exch
+      [ exch
+        s2a {
+            dup c.isspace {
+                pop
+                /spaces spaces 1 add def
+            ]
+            [
+            } if
+        } forall
+      ]
+    ]
+    { length 0 gt } filter
+    { a2s } map /words exch def
+    /spdiv 0 def
+    /remainder spaces def
+    /divs words length 1 sub def
+    divs 0 gt {
+        /spdiv spaces divs idiv def
+        /remainder spaces divs mod def
+    } if
+    /out words [ spdiv { 32 } repeat ] a2s strjoin def
+    remainder 0 gt {
+        /out out [ remainder { 32 } repeat ] a2s strconcat def
+    } if
+    out
+    end
+} bind def
+
+(rearrangespaces) test.start
+(  challenge  ) rearrangespaces (challenge    ) eq test
+(coding  is  fun) rearrangespaces (coding  is  fun) eq test
+(a b c  d) rearrangespaces (a b c d ) eq test
+(  team      pwc  ) rearrangespaces (team          pwc) eq test
+(   the  weekly  challenge  ) rearrangespaces (the    weekly    challenge ) eq test
+test.end

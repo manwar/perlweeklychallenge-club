@@ -1,0 +1,141 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/listdivision {
+    0 dict begin
+    /n exch def
+    /a exch def
+    /al a length def
+    n al gt {
+        []
+    } {
+        /divsize [
+            n {
+                a length n idiv
+            } repeat
+        ] def
+        0 1 al n mod 1 sub {
+            /i exch def
+            divsize i 2 copy get 1 add put
+        } for
+        [
+            /x 0 def
+            divsize {
+                /s exch def
+                a x s getinterval
+                /x x s add def
+            } forall
+        ]
+    } ifelse
+    end
+} bind def
+
+(listdivision) test.start
+[1 2 3 4 5] 2 listdivision [[1 2 3] [4 5]] deepeq test
+[1 2 3 4 5 6] 3 listdivision [[1 2] [3 4] [5 6]] deepeq test
+[1 2 3] 2 listdivision [[1 2] [3]] deepeq test
+[1 2 3 4 5 6 7 8 9 10] 5 listdivision [[1 2] [3 4] [5 6] [7 8] [9 10]] deepeq test
+[1 2 3] 4 listdivision [] deepeq test
+test.end
