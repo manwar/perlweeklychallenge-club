@@ -3,7 +3,7 @@ use v6;
 
 sub checkSubstrings($str) {
   return [] unless $str ~~ m:i/
-    <?before .* a><?before .* e><?before .* i><?before .* o>.*u.*
+    <?before .*a><?before .*e><?before .*i><?before .*o>.*u.*
   /;
   my @output;
   @output.append($str);
@@ -14,7 +14,8 @@ sub checkSubstrings($str) {
 
 sub countVowel($str) {
   my @output;
-  @output.append(checkSubstrings($_)) for $str.split(/<-[aeiou]>/);
+  @output.append(checkSubstrings($_))
+    for $str.split(/<-[aeiou]>/);
   return @output.sort;
 }
 
