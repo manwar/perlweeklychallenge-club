@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Because your list, your list I can't resist](https://packy.dardan.com/b/pU)
+[Perl Weekly Challenge: Hey, won't you play...](https://packy.dardan.com/b/pk)
