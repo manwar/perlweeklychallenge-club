@@ -55,7 +55,8 @@ Example 5
 Assumptions
 -----------
 1. "The largest number with all digits the same in the given string" means: the
-   largest number represented by a substring of *contiguous* identical digits. For example, for the string "9199", the answer is 99.
+   largest number represented by a substring of *contiguous* identical digits.
+   For example, for the string "9199", the answer is 99.
 2. If the string consists of zero digits only, the answer is 0 regardless of how
    many digits are in the string.
 
