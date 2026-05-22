@@ -8,8 +8,9 @@ sub maxSame($str) {
   my $current = shift @digits;
   my $largest = $current + 0;
   for my $digit (@digits) {
-    $current = substr($current,0,1) eq $digit ? $current . $digit
-             :                                  $digit;
+    $current = substr($current,0,1) eq $digit
+             ? $current . $digit
+             :            $digit;
     $largest = max($current + 0, $largest);
   }
   $largest;

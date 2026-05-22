@@ -6,8 +6,9 @@ sub maxSame($str) {
   my $current = @digits.shift;
   my $largest = $current.Int;
   for @digits -> $digit {
-    $current = $current.starts-with($digit) ??  $current ~ $digit
-            !!                                  $digit;
+    $current = $current.starts-with($digit
+          ) ??  $current ~ $digit
+            !!             $digit;
     $largest = [$current.Int, $largest].max;
   }
   $largest;
