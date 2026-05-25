@@ -1,3 +1,3 @@
-# The Weekly Challenge 374
+# The Weekly Challenge 375
 
-Blog: [Vowels and numbers](https://dev.to/simongreennet/weekly-challenge-vowels-and-numbers-dg8)
+Blog: [The Common Beauty](https://dev.to/simongreennet/the-weekly-challenge-the-common-beauty-5eh3)
