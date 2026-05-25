@@ -3,12 +3,14 @@
 #=============================================================================
 # Copyright (c) 2026, Bob Lied
 #=============================================================================
-#  
-# ch-2.pl Perl Weekly Challenge 067 Task 2 Gray Code Sequence
+# ch-2.pl Perl Weekly Challenge 067 Task 2  Letter Phone
 #=============================================================================
-# You are given an integer 2 <= $N <= 5.
-# Write a script to generate $N-bit gray code sequence.
-# https://en.wikipedia.org/wiki/Gray_code
+# You are given a digit string $S. Write a script to print all possible letter
+# combinations that the given digit string could represent.
+# 1 -> _,@    2 -> abc   3 -> def
+# 4 -> ghi    5 -> jkl   6 -> mno
+# 7 -> pqrs   8 -> tuv   9 -> wxyz
+# 0 -> " "    # ->       * -> 
 #=============================================================================
 
 use v5.42;
@@ -27,33 +29,42 @@ my $logger;
 }
 #=============================================================================
 
+my %Phone = ( 1  => [ '_',',','@' ], 2   => [ qw(a b c) ], 3   => [ qw(d e f)   ],
+              4  => [ qw(g h i)   ], 5   => [ qw(j k l) ], 6   => [ qw(m m o)   ],
+              7  => [ qw(p q r s) ], 8   => [ qw(t u v) ], 9   => [ qw(w x y z) ],
+              0  => [ ""          ], '#' => [ ""        ], '*' => [ " "         ],
+          );
+
 exit(!runTest()) if $DoTest;
 
-say join(" ", gcs(shift)->@*) while @ARGV;
+say '[', join(", ", map { qq("$_") } phone($_)->@*), ']' for @ARGV;
 
 #=============================================================================
-sub gcs($n)
+sub phone($s)
 {
-    my @g = (0,1);
-    my $one = 0x1;
-    while ( --$n )
+    my @digit = split(//, $s);
+    my @stringList = ( $Phone{shift @digit}->@* );
+    while ( defined(my $d = shift @digit) )
     {
-        $one <<= 1;
-        @g = ( @g, map { $one|$_ } reverse(@g) );
+        my @letter = $Phone{$d}->@*;
+        
+        my @t;
+        for my $s ( @stringList )
+        {
+            push @t, ( map { "$s$_" } @letter );
+        }
+        @stringList = @t;
+
     }
-    return \@g;
+    return [ sort  @stringList ];
 }
 
 sub runTest
 {
     use Test2::V0;
 
-    is( gcs(1), [0,1], "N=1");
-    is( gcs(2), [0,1,3,2], "N=2");
-    is( gcs(3), [0,1,3,2,6,7,5,4], "N=3");
-    is( gcs(4), [0,1,3,2,6,7,5,4,12,13,15,14,10,11,9,8], "N=4");
-    is( gcs(5), [0,1,3,2,6,7,5,4,12,13,15,14,10,11,9,8,
-                 24,25,27,26,30,31,29,28,20,21,23,22,18,19,17,16] , "N=5");
+    is( phone( "2"), [qw(a b c)], "s=2");
+    is( phone("35"), [qw( dj dk dl ej ek el fj fk fl)], "s=35");
 
     done_testing;
 }
