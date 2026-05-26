@@ -78,9 +78,10 @@ sub findKbeauty($num, $k)
     return $beauty;
 }
 
-sub fk2($num, $k)
+
+sub fk3($num, $k)
 {
-    scalar grep { $num % $_ == 0 } map { substr($num, $_, $k) } 0 .. length($num)-$k;
+    scalar grep { $num % substr($num, $_, $k) == 0 }  0 .. length($num)-$k;
 }
 
 sub runTest
@@ -97,7 +98,7 @@ sub runTest
 
     my @solution = (
         { func => \&findKbeauty, desc => "findKbeauty" },
-        { func =>         \&fk2, desc => "fk2" },
+        { func =>         \&fk3, desc => "fk3" },
     );
 
     for my $tc ( @case )
@@ -117,6 +118,6 @@ sub runBenchmark($repeat)
 
     cmpthese($repeat, {
             forloop => sub { findKbeauty(1125899906842623, 3) },
-            grepmap => sub {         fk2(1125899906842623, 3) },
+            grep    => sub {         fk3(1125899906842623, 3) },
         });
 }
