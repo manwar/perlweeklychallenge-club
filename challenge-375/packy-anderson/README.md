@@ -22,4 +22,4 @@
 
 
 ## Blog Post
-[Perl Weekly Challenge: Hey, won't you play...](https://packy.dardan.com/b/pk)
+[Perl Weekly Challenge: You've got to get up every morning...](https://packy.dardan.com/b/qf)
