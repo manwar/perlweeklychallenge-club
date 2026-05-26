@@ -98,8 +98,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    fprintf(stderr, "After getopt, K=%d argc=%d\n", K, argc);
-
     for ( int n = optind; n < argc; n++ )
     {
         printf("%s %d\n", argv[n], findK(argv[n], K) );
