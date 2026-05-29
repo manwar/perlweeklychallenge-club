@@ -1,0 +1,123 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/findkbeauty {
+    0 dict begin
+    /n exch def
+    /a exch def
+    0
+    /c a alloccvs s2a def
+    c n dup 1 sub neg rotor {
+        a2s cvi /tn exch def
+        a tn mod 0 eq {
+             1 add
+        } if
+    } forall
+    end
+} bind def
+
+(findkbeauty) test.start
+240 2 findkbeauty 2 eq test
+1020 2 findkbeauty 3 eq test
+444 2 findkbeauty 0 eq test
+17 2 findkbeauty 1 eq test
+123 1 findkbeauty 2 eq test
+test.end
