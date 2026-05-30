@@ -1,0 +1,85 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/counterify {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n known {
+            c n 2 copy get 1 add put
+        } {
+            c n 1 put
+        } ifelse
+    } forall
+    c
+    end
+} bind def
+
+/singlecommonword {
+    0 dict begin
+    counterify /bc exch def
+    counterify /ac exch def
+    0
+    ac {
+        /ca exch def
+        /w exch def
+        ca 1 eq bc w known and {
+            bc w get 1 eq {
+                1 add
+            } if
+        } if
+    } forall
+    end
+} bind def
+
+(singlecommonword) test.start
+[(apple) (banana) (cherry)] [(banana) (cherry) (date)] singlecommonword 2 eq test
+[(a) (ab) (abc)] [(a) (a) (ab) (abc)] singlecommonword 2 eq test
+[(orange) (lemon)] [(grape) (melon)] singlecommonword 0 eq test
+[(test) (test) (demo)] [(test) (demo) (demo)] singlecommonword 0 eq test
+[(Hello) (world)] [(hello) (world)] singlecommonword 1 eq test
+test.end
