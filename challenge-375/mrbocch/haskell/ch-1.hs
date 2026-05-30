@@ -1,3 +1,4 @@
+import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Function 
 
@@ -5,10 +6,10 @@ singleCommonWord :: [String] -> [String] -> Int
 singleCommonWord = ((.) . (.)) (Map.size . Map.filter (==2))
                                (on (Map.intersectionWith (+)) tally)
   where 
-    tally :: Ord k => [k] -> Map.Map k Int
+    tally :: Ord k => [k] -> Map k Int
     tally xs = tally' xs Map.empty
       where 
-        tally' :: Ord k => [k] -> Map.Map k Int -> Map.Map k Int
+        tally' :: Ord k => [k] -> Map k Int -> Map k Int
         tally' [] map = map  
         tally' (x:rest) map  
           | Map.member x map = tally' rest (Map.adjust (+1) x map)
