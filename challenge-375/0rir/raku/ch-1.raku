@@ -19,6 +19,7 @@ my @Test =
     ("Hello", "world"),             ("hello", "world"),             1,
     ("", "world"),                  ("", "world"),                  2,
     ("", "world"),                  ("", ""),                       0,
+    ("",),                          (),                             0,
     (),                             (),                             0,
 ;
 plan +@Test ÷ 3;
@@ -32,9 +33,11 @@ for @Test -> $a, $b, $exp {
 }
 done-testing;
 
-my @array1 = ("test", "test", "demo",         'ha', 'hi',       'hmm');
-my @array2 = ("test",         "demo", "demo", 'ha', 'hi', 'hi', 'hmm');
+my @array1 = ("test", "demo",
+              "test", "demo", 'ya', 'hi', 'hmm');
+my @array2 = ("test", "demo",       'hi',
+                      "demo", 'ya', 'hi', 'hmm');
 
-say qq{\nInput: @array1 = ["@array1.join( '", "')"];},
-  ~ qq{\n       @array2 = ["@array2.join( '", "')"];},
+say qq{\nInput: @array1 = ["@array1.sort.join( '", "')"];},
+  ~ qq{\n       @array2 = ["@array2.sort.join( '", "')"];},
   ~ qq{\nOutput: &task( @array1, @array2)};
