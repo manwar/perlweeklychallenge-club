@@ -27,8 +27,7 @@ sub find_k_beauty( $num, $k ) {
     );
 }
 
-use lib qw( . ../../../lib );
-use MultiTest;
+use Test2::V0 qw( -no_srand );
 
 my @tests = (
     [ "Example 1", [240, 2], 2 ],
@@ -38,13 +37,6 @@ my @tests = (
     [ "Example 5", [123, 1], 2 ],
 );
 
-run( "find_k_beauty", \@tests );
-
-__END__
-
-# Version for publishing:
-
-use Test2::V0 qw( -no_srand );
 is find_k_beauty( $_->[1]->@* ), $_->[2], $_->[0]
     for @tests;
 done_testing;
