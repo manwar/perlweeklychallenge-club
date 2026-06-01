@@ -20,7 +20,7 @@ sub doubled-words($str is copy)
 {
     my token html { <ws>? '<' '/'? \w+ '>' <ws>? }
 
-    $str ~~ s:g/ (<<\w+>>) (<html>* || <ws>) (<<\w+>>) 
+    $str ~~ s:g/ (<<\w+>>) (<html>+ || <ws>) (<<\w+>>) 
                   <?{ $0.lc eq $2.lc }> /{ "[$0]" ~ $1 ~ "[$2]" }/;
 
     $str.lines.grep(/'['/).join("\n")
