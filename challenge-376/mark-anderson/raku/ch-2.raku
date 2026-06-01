@@ -18,11 +18,10 @@ is doubled-words("There's more than one one way to do it.\nEasy things should be
 
 sub doubled-words($str is copy)
 {
-    $str ~~ s:g/(<<\w+>>) 
-                (<ws>? ['<' '/'? \w+ '>']? <ws>?) 
-                (<<\w+>>) 
-                (<ws>? ['<' '/'? \w+ '>']? <ws>?) 
-                <?{ $0.lc eq $2.lc }> /{ "[$0]" ~ $1 ~ "[$2]" ~ $3 }/;
+    my token html { <ws>? '<' '/'? \w+ '>' <ws>? }
+
+    $str ~~ s:g/ (<html>* <ws>) (\w+) (<html>* <ws>) (\w+) 
+                  <?{ $1.lc eq $3.lc }> /{$0 ~ "[$1]" ~ $2 ~ "[$3]"}/;
 
     $str.lines.grep(/'['/).join("\n")
 }
