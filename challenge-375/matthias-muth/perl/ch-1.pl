@@ -18,8 +18,7 @@ sub single_common_word( $array1, $array2 ) {
     return scalar grep { $freq1{$_} == 1 == ( $freq2{$_} // 0 ) } keys %freq1;
 }
 
-use lib qw( . ../../../lib );
-use MultiTest;
+use Test2::V0 qw( -no_srand );
 
 my @tests = (
     [ "Example 1",
@@ -31,13 +30,6 @@ my @tests = (
     [ "Example 5", [["Hello", "world"], ["hello", "world"]], 1 ],
 );
 
-run( "single_common_word", \@tests );
-
-__END__
-
-# Version for publishing:
-
-use Test2::V0 qw( -no_srand );
 is single_common_word( $_->[1]->@* ), $_->[2], $_->[0]
     for @tests;
 done_testing;
