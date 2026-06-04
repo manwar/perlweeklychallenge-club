@@ -20,6 +20,5 @@
 * [Task 1](elixir/ch-1.exs)
 * [Task 2](elixir/ch-2.exs)
 
-
 ## Blog Post
-[Perl Weekly Challenge: You've got to get up every morning...](https://packy.dardan.com/b/qf)
+[Perl Weekly Challenge: You might think I'm crazy, but I don't even care](https://packy.dardan.com/b/r4)
