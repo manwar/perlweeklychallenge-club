@@ -1,0 +1,30 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+ibase=36
+
+#
+# The input consists of chess field square, in algebraic notation, a1 to h8. 
+# Normally, bc cannot read text, but if we change the base of the input to 36,
+# we can read the squares as numbers (in base 36).
+#
+# To get the parity of the file, (where 'a', 'c', 'e' and 'g' are odd,
+# and 'b', 'd', 'f', 'h' are even), we divide the number by 10 (36 in base 10),
+# add 1 and take the modulus of 2. To get the parity of the row, we simply
+# take the modulus of 2.
+#
+# If the parity of both the file and row are the same, the square is black (1)
+# else the square is white (0); we use the variables p1 and p2 for that.
+#
+# Then we can just compare p1 and p2.
+#
+
+while (1) {
+    sq1 = read ()
+    if (sq1 == 0) {
+        break
+    }
+    sq2 = read ()
+    if ((sq1 / 10 + 1) % 2 == sq1 % 2) {p1 = 1} else {p1 = 0}
+    if ((sq2 / 10 + 1) % 2 == sq2 % 2) {p2 = 1} else {p2 = 0}
+    if (p1 == p2) {print "true\n"} else {print "false\n"}
+}
