@@ -1,0 +1,78 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+
+% end included library code
+
+/cs2xy {
+    [ exch
+      s2a aload pop
+      (1) s2a aload pop sub
+      exch
+      (a) s2a aload pop sub
+      exch
+    ]
+} bind def
+
+/checkcolor {
+    cs2xy aload pop
+    add 2 mod 1 eq
+} bind def
+
+/chessboardsquares {
+    checkcolor exch
+    checkcolor
+    eq
+} bind def
+
+(chessboardsquares) test.start
+(a7) (f4) chessboardsquares test
+(c1) (e8) chessboardsquares not test
+(b5) (h2) chessboardsquares not test
+(f3) (h1) chessboardsquares test
+(a1) (g8) chessboardsquares not test
+test.end
