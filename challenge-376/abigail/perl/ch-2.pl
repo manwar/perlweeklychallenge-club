@@ -59,7 +59,11 @@ my $tag_re = qr {
 #
 # Tokenize the text: split into words and non-words
 #
-my @chunks = grep {defined}  # No idea why we need this
+# Note that the rules inside the (?(DEFINE) ... ) *do* generate capture,
+# thought they don't capture anything -- not even an empty string.
+# So we need to filter out the undefined captures.
+#
+my @chunks = grep {defined}
              $text =~ /(  \p{XPosixAlnum}+                     # A word
                         | (?:$tag_re|[^\p{XPosixAlnum}<]+|<)+  # Not a word
                        )/gx;
