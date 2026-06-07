@@ -1,3 +1,3 @@
-# The Weekly Challenge 375
+# The Weekly Challenge 376
 
-Blog: [The Common Beauty](https://dev.to/simongreennet/the-weekly-challenge-the-common-beauty-5eh3)
+Blog: [Double chessboard ](https://dev.to/simongreennet/weekly-challenge-double-chessboard-5ce5)
