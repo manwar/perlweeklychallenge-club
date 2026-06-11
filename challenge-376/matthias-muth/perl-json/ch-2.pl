@@ -11,17 +11,11 @@
 use v5.36;
 
 sub doubled_words( $str ) {
-    my $word_re = qr/ \b [a-z'-]+ \b /xi;
-    my $separator_re = qr/ (?:
-        <[^>]*> \s*             # tags
-        | [[:punct:]] \s*       # punctuation
-        |\s+                    # whitespace
-    )+ /sx;
-    $str =~ s/ ($word_re) ($separator_re) (\g{1}) /\[$1\]$2\[$3\]/xig;
-    return join "\n", grep /\[/, split "\n", $str;
+    my @results;
+    return @results;
 }
 
-# Read test data from the accompanying 'ch-?.json' file and run the tests.
+# Read test data from the accompanying '.json' file and run the tests.
 # (Fixed boilerplate code, no changes needed.)
 
 use Test2::V0 qw( -no_srand );
@@ -40,10 +34,10 @@ my $json_data = decode_json( $json_text );
 
 # Convert any expected output strings "true" and "false"
 # as well as JSON Boolean constants true and false
-# into Test2::V0::Compare T and F conditions. 
+# into Test2::V0::Compare T and F conditions.
 for ( @{ $json_data->{examples} } ) {
     for ( @{ $_->{out} } ) {
-        if ( /^(?:(true)|(false))$/i || ref $_ eq "JSON::PP::Boolean" ) {
+        if ( /^(?:(true)|(false))$/i || JSON::PP::is_bool( $_ ) ) {
             $_ = $1 ? T : $2 ? F : $_ ? T : F;
         }
     }
