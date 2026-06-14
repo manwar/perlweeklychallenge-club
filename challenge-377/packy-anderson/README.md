@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: You might think I'm crazy, but I don't even care](https://packy.dardan.com/b/r4)
+[Perl Weekly Challenge: They run and hide their heads / They might as well be dead...](https://packy.dardan.com/b/rU)
