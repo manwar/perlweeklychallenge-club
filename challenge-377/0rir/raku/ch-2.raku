@@ -50,7 +50,6 @@ for @Test -> $in, $exp {
     is task( $in), $exp, "$exp <- $in.raku()";
 }
 done-testing;
-#Input: @array = ("ab", "abab", "ababab")
 my @array = ("ab", "abab", "ababab");
 
 say qq{\nInput: @array = @array.raku()\nOutput: }, task @array;

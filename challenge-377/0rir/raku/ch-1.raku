@@ -26,6 +26,7 @@ sub task-brief( Str:D() $a where *.chars > 1 -->Bool:D) {
     my @r = ($a.comb( 2 )».flip).unique;
     so $a.contains: @r.any;
 }
+
 sub task-regx( Str:D() $a where *.chars > 1 -->Bool:D) {
      so $a ~~ m/ (.)  {} :my $zed = $0;
                  [ $zed ||  . $zed ]
@@ -47,9 +48,8 @@ sub task-arry( Str:D() $a where *.chars > 1 -->Bool:D) {
     False;
 }
 
-
 sub task-str( Str:D() $a where $a.chars > 1 -->Bool:D) {
-    when $a.chars ≤  1 {  False }
+    when $a.chars ≤  1  { False }
     when $a.chars == 2  {
         return $a.substr(0,1) eq $a.substr(1,1) ?? True !! False
     }
@@ -74,8 +74,8 @@ done-testing;
 my $str = "abcdefghijklmnopqrstvvwxyz";
 say qq{\nInput: \$str = "$str"\nOutput: }, task-arry( $str);
 
+# do Benchmarks?
 
-# Benchmarks? -------------------------
 my $timeout-seconds = 5;
 my $input-promise = start { prompt "For Benchmarks Enter y in 5 seconds: " };
 my $timeout-promise = Promise.in($timeout-seconds);
@@ -86,54 +86,58 @@ if $input-promise.status == Kept {
     my $user-input = $input-promise.result;
     say "Running benchmarks:";
 } else {
-    say "Exiting";
+    say "Done!";
     exit;
 }
 
-# For each implementation, bench against 26 and 2600 chars Strs, with a single
+# For each implementation, bench against 26 and 2600 chars Strs, with a single reversable.
 my $b = Bench.new;
 
-my ($short, $long) = 5000, 1000;                   # Bench repetitions
-my $short-str = "abcdefghijklmnopqrstuvwxzz";      
+my $abc = ('a'...'z').join;
+my ($short-ct, $long-ct) = 5000, 1000;                   # Bench repetitions
 my $mult = 100;
-my $long-str =  $short-str x $mult;
-my $s-len = $short-str.chars;
+
+my $s-len = $abc.chars;
 my $l-len = $s-len × $mult;
 
-say '--------------------------------------------------';
-say "\nWorse case";
-$b.cmpthese($short, {
-  ('regx-short'   ~ $s-len) => sub { task-regx( $short-str); },
-  ('str-short'   ~ $s-len) => sub { task-str(   $short-str); },
-  ('arry-short'  ~ $s-len) => sub { task-arry(  $short-str); },
-  ('brief-short' ~ $s-len) => sub { task-brief( $short-str); },
-});
-$long-str =  ('a'...'z').join x $mult;
-$long-str ~~ s/.. $/ zz /;
-$b.cmpthese($long, {
-  ('regx-long'  ~ $l-len) => sub { task-regx(  $long-str); },
-  ('str-long'   ~ $l-len) => sub { task-str(   $long-str); },
-  ('arry-long'  ~ $l-len) => sub { task-arry(  $long-str); },
-  ('brief-long' ~ $l-len) => sub { task-brief( $long-str); },
-});
-say '--------------------------------------------------';
-say "\nMid case";
-$long-str =  "abcdefghijklmnopqrstuvwxyz" xx $mult div 2
-     ~ 'z' ~ "abcdefghijklmnopqrstuvwxyz" xx $mult div 2;
-$short-str = "abcdefghijklnnopqrstuvwxyz";
+my $short-worst = $abc;
+my $long-worst  = $abc x $mult;
+$long-worst  ~~ s/ yz $ / zz /;
+$short-worst ~~ s/ yz $ / zz /;
 
-$b.cmpthese($short, {
-  ('regx-short'  ~ $s-len) => sub { task-regx( $short-str); },
-  ('str-short'   ~ $s-len) => sub { task-str(   $short-str); },
-  ('arry-short'  ~ $s-len) => sub { task-arry(  $short-str); },
-  ('brief-short' ~ $s-len) => sub { task-brief( $short-str); },
+my $short-mid = "abcdefghijkl" ~ "XX" ~ "opqrstuvwxyz";
+my $long-mid =  "abcdefghijklmnopqrstuvwxyz" xx $mult div 2;
+$long-mid ~~ s/ z $/ a /;
+$long-mid ~= "abcdefghijklmnopqrstuvwxyz" xx $mult div 2;
+
+say "\nWorst case";
+$b.cmpthese($short-ct, {
+  ('regx-short'  ~ $s-len) => sub { task-regx  $short-worst },
+  ('str-short'   ~ $s-len) => sub { task-str   $short-worst },
+  ('arry-short'  ~ $s-len) => sub { task-arry  $short-worst },
+  ('brief-short' ~ $s-len) => sub { task-brief $short-worst },
 });
 
-say '--------------------------------------------------';
+say "\nWorst case";
+$b.cmpthese($long-ct, {
+  ('regx-long'  ~ $l-len) => sub { task-regx  $long-worst },
+  ('str-long'   ~ $l-len) => sub { task-str   $long-worst },
+  ('arry-long'  ~ $l-len) => sub { task-arry  $long-worst },
+  ('brief-long' ~ $l-len) => sub { task-brief $long-worst },
+});
+
 say "\nMid case";
-$b.cmpthese($long, {
-  ('regx-long'  ~ $l-len) => sub { task-regx(  $long-str); },
-  ('str-long'   ~ $l-len) => sub { task-str(   $long-str); },
-  ('arry-long'  ~ $l-len) => sub { task-arry(  $long-str); },
-  ('brief-long' ~ $l-len) => sub { task-brief( $long-str); },
+$b.cmpthese($short-ct, {
+  ('regx-short'  ~ $s-len) => sub { task-regx(  $short-mid); },
+  ('str-short'   ~ $s-len) => sub { task-str(   $short-mid); },
+  ('arry-short'  ~ $s-len) => sub { task-arry(  $short-mid); },
+  ('brief-short' ~ $s-len) => sub { task-brief( $short-mid); },
+});
+
+say "\nMid case";
+$b.cmpthese($long-ct, {
+  ('regx-long'  ~ $l-len) => sub { task-regx(  $long-mid); },
+  ('str-long'   ~ $l-len) => sub { task-str(   $long-mid); },
+  ('arry-long'  ~ $l-len) => sub { task-arry(  $long-mid); },
+  ('brief-long' ~ $l-len) => sub { task-brief( $long-mid); },
 });
