@@ -1,3 +1,3 @@
-# The Weekly Challenge 376
+# The Weekly Challenge 377
 
-Blog: [Double chessboard ](https://dev.to/simongreennet/weekly-challenge-double-chessboard-5ce5)
+Blog: [Existence](https://dev.to/simongreennet/weekly-challenge-existence-4531)
