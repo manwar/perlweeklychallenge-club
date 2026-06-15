@@ -3,14 +3,14 @@
 #       The Weekly Challenge - Perl & Raku
 #       (https://theweeklychallenge.org)
 #
-#       Challenge 376 Task 2: Doubled Words
+#       Challenge 377 Task 2: Prefix Suffix
 #
 #       Perl solution by Matthias Muth.
 #
 
 use v5.36;
 
-sub doubled_words( $str ) {
+sub prefix_suffix( @array ) {
     my @results;
     return @results;
 }

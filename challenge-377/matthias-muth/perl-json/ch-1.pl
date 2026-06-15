@@ -3,14 +3,14 @@
 #       The Weekly Challenge - Perl & Raku
 #       (https://theweeklychallenge.org)
 #
-#       Challenge 376 Task 2: Doubled Words
+#       Challenge 377 Task 1: Reverse Existence
 #
 #       Perl solution by Matthias Muth.
 #
 
 use v5.36;
 
-sub doubled_words( $str ) {
+sub reverse_existence( $str ) {
     my @results;
     return @results;
 }
