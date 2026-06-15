@@ -1,3 +1,3 @@
-# The Weekly Challenge 377
+# The Weekly Challenge 378
 
-Blog: [Existence](https://dev.to/simongreennet/weekly-challenge-existence-4531)
+Blog: [The Second Sum](https://dev.to/simongreennet/weekly-challenge-the-second-sum-3lj7)
