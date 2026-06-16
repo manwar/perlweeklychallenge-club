@@ -11,12 +11,12 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     say "$_ -> ",
-	(
-	 sort {$b<=>$a} # reverse sort
-	 uniq           # unique digits
-	 grep{/[0-9]/}  # only keep digits
-	 split ""       # split in characters
-	)               # list of sorted unique digits
-	[1]             # take second element
-	//-1            # or -1 if not defined
+        (
+         sort {$b<=>$a} # reverse sort
+         uniq           # unique digits
+         grep{/\d/}  # only keep digits
+         split ""       # split in characters
+        )               # list of sorted unique digits
+        [1]             # take second element
+        //-1            # or -1 if not defined
 }
