@@ -14,12 +14,12 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try {
-	die "Only a-j are valid characters: $_ " unless /^[a-j\s]*$/;
-	my @words = split " ";
-	die "Expected three space separated strings: $_" unless @words==3;
-	my @numbers = map {tr/a-j/0-9/r} @words;
-	my $result =  $numbers[2]==$numbers[0]+$numbers[1]?"True":"False";
-	say "$_ -> $result";
+        die "Only a-j are valid characters: $_ " unless /^[a-j\s]*$/;
+        my @words = split " ";
+        die "Expected three space separated strings: $_" unless @words==3;
+        my @numbers = map {tr/a-j/0-9/r} @words;
+        my $result =  $numbers[2]==$numbers[0]+$numbers[1]?"True":"False";
+        say "$_ -> $result";
     }
     catch($e){ warn $e; }
 }
