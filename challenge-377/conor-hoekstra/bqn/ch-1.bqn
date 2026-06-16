@@ -1,9 +1,11 @@
 # For up to date code:
 # https://github.com/codereport/bqn-code/blob/main/pwc/377-1.bqn
+# https://arraybox.dev/#uecv
 
 u ⇐ •Import "/home/cph/bqn-test/test.bqn"
 
-ReverseExistence ← { ∨´∨´˘⍷⟜(⌽𝕩)˘2↕𝕩 }
+ReverseExistence ← { ∨´⌽˘⊸∊2↕𝕩 } # Explicit
+ReverseExistence ← ∨´·⌽˘⊸∊2↕⊢    # Tacit
 
 # Tests
 u.UnitTest (ReverseExistence "abcba") ≡ 1
