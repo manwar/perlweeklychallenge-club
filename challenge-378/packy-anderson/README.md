@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: They run and hide their heads / They might as well be dead...](https://packy.dardan.com/b/rU)
+[Perl Weekly Challenge: 'Cause I'd Already Know](https://packy.dardan.com/b/rm)
