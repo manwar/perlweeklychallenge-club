@@ -1,0 +1,19 @@
+LET i 1
+FOR arg IF i < \ARG
+    LET arg \ARG:i
+    LET s 0
+    LET d 9
+    FOR digit IF d > @NEG 1
+        IF arg ~ d
+            IF s
+                NEXT done
+            FI
+            LET s += 1
+        FI
+        LET d -= 1
+        NEXT digit
+    FI
+    FOR done d _ "
+    LET i += 1
+    NEXT arg
+FI
