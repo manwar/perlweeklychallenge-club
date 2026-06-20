@@ -7,25 +7,16 @@
 # count of such pairs.
 
 use Dev::Util::Syntax;
-use File::JSON::Slurper      qw(read_json);
 use Algorithm::Combinatorics qw(combinations);
-
 use Test2::V0;
 plan tests => 6;
 
-my $json_ref = read_json( __FILE__ =~ s/pl$/json/r )
-    or die "ERROR: could not read test data from json file\n";
-my $challenge_ref  = $json_ref->{ challenge };
-my $input_vars_ref = $json_ref->{ input_vars };
-my $examples_ref   = $json_ref->{ examples };
-
-printf qq{Challenge: %s Task %s: %s\n\n},
-    $challenge_ref->{ week },
-    $challenge_ref->{ task },
-    $challenge_ref->{ name };
+use lib '.';
+use PWC;
+my $json_data = get_json_data();
 
 is( prefix_suffix( $_->{ in } ), $_->{ out }->[0], $_->{ name } )
-    for @{ $examples_ref };
+    for $json_data->{examples}->@*;
 
 sub pre_suf {
     my ( $str1, $str2 ) = @_;
@@ -36,7 +27,7 @@ sub pre_suf {
 
 sub prefix_suffix {
     my @array = $_[0]->@*;
-    printf qq{Input: %s = ("%s")\n}, $input_vars_ref->[0], join '", "' => @array;
+    print_inputs($json_data->{input_vars}, @_);
     my $result = 0;
 
     my $iter = combinations( \@array, 2 );
@@ -46,6 +37,6 @@ sub prefix_suffix {
         }
     }
 
-    printf qq{Output: %s\n}, $result;
+    print_outputs($result);
     return $result;
 }

@@ -1,0 +1,77 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/l2n {
+    0 exch
+    s2a {
+        exch
+        10 mul
+        add
+        97 sub
+    } forall
+} bind def
+
+/sumofwords {
+    3 1 roll
+    l2n exch
+    l2n exch
+    add
+    exch
+    l2n eq
+} bind def
+
+(sumofwords) test.start
+(acb) (cba) (cdb) sumofwords test
+(aab) (aac) (ad) sumofwords test
+(bc) (je) (jg) sumofwords not test
+(a) (aaaa) (aa) sumofwords test
+(c) (d) (h) sumofwords not test
+(gfi) (hbf) (bdhd) sumofwords test
+test.end
