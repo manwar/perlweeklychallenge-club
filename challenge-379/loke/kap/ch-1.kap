@@ -1,0 +1,12 @@
+⍝ This is actually a pretty difficult problem in Kap. Not because
+⍝ it's hard to solve, but because this kind of array manipulation
+⍝ is so fundamental to the language that it's hard to define what
+⍝ it means to not use the native reverse function, which is
+⍝ just a single character in Kap.
+⍝
+⍝ The following code computes a reverse number sequcence and uses
+⍝ it to look up the characters in the original array.
+
+solve ⇐ { ⍵[(¯1+≢⍵)-⍳≢⍵] }
+
+io:println solve "reverse the given string"
