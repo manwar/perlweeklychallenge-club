@@ -1,0 +1,24 @@
+LET base \ARG:1
+LET limit \ARG:2
+
+LET i 0
+FOR loop IF i < limit
+    IF @is-armstrong i
+        WUNT \AUSG ", " [ (@NOT i * 2) _ i
+    FI
+    LET i += 1
+    NEXT loop
+FI
+WUNT \AUSG "\n"
+END
+
+FOR is-armstrong KTHX \@ = @armstrong \@
+FOR armstrong LEET t \@ ` base
+    LEET s 0
+    LEET i 0
+    10 IF i < @LENGTH t
+        LET s += t . i ' base ^ @LENGTH t
+        LET i += 1
+        GOFOR 10
+    FI
+KTHX s

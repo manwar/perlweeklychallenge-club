@@ -1,0 +1,8 @@
+LET str \ARG:1
+WUNT \AUSG @reverse str _ "\n"
+END
+
+FOR reverse IF @LENGTH \@
+        KTHX \@ [ @NEG 1 _ @reverse (\@ ] @NEG 1)
+    FI
+KTHX \@
