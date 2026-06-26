@@ -1,0 +1,182 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/pow {
+    0 dict begin
+    /pow exch def
+    /x exch def
+    /ret 1 def
+    {
+        pow 0 le {
+            exit
+        } if
+        pow 1 and 1 eq {
+            /ret ret x mul def
+        } if
+        /x x dup mul def
+        /pow pow -1 bitshift def
+    } loop
+    ret
+    end
+} bind def
+
+/armstrongnumber {
+    0 dict begin
+    /limit exch def
+    /base exch def
+    [
+        0 1 limit 1 sub {
+            /candidate exch def
+            /digits [
+                candidate 0 eq {
+                    0
+                } {
+                    /c candidate def
+                    {
+                        c 0 le {
+                            exit
+                        } if
+                        c base mod
+                        /c c base idiv def
+                    } loop
+                } ifelse
+            ] def
+            /dl digits length def
+            digits { dl pow } map { add } reduce candidate eq {
+                candidate
+            } if
+        } for
+    ]
+    end
+} bind def
+
+(armstrongnumber) test.start
+10 1000 armstrongnumber [0 1 2 3 4 5 6 7 8 9 153 370 371 407] deepeq test
+7 1000 armstrongnumber [0 1 2 3 4 5 6 10 25 32 45 133 134 152 250] deepeq test
+16 1000 armstrongnumber [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 342 371 520 584 645] deepeq test
+test.end
