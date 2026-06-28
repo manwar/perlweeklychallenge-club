@@ -1,3 +1,3 @@
-# The Weekly Challenge 378
+# The Weekly Challenge 379
 
-Blog: [The Second Sum](https://dev.to/simongreennet/weekly-challenge-the-second-sum-3lj7)
+Blog: [Work it](https://dev.to/simongreennet/weekly-challenge-work-it-1j3a)
