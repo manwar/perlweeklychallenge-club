@@ -1,0 +1,11 @@
+#! /usr/bin/env raku
+
+multi sub MAIN ($str where $str.chars > 0)
+{
+  say ($str.chars -1 ... 0).map({ $str.substr($_,1) }).join;
+}
+
+multi sub MAIN ($str where $str.chars == 0)
+{
+  say "";
+}
