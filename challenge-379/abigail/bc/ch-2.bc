@@ -1,0 +1,23 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+while (1) {
+    base = read ()
+    if (base == 0) {
+        break
+    }
+    limit = read ()
+    for (n = 0; n <= limit; n ++) {
+        size = 0
+        for (n_c = n; n_c > 0; n_c /= base) {
+            size += 1
+        }
+        sum = 0
+        for (n_c = n; n_c > 0; n_c /= base) {
+            sum += (n_c % base) ^ size
+        }
+        if (sum == n) {
+            print sum, " "
+        }
+    }
+    print "\n"
+}
