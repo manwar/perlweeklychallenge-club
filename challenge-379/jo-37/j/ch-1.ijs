@@ -1,7 +1,7 @@
 #!/usr/local/bin/jconsole
 
 rev_from =: {~ -@>:@i.@# : [:
-rev_substr =: (0 ,: __)&(];.0)
+rev_substr =: __&(];.0)
 
 Examples =: <;._2 (0 : 0)
 
