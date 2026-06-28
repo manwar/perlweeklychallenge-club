@@ -2,6 +2,16 @@
 
 This is the central repository for the members of [**The Weekly Challenge**](https://theweeklychallenge.org). The members can submit the solution to the challenge each week in their favorite programming languages, although the preferred languages are **Perl** and **Raku**.
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=manwar%2Fperlweeklychallenge-club&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=manwar/perlweeklychallenge-club&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=manwar/perlweeklychallenge-club&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=manwar/perlweeklychallenge-club&type=date&legend=top-left" />
+ </picture>
+</a>
+
 ## EZPWC - Easy Perl Weekly Challenges Script
 
 **Saif Ahmed**, respected member of **Team PWC**, created the tool **[EZPWC](https://github.com/saiftynet/EZPWC)** to help you with contributing to the weekly challenge. We highly recommend you give it a try. If you have any questions/suggestions, then please raise an issue against the tool.
