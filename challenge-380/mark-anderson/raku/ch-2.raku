@@ -1,4 +1,4 @@
-#!/usr/local/www raku
+#!/usr/bin/env raku
 use Test;
 
 is reverse-degree("z"),         1;
