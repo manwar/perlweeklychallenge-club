@@ -10,6 +10,6 @@ is reverse-degree("zyx"),      14;
 sub reverse-degree($str)
 {
     my @a = $str.comb;
-    my %h is Map = 'a'..'z' Z=> (26...1);
+    my %h is Map = 'a'..'z' >>=><< (26...1);
     sum (1..@a) >>*<< %h{@a}
 }
