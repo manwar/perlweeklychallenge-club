@@ -1,0 +1,98 @@
+#!/usr/bin/env tclsh
+#
+# Task 2: Reverse Degree
+# 
+# Submitted by: Mohammad Sajid Anwar
+# 
+# You are given a string.  Write a script to find the reverse degree of the given
+# string.  For each character, multiply its position in the reversed alphabet
+# ('a' = 26, 'b' = 25, ..., 'z' = 1) with its position in the string. Sum these
+# products for all characters in the string to get the reverse degree.
+# 
+# Example 1
+# 
+#     Input: $str = "z"
+#     Output: 1
+# 
+#     Reverse alphabet value of "z" is 1.
+#     Position 1: 1 x 1
+#     Sum of product: 1
+# 
+# Example 2
+# 
+#     Input: $str = "a"
+#     Output: 26
+# 
+#     Reverse alphabet value of "a" is 26.
+#     Position 1: 1 x 26
+#     Sum of product: 26
+# 
+# Example 3
+# 
+#     Input: $str = "bbc"
+#     Output: 147
+# 
+#     Reverse alphabet value of "b" is 25 and "c" is 24.
+#     Position 1: 1 x 25
+#     Position 2: 2 x 25
+#     Position 3: 3 x 24
+#     Sum of product: 25 + 50 + 72 => 147
+# 
+# Example 4
+# 
+#     Input: $str = "racecar"
+#     Output: 560
+# 
+#     Reverse alphabet value of "r" is 9, "a" is 26, "c" is 24 and "e" is 24.
+#     Position 1: 1 x 9
+#     Position 2: 2 x 26
+#     Position 3: 3 x 24
+#     Position 4: 4 x 22
+#     Position 5: 5 x 24
+#     Position 6: 6 x 26
+#     Position 7: 7 x 9
+#     Sum of product: 9 + 52 + 72 + 88 + 120 + 156 + 63
+# 
+# Example 5
+# 
+#     Input: $str = "zyx"
+#     Output: 14
+# 
+#     Reverse alphabet value of "z" is 1, "y" is 2 and "x" is 3.
+#     Position 1: 1 x 1
+#     Position 2: 2 x 2
+#     Position 3: 3 x 3
+#     Sum of product: 1 + 4 + 9
+# 
+
+package require Tcl 8.6
+package require tcltest
+
+set cases {
+    {"z"         1 "Example 1"}
+    {"a"        26 "Example 2"}
+    {"bbc"     147 "Example 3"}
+    {"racecar" 560 "Example 4"}
+    {"zyx"      14 "Example 5"}
+}
+
+proc reverse_degree {str} {
+    set sum 0
+    set len [string length $str]
+    for {set i 0} {$i < $len} {incr i} {
+        set char [string index $str $i]
+        set rev_val [expr 26 - ([scan $char %c] - [scan a %c])]
+        set sum [expr $sum + ($i + 1) * $rev_val]
+    }
+    return $sum
+}
+
+tcltest::configure -verbose {pass}
+foreach case $cases {
+    tcltest::test [lindex $case 2] {} {
+        reverse_degree [lindex $case 0]
+    } [lindex $case 1]
+}
+
+exit 0
+
