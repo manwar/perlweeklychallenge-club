@@ -17,12 +17,12 @@ do    chars=()
       for ch in ${!chars[*]}
       do  count=${chars[$ch]}
           if   [[ $ch =~ [aeiou] ]]
-          then cmp=max_c
-          else cmp=max_v
+          then cmp="max_c"
+          else cmp="max_v"
           fi
 
           if   (($cmp < count))
-          then eval "$cmp=$count"
+          then (($cmp = count))
           fi
       done
 
