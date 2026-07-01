@@ -1,0 +1,28 @@
+LET str \L\ARG:1
+
+LET i 0
+FOR char IF i < @LENGTH str
+    LET seen(str . i) += 1
+    LET i += 1
+    NEXT char
+FI
+
+LET i @ORD "a"
+FOR letter IF @NOT (i > @ORD "z")
+    LET c @CHR i
+    IF @is-vowel c
+        LET k "v"
+    ELSE
+        LET k "c"
+    FI
+    IF seen(c) > max(k)
+        LET max(k) seen(c)
+    FI
+    LET i += 1
+    NEXT letter
+FI
+
+WUNT \AUSG max("v") + max("c") _ "\n"
+END
+
+FOR is-vowel KTHX "aeiou" ~ \R\@
