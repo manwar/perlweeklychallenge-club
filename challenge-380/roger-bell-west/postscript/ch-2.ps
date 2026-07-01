@@ -1,0 +1,81 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/reversedegree {
+    0 dict begin
+    0 exch
+    /z0 (z) s2a 0 get 1 add def
+    s2a enumerate.array {
+        aload pop
+        /c exch def
+        /i exch def
+        z0 c sub i 1 add mul add
+    } forall
+    end
+} bind def
+
+(reversedegree) test.start
+(z) reversedegree 1 eq test
+(a) reversedegree 26 eq test
+(bbc) reversedegree 147 eq test
+(racecar) reversedegree 560 eq test
+(zyx) reversedegree 14 eq test
+test.end

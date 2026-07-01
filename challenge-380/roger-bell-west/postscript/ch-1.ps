@@ -1,0 +1,275 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/counter.most_common_tiebreaker {
+    0 dict begin
+    /tf exch bind def
+    /ct exch def
+    /klist ct values toset keys quicksort reverse def
+    /kv 0 dict def
+    ct {
+        /v exch def
+        /k exch def
+        kv v 0 array dget k apush.right kv exch v exch put
+    } forall
+    [
+        klist {
+            /v exch def
+            kv v get { tf } quicksort.with_comparator
+            { [ exch v ] } map
+            aload pop
+        } forall
+    ]
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 1 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/tocounter {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n 2 copy 0 dget 1 add put
+    } forall
+    c
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/counter.most_common_ordered {
+    { quicksort.cmp } counter.most_common_tiebreaker
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+
+% end included library code
+
+/sumoffrequencies {
+    0 dict begin
+    /vw 0 def
+    /cn 0 def
+    s2a tocounter counter.most_common_ordered {
+        aload pop
+        /n exch def
+        /c exch def
+        c 97 eq
+        c 101 eq
+        c 105 eq
+        c 111 eq
+        c 117 eq
+        or or or or {
+            vw 0 eq {
+                /vw n def
+            } if
+        } {
+            cn 0 eq {
+                /cn n def
+            } if
+        } ifelse
+        vw 0 gt cn 0 gt and {
+            exit
+        } if
+    } forall
+    vw cn add
+    end
+} bind def
+
+(sumoffrequencies) test.start
+(banana) sumoffrequencies 5 eq test
+(teestett) sumoffrequencies 7 eq test
+(aeiouuaa) sumoffrequencies 3 eq test
+(rhythm) sumoffrequencies 2 eq test
+(x) sumoffrequencies 1 eq test
+test.end
