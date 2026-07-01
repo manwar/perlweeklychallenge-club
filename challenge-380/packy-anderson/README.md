@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: I see strings reversed... sum numbers, too...](https://packy.dardan.com/b/sE)
+[Perl Weekly Challenge: Just like honey, baby, from the bee](https://packy.dardan.com/b/t4)
