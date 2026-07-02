@@ -1,44 +1,43 @@
 #!/usr/bin/env raku
-# :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
+# :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴ 🐧
 use v6.d;
 use Test;
 
 =begin comment
-380-2: Armstrong Number     Submitted by: Mohammad Sajid Anwar
+May be edited for space.
+380-2: Reverse Degree       Submitted by: Mohammad Sajid Anwar
+You are given a string.
+Write a script to find the reverse degree of the given string.
 
-You are given two integers, $base and $limit.
-Write a script to find all Armstrong numbers in base $base that are less than $limit.
-    If raising each of the digits of a nonnegative integer to the power of the total number of digits, then taking the sum, equals the original number, it is an Armstrong number.
+For each character, multiply its position in the reversed alphabet (‘a’ = 26, ‘b’ = 25, …, ‘z’ = 1) with its position in the string. Sum these products for all characters in the string to get the reverse degree.
+
 =end comment
 
 my @Test =
-    # base      limit   exp
-    10,  1000, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407),
-    7,   1000, (0, 1, 2, 3, 4, 5, 6, 10, 25, 32, 45, 133, 134, 152, 250),
-    16,  1000, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                    342, 371, 520, 584, 645),
+    # in            $exp
+    "z",              1,
+    "a",             26,
+    "bbc",          147,
+    "racecar",      560,
+    "zyx",           14,
+    "",               0,
 ;
-plan +@Test ÷ 3;
+plan +@Test ÷ 2;
 
-sub task( Int $base where * ~~ 2..32, Int $limit where -1 < * -->Array) {
-    my @ret;
-    for 0 … $limit -> $n {
-        my Str $base-num = $n.base($base);
-        my $power        = $base-num.chars;
-        if $n == sum $base-num.comb».parse-base($base)».&( * ** $power) {
-            @ret.push( $n);
-        }
+my $char2int = Map.new: ('z'…'a') [Z=>] (1…26);
+
+sub task( Str:D $a -->Int:D) {
+    my $ret = 0;
+    for 1..$a.chars -> \k {
+        $ret +=  k × $char2int{ $a.substr( k-1,1) }
     }
-    @ret;
+    $ret;
 }
 
-for @Test -> $base, $limit, @exp {
-    is task( $base, $limit), @exp, "@exp[] <- $base ∘∘ $limit";
+for @Test -> $in, $exp {
+    is task( $in), $exp, "$exp <- $in.raku()";
 }
 done-testing;
 
-my $base = 7;
-my $limit = 100000;
-
-say qq{\nInput: \$base = $base, \$limit = $limit\nOutput: (},
-    task($base, $limit).join(', ') ~ ')'; 
+my $str = "bbc";
+say qq{\nInput: \$str = "$str"\nOutput: &task( $str)};
