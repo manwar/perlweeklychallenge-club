@@ -1,3 +1,3 @@
-# The Weekly Challenge 379
+# The Weekly Challenge 380
 
-Blog: [Work it](https://dev.to/simongreennet/weekly-challenge-work-it-1j3a)
+Blog: [The race car has rhythm](https://dev.to/simongreennet/the-race-car-has-rhythm-5dd1)
