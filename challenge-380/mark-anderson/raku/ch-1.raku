@@ -9,6 +9,7 @@ is sum-of-freq("x"),        1;
 
 sub sum-of-freq($str)
 {
-    my %c is Map = $str.comb.classify(* ~~ any(<a e i o u>));
-    %c.values>>.Bag>>.max(:by(*.value))>>.value.sum
+    my %m is Map = $str.comb.classify(* (elem) <a e i o u>);
+    sum flat (%m<True>  // Empty).Bag.max(:v),
+             (%m<False> // Empty).Bag.max(:v)
 }
