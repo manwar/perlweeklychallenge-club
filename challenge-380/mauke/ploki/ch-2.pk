@@ -1,0 +1,11 @@
+LET str \L\ARG:1
+
+LET sum 0
+LET i 0
+FOR char IF i < @LENGTH str
+    LET sum += i + 1 * (1 + @ORD "z" - @ORD(str [ i))
+    LET i += 1
+    NEXT char
+FI
+
+WUNT \AUSG sum _ "\n"
