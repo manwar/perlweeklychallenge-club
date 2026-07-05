@@ -73,7 +73,6 @@ sub runTest
     is( task("zyx"),      14, "Example 5");
     is( task("xyz"), task("XYZ"), "Case independent");
 
-
     done_testing;
 }
 
