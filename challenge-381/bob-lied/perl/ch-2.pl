@@ -36,7 +36,7 @@ sub task(@int)
     use List::AllUtils qw/sum0 minmax/;
     my ($min, $max) = minmax(@int);
 
-    return sum0 map { $min < $_ < $max } @int
+    return scalar grep { $min < $_ < $max } @int
 }
 
 sub runTest

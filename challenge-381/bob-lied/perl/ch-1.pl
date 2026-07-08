@@ -33,6 +33,8 @@ my $matrix = [ map { [ split(/,/, $_) ] } @ARGV ];
 say task($matrix) ? "true" : "false";
 
 #=============================================================================
+# Using bit operations assumes we're dealing with small integers.
+# Could use vec for larger range
 sub bitSetOf($range, $list)
 {
     my $have = 0;
@@ -45,9 +47,8 @@ sub bitSetOf($range, $list)
 
 sub task($matrix)
 {
-    my $size = $matrix->$#*;    # Assume square matrix
+    my $range = ( my $size = $matrix->$#*) + 1;
 
-    my $range = $size + 1;
     my $all = ( 2**$range - 1 ) << 1; # Bitmask for range bits, exclude 0
 
     for my $i ( 0 .. $size )
