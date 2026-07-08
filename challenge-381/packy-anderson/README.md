@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Just like honey, baby, from the bee](https://packy.dardan.com/b/t4)
+[Perl Weekly Challenge: Oh, yes! I'm the great row column!](https://packy.dardan.com/b/tc)
