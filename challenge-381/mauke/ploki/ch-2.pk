@@ -1,0 +1,44 @@
+WUNT \AUSG @count-mid @collect-argv 0 _ "\n"
+END
+
+FOR collect-argv LEET a #<#>
+    LEET i 1
+    10 IF i < \ARG
+        LET a _= #<\ARG:i#>
+        LET i += 1
+        GOFOR 10
+    FI
+KTHX a
+
+FOR count-mid LEET mm @min-max \@
+    LEET min mm . 0
+    LEET max mm . 1
+    LEET n 0
+    LEET x
+    LEET i 0
+    10 IF i < @LENGTH \@
+        LET x \@ . i
+        IF x ! min & (x ! max)
+            LET n += 1
+        FI
+        LET i += 1
+        GOFOR 10
+    FI
+KTHX n
+
+FOR min-max LEET min "Inf"
+    LEET max "-Inf"
+    LEET x
+    LEET i 0
+    10 IF i < @LENGTH \@
+        LET x \@ . i
+        IF x < min
+            LET min x
+        FI
+        IF x > max
+            LET max x
+        FI
+        LET i += 1
+        GOFOR 10
+    FI
+KTHX #<min max#>

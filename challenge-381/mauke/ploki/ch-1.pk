@@ -1,0 +1,71 @@
+testprint #< ??/
+    #<1 2 3 4#> ??/
+    #<2 3 4 1#> ??/
+    #<3 4 1 2#> ??/
+    #<4 1 2 3#> ??/
+#>
+
+testprint #< #<1#> #>
+
+testprint #< ??/
+    #<1 2 5#> ??/
+    #<5 1 2#> ??/
+    #<2 5 1#> ??/
+#>
+
+testprint #< ??/
+    #<1 2 3#> ??/
+    #<1 2 3#> ??/
+    #<1 2 3#> ??/
+#>
+
+testprint #< ??/
+    #<1 2 3#> ??/
+    #<3 1 2#> ??/
+    #<3 2 1#> ??/
+#>
+
+END
+
+FORtestprint (#<"true""false"#>@NOT@check-all\@_"
+KTHX
+
+FOR check-all LEET m \@
+    LEET n @LENGTH m
+    10 IF n > 0
+        LET n -= 1
+        IF @NOT @enranged #<m #<0 n#> #<1 0#>#> | @NOT @enranged #<m #<n 0 #> #<0 1#>#>
+            KTHX 0
+        FI
+        GOFOR 10
+    FI
+KTHX 1
+
+FOR enranged LEET m \@ . 0
+    LEET iv \@ . 1
+    LEET ix iv . 0
+    LEET iy iv . 1
+    LEET dv \@ . 2
+    LEET dx dv . 0
+    LEET dy dv . 1
+    LEET n @LENGTH m
+    LEET i 0
+    10 IF i < n
+        LET i += 1
+        LEET seen(i) 0
+        GOFOR 10
+    FI
+    LEET x
+    LET i 0
+    10 IF i < n
+        LET x m . ix . iy
+        IF x < 1 | (x > n | seen(x))
+            KTHX 0
+        FI
+        LET seen(x) 1
+        LET ix += dx
+        LET iy += dy
+        LET i += 1
+        GOFOR 10
+    FI
+KTHX 1
