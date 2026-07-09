@@ -21,28 +21,9 @@ foreach my $integer_list (@integer_lists){
     printf(
         "Input: \@int = (%s)\nOutput: %d\n\n",
         join(", ", @{$integer_list}),
-        count_surrounded_elements_X(@{$integer_list})
+        count_surrounded_elements(@{$integer_list})
     );
 }
-
-use Benchmark qw(:all);
-timethese(
-    1000000,
-    {
-        C => sub{
-            map(
-                count_surrounded_elements(@{$_}),
-                @integer_lists
-            );
-        },
-        X => sub{
-            map(
-                count_surrounded_elements_X(@{$_}),
-                @integer_lists
-            );
-        }
-    }
-);
 
 exit(0);
 ################################################################################
