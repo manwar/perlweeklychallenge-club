@@ -86,7 +86,7 @@ sub validate_matrix_sequences{
     # left-shifted by every value from 1 to n,
     # inclusive (e.g.  if n = 3, $bits_initial
     # will be 0x0E or 00001110b)
-    my $bits_initial = (2 ** ($#$matrix + 1) - 1) << 1;
+    my $bits_initial = (2 ** scalar(@{$matrix}) - 1) << 1;
     my $i;
     my $row_bits; 
     my $col_bits; 
