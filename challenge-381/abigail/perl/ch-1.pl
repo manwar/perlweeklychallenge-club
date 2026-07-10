@@ -8,19 +8,14 @@ no  warnings 'syntax';
 
 my @matrix = map {[split]} <>;  # Read input
 my $r = 1;
-my %diffs;
 
-foreach my $r_i (keys @matrix) {
-    my $row = $matrix [$r_i];
-    $r &&= @$row == @matrix;             # Size check
-    foreach my $c_i (keys @$row) {
-        my $n = $$row [$c_i];
-        $r &&= 1 <= $n <= @matrix;       # Bounds check
-        $diffs {"rows_$r_i"} {$n} = 1;   # Numbers by row/column
-        $diffs {"cols_$c_i"} {$n} = 1;
+for (my $i = 0; $i < @matrix; $i ++) {
+    my (%row, %column);
+    for (my $j = 0; $j < @matrix; $j ++) {
+        $r &&= 1 <= $matrix [$i] [$j] <= @matrix;
+        $row {$matrix [$i] [$j]} = $column {$matrix [$j] [$i]} = 1
     }
+    $r &&= keys (%row) == @matrix == keys (%column);
 }
-
-$r &&= @matrix == keys %$_ for values %diffs;  # All different in row/column
 
 say $r ? "true" : "false";
