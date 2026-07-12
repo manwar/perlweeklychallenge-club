@@ -1,3 +1,3 @@
-# The Weekly Challenge 380
+# The Weekly Challenge 381
 
-Blog: [The race car has rhythm](https://dev.to/simongreennet/the-race-car-has-rhythm-5dd1)
+Blog: [Grep, set and match](https://dev.to/simongreennet/the-weekly-challenge-grep-set-and-match-4k5h)
