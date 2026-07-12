@@ -1,0 +1,92 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/samerowcolumn {
+    0 dict begin
+    /a exch def
+    true
+    a {
+        /row exch def
+        /notfound [ 1 1 row length { } for ] toset def
+        row {
+            notfound exch undef
+        } forall
+        notfound length 0 gt {
+            pop false
+            exit
+        } if
+    } forall
+    dup {
+        0 1 a 0 get length 1 sub {
+            /coln exch def
+            /notfound [ 1 1 a length { } for ] toset def
+            a {
+                coln get notfound exch undef
+            } forall
+            notfound length 0 gt {
+                pop false
+                exit
+            } if
+        } for
+    } if
+    end
+} bind def
+
+(samerowcolumn) test.start
+[[1 2 3 4] [2 3 4 1] [3 4 1 2] [4 1 2 3]] samerowcolumn test
+[[1]] samerowcolumn test
+[[1 2 5] [5 1 2] [2 5 1]] samerowcolumn not test
+[[1 2 3] [1 2 3] [1 2 3]] samerowcolumn not test
+[[1 2 3] [3 1 2] [3 2 1]] samerowcolumn not test
+test.end
