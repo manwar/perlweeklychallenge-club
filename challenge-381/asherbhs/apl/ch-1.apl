@@ -1,0 +1,18 @@
+⎕IO←1
+
+SameRowColumn←{∧/∧/(∨/[1]∧∨/[2])⍵∘.=⍳≢⍵}
+
+⎕←SameRowColumn [1 2 3 4
+                 2 3 4 1
+                 3 4 1 2
+                 4 1 2 3]
+⎕←SameRowColumn 1 1⍴1
+⎕←SameRowColumn [1 2 5
+                 5 1 2
+                 2 5 1]
+⎕←SameRowColumn [1 2 3
+                 1 2 3
+                 1 2 3]
+⎕←SameRowColumn [1 2 3
+                 3 1 2
+                 3 2 1]
