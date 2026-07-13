@@ -31,6 +31,7 @@ find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete
 find . -name "*.Mod" -delete
 find . -name "*.ua" -delete
+find . -name "*.uiua" -delete
 find . -name "*.gp" -delete
 find . -name "*.exs" -delete
 find . -name "*.dws" -delete
