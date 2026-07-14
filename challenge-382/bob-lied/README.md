@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 381 by Bob Lied
+# Solutions to weekly challenge 382 by Bob Lied
 
-- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-381/)
+- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-382/)
 
-- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-381/bob-lied)
+- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-382/bob-lied)
 
 - [Blog](https://dev.to/boblied/pwc-376-doubled-words-7g3)
