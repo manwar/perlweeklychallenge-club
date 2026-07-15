@@ -4,4 +4,5 @@
 
 - [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-382/bob-lied)
 
-- [Blog](https://dev.to/boblied/pwc-376-doubled-words-7g3)
+- [Blog Task 1](https://dev.to/boblied/pwc-382-hamiltonian-cycle-8no)
+- [Blog Task 2](https://dev.to/boblied/pwc-382-replace-question-marks-3enn)

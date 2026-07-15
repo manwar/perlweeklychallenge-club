@@ -65,6 +65,11 @@ sub task($str)
     return \@replaced;
 }
 
+sub task2($str)
+{
+    return [ glob($str =~ s/\?/{0,1}/gr) ];
+}
+
 sub runTest
 {
     use Test2::V1 -ipP;
@@ -74,6 +79,12 @@ sub runTest
     is( task("???"  ), ["000", "001", "010", "011", "100", "101", "110", "111"], "Example 3");
     is( task("1?10" ), ["1010", "1110"                    ], "Example 4");
     is( task("1?1?0"), ["10100", "10110", "11100", "11110"], "Example 5");
+
+    is( task2("01??0"), ["01000", "01010", "01100", "01110"], "Example 1");
+    is( task2("101"  ), ["101"                             ], "Example 2");
+    is( task2("???"  ), ["000", "001", "010", "011", "100", "101", "110", "111"], "Example 3");
+    is( task2("1?10" ), ["1010", "1110"                    ], "Example 4");
+    is( task2("1?1?0"), ["10100", "10110", "11100", "11110"], "Example 5");
 
     done_testing;
 }
