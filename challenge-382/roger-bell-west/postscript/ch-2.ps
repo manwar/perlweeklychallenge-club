@@ -1,0 +1,192 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/replacequestionmark {
+    0 dict begin
+    s2a /template exch def
+    /q template { 63 eq } filter length def
+    q 0 eq {
+        [ template a2s ]
+    } {
+        [
+            0 1 1 q bitshift 1 sub {
+                /nn exch def
+                /qm [
+                    {
+                        nn 0 eq {
+                            exit
+                        } if
+                        nn 2 mod 1 eq {
+                            49
+                        } {
+                            48
+                        } ifelse
+                        /nn nn 2 idiv def
+                    } loop
+                ] def
+                qm length q lt {
+                    /qm [
+                        qm aload
+                        length q exch sub {
+                            48
+                        } repeat
+                    ] def
+                } if
+                [
+                    template {
+                        /tc exch def
+                        tc 63 eq {
+                            qm apop.right exch /qm exch def
+                        } {
+                            tc
+                        } ifelse
+                    } forall
+                ] a2s
+            } for
+        ]
+    } ifelse
+    end
+} bind def
+
+(replacequestionmark) test.start
+(01??0) replacequestionmark [(01000) (01010) (01100) (01110)] deepeq test
+(101) replacequestionmark [(101)] deepeq test
+(???) replacequestionmark [(000) (001) (010) (011) (100) (101) (110) (111)] deepeq test
+(1?10) replacequestionmark [(1010) (1110)] deepeq test
+(1?1?0) replacequestionmark [(10100) (10110) (11100) (11110)] deepeq test
+test.end
