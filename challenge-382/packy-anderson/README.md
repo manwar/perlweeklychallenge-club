@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Oh, yes! I'm the great row column!](https://packy.dardan.com/b/tc)
+[Perl Weekly Challenge: The World Turned Upside Down!](https://packy.dardan.com/b/uP)
