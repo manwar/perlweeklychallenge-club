@@ -28,8 +28,14 @@ sub task( @a --> Int) {
     return + @a.grep: $mn < * < $mx ;
 }
 
+sub task-k( @a --> Int) {
+    # one elem  or     general case
+    0           max    @a - ( min(:k, @a), max( :k, @a) ).flat;
+}
+
 for @Test -> $in, $exp {
-    is task( $in), $exp, "{$exp // $exp.^name()} <- $in.raku()";
+    is task( $in),   $exp, "{$exp // $exp.^name()} <- $in.raku()";
+    is task-k( $in), $exp, "{$exp // $exp.^name()} <- $in.raku()";
 }
 done-testing;
 
