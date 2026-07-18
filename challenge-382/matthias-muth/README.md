@@ -1,152 +1,247 @@
-# Smaller? Greater? Same!
-**Challenge 381 solutions in Perl by Matthias Muth**
+# The Recursive Challenge
 
-## Task 1: Same Row Column
+**Challenge 382 solutions in Perl by Matthias Muth**
 
-> You are given a n x n matrix containing integers from 1 to n.<br/>
-> Write a script to find if every row and every column contains all the integers from 1 to n.
+## Task 1: Hamiltonian Cycle
+
+*(Submitted by: Peter Campbell Smith)*
+
+> You are given a target number.<br/>
+> Write a script to arrange all the whole numbers from 1 up to the given target number into a circle so that every pair of side-by-side numbers adds up to a perfect square. Please make sure, the last number and the first must also add up to a square.
 >
 > **Example 1**
 >
 > ```text
-> Input: @matrix = ([1, 2, 3, 4],
->                   [2, 3, 4, 1],
->                   [3, 4, 1, 2],
->                   [4, 1, 2, 3],)
-> Output: true
+> Input: $n = 32
+> Output: 1, 8, 28, 21, 4, 32, 17, 19, 30, 6, 3, 13, 12, 24, 25, 11, 5, 31, 18, 7, 29, 20, 16, 9, 27, 22, 14, 2, 23, 26, 10, 15
+>
+> 1  + 8  = 9
+> 8  + 28 = 36
+> 28 + 21 = 49
+> 21 + 4  = 25
+> 4  + 32 = 36
+> 32 + 17 = 49
+> 17 + 19 = 36
+> 19 + 30 = 49
+>
+> so on, all the way through the sequence.
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @matrix = ([1])
-> Output: true
+> Input: $n = 15
+> Output: ()
+>
+> No valid circular list of numbers exists.
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @matrix = ([1, 2, 5],
->                   [5, 1, 2],
->                   [2, 5, 1],)
-> Output: false
+> Input: $n = 34
+> Output: 1, 8, 28, 21, 4, 32, 17, 19, 6, 30, 34, 15, 10, 26, 23, 2, 14, 22, 27, 9, 16, 33, 31, 18, 7, 29, 20, 5, 11, 25, 24, 12, 13, 3
 >
-> Elements are out of range 1..3.
-> ```
->
-> **Example 4**
->
-> ```text
-> Input: @matrix = ([1, 2, 3],
->                   [1, 2, 3],
->                   [1, 2, 3],)
-> Output: false
-> ```
->
-> **Example 5**
->
-> ```text
-> Input: @matrix = ([1, 2, 3],
->                   [3, 1, 2],
->                   [3, 2, 1],)
-> Output: false
+> [2026-07-13 11:45]: Output was incorrect, corrected by E. Choroba.
 > ```
 
-Only integers from $1$ to $n$ are allowed, so we can exit the subroutine immediately with a `false` value when we encounter a matrix value outside this range.
+A correct solution is a chain where the sum of two neighboring numbers is a perfect square.
 
-But knowing that we need all values from $1$ to $n$ in each row and each column, we can mark the presence of every matrix value at ( $r$, $c$ ) in a 'presence array' for row $r$ and another one for column $c$. In the end, all those arrays need to have all values from $1$ to $n$. More importantly for us, there cannot be any duplicates. This means that whenever a value already has been marked as present in the same row or the same column, we can exit with a `false` value, too. 
+If I want to construct such a chain, I start by choosing the first number as the start of the chain. It doesn't really matter which number I choose (from `1` to `$n`), because a correct chain is cyclic, and I can choose any of the numbers in the cycle as the first number. I make it simple and choose `1` as the first number.
 
-The 'presence arrays' are grouped in two matrices `@row_presences` and `@column_presences`, and everything is done in two nested loops for the rows and the columns.
+I then have to choose the second number. I maintain a list of the numbers that have not yet been used (initially `2..$n`), and from this list I choose those numbers that added to the previous chain element add up to a perfect square.
+
+For checking whether the sum of two numbers is a perfect square, I use a lookup table instead of computing the square root and checking whether it is integer every time I have to check. The lookup table contains a true value for each number that is a perfect square, from 1 to `( $n - 1 ) + $n`, which is the largest possible sum of two numbers that we may need to look up. This changes the square test from an expensive square-root computation into a simple array lookup, saving a lot of CPU cycles. At the same time the setup of the lookup table is simple enough:
+
+```perl
+    my @is_square;
+    for ( my $i = 1; ( my $square = $i * $i ) <= ( $n - 1 ) + $n; ++$i ) {
+        $is_square[ $square ] = 1;
+    }
+```
+
+After assigning a matching number to the chain, I have to check whether the remaining numbers can complete a correct chain using the same mechanism. I use a recursive function to do that. The function gets the chain built so far as a parameter, and the list of numbers that are still available. It returns all correct chains found using the recursion:
 
 ```perl
 use v5.36;
 use builtin qw( true false );
 no warnings 'experimental::builtin';
+use Test2::V0 qw( -no_srand );
 
-sub same_row_column( $matrix ) {
-    my $n = scalar $matrix->@*;
-    my ( @row_presences, @column_presences );
-    for my $r ( keys $matrix->@* ) {
-        for my $c ( keys $matrix->[$r]->@* ) {
-            my $value = $matrix->[$r][$c];
-            return false
-                unless 0 < $value <= $n
-                    && ! $row_presences[$r][$value]++
-                    && ! $column_presences[$c][$value]++
+my @is_square;
+
+sub descend_hamiltonian( $chain, $available ) {
+    my @solutions;
+    if ( $available->@* == 0 ) {
+        return $is_square[ $chain->[-1] + $chain->[0] ] ? $chain : ();
+    }
+    for ( keys $available->@* ) {
+        if ( $is_square[ $chain->[-1] + $available->[$_] ] ) {
+            push @solutions,
+                descend_hamiltonian(
+                    [ $chain->@*, $available->[$_] ],
+                    [ $available->@[ 0 .. $_ - 1, $_ + 1 .. $available->$#* ] ]
+                );
+            # If we want to stop searching after we found
+            # the first solution, we return from here:
+            # return @solutions
+            #     if @solutions;
         }
+    }
+    # For all solutions, we return from here:
+    return @solutions;
+}
+```
+
+(Note that I moved the `@is_square` lookup table outside the main subroutine, so that the recursive subroutine can access it.)
+
+Like most backtracking algorithms, this has exponential worst-case complexity. Fortunately, the challenge input sizes are small enough that this straightforward approach works well.
+
+The main procedure initializes the square lookup table, then it invokes the recursive search and returns the first solution:
+
+```perl
+sub hamiltonian_cycle( $n ) {
+    # Create a lookup table for all perfect squares up to the largest
+    # possible sum of two numbers i, j <= n.
+    # It is much faster to look up whether ( i + j ) is a square number than
+    # repeatedly computing the square root of ( i + j ) and checking
+    # whether it is an integer.
+    for ( my $i = 1; ( my $square = $i * $i ) <= ( $n - 1 ) + $n; ++$i ) {
+        $is_square[ $square ] = 1;
+    }
+
+    # Start recursion with the first element as the chain, and all other
+    # numbers available for completing the chain.
+    # Use an array for the solutions, as there can be many of them.
+    my ( $chain, $available ) = ( [ 1 ], [ 2..$n ] );
+    my @solutions = descend_hamiltonian( $chain, $available );
+    note "found ", scalar( @solutions ),
+        scalar @solutions == 1 ? " solution" : " solutions";
+
+    # Even if there can be multiple solutions, only return the first one.
+    return @solutions ? $solutions[0]->@* : ();
+}
+```
+
+There may be no solution at all (as in Example 2).<br/>
+But if there is a solution, there will be also be at least one other: the reversed chain of the first solution. The reversed chain fulfills the 'perfect square' criteria for all adjacent pairs of numbers just as the original chain does.
+
+
+
+This is only to illustrate that there never is one single solution - we have either none, or several of them.
+
+But this means that our subroutine might return a solution that is correct but is different from the one given as 'Output' in the task example. As a consequence, just testing whether the output of our program results in the example output does not necessarily work.
+
+Typically, a test would look like this:
+
+```perl
+use Test2::V0;
+is [ hamiltonian_cycle( 34 ) ],
+    [ 1, 8, 28, 21, 4, 32, 17, 19, 6, 30, 34, 15, 10, 26, 23, 2,
+        14, 22, 27, 9, 16, 33, 31, 18, 7, 29, 20, 5, 11, 25, 24, 12, 13, 3 ],
+    "Example 3";
+```
+
+But this test will fail if the first chain produced by `hamiltonian_cycle( 34 )` is not the expected one.
+
+I therefore changed my testing strategy, and implemented a checking function for use with `Test2::V0` that tests whether the output is a correct chain:
+
+```perl
+sub chain_check {
+    my $chain = $_;		# Per Test2::V0 convention, validator callbacks
+                        # receive the value to be checked in $_.
+    return () unless $chain->@*;
+    # Cheating for index 0 to compare with $chain->[-1], which miraculously
+    # is the end of the chain.
+    for ( keys $chain->@* ) {
+        return false unless $is_square[ $chain->[$_] + $chain->[ $_ - 1 ] ];
     }
     return true;
 }
 ```
 
-## Task 2: Smaller Greater Element
+Then, my tests look like this:
 
-> You are given an array of integers.<br/>
-> Write a script to find the number of elements that have both a strictly smaller and greater element in the given array.
+```perl
+my @tests = (
+    [ "Example 1", 32, validator( \&chain_check ) ],
+    [ "Example 2", 15, [] ],
+    [ "Example 3", 34, validator( \&chain_check ) ],
+);
+
+is [ hamiltonian_cycle( $_->[1] ) ], $_->[2], $_->[0]
+    for @tests;
+
+done_testing;
+```
+
+This was a good reminder that not every algorithm has a unique correct answer. Sometimes the right way to test is to validate the properties of the result rather than compare it with a single expected output.
+
+I have learned about the `validator` checking function of `Test2::V0`. That's a useful lesson for me!
+
+## Task 2: Replace Question Mark
+
+*(Submitted by: Simon Green)*
+
+> You are given a string that contains only 0, 1 and ? characters.<br/>
+> Write a script to generate all possible combinations when replacing the question marks with a zero or one.
 >
 > **Example 1**
 >
 > ```text
-> Input: @int = (2,4)
-> Output: 0
->
-> Not enough elements in the array.
+> Input: $str = "01??0"
+> Output: ("01000", "01010", "01100", "01110")
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @int = (1, 1, 1, 1)
-> Output: 0
+> Input: $str = "101"
+> Output: ("101")
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @int = (1, 1, 4, 8, 12, 12)
-> Output: 2
->
-> The elements are 4 and 8.
+> Input: $str = "???"
+> Output: ("000", "001", "010", "011", "100", "101", "110", "111")
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @int = (3, 6, 6, 9)
-> Output: 2
->
-> Both instances of 6.
+> Input: $str = "1?10"
+> Output: ("1010", "1110")
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @int = (0, -5, 10, -2, 4)
-> Output: 3
->
-> The elements are 0, -2, and 4.
+> Input: $str = "1?1?0"
+> Output: ("10100", "10110", "11100", "11110")
 > ```
 
-The only numbers in the array that *don't* have 'both a strictly smaller and greater element in the given array' are the smallest and the largest number in the array. 
+If `$str` contains a question mark `'?'`, it can be replaced by a `'0'` or a `'1'`. If there are more question marks, they have to be replaced using both of these results as the base.
 
-This means we need to find the minimum and the maximum values in the array. While going through the array, we can also count how many times each number occurs i.e. its frequency. This is because we need to know how many array elements do not meet the criteria. In other words, we need to know how many times the smallest and the largest numbers occur.
+This lends itself to a recursive approach again. The solution subroutine returns the string given as parameter as it is if it doesn't contain any question marks. This serves as the end condition for the recursion.
 
-If we don't have at least two distinct numbers (the smallest one and the largest one), there can't be any numbers in between that fulfill the criteria, so we return `0`. If there are, we deduct the number of occurrences of the smallest and the largest number from the total number of values in the array, and that's it.  
+If there is a question mark, the subroutine recursively calls itself for the string with the question mark replaced by `'1'` and with the question mark replaced by `'0'`. If it was the last question mark, both calls will just return their parameters. If more question marks remain, each recursive call repeats the same process until eventually every branch reaches a string without question marks.
+
+For detecting the presence of a question mark, I keep it short and simple by using regular expressions.
+
+A neat Perl feature is that an empty search pattern in `s///` reuses the most recent successful match. Since `/\?/` has already located the question mark, `s//0/r` and `s//1/r` can replace exactly that character without searching the string a second time.
+
+The solution is quite a bit shorter and simpler than the previous one:
 
 ```perl
 use v5.36;
 
-sub smaller_greater_element( @int ) {
-    my ( $min, $max, %freq ) = ( $int[0], $int[0] );
-    for ( @int ) {
-        $max >= $_ or $max = $_;
-        $min <= $_ or $min = $_;
-        ++$freq{$_};
-    }
+sub replace_question_mark( $str ) {
     return
-        scalar %freq <= 2
-        ? 0
-        : @int - $freq{$min} - $freq{$max};
+        $str =~ /\?/
+        ? ( replace_question_mark( $str =~ s//0/r ),
+            replace_question_mark( $str =~ s//1/r ) )
+        : ( $str );
 }
 ```
 
