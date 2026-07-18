@@ -73,7 +73,8 @@ Backtracking, implemented via recursion.
 The cycle begins with the number 1. A depth-first search of the solution space
 is made by examining, recursively, each possible successor to the last entry in
 the cycle. At each stage, possible successors are considered in increasing
-numerical order (smallest to greatest). The search ends when either the first solution has been found, or all possible solutions have been exhausted.
+numerical order (smallest to greatest). The search ends when either the first
+ solution has been found, or all possible solutions have been exhausted.
 
 For testing, the output in Example 3 has been replaced by the cycle found by the
 above algorithm.
