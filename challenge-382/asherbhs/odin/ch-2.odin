@@ -19,12 +19,10 @@ replace_question_mark :: proc(str: string) -> []string {
 	bit := mark_count - 1
 	for c in str {
 		if c == '?' {
-			for i in 0 ..< out_count do strings.write_byte(&builders[i], u8(
-				'0' + ((i >> bit) & 1)
-			))
+			for &sb, i in builders do strings.write_byte(&sb, u8('0' + (i >> bit) & 1))
 			bit -= 1
 		} else {
-			for i in 0 ..< out_count do strings.write_rune(&builders[i], c)
+			for &sb in builders do strings.write_rune(&sb, c)
 		}
 	}
 
