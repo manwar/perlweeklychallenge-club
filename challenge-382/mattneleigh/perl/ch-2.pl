@@ -39,10 +39,15 @@ exit(0);
 
 
 ################################################################################
-# You are given a string that contains only 0, 1 and ? characters.
-# 
-# Write a script to generate all possible combinations when replacing the question marks with a zero or one.
-# 
+# Given a string consisting of only ones (1), zeros (0), or question marks (?)
+# generate a list of all possible variations of the original string in which
+# which question marks have been replaced with zeros or ones
+# Takes one argument:
+# * The string to examine (e.g. "1?1?0")
+# Returns:
+# * A list of all possible variations of the original string in which question
+#   marks in the original string are replaced with zeros or ones (e.g.
+#   ( "10100", "10110", "11100", "11110" ) )
 ################################################################################
 sub all_questionable_substitutions{
     my @chars = split("", shift());
