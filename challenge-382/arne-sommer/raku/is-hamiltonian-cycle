@@ -1,0 +1,32 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str, :v(:$verbose));
+
+my @seq = $str.split(/\s*\,\s*/)>>.Int;
+my $n   = @seq.max;
+my $ok  = True;
+
+my %perfect-squares = (2 .. $n).map: { $_ ** 2 => True };
+
+die "Missing '1'"  unless @seq.min   == 1;
+die "Missing '$n'" unless @seq.elems == $n;
+die "Duplicates"   unless @seq.elems == @seq.unique.elems;
+
+
+for ^@seq.elems -> $index
+{
+  my $left      = @seq[$index];
+  my $right     = $index == $n -1 ?? @seq[0] !! @seq[$index +1];
+  my $sum       = $left + $right;
+  my $is-square = %perfect-squares{$sum}:exists;
+ 
+  say ":Index $index: $left + $right = $sum -> { $is-square ?? "ok" !! "not ok" }" if $verbose;
+
+  unless $is-square
+  {
+    $ok = False;
+    last;
+  }
+}
+
+say $ok ?? "ok" !! "not ok";
