@@ -76,8 +76,6 @@ def gen_all_circles(n):
     dfs()
     return all_solutions
 
-
-# --- UNIT TEST CASE ---
 class TestSquareSumCircle(unittest.TestCase):
     def test_square_sum_circles(self):
         examples = [
