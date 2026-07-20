@@ -1,3 +1,4 @@
+find . -name "*.mac" -delete
 find . -name "*.R" -delete
 find . -name "*.pk" -delete
 find . -name "*.tinyapl" -delete
