@@ -11,7 +11,7 @@ sub hamcyc {  #returns all cycles of length n, array of arrayrefs
     @lst == $n ? is_square( $lst[0] + $lst[-1] ) ? \@lst : () :
                  map hamcyc($n, $seen | 1 << $_, @lst, $_),
                  grep !( $seen & 1 << $_ ),
-	         @{ $companionN{ $n }{ $lst[-1] } }
+                 @{ $companionN{ $n }{ $lst[-1] } }
 }
 
 
