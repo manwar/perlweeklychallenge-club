@@ -24,7 +24,7 @@ class actions
                 '80' => '99', '99' => '99', 'B2' => '99', 'B3' => 'CC',
                 'CC' => 'CC', 'E5' => 'CC', 'E6' => 'FF', 'FF' => 'FF';
         
-        make %h{ @a.first(* ge $/) }
+        make %h{ @a.first(* ge $/.uc) }
     }
 }
 
