@@ -1,0 +1,358 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 1 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/is_adjacentsquared {
+    0 dict begin
+    /hc exch def
+    /param exch def
+    true
+    /hcs hc deepcopy quicksort def
+    [ 1 1 param {} for ] hcs deepeq not {
+        pop false
+    } if
+    dup {
+        0 1 param 2 sub {
+            /i exch def
+            /pn hc i get hc i 1 add get add def
+            /sn pn sqrt def
+            pn sn dup mul ne {
+                pop false
+                exit
+            } if
+        } for
+    } if
+    dup {
+        /pn hc 0 get hc dup length 1 sub get add def
+        /sn pn sqrt def
+        pn sn dup mul ne {
+            pop false
+        } if
+    } if
+    end
+} bind def
+
+/hamiltoniancycle {
+    0 dict begin
+    /a exch def
+    a 31 lt {
+        []
+    } {
+        /perfectsquares 0 dict def
+        /lim a 2 mul def
+        1 1 a {
+            /p exch def
+            /ps p dup mul def
+            ps lim gt {
+                exit
+            } if
+            perfectsquares ps true put
+        } for
+        /neighbours 0 dict def
+        1 1 a {
+            /x exch def
+            perfectsquares keys {
+                /y exch def
+                y x gt {
+                    /z y x sub def
+                    z a le {
+                        /s neighbours x 0 dict dget def
+                        s z true put
+                        neighbours x s put
+                        /s neighbours z 0 dict dget def
+                        s x true put
+                        neighbours z s put
+                    } if
+                } if
+            } forall
+        } for
+        /stack [ [ 1 ] ] def
+        {
+            stack length 1 lt {
+                []
+                exit
+            } if
+            /stack stack apop.right /lst exch def def
+            lst length a eq {
+                perfectsquares lst 0 get lst dup length 1 sub get add known {
+                    lst
+                    exit
+                } if
+            } {
+                /ls lst toset def
+                neighbours lst dup length 1 sub get get keys {
+                    /candidate exch def
+                    ls candidate known not {
+                        /stack stack
+                        [
+                            lst aload pop
+                            candidate
+                        ]
+                        apush.right def
+                    } if
+                } forall
+            } ifelse
+        } loop
+    } ifelse
+    end
+} bind def
+
+(hamiltoniancycle) test.start
+32 dup hamiltoniancycle is_adjacentsquared test
+15 hamiltoniancycle [] deepeq test
+34 dup hamiltoniancycle is_adjacentsquared test
+test.end

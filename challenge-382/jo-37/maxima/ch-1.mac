@@ -1,0 +1,6 @@
+load("graphs")$
+have_squaresum(i, j) := is(i + j = floor(sqrt(i + j))^2)$
+squaresum_graph(n) := make_graph(n, have_squaresum)$
+hamilton_cycle(squaresum_graph(32));
+hamilton_cycle(squaresum_graph(15));
+hamilton_cycle(squaresum_graph(34));
