@@ -51,13 +51,14 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    # 0x00, 0x33, 0x66, 0x99, 0xCC, 0xFF:
    sub snap ( $x ) {
       my $out = 0x00;
-      my $min = 50_000_000 + abs $x;
-      if (abs($x - 0x00) < $min) {$min = abs($x - 0x00); $out = 0x00;}
-      if (abs($x - 0x33) < $min) {$min = abs($x - 0x33); $out = 0x33;}
-      if (abs($x - 0x66) < $min) {$min = abs($x - 0x66); $out = 0x66;}
-      if (abs($x - 0x99) < $min) {$min = abs($x - 0x99); $out = 0x99;}
-      if (abs($x - 0xCC) < $min) {$min = abs($x - 0xCC); $out = 0xCC;}
-      if (abs($x - 0xFF) < $min) {$min = abs($x - 0xFF); $out = 0xFF;}
+      my $min = 1000 + abs $x;
+      for my $safe ( map {0x33*$_} (0..5) ) {
+         my $dist = abs($x - $safe);
+         if ($dist < $min) {
+            $min = $dist;
+            $out = $safe;
+         }
+      }
       return $out;
    }
 
@@ -110,7 +111,7 @@ for my $color (@colors) {
    $color =~ s/#/0x/;
    # Re-interpret from string to numeric:
    $color = eval($color);
-   printf("Original color = %06X\n", $color);
+   printf("Original color = #%06X\n", $color);
    my $websafe = safe($color);
-   printf("Websafe  color = %06X\n", $websafe);
+   printf("Websafe  color = #%06X\n", $websafe);
 }
