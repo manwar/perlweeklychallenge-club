@@ -10,6 +10,5 @@ is base-n(123456789, 64), "7MyqL";
 sub base-n($num, $base)
 {
     my @a = flat 0..9, 'A'..'Z', 'a'..'z', '+', '/';
-    
     [~] @a[ [R,] $num.polymod($base xx *) ]
 }
