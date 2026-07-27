@@ -55,9 +55,11 @@ sub task($binary)
     my @run = ( $binary =~ m/(0+|1+)/g );
 
     # Move through the list in pairs. Could use List::MoreUtils::slideatatime.
-    for ( my $first = shift @run; defined(my $second = shift @run) ; $first = $second )
+    for ( my $first = shift @run
+        ; defined(my $second = shift @run)
+        ; $first = $second )
     {
-        my $other = $second;    # Work on a copy in case it gets shortened
+        my $other;    # Work on a copy in case it gets shortened
 
         # Reduce strings to be of same size.
         my $length = length($first);
@@ -69,6 +71,7 @@ sub task($binary)
         {
             $length = length($second);
             $first = substr($first, 0, $length);
+            $other = $second;
         }
 
         push @out, "$first$other";
