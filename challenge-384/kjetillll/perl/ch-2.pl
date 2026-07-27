@@ -1,6 +1,6 @@
 sub f {
     my $s = shift;
-    !length($s) ? () : ( $s =~ / ^ (.) \1* (??{ (1 - $1) x length $& }) /x ? "$&" : (), f( substr $s, 1 ) )
+    !length($s) ? () : ( $s =~ / ^ (0+|1+) (??{ $& =~ y,01,10,r }) /x ? "$&" : (), f( substr $s, 1 ) )
 }
 
 #----tests
