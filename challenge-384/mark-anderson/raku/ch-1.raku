@@ -9,8 +9,7 @@ is base-n(123456789, 64), "7MyqL";
 
 sub base-n($num, $base)
 {
-    my %m is Map = flat(0..9,  10..35,   36..61,  62,   63) Z=> 
-                   flat(0..9, 'A'..'Z', 'a'..'z', '+', '/');
-
-    [~] %m{ [R,] $num.polymod($base xx *) }
+    my @a = flat 0..9, 'A'..'Z', 'a'..'z', '+', '/';
+    
+    [~] @a[ [R,] $num.polymod($base xx *) ]
 }
