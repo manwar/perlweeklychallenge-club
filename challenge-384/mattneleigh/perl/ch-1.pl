@@ -45,7 +45,7 @@ exit(0);
 # Given a list of digits in a numerical base, and a number to represent in that
 # base, produce a string that represents the number in the specified base using
 # the provided digits
-# Takes three arguments:
+# Takes two arguments:
 # * A ref to an array of digits to use, in which the index of the digit must
 #   correspond to its value (e.g.
 #       [ "0", "1", "2", ... "9", "A", "B", "C", "D", "E", "F" ]
