@@ -1,0 +1,105 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+
+% end included library code
+
+/basen {
+    0 dict begin
+    /base exch def
+    /a exch def
+    a 0 eq {
+        "0"
+    } {
+        /digits [
+            48 1 57 { } for
+            65 1 90 { } for
+            97 1 122 { } for
+            43
+            47
+        ] def
+        /aa a def
+        /fields [
+            {
+                aa 0 le {
+                    exit
+                } if
+                aa base mod
+                /aa aa base idiv def
+            } loop
+        ] def
+        [
+            {
+                fields length 0 le {
+                    exit
+                } if
+                /fields fields apop.right 3 1 roll def
+                digits exch get
+            } loop
+        ] a2s
+    } ifelse
+    end
+} bind def
+
+(basen) test.start
+42 2 basen (101010) eq test
+15642094 16 basen (EEADEE) eq test
+493 8 basen (755) eq test
+2228519 36 basen (1BRJB) eq test
+123456789 64 basen (7MyqL) eq test
+test.end

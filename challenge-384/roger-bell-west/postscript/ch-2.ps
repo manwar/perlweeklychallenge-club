@@ -1,0 +1,162 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/specialbinarysubstrings {
+    0 dict begin
+    /ac exch s2a def
+    [
+        0 1 ac length 2 sub {
+            /i exch def
+            i 1 add 2 ac length 1 sub {
+                /j exch def
+                /lastchar 120 def
+                /switches 0 def
+                /balance 0 def
+                /outarr [
+                    i 1 j {
+                        /ct exch def
+                        ac ct get
+                        dup lastchar ne {
+                            /switches switches 1 add def
+                            dup /lastchar exch def
+                        } if
+                        dup 48 eq {
+                            /balance balance 1 sub def
+                        } {
+                            /balance balance 1 add def
+                        } ifelse
+                    } for
+                ] def
+                balance 0 eq switches 2 eq and {
+                    outarr a2s
+                } if
+            } for
+        } for
+    ]
+    end
+} bind def
+
+(specialbinarysubstrings) test.start
+(0101) specialbinarysubstrings [(01) (10) (01)] deepeq test
+(000111) specialbinarysubstrings [(000111) (0011) (01)] deepeq test
+(000011) specialbinarysubstrings [(0011) (01)] deepeq test
+(10011100) specialbinarysubstrings [(10) (0011) (01) (1100) (10)] deepeq test
+(00000) specialbinarysubstrings [] deepeq test
+test.end
