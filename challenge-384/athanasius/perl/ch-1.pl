@@ -69,7 +69,8 @@ Output
 ------
 The symbol set comprises all the printable ASCII characters, with the exception
 of '-' (minus, which is used to indicate negative numbers) and ' ' (space).
-Hence, a number in any base up to 93 is represented as a string of ASCII char- acters; for example, the decimal number 1,234,567,890 is represented in base 93
+Hence, a number in any base up to 93 is represented as a string of ASCII char-
+acters; for example, the decimal number 1,234,567,890 is represented in base 93
 by the string "Gk]Ap".
 
 For bases 94 and above, a different notation is used: each digit is represented
