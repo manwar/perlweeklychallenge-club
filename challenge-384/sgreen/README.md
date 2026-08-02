@@ -1,3 +1,3 @@
-# The Weekly Challenge 383
+# The Weekly Challenge 384
 
-Blog: [Similar colors](https://dev.to/simongreennet/weekly-challenge-similar-colors-1n4d)
+Blog: [Base substrings](https://dev.to/simongreennet/weekly-challenge-base-substrings-44ii)
