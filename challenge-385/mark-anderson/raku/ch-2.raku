@@ -9,29 +9,25 @@ is outermost-parentheses("(()(()))(()())"), "()(())()()";
 
 sub outermost-parentheses($str)
 {
-    ($str ~~ m:g/(.+?) <?{ .<(> == .<)> given $0.comb.Bag }>/)>>.substr(1, *-1)
-                                                                .join
+    ($str ~~ m:g/(.+?) <?{ .<(> == .<)> given $0.comb.Bag }>/)>>.substr(1, *-1).join
 }
 
 sub outermost-parentheses-v2($str)
 {
     my @p = $str.comb;
 
-    my @i = gather
+    .join given gather while @p
     {
-        while temp @p
-        {
-            my $left  = 0;
-            my $right = 0;
- 
-            repeat until $right == $left
-            {
-                @p.shift eq '(' ?? $left++ !! $right++
-            } 
-
-            take $left + $right 
-        }
+         my $left  = 0;
+         my $right = 0;
+     
+         take .[1..*-2].join given gather repeat until $right == $left
+         {
+             given @p.shift -> $p
+             {
+                 take $p;
+                 $p eq '(' ?? $left++ !! $right++
+             }
+         }
     }
-
-    [~] @p.rotor(@i)>>[1..*-2]>>.join
- }
+}
