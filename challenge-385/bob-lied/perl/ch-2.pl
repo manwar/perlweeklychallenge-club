@@ -74,6 +74,27 @@ sub taskRE($str)
     return $output;
 }
 
+sub taskSM($str)
+{
+    my @p = split(//, $str);
+
+    my $output = '';
+    my $depth = 0;
+    for my ($pos, $p) ( indexed @p )
+    {
+        if ( $p eq '(' )
+        {
+            $output .= $p if ++$depth > 1;
+        }
+        elsif ( $p eq ')' )
+        {
+            $output .= $p if $depth-- > 1;
+        }
+    }
+
+    return $output;
+}
+
 sub runTest
 {
     use Test2::V1 -ipP;
@@ -90,6 +111,12 @@ sub runTest
     is( taskRE(    "()((()))()"),       "(())", "Example 4");
     is( taskRE("(()(()))(()())"), "()(())()()", "Example 5");
 
+    is( taskSM(        "()()()"),           "", "Example 1");
+    is( taskSM(      "(((())))"),     "((()))", "Example 2");
+    is( taskSM(    "(()())(())"),     "()()()", "Example 3");
+    is( taskSM(    "()((()))()"),       "(())", "Example 4");
+    is( taskSM("(()(()))(()())"), "()(())()()", "Example 5");
+
     done_testing;
 }
 
@@ -101,5 +128,6 @@ sub runBenchmark($repeat)
     cmpthese($repeat, {
             balanced => sub { taskRE($str) },
             regex    => sub { taskRE($str) },
+            parse    => sub { taskSM($str) },
         });
 }
