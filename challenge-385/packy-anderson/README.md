@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: A heaven on earth, they call it Base-N Street](https://packy.dardan.com/b/wJ)
+[Perl Weekly Challenge: Parenthetically Uncommon](https://packy.dardan.com/b/wk)
