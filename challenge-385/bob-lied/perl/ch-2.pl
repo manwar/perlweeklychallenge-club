@@ -76,22 +76,19 @@ sub taskRE($str)
 
 sub taskSM($str)
 {
-    my @p = split(//, $str);
-
     my $output = '';
     my $depth = 0;
-    for my ($pos, $p) ( indexed @p )
+    for my $p ( split(//, $str) )
     {
         if ( $p eq '(' )
         {
             $output .= $p if ++$depth > 1;
         }
-        elsif ( $p eq ')' )
+        else
         {
             $output .= $p if $depth-- > 1;
         }
     }
-
     return $output;
 }
 
