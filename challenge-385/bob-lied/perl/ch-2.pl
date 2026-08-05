@@ -78,16 +78,10 @@ sub taskSM($str)
 {
     my $output = '';
     my $depth = 0;
-    for my $p ( split(//, $str) )
+    for ( split(//, $str) )
     {
-        if ( $p eq '(' )
-        {
-            $output .= $p if ++$depth > 1;
-        }
-        else
-        {
-            $output .= $p if $depth-- > 1;
-        }
+        if ( $_ eq '(' ) { $output .= $_ if ++$depth > 1; }
+        else             { $output .= $_ if $depth-- > 1; }
     }
     return $output;
 }
