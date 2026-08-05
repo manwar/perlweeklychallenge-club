@@ -46,17 +46,30 @@ my $logger;
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say task($_) for @ARGV;
+say task($_), "\n", taskRE($_) for @ARGV;
 
 #=============================================================================
 sub task($str)
 {
     use Text::Balanced qw/extract_bracketed/;
-    my $output;
+    my $output = '';
 
-    while ( my $group = extract_bracketed($str) )
+    while ( my $group = extract_bracketed($str, '()') )
     {
         $output .= substr($group, 1, length($group)-2);
+    }
+    return $output;
+}
+
+sub taskRE($str)
+{
+    use Regexp::Common qw/balanced/; use feature "multidimensional";
+    my $output = '';
+
+    my $rx = $RE{balanced}{-parens=>'()'}{-keep};
+    while ( $str =~ m/$rx/g )
+    {
+        $output .= substr($1, 1, length($1)-2);
     }
     return $output;
 }
@@ -71,6 +84,12 @@ sub runTest
     is( task(    "()((()))()"),       "(())", "Example 4");
     is( task("(()(()))(()())"), "()(())()()", "Example 5");
 
+    is( taskRE(        "()()()"),           "", "Example 1");
+    is( taskRE(      "(((())))"),     "((()))", "Example 2");
+    is( taskRE(    "(()())(())"),     "()()()", "Example 3");
+    is( taskRE(    "()((()))()"),       "(())", "Example 4");
+    is( taskRE("(()(()))(()())"), "()(())()()", "Example 5");
+
     done_testing;
 }
 
@@ -78,7 +97,9 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my $str = "(()(()))(()())" x 10;
     cmpthese($repeat, {
-            label => sub { },
+            balanced => sub { taskRE($str) },
+            regex    => sub { taskRE($str) },
         });
 }
