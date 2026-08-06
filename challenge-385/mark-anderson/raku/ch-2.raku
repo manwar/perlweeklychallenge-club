@@ -7,27 +7,11 @@ is outermost-parentheses("(()())(())"),     "()()()";
 is outermost-parentheses("()((()))()"),     "(())";
 is outermost-parentheses("(()(()))(()())"), "()(())()()";
 
+#
+# do-over after seeing the solution from Athanasius
+#
+
 sub outermost-parentheses($str)
 {
-    ($str ~~ m:g/(.+?) <?{ .<(> == .<)> given $0.comb.Bag }>/)>>.substr(1, *-1).join
-}
-
-sub outermost-parentheses-v2($str)
-{
-    my @p = $str.comb;
-
-    .join given gather while @p
-    {
-         my $left  = 0;
-         my $right = 0;
-     
-         take .[1..*-2].join given gather repeat until $right == $left
-         {
-             given @p.shift -> $p
-             {
-                 take $p;
-                 $p eq '(' ?? $left++ !! $right++
-             }
-         }
-    }
+    ($str ~~ m:g/'(' <~~>* ')'/)>>.substr(1,*-1).join
 }
