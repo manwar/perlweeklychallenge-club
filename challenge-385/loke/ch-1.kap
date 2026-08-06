@@ -1,0 +1,13 @@
+Solve1 ⇐ {
+	⫽⍨/ ⊂[0] (1≡≢)⌸⍨ ,/ (@\s≠)⍛⊂¨ ⍵
+}
+
+TestSolution1 ⇐ {
+	result ← `
+			((⍮"orange") ≡ Solve1 "apple banana apple" "banana orange") `
+			("cat" "dog" "bird" "fish" ≡ Solve1 "cat dog" "bird fish") `
+			("brown" "fox" ≡ Solve1 "the quick brown fox" "the quick") `
+			(⍬ ≡ Solve1 "hello" "hello") `
+			((⍮"yellow") ≡ Solve1 "blue blue red" "red green green yellow")
+	∧/results ⍝ Return true if all results are correct
+}
