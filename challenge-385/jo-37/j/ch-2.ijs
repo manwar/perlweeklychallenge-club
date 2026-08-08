@@ -2,14 +2,23 @@
 
 require 'regex'
 
-outermost_parentheses =: _(adverb define)
-  NB. compile the regex pattern
-  NB. the returned pattern handle is persistent and global
-  ph =. rxcomp '(?<BP>\((?&NP)(?:(?&BP)(?&NP))*\))(?(DEFINE)(?<NP>[^()]*+))'
-
-  NB. behead and curtail all matched substrings
-  ph & (}:@}. rxapply) : [:
+NB. compile pattern
+ph =: rxcomp 0 : 0
+(?x)
+(?<BP>
+  \(
+  (?&NP)
+  (?:
+    (?&BP)
+    (?&NP)
+  )*
+  \)
+) (?#)
+(?(DEFINE)(?<NP>[^()]*+))
 )
+
+NB. behead and curtail all matched substrings
+outermost_parentheses =: ph & (}:@}. rxapply) : [:
 
 NB. cheating on example 1: here it has a trailing blank
 NB. such that the expected result is not empty
