@@ -1,210 +1,197 @@
-# A Helpful Module and a Recursive Pattern
+# Uncommonly Recursive
 
-**Challenge 384 solutions in Perl by Matthias Muth**
+**Challenge 385 solutions in Perl by Matthias Muth**
 
-## Task 1: Base N
+## Task 1: Uncommon Words
 
-> You are given a number and a base integer.<br/>
-> Write a script to convert the given number in the given base integer.
+> You are given two sentences.<br/>
+> Write a script to return list of all uncommon words, order is not important.
 >
 > **Example 1**
 >
 > ```text
-> Input: $num = 42, $base = 2
-> Output: 101010
+> Input: $sentence1 = "apple banana apple"
+>        $sentence2 = "banana orange"
+> Output: ("orange")
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: $num = 15642094, $base = 16
-> Output: EEADEE
+> Input: $sentence1 = "cat dog"
+>        $sentence2 = "bird fish"
+> Output: ("cat", "dog", "bird", "fish")
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: $num = 493, $base = 8
-> Output: 755
+> Input: $sentence1 = "the quick brown fox"
+>        $sentence2 = "the quick"
+> Output: ("brown", "fox")
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: $num = 2228519, $base = 36
-> Output: 1BRJB
->
-> Base 36 uses numbers 0-9 and letters A-Z.
-> ```
->
-> **Example 5**
->
-> ```text
-> Input: $num = 123456789, $base = 64
-> Output: 7MyqL
->
-> Base 64 (using 0-9, A-Z, a-z, and extra symbols like + and /)
-> ```
-
-Not long ago, the was another challenge ([Challenge 379 Task 2 'Armstrong Number'](https://theweeklychallenge.org/blog/perl-weekly-challenge-379/#TASK2)) where we needed to convert numbers into different bases, too. What I took from solving that task, then, was that the `Math::Prime::Util` CPAN module contains a `todigits` function that returns the digits of a number $n$ in a given base $b$, as an array of integers (from $\{0,\dots,b-1\}$).
-
-All that is left to do then is to translate those digits into the characters representing each digit in base $b$. This can be done with a substring lookup, using `map` to translate each digit into a single character, by using the digit as an index into an 'alphabet' string.
-
-The task text and the examples give information about the 'alphabet' to use up to a base of 64. Larger bases will therefore be refused, as well as bases equal to or lower than 0.   
-
-I don't think the following code needs much more explanation:
-
-```perl
-use v5.36;
-use Math::Prime::Util qw( todigits );
-
-sub base_n( $num, $base ) {
-    return undef unless 0 < $base <= 64;
-    my $digits = join "", 0..9, "A".."Z", "a".."z", "+", "/";
-    return join "", map substr( $digits, $_, 1 ), todigits( $num, $base );
-}
-```
-
-## Task 2: Special Binary Substrings
-
-> You are given a binary string.<br/>
-> Write a script to return all non-empty substrings (distinct) that have the same number of 0’s and 1’s, and all the 0’s and all the 1’s in these substrings are grouped consecutively.
->
-> **Example 1**
->
-> ```text
-> Input: $binary = "0101"
-> Output: ("01", "10")
-> ```
->
-> **Example 2**
->
-> ```text
-> Input: $binary = "000111"
-> Output: ("000111", "0011", "01")
-> ```
->
-> **Example 3**
->
-> ```text
-> Input: $binary = "000011"
-> Output:  ("0011", "01")
-> ```
->
-> **Example 4**
->
-> ```text
-> Input: $binary = "10011100"
-> Output: ("10", "0011", "01", "1100")
-> ```
->
-> **Example 5**
->
-> ```text
-> Input: $binary = "00000"
+> Input: $sentence1 = "hello"
+>        $sentence2 = "hello"
 > Output: ()
 > ```
+>
+> **Example 5**
+>
+> ```text
+> Input: $sentence1 = "blue blue red"
+>        $sentence2 = "red green green yellow"
+> Output: ("yellow")
+> ```
 
-Very good, it's time to brush up my knowledge about recursive regular expressions a bit!
+I interpret *uncommon words* as *words that the two sentences do not have in common*. In other words, they are words that occur in one sentence but not in the other.
 
-Let's first look at how to recognize a substring with `0` digits, followed by the same number of `1` digits (strings with `1`s followed by `0`s will be added later).
+For me, the easiest way to solve the task is to count how often each word occurs across the two sentences. All *uncommon* words should then have a count of 1.
 
-The shortest possible substring is `"01"`, and we recognize it with a pattern of `/01/`.
+But wait. What happens if the same word appears twice in the same sentence, but not in the other one? One could argue that such a word is not 'common', because it does not appear in both sentences. Yet the word count for this word will be greater than 1.
 
-The next longer substring is `"0011"`, and we can group it like this: `/(0(01)1)/`.
+But Example 5 gives an important clue. We have `blue` appearing twice in the first sentence, `green` appearing twice in the second one, and `red` appearing in both. Thus `blue`, `green`, and `red` all have a frequency of 2, while `yellow` has a frequency of 1. Since `yellow` is the only word in the expected result, this confirms that a frequency of 1 is indeed the correct criterion. It doesn't seem to matter *why* a word has frequency 2 (whether it occurs twice in one sentence or once in each sentence), it is excluded from the result.
 
-For finding `"000111"`, a pattern with grouping could be  `/(0(0(01)1)1)/`.
+For count the occurrences for every word, I use `frequency` from `List::MoreUtils`. It returns a hash in which for every key, its value indicates how often that key appeared in the input list.
 
-Now we start to see a pattern (pun intended): It looks like after finding a `0`, we can recurse into the same pattern for finding more 'inner groups' before we match the final `1` on the same level.
+`split " "` splits a sentence at whitespace. For the list of all words, I use `map` to apply this to both `$sentence1` and `$sentence2`.
 
-The recursive pattern thus looks like this:
-
-```perl
-    / ( 0 (?-1)* 1 ) /x
-```
-
-The `(?-1)` part refers to the 'previous' parentheses group that was opened (hence the `-1`). That pattern can appear any number of times, so it is followed by the `*` quantifier.
-
-An alternation helps to find both types of sequences, `0-1` as well as `1-0`:
-
-```perl
-     / ( 0 (?-1)* 1 ) | ( 1 (?-1)* 0 ) /x
-```
-
-For finding all occurrences, we cannot simply use the `//g` *global* option, because the substrings might overlap. We need to check the pattern starting at every possible position in the string, one by one. 
-
-I see two options for doing that:
-
-* Using `//g`, and setting the starting position for each search explicitly, using the `pos` function:
-
-  ```perl
-      my @results;
-      for ( 0 .. length( $binary ) - 2 ) {
-          pos( $binary ) = $_;
-          if ( $binary =~ / ( 0 (?-1)* 1 ) | ( 1 (?-1)* 0 ) /gx ) {
-              push @results, $&;
-          }
-      }
-  ```
-
-* Using `substr` to reduce the string to the part that is to be searched:
-
-  ```perl
-      my ( @results, %marked );
-      for ( 0 .. length( $binary ) - 2 ) {
-          if ( substr( $binary, $_ ) =~ / ( 0 (?-1)* 1 ) | ( 1 (?-1)* 0 ) /gx ) {
-              push @results, $&;
-          }
-      }
-  ```
-
-I implemented both, and running a small benchmark, I found that the runtime is almost the same, with the `substr` version having a slight edge over the `pos` version.
-
-I find that interesting, because I had imagined that repetitively building the substring needs a lot of copy operations. But it seems that the Perl optimizer does a great job there.
-
-At the same time, I think that the `substr` version is easier to understand. So let's go with it.
-
-Another point still needs to be addressed: The examples show that every match appears only once in the result list, while the code above does not eliminate possible duplicates.
-
-Again, there are (at least) two options:
-
-* using `uniq` from `List::Util` to reduce the result list,
-* using a hash to mark the matches we already encountered, and skip their inclusion if they appear again.
-
-Using `uniq` is the 'easy programming' option, which gives it an advantage.
-
-Even more because another little benchmark shows that it is around 15% *faster* than the programmed out solution using a hash.
-
-Again I would not necessarily have expected this, since there is a subroutine call overhead with `uniq`. But it seems that the `uniq` implementation is so highly optimized that this doesn't play a too big role.
-
-This is the 'proof of concept' version of my solution:
+For the final result, `grep` selects those words whose frequency is exactly 1.
 
 ```perl
 use v5.36;
+use List::MoreUtils qw( frequency );
 
-sub special_binary_substrings( $binary ) {
-    my @results;
-    for ( 0 .. length( $binary ) - 2 ) {
-        push @results, $&
-            if substr( $binary, $_ ) =~ / ( 0 (?-1)* 1 ) | ( 1 (?-1)* 0 ) /gx;
-    }
-    return uniq @results;
+sub uncommon_words( $sentence1, $sentence2 ) {
+    my %freq = frequency map { split " " } $sentence1, $sentence2;
+    return grep { $freq{$_} == 1 } keys %freq;
 }
 ```
 
-I then decided to replace the `for` loop by a call to `map`, and turn it into a one-statement solution:
+Testing this solution requires a little effort.
+
+For typical challenge tasks, it is enough to compare the result with an expected value (or list of values). Here, though, the return value is a list of hash keys. Perl randomizes the order in which hash keys are returned between runs, for security reasons.
+
+We could sort the result list before returning it, but the task description explicitly tells us that 'the order is not important', so we shouldn't take more effort than needed and waste CPU cycles for sorting.
+
+But `Test2::V0` has an answer for this: We can use a *bag builder* if the expected elements may occur in any order. The `bag` function creates a check object that can be used with `is` to compare to our subroutine output (wrapped into an array reference) with the expected elements. The *bag* can be set up to pass the test if all the expected elements are present, regardless of their order, and no other elements are present.
+
+Of course it only makes sense to use a `bag` if there is more than one expected element to check. For a single word, a simple arrayref containing that word is enough, as is an empty arrayref if no value is expected at all. Therefore, a `bag` is used only for Examples 2 and 3.
+
+This is the testing code that tests the task examples:
+
+```perl
+use Test2::V0 qw( -no_srand );
+
+my @tests = (
+    [ "Example 1", ["apple banana apple", "banana orange"],
+        ["orange"] ],
+    [ "Example 2", ["cat dog", "bird fish"],
+        bag { item $_ for "cat", "dog", "bird", "fish"; end } ],
+    [ "Example 3", ["the quick brown fox", "the quick"],
+        bag { item $_ for "brown", "fox"; end } ],
+    [ "Example 4", ["hello", "hello"],
+        [] ],
+    [ "Example 5", ["blue blue red", "red green green yellow"],
+        ["yellow"] ],
+);
+
+is [ uncommon_words( $_->[1]->@* ) ], $_->[2], $_->[0]
+    for @tests;
+
+done_testing;
+```
+
+## Task 2: Outermost Parentheses
+
+> You are given a valid parentheses string.<br/>
+> Write a script to return the string after removing the outermost parentheses of every primitive string in the primitive decomposition of the given string.
+>
+> **Example 1**
+>
+> ```text
+> Input: $str = "()()()"
+> Output: ""
+>
+> Primitive Decomposition: "()" + "()" + "()"
+> ```
+>
+> **Example 2**
+>
+> ```text
+> Input: $str = "(((())))"
+> Output: "((()))"
+>
+> Primitive Decomposition: "(((())))"
+> ```
+>
+> **Example 3**
+>
+> ```text
+> Input: $str = "(()())(())"
+> Output: "()()()"
+>
+> Primitive Decomposition: "(()())" + "(())"
+> ```
+>
+> **Example 4**
+>
+> ```text
+> Input: $str = "()((()))()"
+> Output: "(())"
+>
+> Primitive Decomposition: "()" + "((()))" + "()"
+> ```
+>
+> **Example 5**
+>
+> ```text
+> Input: $str = "(()(()))(()())"
+> Output: "()(())()()"
+>
+> Primitive Decomposition: "(()(()))" + "(()())"
+> ```
+
+Cool, another task that can be solved with a recursive regular expression!
+
+The 'Primitive Decomposition' seems to split the input string into a sequence of balanced-parentheses strings. Each 'primitive' starts with an opening parenthesis and ends with a closing one, and it contains an 'inner part' that, again, is a balanced-parentheses string. So, actually, the task is to remove the enclosing parentheses at the outermost level of every primitive.
+
+Let's start with constructing a pattern that accepts one such 'primitive', capturing the inner part:
+
+```perl
+    / \( ( <inner part> ) \) /x
+```
+
+The escaped parentheses, `\(` and `\)`, match literal parentheses. The unescaped parentheses, `(` and `)`, delimit a capture group.
+
+As said before, the inner part is a balanced-parentheses string (which can be empty, actually). This is where we can apply the recursion, because the outer parentheses already match the first level of a balanced sequence. We can apply the complete pattern for the recursion to match the inner part.
+
+`(?R)` recursively invokes the entire regular expression, allowing the inner part to contain arbitrarily nested balanced parentheses. Since the inner part can contain zero or more complete balanced-parentheses groups, we use `(?R)*`.
+
+```perl
+    / \( ( (?R)* ) \) /x
+```
+
+Having captured the inner part, we can use a `s///` substitution to replace the whole match by `$1`, thereby removing the outer parentheses while leaving the inner part untouched.
+
+Since there may be several primitives in sequence, we use the `/g` *global* flag to perform the substitution on all of them in one statement.
+
+And as we want to directly return the resulting string after all the substitutions, we can use the `/r` (*result*) flag to that effect.
+
+The 'Primitive Decomposition' and the removal of the outer parentheses are entirely handled by the recursive regular expression in the substitution. The subroutine itself does not need any explicit recursion or looping.
+
+In effect, it turns out to be a one-statement solution!
 
 ```perl
 use v5.36;
-use List::Util qw( uniq );
 
-sub special_binary_substrings( $binary ) {
-    return uniq map {
-        substr( $binary, $_ ) =~ / ( 0 (?-1)* 1 ) | ( 1 (?-1)* 0 ) /gx
-        ? $&
-        : ()
-    } 0 .. length( $binary ) - 2;
+sub outermost_parentheses( $str ) {
+    return $str =~ s/ \( ( (?R)* ) \) /$1/xgr;
 }
 ```
 
 #### **Thank you for the challenge!**
+
