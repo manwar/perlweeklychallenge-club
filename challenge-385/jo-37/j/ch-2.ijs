@@ -2,8 +2,9 @@
 
 require 'regex'
 
-NB. compile pattern
-ph =: rxcomp 0 : 0
+NB. - compile pattern
+NB. - behead and curtail all matched substrings
+outermost_parentheses =: (rxcomp 0 : 0) & (}:@}. rxapply)
 (?x)
 (?<BP>
   \(
@@ -11,14 +12,11 @@ ph =: rxcomp 0 : 0
   (?:
     (?&BP)
     (?&NP)
-  )*
-  \)
+   )*
+   \)
 ) (?#)
 (?(DEFINE)(?<NP>[^()]*+))
 )
-
-NB. behead and curtail all matched substrings
-outermost_parentheses =: ph & (}:@}. rxapply) : [:
 
 NB. cheating on example 1: here it has a trailing blank
 NB. such that the expected result is not empty
