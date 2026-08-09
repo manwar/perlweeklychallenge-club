@@ -39,6 +39,5 @@ main :: proc() {
 	out = outermost_parentheses("(()(()))(()())")
 	fmt.println(out)
 	delete(out)
-	
 }
 
