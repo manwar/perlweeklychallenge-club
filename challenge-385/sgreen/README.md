@@ -1,3 +1,3 @@
-# The Weekly Challenge 384
+# The Weekly Challenge 385
 
-Blog: [Base substrings](https://dev.to/simongreennet/weekly-challenge-base-substrings-44ii)
+Blog: [Uncommon parentheses](https://dev.to/simongreennet/weekly-challenge-uncommon-parentheses-16hf)
