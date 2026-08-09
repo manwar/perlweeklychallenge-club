@@ -9,9 +9,9 @@ outermost_parentheses :: proc(str: string) -> string {
 	for c in str do switch c {
 		case '(':
 			depth += 1
-			if depth > 1 do strings.write_rune(&sb, '(')
+			if depth > 1 do strings.write_rune(&sb, c)
 		case ')':
-			if depth > 1 do strings.write_rune(&sb, ')')
+			if depth > 1 do strings.write_rune(&sb, c)
 			depth -= 1
 	}
 	return strings.to_string(sb)

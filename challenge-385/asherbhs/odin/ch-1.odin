@@ -9,24 +9,12 @@ uncommon_words :: proc(sentence1, sentence2: string) -> []string {
 	{
 		words := strings.split(sentence1, " ")
 		defer delete(words)
-		for word in words {
-			if word in counts {
-				counts[word] += 1
-			} else {
-				counts[word] = 1
-			}
-		}
+		for word in words do if word in counts do counts[word] += 1
 	}
 	{
 		words := strings.split(sentence2, " ")
 		defer delete(words)
-		for word in words {
-			if word in counts {
-				counts[word] += 1
-			} else {
-				counts[word] = 1
-			}
-		}
+		for word in words do if word in counts do counts[word] += 1
 	}
 	words := make([dynamic]string)
 	for word, count in counts do if count == 1 do append(&words, word)
