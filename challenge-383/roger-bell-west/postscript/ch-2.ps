@@ -1,0 +1,106 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+
+% end included library code
+
+/mkhexchar {
+    dup 9 le {
+        48 add
+    } {
+        55 add
+    } ifelse
+} bind def
+
+/nearestrgb {
+    0 dict begin
+    /a exch def
+    [
+        35
+        1 2 5 {
+            /i exch def
+            /cs 0 def
+            0 1 1 {
+                /cs cs 16 mul def
+                a exch i add get dup
+                c.isdigit {
+                    48 sub
+                } {
+                    55 sub
+                } ifelse
+                /cs exch cs add def
+            } for
+            /ct cs 51 idiv 51 mul def
+            cs ct sub 25 gt {
+                /ct ct 51 add def
+            } if
+            ct 16 idiv mkhexchar
+            ct 16 mod mkhexchar
+        } for
+    ]
+    a2s
+    end
+} bind def
+
+(nearestrgb) test.start
+(#F4B2D1) nearestrgb (#FF99CC) eq test
+(#15E6E5) nearestrgb (#00FFCC) eq test
+(#191A65) nearestrgb (#003366) eq test
+(#2D5A1B) nearestrgb (#336633) eq test
+(#00FF66) nearestrgb (#00FF66) eq test
+test.end

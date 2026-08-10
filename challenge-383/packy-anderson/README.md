@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: The World Turned Upside Down!](https://packy.dardan.com/b/uP)
+[Perl Weekly Challenge: Hey! Are we doing government work here?](https://packy.dardan.com/b/vE)
