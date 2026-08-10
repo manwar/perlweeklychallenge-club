@@ -42,6 +42,7 @@ class TestReverseBase(unittest.TestCase):
         self.assertEqual(reverse_base("755", 8), 493)
         self.assertEqual(reverse_base("1BRJB", 36), 2228519)
         self.assertEqual(reverse_base("7Myql", 64), 123456789)
+        self.assertEqual(reverse_base("7MyqL", 64), 123456789)
 
 
 if __name__ == "__main__":

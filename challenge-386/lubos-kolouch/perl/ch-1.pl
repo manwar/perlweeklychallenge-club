@@ -44,7 +44,8 @@ if ( !@ARGV ) {
     is( reverse_base( "EEADEE", 16 ), 15642094,  "Example 2" );
     is( reverse_base( "755",    8 ),  493,       "Example 3" );
     is( reverse_base( "1BRJB",  36 ), 2228519,   "Example 4" );
-    is( reverse_base( "7Myql",  64 ), 123456789, "Example 5" );
+    is( reverse_base( "7Myql",  64 ), 123456789, "Example 5a" );
+    is( reverse_base( "7MyqL",  64 ), 123456789, "Example 5b" );
 
     done_testing();
 }
