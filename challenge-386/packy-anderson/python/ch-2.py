@@ -21,13 +21,10 @@ def rational_to_fraction(rat):
 def rational_equal(rat1, rat2):
   n1, d1 = rational_to_fraction(rat1)
   n2, d2 = rational_to_fraction(rat2)
-  length = max(len(rat1), len(rat2))
-  fmt = ('{:>' + str(length) + '} is {}/{}' +
-         '\n'  +
-         '{:>' + str(length) + '} is {}/{}')
+  l = max(len(rat1), len(rat2))
   return (
     'true' if n1 == n2 and d1 == d2 else 'false',
-    fmt.format(rat1, n1, d1, rat2, n2, d2)
+    f"{rat1:>{l}} is {n1}/{d1}\n{rat2:>{l}} is {n2}/{d2}"
   )
 
 def solution(rat1, rat2):
