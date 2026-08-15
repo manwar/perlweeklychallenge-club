@@ -22,7 +22,7 @@ my @Test =
 plan +@Test ÷ 3;
 
 #  an ordered  result
-sub task-order( Any:D(Str) $a, Any:D(Str) $b -->List:D) {
+sub task-order( Str:D(Any) $a, Str:D(Any) $b -->List:D) {
     my @ary = ($a ~ ' ' ~ $b).split( / \s+ / ).Array;
     my $count = @ary.Bag;
     do for @ary ->  $v {
@@ -31,7 +31,7 @@ sub task-order( Any:D(Str) $a, Any:D(Str) $b -->List:D) {
     }
 }
 
-sub task( Any:D(Str) $a, Any:D(Str) $b -->List:D) {
+sub task( Str:D(Any) $a, Str:D(Any) $b -->List:D) {
     my %h = ($a ~ ' ' ~ $b).split( / \s+ / ).BagHash;
     do for %h.kv ->  $k, $v {
         next unless $v == 1;
