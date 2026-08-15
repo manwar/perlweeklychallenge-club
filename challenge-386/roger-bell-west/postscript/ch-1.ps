@@ -1,0 +1,91 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/reversebase {
+    0 dict begin
+    /base exch def
+    /dd 0 dict def
+    [
+        48 1 57 { } for
+        65 1 90 { } for
+        97 1 122 { } for
+        43
+        47
+    ] enumerate.array {
+        aload pop
+        dd 3 1 roll
+        exch put
+    } forall
+    0 exch
+    s2a {
+        dd exch get
+        exch base mul add
+    } forall
+    end
+} bind def
+
+(reversebase) test.start
+(101010) 2 reversebase 42 eq test
+(EEADEE) 16 reversebase 15642094 eq test
+(755) 8 reversebase 493 eq test
+(1BRJB) 36 reversebase 2228519 eq test
+(7MyqL) 64 reversebase 123456789 eq test
+test.end
