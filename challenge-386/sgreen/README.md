@@ -1,3 +1,3 @@
-# The Weekly Challenge 385
+# The Weekly Challenge 386
 
-Blog: [Uncommon parentheses](https://dev.to/simongreennet/weekly-challenge-uncommon-parentheses-16hf)
+Blog: [The Rational Base](https://dev.to/simongreennet/weekly-challenge-the-rational-base-9m1)
