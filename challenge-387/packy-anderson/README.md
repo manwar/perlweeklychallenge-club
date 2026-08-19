@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: We're Talkin' Algebra](https://packy.dardan.com/b/xF)
+[Perl Weekly Challenge: Regex Man Hates Atom Man](https://packy.dardan.com/b/yD)
