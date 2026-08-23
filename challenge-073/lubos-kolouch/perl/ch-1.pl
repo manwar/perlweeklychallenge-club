@@ -1,54 +1,35 @@
-#!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE: ch-1.pl
-#
-#        USAGE: ./ch-1.pl  
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-073/
-#	
-#				Min Sliding Window
-#
-#
-#      OPTIONS: ---
-# REQUIREMENTS: ---
-#         BUGS: ---
-#        NOTES: ---
-#       AUTHOR: Lubos Kolouch
-# ORGANIZATION: 
-#      VERSION: 1.0
-#      CREATED: 16.8.2020 12:40
-#     REVISION: ---
-#===============================================================================
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use List::Util qw/min/;
+use experimental 'signatures';
+use List::Util qw(min);
 
-sub min_window {
-   my ($a_ref, $s) = @_;
+sub min_window ( $arr, $s ) {
+    return [] if !@$arr || $s <= 0;
+    return [ min(@$arr) ] if $s >= scalar(@$arr);
 
-   my @return_array;
+    my @return_array;
+    for my $i ( 0 .. scalar(@$arr) - $s ) {
+        push @return_array, min( @$arr[ $i .. $i + $s - 1 ] );
+    }
 
-   my $pos = 0;
-   while (1) {
-	   my $last_index = min(scalar @$a_ref-1, $pos+$s);
-
-	   push @return_array, min(@$a_ref[$pos..$last_index]);
-	   last if $last_index == scalar(@$a_ref)-1;
-
-	   $pos++;
-   }
-
-   return \@return_array;
+    return \@return_array;
 }
 
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-# TESTS
+    is_deeply(
+        min_window( [ 1, 5, 0, 2, 9, 3, 7, 6, 4, 8 ], 3 ),
+        [ 0, 0, 0, 2, 3, 3, 4, 4 ],
+        'Example 1'
+    );
+    is_deeply( min_window( [ 1, 2, 3 ], 4 ), [1], 'Window larger than array' );
+    is_deeply( min_window( [ 3, 1, 2 ], 1 ), [ 3, 1, 2 ], 'Window size 1' );
+    is_deeply( min_window( [],          3 ), [],        'Empty array' );
 
-use Test::More;
+    done_testing();
+}
 
-is_deeply(\min_window([1, 5, 0, 2, 9, 3, 7, 6, 4, 8],3),\[0,0,0,2,3,3,4]);
-is_deeply(\min_window([1, 2, 3],4),\[1]);
-
-done_testing;

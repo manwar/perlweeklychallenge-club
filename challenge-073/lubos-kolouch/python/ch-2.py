@@ -1,29 +1,49 @@
-#! /usr/bin/env python
-""" Perl weekly challenge 073
-    https://perlweeklychallenge.org/blog/perl-weekly-challenge-073/ Task 2 """
+#!/usr/bin/env python3
+"""
+Perl Weekly Challenge 073 - Task 2: Smallest Neighbour
+
+You are given an array of integers @A.
+Write a script to create an array that represents the smallest element
+to the left of each corresponding index. If none found, then use 0.
+"""
+
+import unittest
 
 
-def get_smallest(arr):
-    """Write a script to create an array that represents the
-       smallest element to the left of each corresponding index.
-       If none found then use 0. """
+def get_smallest(arr: list[int]) -> list[int]:
+    """Return smallest element to the left of each index, or 0 if none is smaller."""
+    if not arr:
+        return []
 
-    return_array = list()
-    return_array.append(0)
+    result: list[int] = [0]
+    current_min = arr[0]
 
-    my_min = arr[0]
-
-    for i in range(1, len(arr)):
-        if my_min < arr[i]:
-            return_array.append(my_min)
+    for x in arr[1:]:
+        if current_min < x:
+            result.append(current_min)
         else:
-            return_array.append(0)
+            result.append(0)
 
-        if arr[i] < my_min:
-            my_min = arr[i]
+        if x < current_min:
+            current_min = x
 
-    return return_array
+    return result
 
 
-assert get_smallest([7, 8, 3, 12, 10]) == [0, 7, 0, 3, 3]
-assert get_smallest([4, 6, 5]) == [0, 4, 4]
+class TestSmallestNeighbour(unittest.TestCase):
+    def test_example_1(self) -> None:
+        self.assertEqual(get_smallest([7, 8, 3, 12, 10]), [0, 7, 0, 3, 3])
+
+    def test_example_2(self) -> None:
+        self.assertEqual(get_smallest([4, 6, 5]), [0, 4, 4])
+
+    def test_single_element(self) -> None:
+        self.assertEqual(get_smallest([5]), [0])
+
+    def test_empty(self) -> None:
+        self.assertEqual(get_smallest([]), [])
+
+
+if __name__ == "__main__":
+    unittest.main()
+
