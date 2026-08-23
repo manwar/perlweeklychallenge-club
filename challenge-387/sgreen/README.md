@@ -1,3 +1,3 @@
-# The Weekly Challenge 386
+# The Weekly Challenge 387
 
-Blog: [The Rational Base](https://dev.to/simongreennet/weekly-challenge-the-rational-base-9m1)
+Blog: [Rearranging Atoms](https://dev.to/simongreennet/rearranging-atoms-56c4)
