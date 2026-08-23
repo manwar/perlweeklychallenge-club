@@ -1,5 +1,5 @@
-**Challenge 386 solutions in Perl by Matthias Muth**
+**Challenge solutions in Perl by Matthias Muth**
 
-(sorry, no blog post this time...)
+(sorry, no blog post for this challenge...)
 
 **Thank you for the challenge!**
