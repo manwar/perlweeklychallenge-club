@@ -18,12 +18,13 @@ multi dyck-words($n)
 
     return ($a.parse-base(2)...$b.parse-base(2))
                                  .fmt('%0' ~ $n*2 ~ 'b')
-                                 .trans('01' => 'UD')
                                  .split(' ')
-                                 .grep(all *.ends-with('D'), *.comb('D') == $n, &f);
+                                 .grep(all *.ends-with('1'), *.comb('1') == $n, &f)
+                                 .map(*.trans('01' => 'UD'));
 
     sub f($_)
     {
-        none .flip.match(/...*/, :ov).grep(-> $m { .<D> > .<U> given $m.comb.Bag })
+        my $s = .subst('0', '-1', :g);
+        ([\+] $s.comb(/'-'? \d/)).all < 1 
     }
 }
