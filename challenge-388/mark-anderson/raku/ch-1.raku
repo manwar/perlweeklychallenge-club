@@ -16,11 +16,12 @@ multi dyck-words($n)
     my $a = [~] '01' xx $n;
     my $b = [~] '0'  x  $n, '1' x $n; 
 
-    return ($a.parse-base(2)...$b.parse-base(2))
-                                 .fmt('%0' ~ $n*2 ~ 'b')
-                                 .split(' ')
-                                 .grep(all *.ends-with('1'), *.comb('1') == $n, &f)
-                                 .map(*.trans('01' => 'UD'));
+    return ($a.parse-base(2),
+            $a.parse-base(2)-2 ... $b.parse-base(2))
+                                     .fmt('%0' ~ $n*2 ~ 'b')
+                                     .split(' ')
+                                     .grep(all *.comb('1') == $n, &f)
+                                     .map(*.trans('01' => 'UD'));
 
     sub f($_)
     {
