@@ -1,0 +1,95 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/rearrangebinarystring {
+    0 dict begin
+    /a exch s2a def
+    /ct 0 def
+    {
+        /dirty false def
+        /b [
+            /ci 0 def
+            {
+                ci a length ge {
+                    exit
+                } if
+                1 {
+                    a ci get 48 eq ci 1 add a length lt and {
+                        a ci 1 add get 49 eq {
+                            49
+                            48
+                            /ci ci 2 add def
+                            /dirty true def
+                            exit
+                        } if
+                    } if
+                    a ci get
+                    /ci ci 1 add def
+                } repeat
+            } loop
+        ] def
+        dirty {
+            /ct ct 1 add def
+            /a b def
+        } {
+            exit
+        } ifelse
+    } loop
+    ct
+    end
+} bind def
+
+(rearrangebinarystring) test.start
+(111000) rearrangebinarystring 0 eq test
+(00011) rearrangebinarystring 4 eq test
+(01011) rearrangebinarystring 3 eq test
+(010101) rearrangebinarystring 3 eq test
+(00001) rearrangebinarystring 4 eq test
+test.end

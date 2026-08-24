@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Parenthetically Uncommon](https://packy.dardan.com/b/wk)
+[Perl Weekly Challenge: We're Talkin' Algebra](https://packy.dardan.com/b/xF)
