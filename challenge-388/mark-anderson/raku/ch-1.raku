@@ -24,9 +24,6 @@ multi dyck-words($n)
 
     sub f($_)
     {
-        ? none do for .flip ~~ m:ov/...*/ -> $m 
-        { 
-            .<D> > .<U> given $m.comb.Bag
-        }
+        none .flip.match(/...*/, :ov).grep(-> $m { .<D> > .<U> given $m.comb.Bag })
     }
 }
