@@ -13,19 +13,16 @@ multi dyck-words($n where * < 1) { Empty }
 
 multi dyck-words($n)
 {
-    my $a = [~] '01' xx $n;
-    my $b = [~] '0'  x  $n, '1' x $n; 
+    my $a = ([~] '10' xx $n).parse-base(2);
+    my $b = ([~] '1'  x  $n, '0' x $n).parse-base(2); 
 
-    return ($a.parse-base(2),
-            $a.parse-base(2)-2 ... $b.parse-base(2))
-                                     .fmt('%0' ~ $n*2 ~ 'b')
-                                     .split(' ')
-                                     .grep(all *.comb('1') == $n, &f)
-                                     .map(*.trans('01' => 'UD'));
+    return ($a,$a+2...$b).hyper.map(&f).List;
 
-    sub f($_)
+    sub f($_) 
     {
-        my $s = .subst('0', '-1', :g);
-        ([\+] $s.comb(/'-'? \d/)).all < 1 
+        my $b = .base(2);
+        my @a = $b.subst('0', '-1', :g).comb(/'-'? \d/);
+        my @s = [\+] @a;
+        $b.trans('10' => 'UD') if all @s.tail == 0, @s.all >= 0
     }
 }
