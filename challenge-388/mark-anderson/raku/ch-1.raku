@@ -1,13 +1,21 @@
 #!/usr/bin/env raku
 use Test;
 
-is-deeply dyck-words(1), ("UD",);
-is-deeply dyck-words(2), <UDUD UUDD>;
-is-deeply dyck-words(3), <UDUDUD UDUUDD UUDDUD UUDUDD UUUDDD>;
-is-deeply dyck-words(0), Empty;
-is-deeply dyck-words(4), <UDUDUDUD UDUDUUDD UDUUDDUD UDUUDUDD UDUUUDDD
-                          UUDDUDUD UUDDUUDD UUDUDDUD UUDUDUDD UUDUUDDD
-                          UUUDDDUD UUUDDUDD UUUDUDDD UUUUDDDD>;
+is-deeply dyck-words(1),    ("UD",);
+is-deeply dyck-words(2),    <UDUD UUDD>;
+is-deeply dyck-words(3),    <UDUDUD UDUUDD UUDDUD UUDUDD UUUDDD>;
+is-deeply dyck-words(0),    Empty;
+is-deeply dyck-words(4),    <UDUDUDUD UDUDUUDD UDUUDDUD UDUUDUDD UDUUUDDD
+                             UUDDUDUD UUDDUUDD UUDUDDUD UUDUDUDD UUDUUDDD
+                             UUUDDDUD UUUDDUDD UUUDUDDD UUUUDDDD>;
+
+is-deeply dyck-words-v2(1), ("UD",);
+is-deeply dyck-words-v2(2), <UDUD UUDD>;
+is-deeply dyck-words-v2(3), <UDUDUD UDUUDD UUDDUD UUDUDD UUUDDD>;
+is-deeply dyck-words-v2(0), Empty;
+is-deeply dyck-words-v2(4), <UDUDUDUD UDUDUUDD UDUUDDUD UDUUDUDD UDUUUDDD
+                             UUDDUDUD UUDDUUDD UUDUDDUD UUDUDUDD UUDUUDDD
+                             UUUDDDUD UUUDDUDD UUUDUDDD UUUUDDDD>;
 
 multi dyck-words($n where * < 1) { Empty }
 
