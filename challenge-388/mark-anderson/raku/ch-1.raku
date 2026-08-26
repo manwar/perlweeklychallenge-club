@@ -13,6 +13,27 @@ multi dyck-words($n where * < 1) { Empty }
 
 multi dyck-words($n)
 {
+    my @c = (^($n*2)).combinations($n);
+    my $i = @c.first((1,3...^($n*2)).cache, :k:end);
+    @c = @c[$i..*];
+
+    return @c.hyper.map(&f).List;
+
+    sub f(@a)
+    {
+        my (@b, @s);
+        @b[@a] = -1 xx $n;
+        @s = (^($n*2) (-) @a).keys;
+        @b[@s] = 1 xx $n;
+        @b.trans((1,-1) => ('U','D'))
+          .subst(' ', :g) if ([\+] @b).all >= 0
+    }
+}
+
+multi dyck-words-v2($n where * < 1) { Empty }
+
+multi dyck-words-v2($n)
+{
     my $a = ([~] '10' xx $n).parse-base(2);
     my $b = ([~] '1'  x  $n, '0' x $n).parse-base(2); 
 
