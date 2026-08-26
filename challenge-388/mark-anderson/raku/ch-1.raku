@@ -21,7 +21,7 @@ multi dyck-words($n)
     sub f($_) 
     {
         my $b = .base(2);
-        my @a = $b.subst('0', '-1', :g).comb(/'-'? \d/);
+        my @a = $b.subst('0', '-1', :g).comb(/'-'? 1/);
         my @s = [\+] @a;
         $b.trans('10' => 'UD') if all @s.tail == 0, @s.all >= 0
     }
