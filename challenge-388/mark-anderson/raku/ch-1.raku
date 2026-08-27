@@ -29,10 +29,8 @@ multi dyck-words($n)
 
     sub f(@a)
     {
-        my (@b, @s);
+        my @b  =  1 xx $n*2;
         @b[@a] = -1 xx $n;
-        @s = (^($n*2) (-) @a).keys;
-        @b[@s] = 1 xx $n;
         @b.trans((1,-1) => ('U','D'))
           .subst(' ', :g) if ([\+] @b).all >= 0
     }
