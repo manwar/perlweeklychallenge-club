@@ -1,0 +1,184 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+% end included library code
+
+/dyckwords {
+    0 dict begin
+    /order exch def
+    [
+        /queue [ 0 array ] def
+        {
+            queue length 0 eq {
+                exit
+            } if
+            queue apop.left
+            /st exch s2a def
+            /queue exch def
+            /dcount st { 68 eq } filter length def
+            st length order 2 mul ge {
+                dcount order eq {
+                    st a2s
+                } if
+            } {
+                /queue
+                [
+                    queue aload pop
+                    dcount 2 mul st length lt {
+                        [
+                            st aload pop
+                            68
+                        ] a2s
+                    } if
+                    [
+                        st aload pop
+                        85
+                    ] a2s
+                ] def
+            } ifelse
+        } loop
+    ]
+    end
+} bind def
+
+(dyckwords) test.start
+1 dyckwords [(UD)] deepeq test
+2 dyckwords [(UDUD) (UUDD)] deepeq test
+3 dyckwords [(UDUDUD) (UDUUDD) (UUDDUD) (UUDUDD) (UUUDDD)] deepeq test
+0 dyckwords [()] deepeq test
+4 dyckwords [(UDUDUDUD) (UDUDUUDD) (UDUUDDUD) (UDUUDUDD) (UDUUUDDD) (UUDDUDUD) (UUDDUUDD) (UUDUDDUD) (UUDUDUDD) (UUDUUDDD) (UUUDDDUD) (UUUDDUDD) (UUUDUDDD) (UUUUDDDD)] deepeq test
+test.end
