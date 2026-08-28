@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Regex Man Hates Atom Man](https://packy.dardan.com/b/yD)
+[Perl Weekly Challenge: Code of Many Colors](https://packy.dardan.com/b/yZ)
