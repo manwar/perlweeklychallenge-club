@@ -1,3 +1,3 @@
-# The Weekly Challenge 387
+# The Weekly Challenge 388
 
-Blog: [Rearranging Atoms](https://dev.to/simongreennet/rearranging-atoms-56c4)
+Blog: [Secret Words](https://dev.to/simongreennet/weekly-challenge-secret-words-2mj5)
