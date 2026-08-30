@@ -10,7 +10,7 @@
 
 use v5.36;
 
-sub dyck_words_q( $n ) {
+sub dyck_words_bfs( $n ) {
     my @results;
     my ( $string, $height, $u_used ) = ( "", 0, 0 );
     my @q = ( [ $string, $height, $u_used ] );
@@ -29,16 +29,15 @@ sub dyck_words_q( $n ) {
     return @results;
 }
 
-sub dyck_words_rec( $n, $h = 0 ) {
+sub dyck_words( $n, $h = 0 ) {
     return "" if $n == 0 && $h == 0;
     return (
-        $h > 0 ? ( map { "D" . $_ } dyck_words_rec( $n, $h - 1 ) ) : (),
-        $n > 0 ? ( map { "U" . $_ } dyck_words_rec( $n - 1, $h + 1 ) ) : ()
+        $h > 0 ? ( map { "D" . $_ } dyck_words( $n, $h - 1 ) ) : (),
+        $n > 0 ? ( map { "U" . $_ } dyck_words( $n - 1, $h + 1 ) ) : ()
     );
 }
 
-use lib qw( . ../../../lib );
-use MultiTest;
+use Test2::V0 qw( -no_srand );
 
 my @tests = (
     [ "Example 1", 1, ["UD"] ],
@@ -52,5 +51,7 @@ my @tests = (
     ],
 );
 
-my @benchmark_data = ( 6 );
-run( "dyck_words", \@tests, \@benchmark_data );
+is [ dyck_words( $_->[1] ) ], $_->[2], $_->[0]
+    for @tests;
+
+done_testing;

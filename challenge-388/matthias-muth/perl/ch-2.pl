@@ -52,8 +52,7 @@ sub secret_santa_bfs( $n ) {
     return scalar @results;
 }
 
-use lib qw( . ../../../lib );
-use MultiTest;
+use Test2::V0 qw( -no_srand );
 
 my @tests = (
     [ "Example 1", 1, 0 ],
@@ -68,4 +67,7 @@ my @tests = (
     [ "Test 10", 10, 1334961 ],
 );
 
-run( "secret_santa", \@tests );
+is secret_santa( $_->[1] ), $_->[2], $_->[0]
+    for @tests;
+
+done_testing;
