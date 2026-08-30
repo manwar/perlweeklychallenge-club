@@ -67,7 +67,7 @@ sub generateDyck($n, $dyck = [], $word = 'U', $nU = 1, $nD = 0, $depth = 1 )
 
     if ( $nU == $n )
     {
-        # We have all the Us, must add D until we balance.
+        # We have all the Us, must add enough D to balance.
         if ( $nD < $n  )
         {
             my $need = $n - $nD;
