@@ -2,15 +2,15 @@
 use MONKEY-SEE-NO-EVAL;
 use Test;
 
-is zig-zag(9,4,2,10,7,8,8,1,9), 5;
-is zig-zag(1,7,4,9,2,5),        6;
-is zig-zag(1,2,3,4,5),          2;
-is zig-zag(4,4,4),              1;
-is zig-zag(10,20,15,12,18),     3;
+is ZigZag(9,4,2,10,7,8,8,1,9), 5;
+is ZigZag(1,7,4,9,2,5),        6;
+is ZigZag(1,2,3,4,5),          2;
+is ZigZag(4,4,4),              1;
+is ZigZag(10,20,15,12,18),     3;
 
-sub zig-zag(*@a)
+sub ZigZag(*@a)
 {
-    my @r   = @a.rotor(2 => -1);
+    my @r = @a.rotor(2 => -1);
     
     return max f((('<', '>') xx *).flat), 
                f((('>', '<') xx *).flat);
