@@ -16,7 +16,7 @@ sub ZigZag(*@a)
 
     sub f(*@s)
     {
-        my $e = ([Z] @r[0,2...*], (@s xx *).flat, @r[1,3...*]).join(', ');  
+        my $e = ([Z] @r[0,2...*], |@s xx *, @r[1,3...*]).join(', ');  
        (EVAL $e).join.comb(/'True'+/) andthen .elems ?? .max.chars div 4 + 1 !! 1 
     }
 }
