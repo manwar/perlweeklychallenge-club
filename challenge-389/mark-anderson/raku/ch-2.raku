@@ -10,14 +10,13 @@ is ZigZag(10,20,15,12,18),     3;
 
 sub ZigZag(*@a)
 {
-    my @r = @a.rotor(2 => -1);
-    
-    return max f((('<', '>') xx *).flat), 
-               f((('>', '<') xx *).flat);
+    my @r = @a.rotor(2 => -1).flat;
 
-    sub f(@a)
+    return max f('<', '>'), f('>', '<');
+
+    sub f(*@s)
     {
-        my $e = (@a Z @r).subst(/(.) \s (\d+) \s (\d+)/, {"$1 $0 $2,"}, :g);
+        my $e = ([Z] @r[0,2...*], (@s xx *).flat, @r[1,3...*]).join(', ');  
        (EVAL $e).join.comb(/'True'+/) andthen .elems ?? .max.chars div 4 + 1 !! 1 
     }
 }
