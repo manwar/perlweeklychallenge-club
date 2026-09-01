@@ -7,9 +7,8 @@ is-deeply reorder-notes('Brahms', <C Db Eb F G Ab Bb C D>, <9 3 7 1 8 5 2 6 4>),
 is-deeply reorder-notes('Bruckner', <G F# Bb C D Eb F>, <4 7 2 6 1 5 3>), 'BRUCKNER' => <D Bb F G Eb C F#>;
 is-deeply reorder-notes('Berg', ('C#',), (1,)), 'BERG' => ('C#',);
 
-sub reorder-notes($composer, @notes, @indices)
+sub reorder-notes($composer, @notes is copy, @indices)
 {
-    my @a;
-    @a[@indices] = @notes;
-    $composer.uc => @a[1..*]
+    @notes[@indices] = @notes;
+    $composer.uc => @notes[1..*]
 }
