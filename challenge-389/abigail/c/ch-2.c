@@ -12,7 +12,7 @@ int main (int argc, char ** argv) {
         char * ptr = line;
         bool first = true;
         errno = 0;
-        int p_updown = 1;
+        int p_updown = 0;
         int c_streak = 0;
         int max = 1;
         for (long prev = 0,   cur = strtol (ptr, &ptr, 10); errno == 0;
@@ -21,7 +21,7 @@ int main (int argc, char ** argv) {
                 int c_updown = prev <  cur ? -1
                              : prev == cur ?  0
                              :                1;
-                if (c_updown && c_updown == -p_updown) {
+                if (c_updown && (c_updown == -p_updown || c_streak == 0)) {
                     if (++ c_streak >= max) {
                         max = c_streak + 1;
                     }
