@@ -71,8 +71,11 @@ sub reorder_notes
      my $author = $melody->[0];
      my $notes = $melody->[1]; 
      my $positions = $melody->[2]; 
-     my %pos;
-     @pos{map { $_ - 1 } @$positions} = @$notes;
+     # my %pos;
+     # @pos{map { $_ - 1 } @$positions} = @$notes;
 
-     return join(" => ", uc $author, join(" ", @pos{0 .. $#$positions}));
+     # return join(" => ", uc $author, join(" ", @pos{0 .. $#$positions}));
+     my @pos;
+     @pos[map { $_ - 1 } @$positions] = @$notes;
+     return join(" => ", uc $author, join(" ", @pos));
 }    
