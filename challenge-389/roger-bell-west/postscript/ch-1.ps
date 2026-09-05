@@ -1,0 +1,139 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/reordernotes {
+    0 dict begin
+    /order exch def
+    /notes exch def
+    /composer exch def
+    /out [ order length { 0 string } repeat ] def
+    order enumerate.array {
+        aload pop
+        /n exch def
+        /i exch def
+        out n 1 sub notes i get put
+    } forall
+    << composer out >>
+    end
+} bind def
+
+(reordernotes) test.start
+(Mozart) [(C) (D) (E) (F) (G) (A) (B)] [7 1 6 2 5 3 4] reordernotes << (Mozart) [(D) (F) (A) (B) (G) (E) (C)] >> deepeq test
+(Chopin) [(C) (C#) (D) (D#) (E) (F)] [6 5 4 3 2 1] reordernotes << (Chopin) [(F) (E) (D#) (D) (C#) (C)] >> deepeq test
+(Vivaldi) [(A) (B) (C) (D) (E)] [1 2 3 4 5] reordernotes << (Vivaldi) [(A) (B) (C) (D) (E)] >> deepeq test
+(Debussy) [(C) (D) (F) (G) (A)] [1 3 5 2 4] reordernotes << (Debussy) [(C) (G) (D) (A) (F)] >> deepeq test
+(Stravinsky) [(C#)] [1] reordernotes << (Stravinsky) [(C#)] >> deepeq test
+test.end
