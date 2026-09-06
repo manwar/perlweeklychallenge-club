@@ -2,34 +2,34 @@
   "challenge": {
     "week": 390,
     "task": 1,
-    "name": "IPv4 Address"
+    "name": "Decode String"
   },
   "input_vars": [ "$str" ],
   "examples": [
     {
       "name": "Example 1",
-      "in": ["0000"],
-      "out": ["0.0.0.0"]
+      "in": ["2[3[a]]"],
+      "out": ["aaaaaa"]
     },
     {
       "name": "Example 2",
-      "in": ["101023"],
-      "out": ["1.0.10.23", "1.0.102.3", "10.1.0.23", "10.10.2.3", "101.0.2.3"]
+      "in": ["10[a]"],
+      "out": ["aaaaaaaaaa"]
     },
     {
       "name": "Example 3",
-      "in": ["255255255255"],
-      "out": ["255.255.255.255"]
+      "in": ["a2[b]c3[d]e"],
+      "out": ["abbcddde"]
     },
     {
       "name": "Example 4",
-      "in": ["999999999"],
-      "out": []
+      "in": ["2[a2[b]c]"],
+      "out": ["abbcabbc"]
     },
     {
       "name": "Example 5",
-      "in": ["010010"],
-      "out": ["0.10.0.10", "0.100.1.0"]
+      "in": ["1[a]2[b3[c]]"],
+      "out": ["abcccbccc"]
     }
   ]
 }
