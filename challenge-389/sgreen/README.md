@@ -1,3 +1,3 @@
-# The Weekly Challenge 388
+# The Weekly Challenge 389
 
-Blog: [Secret Words](https://dev.to/simongreennet/weekly-challenge-secret-words-2mj5)
+Blog: [Zigzag notes](https://dev.to/simongreennet/weekly-challenge-zigzag-notes-243b)
