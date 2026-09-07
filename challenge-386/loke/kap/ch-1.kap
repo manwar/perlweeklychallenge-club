@@ -1,0 +1,14 @@
+Solve1 ⇐ {
+	chars ← ⎕d,⎕A,⎕a,"+/"
+	⍺ ⊥ chars⍳⍵
+}
+
+TestSolution1 ⇐ {
+	result ← `
+		(42 = 2 Solve1 "101010") `
+		(15642094 = 16 Solve1 "EEADEE") `
+		(493 = 8 Solve1 "755") `
+		(2228519 = 36 Solve1 "1BRJB") `
+		(123456789 = 64 Solve1 "7MyqL")
+	∧/result
+}

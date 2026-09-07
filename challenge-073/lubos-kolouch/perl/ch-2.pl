@@ -1,55 +1,42 @@
-#!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE: ch-2.pl
-#
-#        USAGE: ./ch-2.pl  
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-073/
-#	
-#				Smallest Neighbour
-#
-#
-#      OPTIONS: ---
-# REQUIREMENTS: ---
-#         BUGS: ---
-#        NOTES: ---
-#       AUTHOR: Lubos Kolouch
-# ORGANIZATION: 
-#      VERSION: 1.0
-#      CREATED: 16.8.2020 13:40
-#     REVISION: ---
-#===============================================================================
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use experimental 'signatures';
 
-sub get_smallest {
-   my $a_ref = shift;
+sub get_smallest ($arr) {
+    return [] if !@$arr;
 
-   my @return_array = 0;
-   my $min = @$a_ref[0];
+    my @return_array = (0);
+    my $min          = $arr->[0];
 
-   for my $i (1 .. scalar @$a_ref-1) {
+    for my $i ( 1 .. $#$arr ) {
+        if ( $min < $arr->[$i] ) {
+            push @return_array, $min;
+        }
+        else {
+            push @return_array, 0;
+        }
 
-	   if ($min < $a_ref->[$i]) {
-		   push @return_array, $min;
-	   } else {
-		   push @return_array, 0;
-	   }
+        $min = $arr->[$i] if $arr->[$i] < $min;
+    }
 
-	   $min = $a_ref->[$i] if @$a_ref[$i] < $min;
-
-   }
-
-   return \@return_array;
+    return \@return_array;
 }
 
-# TESTS
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-use Test::More;
+    is_deeply(
+        get_smallest( [ 7, 8, 3, 12, 10 ] ),
+        [ 0, 7, 0, 3, 3 ],
+        'Example 1'
+    );
+    is_deeply( get_smallest( [ 4, 6, 5 ] ), [ 0, 4, 4 ], 'Example 2' );
+    is_deeply( get_smallest( [5] ),         [0],         'Single element' );
+    is_deeply( get_smallest( [] ),          [],          'Empty array' );
 
-is_deeply(\get_smallest([7, 8, 3, 12, 10]),\[0, 7, 0, 3, 3]);
-is_deeply(\get_smallest([4, 6, 5]),\[0, 4, 4]);
+    done_testing();
+}
 
-done_testing;

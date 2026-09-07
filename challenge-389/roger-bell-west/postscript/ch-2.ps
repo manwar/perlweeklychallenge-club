@@ -1,0 +1,88 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/zigzagsubarray {
+    0 dict begin
+    /a exch def
+    /mx a length 1 min def
+    0 1 a length 1 sub {
+        /i exch def
+        /o 0 def
+        /lastdir 0 def
+        i 1 a length 1 sub {
+            /j exch def
+            /thisdir 0 def
+            j i gt {
+                a j get o gt {
+                    /thisdir 1 def
+                    /mx mx 2 max def
+                } if
+                a j get o lt {
+                    /thisdir -1 def
+                    /mx mx 2 max def
+                } if
+            } if
+            j i gt thisdir 0 eq and
+            j i 1 add gt thisdir lastdir mul -1 ne and or {
+                /mx mx j i sub max def
+                exit
+            } if
+            /o a j get def
+            /lastdir thisdir def
+            /mx mx j i sub 1 add max def
+        } for
+    } for
+    mx
+    end
+} bind def
+
+(zigzagsubarray) test.start
+[9 4 2 10 7 8 8 1 9] zigzagsubarray 5 eq test
+[1 7 4 9 2 5] zigzagsubarray 6 eq test
+[1 2 3 4 5] zigzagsubarray 2 eq test
+[4 4 4] zigzagsubarray 1 eq test
+[10 20 15 12 18] zigzagsubarray 3 eq test
+test.end

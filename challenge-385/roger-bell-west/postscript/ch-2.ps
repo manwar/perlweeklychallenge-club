@@ -1,0 +1,95 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/outermostparentheses {
+    0 dict begin
+    /d 0 def
+    [ exch
+      s2a
+      {
+          dup 40 eq {
+              /d d 1 add def
+              d 1 le {
+                  pop
+              } if
+          } {
+              dup 41 eq {
+                  /d d 1 sub def
+                  d 0 le {
+                      pop
+                  } if
+              } {
+                  pop
+              } ifelse
+          } ifelse
+      } forall
+    ]
+    a2s
+    end
+} bind def
+
+(outermostparentheses) test.start
+(()()()) outermostparentheses () eq test
+((((())))) outermostparentheses (((()))) eq test
+((()())(())) outermostparentheses (()()()) eq test
+(()((()))()) outermostparentheses ((())) eq test
+((()(()))(()())) outermostparentheses (()(())()()) eq test
+test.end

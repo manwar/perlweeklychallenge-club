@@ -1,0 +1,13 @@
+#!/opt/homebrew/opt/bc/bin/bc
+
+while (1) {
+    n = read ()
+    if (n == 0) {
+        break
+    }
+    sf = 1
+    for (i = 1; i <= n; i ++) {
+        sf = i * sf + 1 - 2 * (i % 2)
+    }
+    print sf, "\n"
+}
