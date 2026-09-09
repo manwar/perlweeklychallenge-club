@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Zig Zag Melodies](https://packy.dardan.com/b/yv)
+[Perl Weekly Challenge: How does it feel to decode me like you do?](https://packy.dardan.com/b/zB)
