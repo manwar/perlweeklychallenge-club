@@ -1,56 +1,57 @@
-#
-#!/usr/bin/perl 
-#===============================================================================
-#
-#҄         FILE: ch-2.pl
-#
-#        USAGE: ./ch-2.pl
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-074/
-#
-#               TASK #2 › FNR Character
-#
-#       AUTHOR: Lubos Kolouch
-#      VERSION: 1.0
-#      CREATED: 08/22/2020 12:40:09 PM
-#===============================================================================
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use List::MoreUtils qw/firstidx/;
-use feature qw/say/;
-use Data::Dumper;
+use experimental 'signatures';
+use List::Util qw(first);
 
-sub get_fnr {
-    my $input = shift;
+# Task 2: FNR Character
+# Find the first non-repeating character dynamically at each step.
+# Output '#' if no non-repeating character exists at that point.
+
+sub get_fnr ($input) {
+    return '' if !defined $input || length($input) == 0;
 
     my %fnr_count;
     my @fnr_queue;
+    my $result = '';
 
-    my $result;
+    for my $char ( split //, $input ) {
+        $fnr_count{$char}++;
 
-    for (split //, $input) {
-        my $char = $_;
-
-        $fnr_count{$_}++;
-
-        if ($fnr_count{$_} == 1) {
-            push @fnr_queue, $_;
-        } else {
-            my $pos = firstidx { $_ eq $char }   @fnr_queue;
+        if ( $fnr_count{$char} == 1 ) {
+            push @fnr_queue, $char;
+        }
+        else {
+            my $pos;
+            for my $i ( 0 .. $#fnr_queue ) {
+                if ( $fnr_queue[$i] eq $char ) {
+                    $pos = $i;
+                    last;
+                }
+            }
             splice @fnr_queue, $pos, 1 if defined $pos;
         }
 
-        $result .= scalar @fnr_queue? $fnr_queue[-1] : '#'; 
+        $result .= @fnr_queue ? $fnr_queue[-1] : '#';
     }
 
     return $result;
-
 }
 
-use Test::More;
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-is(get_fnr('ababc'),'abb#c');
-is(get_fnr('xyzzyx'),'xyzyx#');
+    is( get_fnr('ababc'),  'abb#c',  'Example 1' );
+    is( get_fnr('xyzzyx'), 'xyzyx#', 'Example 2' );
 
-done_testing;
+    is( get_fnr(''),       '',       'Empty string' );
+    is( get_fnr('a'),      'a',      'Single char' );
+    is( get_fnr('aa'),     'a#',     'Two same chars' );
+
+    done_testing();
+}
+else {
+    say get_fnr( $ARGV[0] );
+}
