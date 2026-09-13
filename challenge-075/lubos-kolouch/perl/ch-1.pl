@@ -1,27 +1,42 @@
 #!/usr/bin/env perl
-use strict;
+use v5.38;
 use warnings;
-# Perl weekly challenge 075 Task 1 - Coins sum
+use experimental 'signatures';
 
+# Task 1: Coins Sum
+# You are given a set of coins @C and target sum $S.
+# Find how many ways you can make sum $S using coins from @C (infinite amount of each coin).
 
-sub count {
+sub count_coin_ways ( $coins, $target_sum ) {
+    return 1 if $target_sum == 0;
+    return 0 if $target_sum < 0 || !@$coins;
 
-    my ($coins, $target_sum) = @_;
-
-    my @ways = (0) x $target_sum;
+    my @ways = (0) x ( $target_sum + 1 );
     $ways[0] = 1;
 
-    for my $coin_pos (0..scalar @$coins - 1) {
-        for my $j (0..$target_sum) {
-            $ways[$j] += $ways[$j - $coins->[$coin_pos]] if $coins->[$coin_pos] <= $j;
+    for my $coin (@$coins) {
+        next if $coin <= 0;
+        for my $j ( $coin .. $target_sum ) {
+            $ways[$j] += $ways[ $j - $coin ];
         }
     }
 
     return $ways[$target_sum];
 }
 
-use Test::More;
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-is(count([1, 2, 4], 6), 6, 'Test case 1, 2, 4 and 6');
-is(count([1, 5, 10], 12), 4, 'Test case 1, 5, 10 and 12');
-done_testing;
+    is( count_coin_ways( [ 1, 2, 4 ], 6 ),  6, 'Example 1: sum 6 with coins (1, 2, 4)' );
+    is( count_coin_ways( [ 1, 5, 10 ], 12 ), 4, 'Test: sum 12 with coins (1, 5, 10)' );
+    is( count_coin_ways( [ 2 ], 3 ),         0, 'Test: sum 3 with coin (2)' );
+    is( count_coin_ways( [ 1, 2 ], 0 ),      1, 'Test: sum 0' );
+
+    done_testing();
+}
+else {
+    my $target = pop @ARGV;
+    say count_coin_ways( \@ARGV, $target );
+}

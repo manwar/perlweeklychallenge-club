@@ -1,62 +1,90 @@
-#!/usr/bin/env python
-""" Perl Weekly challenge 075 Task 2 - Largest histogram """
+#!/usr/bin/env python3
+"""Perl Weekly Challenge 075 - Task 2: Largest Rectangle Histogram.
+
+Find the largest rectangular area possible in a given histogram.
+"""
+
+from __future__ import annotations
+
+import unittest
 
 
-def printHistogram(histogram):
-    """ print the histogram """
+def format_histogram(histogram: list[int]) -> str:
+    """Format the histogram visually as an ASCII diagram.
+
+    :param histogram: List of bar heights.
+    :return: Formatted multiline ASCII string.
+    """
+    if not histogram:
+        return ""
 
     hist_max = max(histogram)
+    max_len = len(str(hist_max)) + 1
+    lines: list[str] = []
 
     for i in range(hist_max, 0, -1):
-        my_str = str(i)
-
+        line = f"{i:>{max_len}}"
         for bar in histogram:
-            my_str += '#' if bar >= i else ' '
+            line += f"{'#':>{max_len}}" if bar >= i else f"{' ':>{max_len}}"
+        lines.append(line)
 
-        print(my_str)
+    lines.append("_" * (max_len * (len(histogram) + 1)))
 
-    my_str = '_'
-    for _ in histogram:
-        my_str += '_'
-
-    print(my_str)
-
-    my_str = ' '
+    bottom_row = " " * max_len
     for item in histogram:
-        my_str += str(item)
+        bottom_row += f"{item:>{max_len}}"
+    lines.append(bottom_row)
 
-    print(my_str)
+    return "\n".join(lines)
 
-def largestRectangle(histogram):
-    stack = list()
+
+def largest_rectangle(histogram: list[int]) -> int:
+    """Compute the maximum area of a rectangle formed within the histogram.
+
+    Uses a monotonic increasing stack in O(N) time.
+
+    :param histogram: List of bar heights.
+    :return: Maximum rectangular area.
+    """
+    if not histogram:
+        return 0
+
+    stack: list[int] = []
     max_area = 0
-    index = 0
+    n = len(histogram)
 
-    while index < len(histogram):
-        if (not stack) or (histogram[stack[-1]] <= histogram[index]):
-            stack.append(index)
-            index += 1
-        else:
-            top_of_stack = stack.pop()
-            area = (histogram[top_of_stack] * ((index - stack[-1] - 1)
-                 if stack else index))
+    for i in range(n + 1):
+        curr_height = 0 if i == n else histogram[i]
 
-            max_area = max(max_area, area)
+        while stack and histogram[stack[-1]] > curr_height:
+            top_idx = stack.pop()
+            h = histogram[top_idx]
+            w = (i - stack[-1] - 1) if stack else i
+            max_area = max(max_area, h * w)
 
-    while stack:
- 
-        top_of_stack = stack.pop()
-
-        area = (histogram[top_of_stack] * ((index - stack[-1] - 1)
-                if stack else index))
-
-        max_area = max(max_area, area)
-
-    printHistogram(histogram)
+        stack.append(i)
 
     return max_area
 
 
-assert largestRectangle([2, 1, 4, 5, 3, 7]) == 12
-assert largestRectangle([3, 2, 3, 5, 7, 5]) == 15
+class TestLargestRectangle(unittest.TestCase):
+    """Test cases for largest_rectangle."""
 
+    def test_example_1(self) -> None:
+        self.assertEqual(largest_rectangle([2, 1, 4, 5, 3, 7]), 12)
+
+    def test_example_2(self) -> None:
+        self.assertEqual(largest_rectangle([3, 2, 3, 5, 7, 5]), 15)
+
+    def test_single_bar(self) -> None:
+        self.assertEqual(largest_rectangle([2]), 2)
+
+    def test_two_bars(self) -> None:
+        self.assertEqual(largest_rectangle([2, 4]), 4)
+
+    def test_empty(self) -> None:
+        self.assertEqual(largest_rectangle([]), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()
