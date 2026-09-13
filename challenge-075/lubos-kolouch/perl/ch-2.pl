@@ -1,75 +1,77 @@
 #!/usr/bin/env perl
-use strict;
+use v5.38;
 use warnings;
-use List::Util qw/max/;
-use feature qw/say/;
-# Perl Weekly challenge 075 Task 2 - Largest histogram 
+use experimental 'signatures';
+use List::Util qw(max);
 
+# Task 2: Largest Rectangle Histogram
+# Given an array of positive numbers @A, find the largest rectangle histogram.
 
-sub printHistogram {
-    my $histogram = shift;
+sub format_histogram ($histogram) {
+    return '' if !@$histogram;
 
     my $hist_max = max(@$histogram);
-    my $out_str;
+    my $max_len  = length($hist_max) + 1;
+    my @lines;
 
-    my $max_len = length($hist_max) + 1;
-    my $total_len = 0;
-
-    for my $i (reverse 1..$hist_max) {
-        $out_str = sprintf "%${max_len}s", $i;
-        $total_len += length($i);
-
+    for my $i ( reverse 1 .. $hist_max ) {
+        my $line = sprintf "%${max_len}s", $i;
         for my $bar (@$histogram) {
-            $out_str .= $bar >= $i ? sprintf "%${max_len}s", '#' : sprintf "%${max_len}s", ' '
+            $line .= $bar >= $i ? sprintf( "%${max_len}s", '#' ) : sprintf( "%${max_len}s", ' ' );
         }
-
-        say $out_str;
-        
+        push @lines, $line;
     }
 
-    $out_str = '_' x $max_len;
-    $out_str .= '_' x ($max_len * scalar @$histogram);
+    my $separator = ( '_' x $max_len ) . ( '_' x ( $max_len * scalar @$histogram ) );
+    push @lines, $separator;
 
-    say $out_str;
+    my $bottom_row = ' ' x $max_len;
+    for my $bar (@$histogram) {
+        $bottom_row .= sprintf "%${max_len}s", $bar;
+    }
+    push @lines, $bottom_row;
 
-    $out_str = ' ' x $max_len;
-    $out_str .= sprintf "%${max_len}s", $_ for (@$histogram);
-
-    say $out_str;
+    return join( "\n", @lines );
 }
 
-sub largestRectangle {
-    my $histogram = shift;
-    
+sub largest_rectangle ($histogram) {
+    return 0 if !@$histogram;
+
     my @stack;
     my $max_area = 0;
-    my $index = 0;
+    my $n        = scalar @$histogram;
 
-    while ($index < scalar @$histogram) {
-        if ( (not @stack) or ($histogram->[$stack[-1]] <= $histogram->[$index]) ) {
-            push @stack, $index;
-            $index ++;
-        } else {
-            my $top_of_stack = pop @stack;
-            my $area = @stack ? $histogram->[$top_of_stack] * ($index - $stack[-1] - 1) : $index;
+    for my $i ( 0 .. $n ) {
+        my $curr_height = ( $i == $n ) ? 0 : $histogram->[$i];
 
-            $max_area = max($max_area, $area);
+        while ( @stack && $histogram->[ $stack[-1] ] > $curr_height ) {
+            my $top_idx = pop @stack;
+            my $h       = $histogram->[$top_idx];
+            my $w       = @stack ? ( $i - $stack[-1] - 1 ) : $i;
+            my $area    = $h * $w;
+            $max_area = $area if $area > $max_area;
         }
-    }
 
-    while (@stack) {
-            my $top_of_stack = pop @stack;
-            my $area = @stack ? $histogram->[$top_of_stack] * ($index - $stack[-1] - 1) : $index;
-
-            $max_area = max($max_area, $area);
+        push @stack, $i;
     }
-    printHistogram($histogram);
 
     return $max_area;
 }
 
-use Test::More;
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-is(largestRectangle([2, 1, 4, 5, 3, 7]), 12);
-is(largestRectangle([3, 2, 3, 5, 7, 5]), 15);
+    is( largest_rectangle( [ 2, 1, 4, 5, 3, 7 ] ), 12, 'Example 1' );
+    is( largest_rectangle( [ 3, 2, 3, 5, 7, 5 ] ), 15, 'Example 2' );
+    is( largest_rectangle( [2] ),                   2,  'Single bar' );
+    is( largest_rectangle( [ 2, 4 ] ),             4,  'Two bars' );
+    is( largest_rectangle( [] ),                    0,  'Empty histogram' );
 
+    done_testing();
+}
+else {
+    say "Histogram:\n" . format_histogram( \@ARGV );
+    say "Largest Rectangle Area: " . largest_rectangle( \@ARGV );
+}
