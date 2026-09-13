@@ -1,3 +1,3 @@
-# The Weekly Challenge 389
+# The Weekly Challenge 390
 
-Blog: [Zigzag notes](https://dev.to/simongreennet/weekly-challenge-zigzag-notes-243b)
+Blog: [The First Expansion](https://dev.to/simongreennet/weekly-challenge-the-first-expansion-38lj)
