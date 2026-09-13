@@ -10,11 +10,11 @@ my @examples = (
     %{ in => "1[a]2[b3[c]]", out => "abcccbccc"  },
 );
 
-is decode_string($_<in>), $_<out> for @examples;
+is decode-string($_<in>), $_<out> for @examples;
 
 done-testing;
 
-sub decode_string($s is copy) {
+sub decode-string($s is copy) {
     Nil while $s ~~ s:g/ (\d+) '[' (<-[ \[ \] ]>*) ']' /{$1 x $0}/;
     return $s;
 }
