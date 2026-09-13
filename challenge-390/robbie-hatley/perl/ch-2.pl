@@ -142,6 +142,6 @@ for my $input (@inputs) {
    my $k = $input->[1];
    my $m = order_characters($s, $k);
    say '';
-   say "Original string = $s";
+   say "Original string = $s. Number = $k.";
    say "Lexicographically-smallest string we could make = $m";
 }
