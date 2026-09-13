@@ -93,7 +93,7 @@ sub zigzag_subarray
                 $expected_sign = 1;
             } else {
                 $current_len = 2;
-                $expected_sign = 1;   # A következőnek növekedésnek kell lennie
+                $expected_sign = 1;
             }
         } else {
             $current_len = 1;
