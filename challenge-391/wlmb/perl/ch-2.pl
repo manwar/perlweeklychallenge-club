@@ -12,30 +12,32 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     my @box =
-	sort {by_nesting_height_width($a, $b)}
-	map { [ split(","),1] }    # [width, height, nesting]
+        sort {by_nesting_height_width($a, $b)}
+        map { [ split(","),1] }    # [width, height, nesting]
         split " ";
     for my $small(1..@box-1){
-	my $bsmall=$box[$small];
-	for my $large(0..$small-1){
-	    next unless fits($bsmall, $box[$large]);
-	    $bsmall->[2] = $box[$large]->[2]+1; # update nesting level
+        my $bsmall=$box[$small];
+        for my $large(0..$small-1){
+            next unless fits($bsmall, $box[$large]);
+            $bsmall->[2] = $box[$large]->[2]+1; # update nesting level
+
+
 	    my $newplace = $small;
             for (0..$small-1){
                 $newplace = $_, last
-		    if by_nesting_height_width($bsmall, $box[$_]);
-	    }
-	    splice @box, $small, 1;
-	    splice @box, $newplace, 0, $bsmall;
-	    last;
-	}
+                    if by_nesting_height_width($bsmall, $box[$_])==-1;
+            }
+            splice @box, $small, 1;
+            splice @box, $newplace, 0, $bsmall;
+            last;
+        }
     }
     say "$_ -> $box[0]->[2]";
 }
 sub by_nesting_height_width($x, $y) {
     $y->[2] <=> $x->[2]      # compare nesting
-	|| $y->[1]<=>$x->[1] # height
-	|| $y->[0]<=>$x->[0]  # width
+        || $y->[1]<=>$x->[1] # height
+        || $y->[0]<=>$x->[0]  # width
 }
 sub fits($x,$y){
     $x->[0] < $y->[0] && $x->[1] < $y->[1]
