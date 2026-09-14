@@ -9,7 +9,6 @@
 #
 
 use v5.36;
-use Dsay;
 
 sub decode_string( $str ) {
     while ( $str =~ s< (\d+) \[ ([[:alpha:]]*) \] >{ $2 x $1 }xeg ) {
