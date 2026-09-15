@@ -18,12 +18,10 @@ for(@ARGV){
     for my $small(1..@box-1){
         my $bsmall=$box[$small];
         for my $large(0..$small-1){
-            next unless fits($bsmall, $box[$large]);
-            $bsmall->[2] = $box[$large]->[2]+1; # update nesting level
-
-
-	    my $newplace = $small;
-            for (0..$small-1){
+            next unless fits($bsmall, $box[$large]); # find fitting box w/largest nesting
+            $bsmall->[2] = $box[$large]->[2]+1;      # update nesting level
+	    my $newplace = $small;                   # find where to move box
+            for (0..$small-1){                       # to keep list sorted
                 $newplace = $_, last
                     if by_nesting_height_width($bsmall, $box[$_])==-1;
             }
@@ -32,7 +30,7 @@ for(@ARGV){
             last;
         }
     }
-    say "$_ -> $box[0]->[2]";
+    say "$_ -> $box[0]->[2]"; # nesting level of first box
 }
 sub by_nesting_height_width($x, $y) {
     $y->[2] <=> $x->[2]      # compare nesting
@@ -40,5 +38,5 @@ sub by_nesting_height_width($x, $y) {
         || $y->[0]<=>$x->[0]  # width
 }
 sub fits($x,$y){
-    $x->[0] < $y->[0] && $x->[1] < $y->[1]
+    $x->[0] < $y->[0] && $x->[1] < $y->[1] # compare width and height
 }
