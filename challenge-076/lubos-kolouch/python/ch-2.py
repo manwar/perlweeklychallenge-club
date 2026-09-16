@@ -1,137 +1,102 @@
-#!/usr/bin/env python
-""" Challenge 2 Python """
-# ===============================================================================
-#
-#         FILE: ch-2.py
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-076/
-#
-#              Task 2 - Word Search
-#
-#       AUTHOR: Lubos Kolouch
-# ===============================================================================
-import sys
+#!/usr/bin/env python3
+"""Perl Weekly Challenge 076 - Task 2: Word Search.
+
+Find all words from a list appearing in a 2D grid in any of 8 directions.
+"""
+
+from __future__ import annotations
+
+import unittest
 
 
-class GridWords:
-    """ class for processing the grid, wordlist and returning matches """
+def build_search_corpus(grid_lines: list[str]) -> str:
+    """Extract all ray strings from the grid in all 8 directions.
 
-    def __init__(self, grid_file, words_file, min_count=5):
-        self.grid = list()
-        self.words = list()
-        self.load_grid_to_list(grid_file)
-        self.load_words_to_list(words_file)
-        self.min_count = min_count
-        self.x_size = len(self.grid) 
-        self.y_size = len(self.grid[0]) 
-        self.big_string = ''
+    :param grid_lines: List of space-separated row strings.
+    :return: Concatenated corpus separated by '#' delimiter.
+    """
+    if not grid_lines:
+        return ""
 
-    def load_grid_to_list(self, grid_file):
-        """ Convert input grid to 2D list """
-        in_file = open(grid_file, "r")
-        grid_load = in_file.readlines()
+    real_grid = [line.strip().split() for line in grid_lines if line.strip()]
+    if not real_grid or not real_grid[0]:
+        return ""
 
-        for what in grid_load:
-            self.grid.append(what.strip().split(' '))
+    rows = len(real_grid)
+    cols = len(real_grid[0])
 
-    def load_words_to_list(self, words_file):
-        """ Convert file with words to list """
-        in_file = open(words_file, "r")
+    directions = [
+        (0, 1),
+        (1, 0),
+        (1, 1),
+        (1, -1),
+        (0, -1),
+        (-1, 0),
+        (-1, -1),
+        (-1, 1),
+    ]
 
-        for line in in_file.readlines():
-            self.words.append(line.strip())
+    strings: list[str] = []
+    for r in range(rows):
+        for c in range(cols):
+            for dr, dc in directions:
+                chars: list[str] = []
+                cr, cc = r, c
+                while 0 <= cr < rows and 0 <= cc < cols:
+                    chars.append(real_grid[cr][cc])
+                    cr += dr
+                    cc += dc
+                if chars:
+                    strings.append("".join(chars))
 
-    def add_rows_to_big_string(self):
-        """ add all rows """
-        for pos_x in range(self.x_size):
-            for pos_y in range(self.y_size):
-                self.big_string += self.grid[pos_x][pos_y]
-            # at the end of row we need a break
-            self.big_string += '_'
-
-    def add_columns_to_big_string(self):
-        """ add all columns """
-
-        for pos_y in range(self.y_size):
-            for pos_x in range(self.x_size):
-                self.big_string += self.grid[pos_x][pos_y]
-
-            self.big_string += '_'
-
-    def add_diag_1_to_big_string(self):
-        """ add diagonal 1 to big string """
-
-        for pos_x in range(self.x_size):
-            for pos_y in range(self.y_size):
-                if pos_x + pos_y >= self.x_size:
-                    break
-                self.big_string += self.grid[pos_x+pos_y][pos_y]
-
-            self.big_string += '_'
-
-    def add_diag_2_to_big_string(self):
-        """ add diagonal 2 to big string """
-
-        for pos_y in range(self.y_size):
-            for pos_x in range(self.x_size):
-                if pos_x + pos_y >= self.y_size:
-                    break
-                self.big_string += self.grid[pos_x][pos_x+pos_y]
-
-            self.big_string += '_'
-
-    def add_diag_3_to_big_string(self):
-        """ add diagonal 3 to big string """
-
-        for pos_x in range(self.x_size):
-            for pos_y in range(self.y_size):
-                if pos_x + pos_y >= self.x_size:
-                    break
-                self.big_string += self.grid[pos_x+pos_y][self.y_size - 1 - pos_y]
-
-            self.big_string += '_'
-
-    def add_diag_4_to_big_string(self):
-        """ add diagonal 4 to big string """
-
-        for pos_y in range(self.y_size):
-            for pos_x in range(self.x_size):
-                if pos_x + pos_y > self.y_size:
-                    break
-                self.big_string += self.grid[pos_x][self.y_size - 1 - pos_y - pos_x]
-
-            self.big_string += '_'
-
-    def get_words(self):
-        """ get number of found words with minimal length min_count """
-
-        self.add_rows_to_big_string()
-        self.add_columns_to_big_string()
-        self.add_diag_1_to_big_string()
-        self.add_diag_2_to_big_string()
-        self.add_diag_3_to_big_string()
-        self.add_diag_4_to_big_string()
-
-        self.big_string += self.big_string[::-1]
-
-        count = 0
-        for word in self.words:
-            if len(word) < self.min_count:
-                continue
-
-            if self.big_string.find(word.upper()) != -1:
-                count += 1
-
-        return count
+    return "#".join(strings)
 
 
-if len(sys.argv) != 3:
-    print('usage: script grif_file words_file')
-    sys.exit(1)
+def find_words(grid_lines: list[str], words: list[str], min_len: int = 1) -> list[str]:
+    """Find and return words present in the grid in any of 8 directions.
 
-grid_f = sys.argv[1]
-words_f = sys.argv[2]
+    :param grid_lines: List of strings defining the grid rows.
+    :param words: List of words to search for.
+    :param min_len: Minimum word length to consider.
+    :return: List of found words.
+    """
+    corpus = build_search_corpus(grid_lines)
+    found: list[str] = []
 
-words_processor = GridWords(grid_f, words_f, 5)
+    for word in words:
+        if len(word) < min_len:
+            continue
+        if word.upper() in corpus:
+            found.append(word)
 
-print(words_processor.get_words())
+    return found
+
+
+class TestWordSearch(unittest.TestCase):
+    """Test cases for find_words."""
+
+    def setUp(self) -> None:
+        self.grid = [
+            "B I D E",
+            "H E A R",
+            "C D E F",
+        ]
+
+    def test_horizontal(self) -> None:
+        self.assertEqual(
+            find_words(self.grid, ["BIDE", "HEAR", "CDEF"]),
+            ["BIDE", "HEAR", "CDEF"],
+        )
+
+    def test_diagonal(self) -> None:
+        self.assertEqual(find_words(self.grid, ["BEE"]), ["BEE"])
+
+    def test_reversed(self) -> None:
+        self.assertEqual(find_words(self.grid, ["RAEH"]), ["RAEH"])
+
+    def test_not_found(self) -> None:
+        self.assertEqual(find_words(self.grid, ["NONEXISTENT"]), [])
+
+
+if __name__ == "__main__":
+    unittest.main()
