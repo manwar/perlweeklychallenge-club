@@ -39,7 +39,7 @@ HERE" at each point in the sequence. This has quadratic complexity.
 
 But I eventually settled on a different algorithm, the "least tails" method. This method keeps an array
 "@tails" such that $tails[$i] = "least ending value (tail) seen so far for strictly-increasing subsequences
-of length $i+1". At first I felt disinclined to also provide a binary search; but in the end I figured that
+of length $i". At first I felt disinclined to also provide a binary search; but in the end I figured that
 since I've already gone through the hassle of implementing an exceedingly-non-intuitive algoritm, I might as
 well take it all the way and make a version which has O(n log n) complexity.
 
