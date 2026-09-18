@@ -23,14 +23,13 @@ my @Test =
 plan +@Test ÷ 3;
 
 multi task( [], [] ) { Rat }
-
-multi task( @a, @b -->Rational:D) {
+multi task( @a, @b  -->Rational:D) {
     my @ary = sort flat @a, @b;
-    my $middle = @ary.end ÷ 2;
+    my $center = @ary.end ÷ 2;
 
-   Rat( $middle == $middle.Int
-             ?? @ary[$middle.Int]
-             !! @ary[ $middle.floor, $middle.ceiling].sum ÷ 2
+    Rat( $center == $center.Int
+                ?? @ary[$center.Int]
+                !! @ary[ $center.floor, $center.ceiling].sum ÷ 2
    );
 }
 

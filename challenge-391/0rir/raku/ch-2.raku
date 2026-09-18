@@ -45,10 +45,8 @@ multi task( @a -->Int:D) {
         if @work[$cur] nests-in @work[$candi] {
             ++$ret; 
             $cur = $candi;
-            ++$candi;
-        } else {
-            ++$candi;
         }
+        ++$candi;
     }
     $ret;
 }
