@@ -1,3 +1,3 @@
-# The Weekly Challenge 390
+# The Weekly Challenge 391
 
-Blog: [The First Expansion](https://dev.to/simongreennet/weekly-challenge-the-first-expansion-38lj)
+Blog: [Arranging things](https://dev.to/simongreennet/the-weekly-challenge-arranging-things-57mb)
