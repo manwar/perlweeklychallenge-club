@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 390 by Bob Lied
+# Solutions to weekly challenge 391 by Bob Lied
 
-- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-390/)
+- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-391/)
 
-- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-390/bob-lied)
+- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-391/bob-lied)
 
-- [Blog](https://dev.to/boblied/pwc-390-weird-ways-to-wrangle-words-49mh)
+- [Blog](https://dev.to/boblied/pwc-391-median-boxes-27o4)
