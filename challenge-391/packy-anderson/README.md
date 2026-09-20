@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: How does it feel to decode me like you do?](https://packy.dardan.com/b/zB)
+[Perl Weekly Challenge: Old King Cole Was A Merry Old Soul](https://packy.dardan.com/b/zc)
