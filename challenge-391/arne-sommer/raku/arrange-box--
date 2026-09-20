@@ -1,0 +1,55 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@boxes, :v(:$verbose));
+
+my @dims = @boxes.map: *.words>>.Numeric;
+
+die "At least one box is required" unless @dims.elems;
+die "Each box must have exactly two dimensions" unless all(@dims>>.elems) == 2;
+
+my @sorted = @dims.sort: { (.[0], -.[1]) };
+
+say ": Sorted: " ~ @sorted.map({ "[$_[0], $_[1]]" }).join(", ") if $verbose;
+say ": Heights: " ~ @sorted>>[1].join(", ") if $verbose;
+
+my @tails;
+my @tail-indices;
+my @prev;
+
+for @sorted.kv -> $i, $box
+{
+  my $h  = $box[1];
+  my $lo = 0;
+  my $hi = @tails.elems;
+
+  while $lo < $hi
+  {
+    my $mid = ($lo + $hi) div 2;
+
+    if @tails[$mid] < $h
+    {
+      $lo = $mid + 1;
+    }
+    else
+    {
+      $hi = $mid;
+    }
+  }
+
+  @tails[$lo] := $h;
+  @tail-indices[$lo] := $i;
+  @prev[$i] = $lo > 0 ?? @tail-indices[$lo - 1] !! Nil;
+}
+
+my @chain;
+my $i = @tail-indices[@tails.elems - 1];
+
+while defined $i
+{
+  @chain.unshift: @sorted[$i];
+  $i = @prev[$i];
+}
+
+say ": Chain: " ~ @chain.map({ "[$_[0], $_[1]]" }).join(" -> ") if $verbose;
+
+say @chain.elems;
