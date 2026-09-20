@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($arr1, $arr2, :v(:$verbose));
+
+my @arr1   = $arr1.words>>.Numeric;
+my @arr2   = $arr2.words>>.Numeric;
+my @sorted = (@arr1, @arr2).flat.sort;
+my $index  = (@sorted.elems - 1) div 2;
+
+if $verbose
+{
+  say ": Merged: @sorted[]";
+  say ": Median index: $index" ~ ((@sorted.elems % 2) ?? "" !! "+");
+}
+
+say @sorted.elems % 2
+  ?? @sorted[$index]
+  !! (@sorted[$index] + @sorted[$index +1]) / 2;
+
