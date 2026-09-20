@@ -1,61 +1,75 @@
-#!/bin/env python
-""" Perl Weekly challenge 077 Task 1
-    https://perlweeklychallenge.org/blog/perl-weekly-challenge-077/
-    Solution Lubos Kolouch """
+#!/usr/bin/env python3
+"""Perl Weekly Challenge 077 - Task 1: Fibonacci Sum.
+
+Find all combinations of unique Fibonacci numbers that sum to N.
+"""
+
+from __future__ import annotations
+
+import unittest
 
 
-class FibSolver:
-    """ Class for solving the challenge """
+def get_fibs_up_to(max_n: int) -> list[int]:
+    """Generate all Fibonacci numbers <= max_n starting with 1, 2, in descending order.
 
-    def __init__(self, n: int):
-        """ init the solution """
-        self.max_n = n
-        self.solution_arr = list()
-        self.all_fibs = list()
+    :param max_n: Upper limit for Fibonacci numbers.
+    :return: List of Fibonacci numbers in descending order.
+    """
+    if max_n < 1:
+        return []
 
-    def get_all_fibs(self):
-        """ Generate all fibonacci numbers """
+    fibs = [1, 2]
+    while True:
+        nxt = fibs[-1] + fibs[-2]
+        if nxt > max_n:
+            break
+        fibs.append(nxt)
 
-        self.all_fibs.append(2)
-        self.all_fibs.append(1)
+    return fibs[::-1]
 
-        fib_nr = 2
 
-        while fib_nr < self.max_n:
-            fib_nr = self.all_fibs[0] + self.all_fibs[1]
-            self.all_fibs.insert(0, fib_nr)
+def find_fibonacci_sums(max_n: int) -> list[list[int]] | int:
+    """Find all possible combinations of unique Fibonacci numbers that sum to max_n.
 
-    def find_solutions(self):
-        """ Print all solutions """
-
-        self.get_all_fibs()
-        self.partition(solution=[])
-
-        if self.solution_arr:
-            print(self.solution_arr)
-            return self.solution_arr
-
-        print("0")
+    :param max_n: Target integer sum.
+    :return: List of combinations or 0 if none found.
+    """
+    if max_n < 1:
         return 0
 
-    def partition(self, idx: int = 0, solution: list = None):
-        """ Recursive method to get the partitions """
+    all_fibs = get_fibs_up_to(max_n)
+    solutions: list[list[int]] = []
 
-        rem_value = self.max_n - sum(solution)
-        if rem_value == 0:
-            self.solution_arr.append(solution)
+    def backtrack(idx: int, current_combo: list[int], current_sum: int) -> None:
+        if current_sum == max_n:
+            solutions.append(current_combo)
             return
 
-        for i in range(idx, len(self.all_fibs)):
-            if self.all_fibs[i] > rem_value:
+        for i in range(idx, len(all_fibs)):
+            fib = all_fibs[i]
+            if current_sum + fib > max_n:
                 continue
-            self.partition(i+1, solution+[self.all_fibs[i]])
-        return
+            backtrack(i + 1, current_combo + [fib], current_sum + fib)
+
+    backtrack(0, [], 0)
+    return solutions if solutions else 0
 
 
-fib = FibSolver(-19)
-assert fib.find_solutions() == 0
-fib = FibSolver(6)
-assert fib.find_solutions() == [[5, 1], [3, 2, 1]]
-fib = FibSolver(9)
-assert fib.find_solutions() == [[8, 1], [5, 3, 1]]
+class TestFibonacciSum(unittest.TestCase):
+    """Test cases for find_fibonacci_sums."""
+
+    def test_example_1(self) -> None:
+        self.assertEqual(find_fibonacci_sums(6), [[5, 1], [3, 2, 1]])
+
+    def test_example_2(self) -> None:
+        self.assertEqual(find_fibonacci_sums(9), [[8, 1], [5, 3, 1]])
+
+    def test_negative(self) -> None:
+        self.assertEqual(find_fibonacci_sums(-19), 0)
+
+    def test_sum_4(self) -> None:
+        self.assertEqual(find_fibonacci_sums(4), [[3, 1]])
+
+
+if __name__ == "__main__":
+    unittest.main()
