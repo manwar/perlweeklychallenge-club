@@ -1,58 +1,85 @@
-#!/bin/env python
-""" Perl Weekly challenge 077 Task 2
-    https://perlweeklychallenge.org/blog/perl-weekly-challenge-077/
-    Solution Lubos Kolouch """
+#!/usr/bin/env python3
+"""Perl Weekly Challenge 077 - Task 2: Lonely X.
+
+Count the total number of 'X' surrounded by 'O' only in an m x n matrix.
+"""
+
+from __future__ import annotations
+
+import unittest
 
 
-class LoneX:
-    """ Class for solving the challenge """
+def is_cell_lonely(matrix: list[list[str]], r: int, c: int) -> bool:
+    """Check if cell at (r, c) has no adjacent 'X' in all 8 directions.
 
-    def __init__(self, matrix: list):
-        """ init the solution """
-        self.matrix = matrix
-        self.solution_count = 0
+    :param matrix: 2D list of 'O' and 'X'.
+    :param r: Row index.
+    :param c: Column index.
+    :return: True if strictly surrounded by 'O' (or matrix boundaries), False otherwise.
+    """
+    rows = len(matrix)
+    cols = len(matrix[0])
 
-    def check_position(self, pos_x: int, pos_y: int):
-        """ check if the position is lone """
-
-        for d_x in [-1, 0, 1]:
-            for d_y in [-1, 0, 1]:
-                if d_x == d_y == 0:
-                    continue
-
-                if pos_x + d_x < 0 or pos_x + d_x >= len(self.matrix):
-                    continue
-
-                if pos_y + d_y < 0 or pos_y + d_y >= len(self.matrix):
-                    continue
-
-                if self.matrix[pos_x + d_x][pos_y + d_y] == 'X':
+    for dr in (-1, 0, 1):
+        for dc in (-1, 0, 1):
+            if dr == 0 and dc == 0:
+                continue
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if matrix[nr][nc] == "X":
                     return False
 
-        return True
-
-    def count_lone(self):
-        """ count the occurences of lone X """
-
-        for pos_x, line in enumerate(self.matrix):
-            for pos_y, char in enumerate(line):
-                if char == "O":
-                    continue
-
-                if self.check_position(pos_x, pos_y):
-                    self.solution_count += 1
-
-    def get_count(self):
-        """ just return the solutions count """
-
-        return self.solution_count
+    return True
 
 
-lonex = LoneX([['O', 'O', 'X'], ['X', 'O', 'O'], ['X', 'O', 'O']])
-lonex.count_lone()
-assert lonex.get_count() == 1
+def count_lonely_x(matrix: list[list[str]]) -> int:
+    """Count the total number of 'X' surrounded only by 'O' in an m x n matrix.
 
-lonex2 = LoneX([['O', 'O', 'X', 'O'], ['X', 'O', 'O', 'O'],
-                ['X', 'O', 'O', 'X'], ['O', 'X', 'O', 'O']])
-lonex2.count_lone()
-assert lonex2.get_count() == 2
+    :param matrix: 2D list of characters 'O' and 'X'.
+    :return: Total count of lonely 'X' cells.
+    """
+    if not matrix or not matrix[0]:
+        return 0
+
+    rows = len(matrix)
+    cols = len(matrix[0])
+    count = 0
+
+    for r in range(rows):
+        for c in range(cols):
+            if matrix[r][c] == "X" and is_cell_lonely(matrix, r, c):
+                count += 1
+
+    return count
+
+
+class TestLonelyX(unittest.TestCase):
+    """Test cases for count_lonely_x."""
+
+    def test_example_1(self) -> None:
+        matrix = [
+            ["O", "O", "X"],
+            ["X", "O", "O"],
+            ["X", "O", "O"],
+        ]
+        self.assertEqual(count_lonely_x(matrix), 1)
+
+    def test_example_2(self) -> None:
+        matrix = [
+            ["O", "O", "X", "O"],
+            ["X", "O", "O", "O"],
+            ["X", "O", "O", "X"],
+            ["O", "X", "O", "O"],
+        ]
+        self.assertEqual(count_lonely_x(matrix), 2)
+
+    def test_no_lonely(self) -> None:
+        matrix = [
+            ["X", "X"],
+            ["X", "X"],
+        ]
+        self.assertEqual(count_lonely_x(matrix), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

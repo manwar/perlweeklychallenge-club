@@ -1,75 +1,70 @@
-#!/bin/env perl
-#""" Perl Weekly challenge 077 Task 1 """
-#""" https://perlweeklychallenge.org/blog/perl-weekly-challenge-077/ """
-#""" Solution Lubos Kolouch """
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Data::Dumper;
-use List::Util qw/sum/;
+use experimental 'signatures';
 
-my @all_fibs;
-my @solution_arr;
+# Task 1: Fibonacci Sum
+# Find all possible combinations of unique Fibonacci numbers that sum to $n.
+# Return [0] if no combinations are found.
 
-sub get_all_fibs {
-        #""" Generate all fibonacci numbers """
-        my $max_n = shift;
+sub get_fibs_up_to ($max_n) {
+    return () if $max_n < 1;
 
-        unshift @all_fibs, 1;
-        unshift @all_fibs, 2;
+    my @fibs = ( 1, 2 );
+    while (1) {
+        my $next = $fibs[-1] + $fibs[-2];
+        last if $next > $max_n;
+        push @fibs, $next;
+    }
+    return reverse @fibs;
+}
 
-        my $fib_nr = 2;
+sub find_fibonacci_sums ($max_n) {
+    return [0] if $max_n < 1;
 
-        while ($fib_nr < $max_n) {
-            $fib_nr = $all_fibs[0] + $all_fibs[1];
-            unshift @all_fibs, $fib_nr;
+    my @all_fibs = get_fibs_up_to($max_n);
+    my @solutions;
+
+    my $backtrack;
+    $backtrack = sub ( $idx, $current_combo, $current_sum ) {
+        if ( $current_sum == $max_n ) {
+            push @solutions, [@$current_combo];
+            return;
         }
+
+        for my $i ( $idx .. $#all_fibs ) {
+            my $fib = $all_fibs[$i];
+            next if $current_sum + $fib > $max_n;
+
+            $backtrack->( $i + 1, [ @$current_combo, $fib ], $current_sum + $fib );
+        }
+    };
+
+    $backtrack->( 0, [], 0 );
+
+    return @solutions ? \@solutions : [0];
 }
 
-sub find_solutions {
-        #""" Print all solutions """
-        my $max_n = shift;
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-        @all_fibs = ();
-        @solution_arr = ();
-        get_all_fibs($max_n);
+    is_deeply( find_fibonacci_sums(6),   [ [ 5, 1 ], [ 3, 2, 1 ] ], 'Example 1: sum 6' );
+    is_deeply( find_fibonacci_sums(9),   [ [ 8, 1 ], [ 5, 3, 1 ] ], 'Example 2: sum 9' );
+    is_deeply( find_fibonacci_sums(-19), [0],                       'Negative input returns 0' );
+    is_deeply( find_fibonacci_sums(4),   [ [ 3, 1 ] ],              'Sum 4 = 3 + 1' );
 
-        partition({ max_n => $max_n });
-        @solution_arr = [0] unless @solution_arr;
-
-        warn Dumper \@solution_arr;
-        return \@solution_arr;
+    done_testing();
 }
-
-
-sub partition {
-    #""" Recursive method to get the partitions """
-
-    my ($args) = @_;
-
-    my $idx = $args->{idx} // 0;
-    my $solution = $args->{solution} // [];
-    my $max_n = $args->{max_n} // die 'No max value specified';
-
-    my $rem_value = @$solution ? $max_n - sum(@$solution) : $max_n;
-
-    if ($rem_value == 0) {
-        push @solution_arr, [@$solution];
-        return 0;
+else {
+    my $res = find_fibonacci_sums( $ARGV[0] );
+    if ( $res->[0] eq '0' ) {
+        say 0;
     }
-
-    for my $i ($idx..scalar @all_fibs-1) {
-        next if $all_fibs[$i] > $rem_value;
-            
-        my @new_arr = (@$solution, $all_fibs[$i]);
-        partition({ idx => $i+1, max_n => $max_n, solution => \@new_arr });
+    else {
+        for my $combo (@$res) {
+            say join( ' + ', @$combo ) . " = $ARGV[0]";
+        }
     }
-    return 1;
 }
-
-use Test::More;
-
-is_deeply( find_solutions(6), [[5,1],[3,2,1]]);
-is_deeply( find_solutions(9), [[8,1],[5,3,1]]);
-is_deeply( find_solutions(-19), [[0]]);
-
-done_testing;
