@@ -1,0 +1,177 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 1 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/arrangebox {
+    0 dict begin
+    {
+        0 dict begin
+        /j exch def
+        /i exch def
+        i 0 get j 0 get eq {
+            i 1 get j 1 get quicksort.cmp
+        } {
+            i 0 get j 0 get quicksort.cmp
+        } ifelse
+        end
+    } quicksort.with_comparator
+    /a exch def
+    mark
+    0 1 a length 1 sub {
+        [ exch 1 ]
+    } for
+    /mx 1 def
+    {
+        counttomark 0 eq {
+            exit
+        } if
+        aload pop
+        /pm exch def
+        /ix exch def
+        /mx mx pm max def
+        ix 1 add 1 a length 1 sub {
+            /j exch def
+            a ix get 0 get a j get 0 get lt
+            a ix get 1 get a j get 1 get lt
+            and {
+                [ j pm 1 add ]
+            } if
+        } for
+    } loop
+    pop
+    mx
+} def
+
+(arrangebox) test.start
+[[1 3] [3 5] [6 8] [2 4]] arrangebox 4 eq test
+[[4 5] [4 6] [6 7] [2 3] [4 3]] arrangebox 3 eq test
+[[5 5] [5 5] [5 5]] arrangebox 1 eq test
+[[2 100] [3 200] [4 300] [5 50] [5 400]] arrangebox 4 eq test
+[[10 20] [15 10] [20 30] [12 18] [16 25]] arrangebox 3 eq test
+test.end
