@@ -1,121 +1,90 @@
-#!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE: ch-2.pl
-#
-#        USAGE: ./ch-2.pl  
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-076/
-#
-#              Task 2 - Word Search
-#
-#       AUTHOR: Lubos Kolouch
-#===============================================================================
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use File::Slurp;
-use feature qw/say/;
+use experimental 'signatures';
 
+# Task 2: Word Search
+# Search for words in a 2D grid in all 8 directions (horizontal, vertical, diagonal, forward/backward).
 
-sub get_words {
-    my ($grid, $words, $min_count)  = @_;
+sub build_search_corpus ($grid_lines) {
+    return '' if !@$grid_lines;
 
-
-    # load the grid into 2D array
     my @real_grid;
+    for my $line (@$grid_lines) {
+        my @chars = split( /\s+/, $line );
+        push @real_grid, \@chars if @chars;
+    }
 
-    my $x_size = scalar @$grid - 1;
-    my $y_size;
+    my $rows = scalar @real_grid;
+    return '' if $rows == 0;
+    my $cols = scalar @{ $real_grid[0] };
 
-    for my $i (0..scalar @$grid -1) {
-        my $pos = 0;
-        for (split / /, $grid->[$i]) {
-            $real_grid[$i][$pos] = $_;
-            $pos++;
+    my @strings;
+
+    # 8 directions: (dx, dy)
+    my @dirs = (
+        [ 0,  1 ],     # right
+        [ 1,  0 ],     # down
+        [ 1,  1 ],     # down-right
+        [ 1,  -1 ],    # down-left
+        [ 0,  -1 ],    # left
+        [ -1, 0 ],     # up
+        [ -1, -1 ],    # up-left
+        [ -1, 1 ],     # up-right
+    );
+
+    for my $r ( 0 .. $rows - 1 ) {
+        for my $c ( 0 .. $cols - 1 ) {
+            for my $d (@dirs) {
+                my ( $dr, $dc ) = @$d;
+                my $curr_str = '';
+                my ( $cr, $cc ) = ( $r, $c );
+
+                while ( $cr >= 0 && $cr < $rows && $cc >= 0 && $cc < $cols ) {
+                    $curr_str .= $real_grid[$cr][$cc];
+                    $cr += $dr;
+                    $cc += $dc;
+                }
+                push @strings, $curr_str if length($curr_str) > 0;
+            }
         }
-        $y_size = $pos;
     }
 
-    $y_size--;
-
-    # let's construct a big string of all possible combinations
-
-    my $big_string;
-    # add all rows
-    for my $x (0..$x_size) {
-        for my $y (0..$y_size) {
-            $big_string .= $real_grid[$x][$y];
-        }
-        # at the end of row we need a break
-        $big_string .= '_';
-    }
-
-    # add all columns
-    for my $y (0..$y_size) {
-        for my $x (0..$x_size) {
-            $big_string .= $real_grid[$x][$y];
-        }
-        $big_string .= '_';
-    }
-
-    # add diagonal 1
-    for my $x (0..$x_size) {
-        for my $y (0..$y_size) {
-            last if $x + $y > $x_size;
-            $big_string .= $real_grid[$x+$y][$y];
-        }
-        $big_string .= '_';
-    }
-
-    # add diagonal 2
-    for my $y (0..$y_size) {
-
-        for my $x (0..$x_size) {
-            last if $x + $y > $y_size;
-            $big_string .= $real_grid[$x][$y+$x];
-        }
-        $big_string .= '_';
-    }
-
-    # add diagonal 3
-    for my $x (0..$x_size) {
-        for my $y (0..$y_size) {
-            last if $x + $y > $x_size;
-            $big_string .= $real_grid[$x+$y][$y_size - $y];
-        }
-        $big_string .= '_';
-    }
-
-    # add diagonal 4
-    for my $y (0..$y_size) {
-        for my $x (0..$x_size) {
-            last if $x + $y > $y_size;
-            $big_string .= $real_grid[$x][$y_size - $y - $x];
-        }
-        $big_string .= '_';
-    }
-
-    $big_string .= reverse $big_string;
-
-
-    my $count = 0;
-
-    for (@$words) {
-        next unless length($_) >= $min_count;
-        $count++ if index($big_string, uc($_)) != -1;
-    }
-
-    return $count;
+    return join( '#', @strings );
 }
 
-my ($grid_file, $words_file) = @ARGV;
+sub find_words ( $grid_lines, $words, $min_len = 1 ) {
+    my $corpus = build_search_corpus($grid_lines);
+    my @found;
 
-my $grid_ref = read_file($grid_file, array_ref => 1, chomp => 1);
-my $words_ref = read_file($words_file, array_ref => 1, chomp => 1);
+    for my $word (@$words) {
+        next if length($word) < $min_len;
+        if ( index( $corpus, uc($word) ) != -1 ) {
+            push @found, $word;
+        }
+    }
 
-use Test::More;
+    return \@found;
+}
 
-is (get_words(['AA','BB'],['AA', 'BB', 'CC'],2), 2);
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
 
-done_testing;
+    my @grid = (
+        'B I D E',
+        'H E A R',
+        'C D E F',
+    );
+
+    is_deeply( find_words( \@grid, [ 'BIDE', 'HEAR', 'CDEF' ] ), [ 'BIDE', 'HEAR', 'CDEF' ], 'Horizontal words' );
+    is_deeply( find_words( \@grid, ['BEE'] ),                     ['BEE'],                     'Diagonal word (B-E-E)' );
+    is_deeply( find_words( \@grid, ['RAEH'] ),                    ['RAEH'],                    'Reversed word' );
+    is_deeply( find_words( \@grid, ['NONEXISTENT'] ),             [],                          'Not found' );
+
+    done_testing();
+}
+else {
+    say "Run via embedded tests.";
+}

@@ -1,48 +1,56 @@
-#!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE: ch-1.pl
-#
-#        USAGE: ./ch-1.pl  
-#
-#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-076/
-#
-#              Task 1 - Prime Sum
-#
-#       AUTHOR: Lubos Kolouch
-#===============================================================================
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Math::Prime::Util qw/is_prime/;
+use experimental 'signatures';
 
-sub get_nr_primes {
-    my $what = shift;
+# Task 1: Prime Sum
+# Find the minimum number of prime numbers required whose summation gives $n.
+# Note: 1 is not considered prime.
 
-    # if the number is prime, we need just 1 number to represent it
+sub is_prime ($n) {
+    return 0 if $n < 2;
+    return 1 if $n == 2 || $n == 3;
+    return 0 if $n % 2 == 0 || $n % 3 == 0;
 
-    return 1 if is_prime($what);
-
-    # if the number is even, we need 2 primes thanks to Goldbach's conjecture
-    return 2 if $what % 2 == 1;
-
-    # if the number - 2 is prime, return 2
-    return 2 if is_prime($what - 2);
-
-    # if the number -3 is prime, return 2 (3 and the prime)
-    return 2 if is_prime($what - 3);
-
-    # otherwise return 3 - it is 3 and 2 primes forming $what - 3 thanks to
-    # Goldbach's conjecture
-    
-    return 3
+    my $i = 5;
+    while ( $i * $i <= $n ) {
+        return 0 if $n % $i == 0 || $n % ( $i + 2 ) == 0;
+        $i += 6;
+    }
+    return 1;
 }
 
+sub get_nr_primes ($n) {
+    return 0 if $n < 2;
 
-use Test::More;
+    # 1 prime if $n itself is prime
+    return 1 if is_prime($n);
 
-is(get_nr_primes(9), 2, 'test 9');
-is(get_nr_primes(10), 2, 'test 10');
-is(get_nr_primes(2), 1, 'test 2');
+    # If $n is even, by Goldbach's conjecture (for all even n > 2), it is the sum of 2 primes.
+    return 2 if $n % 2 == 0;
 
-done_testing;
+    # If $n is odd:
+    # If $n - 2 is prime, then $n = 2 + ($n - 2), so 2 primes.
+    return 2 if is_prime( $n - 2 );
+
+    # Otherwise, by Goldbach's weak conjecture, every odd n > 5 is the sum of 3 primes:
+    # $n = 3 + ($n - 3), where $n - 3 is even and expressible as sum of 2 primes.
+    return 3;
+}
+
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
+
+    is( get_nr_primes(2),  1, 'Example: 2 is prime (1 prime)' );
+    is( get_nr_primes(9),  2, 'Example: 9 = 2 + 7 (2 primes)' );
+    is( get_nr_primes(10), 2, 'Example: 10 = 3 + 7 or 5 + 5 (2 primes)' );
+    is( get_nr_primes(12), 2, 'Even number 12 = 5 + 7 (2 primes)' );
+    is( get_nr_primes(27), 3, 'Odd number 27 = 3 + 24 = 3 + 5 + 19 (3 primes)' );
+
+    done_testing();
+}
+else {
+    say get_nr_primes( $ARGV[0] );
+}
