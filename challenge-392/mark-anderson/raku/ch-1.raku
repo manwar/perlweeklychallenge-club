@@ -6,6 +6,7 @@ is convert-palindrome("abcd"),       "dcbabcd";
 is convert-palindrome("bananas"),    "sananabananas";
 is convert-palindrome("dissident"),  "tnedissident";
 is convert-palindrome("cailliachs"), "shcailliachs";
+is convert-palindrome("racecar"),    "racecar";
 
 sub convert-palindrome($str)
 {
