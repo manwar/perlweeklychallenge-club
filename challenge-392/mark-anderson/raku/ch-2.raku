@@ -21,7 +21,7 @@ sub words-length-product(@words)
 
     .max given flat 0, gather for @bags.combinations(2) 
     {
-         next if .head.keys (&) .tail.keys;
+         next if .head (&) .tail;
          take .head.total * .tail.total
     }
 }
