@@ -17,7 +17,7 @@ at Skokloster Castle in Sweden >),                   80;
 
 sub words-length-product(@words)
 {
-    my @bags = @words>>.comb>>.Bag.unique: with => &[eqv];
+    my @bags = @words>>.comb>>.Bag.unique(with => &[eqv]);
 
     .max given flat 0, gather for @bags.combinations(2) 
     {
