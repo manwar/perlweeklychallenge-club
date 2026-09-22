@@ -52,6 +52,13 @@ repos:
         types:
           - python
         pass_filenames: true
+      - id: perlcritic
+        name: perlcritic
+        entry: perl -S perlcritic --profile .perlcriticrc
+        language: system
+        types:
+          - perl
+        pass_filenames: true
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.24.2
     hooks:
