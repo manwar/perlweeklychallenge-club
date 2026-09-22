@@ -1,72 +1,67 @@
-#!/usr/bin/perl
-
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use experimental 'signatures';
 
-=head1 DESCRIPTION
+# Task 1: Compact number lists
+# Take a list of numbers and print them in compact form.
+# A range of 3 or more consecutive numbers is compacted to "start-end".
+# Example: 1,2,3,4,9,10,14,15,16 -> 1-4,9,10,14-16
 
-This script takes a list of numbers from command line and print the same in the compact form.
+sub compact_number_list (@numbers) {
+    return '' if !@numbers;
 
-For example, if you pass “1,2,3,4,9,10,14,15,16” then it should print the compact form like “1-4,9,10,14-16”. 
+    my @sorted = sort { $a <=> $b } @numbers;
 
-=cut
+    my @compact;
+    my $start = $sorted[0];
+    my $end   = $sorted[0];
 
-# Get the list of numbers from command line
-my @numbers = @ARGV;
-
-# Sort the list of numbers in ascending order
-@numbers = sort { $a <=> $b } @numbers;
-
-# Initializing variables
-my @compact_list;
-my $first_num = $numbers[0];
-my $last_num  = $numbers[0];
-
-# Generate the compact list
-foreach my $num (@numbers) {
-    if ( $num == $last_num + 1 ) {
-
-        # If the current number is 1 more than the last number,
-        # update the last number
-        $last_num = $num;
-    }
-    else {
-        # If the current number is not 1 more than the last number,
-        # add the range of numbers to the compact list
-        if ( $first_num == $last_num ) {
-            push @compact_list, $first_num;
+    my sub append_range ( $s, $e ) {
+        if ( $e - $s >= 2 ) {
+            push @compact, "$s-$e";
+        }
+        elsif ( $e - $s == 1 ) {
+            push @compact, $s, $e;
         }
         else {
-            push @compact_list, "$first_num-$last_num";
+            push @compact, "$s";
         }
-
-        # Reset the variables
-        $first_num = $num;
-        $last_num  = $num;
     }
+
+    for my $num ( @sorted[ 1 .. $#sorted ] ) {
+        if ( $num == $end + 1 ) {
+            $end = $num;
+        }
+        elsif ( $num == $end ) {
+            next;    # Skip duplicates
+        }
+        else {
+            append_range( $start, $end );
+            $start = $num;
+            $end   = $num;
+        }
+    }
+
+    append_range( $start, $end );
+    return join( ',', @compact );
 }
 
-# Add the last range of numbers to the compact list
-if ( $first_num == $last_num ) {
-    push @compact_list, $first_num;
+# Embedded tests
+if ( !@ARGV ) {
+    require Test::More;
+    Test::More->import();
+
+    is( compact_number_list( 1, 2, 3, 4, 9, 10, 14, 15, 16 ), '1-4,9,10,14-16', 'Example 1' );
+    is( compact_number_list( 1, 2, 3 ),                         '1-3',            'Continuous range >= 3' );
+    is( compact_number_list( 1, 2 ),                            '1,2',            'Length 2 consecutive' );
+    is( compact_number_list( 5 ),                               '5',              'Single number' );
+    is( compact_number_list( 1, 3, 5 ),                         '1,3,5',          'Isolated numbers' );
+    is( compact_number_list(),                                  '',               'Empty list' );
+
+    done_testing();
 }
 else {
-    push @compact_list, "$first_num-$last_num";
+    my @input = map { split /,/, $_ } @ARGV;
+    say compact_number_list(@input);
 }
-
-# Print the compact list
-print join( ',', @compact_list );
-
-=head1 TESTING
-
-=over 4
-
-=item *
-
-Input: 1,2,3,4,9,10,14,15,16
-
-Expected Output: 1-4,9,10,14-16
-
-=back
-
-=cut
