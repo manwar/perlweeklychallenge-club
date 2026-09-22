@@ -1,35 +1,24 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Perl Weekly Challenge 006 - Task 2: Ramanujan's constant.
 
+Calculate Ramanujan's constant e^(pi * sqrt(163)) with at least 32 digits of precision.
 """
-Challenge 006 - Task 2
 
-Create a script to calculate Ramanujan's constant with at least 32 digits of
-precision.
-
-Ramanujan's constant is e^(pi * sqrt(163)), which produces a value remarkably
-close to an integer.
-
-The standard IEEE 754 double-precision binary floating-point format: binary64
-gives only 15 to 17 significant decimal digits. Therefore the decimal module
-must be used for high-precision arithmetic.
-"""
+from __future__ import annotations
 
 from decimal import Decimal, getcontext
+import unittest
 
 
-def pi(prec):
-    """Calculate pi to the given precision using the Chudnovsky algorithm.
+def pi(prec: int) -> Decimal:
+    """Calculate pi to the given precision using Machin's formula.
 
-    Args:
-        prec (int): Number of significant digits.
-
-    Returns:
-        Decimal: Pi calculated to the requested precision.
+    :param prec: Number of significant digits.
+    :return: Decimal representation of pi.
     """
-    getcontext().prec = prec + 10  # extra guard digits
+    getcontext().prec = prec + 10
 
-    # Machin's formula: pi = 4 * (4*arctan(1/5) - arctan(1/239))
-    def arctan(x, num_terms=200):
+    def arctan(x: Decimal, num_terms: int = 200) -> Decimal:
         power = x
         result = x
         for n in range(1, num_terms):
@@ -38,19 +27,16 @@ def pi(prec):
         return result
 
     pi_val = 4 * (4 * arctan(Decimal(1) / 5) - arctan(Decimal(1) / 239))
-    getcontext().prec = prec + 2  # restore with minimal guard
+    getcontext().prec = prec
     return +pi_val
 
 
-def exp_value(x, prec):
-    """Calculate e^x using the Taylor series.
+def exp_value(x: Decimal, prec: int) -> Decimal:
+    """Calculate e^x using the Taylor series expansion.
 
-    Args:
-        x (Decimal): The exponent.
-        prec (int): Number of significant digits.
-
-    Returns:
-        Decimal: e raised to the power x.
+    :param x: Decimal exponent.
+    :param prec: Number of significant digits.
+    :return: e^x as Decimal.
     """
     getcontext().prec = prec + 10
     result = Decimal(1)
@@ -64,14 +50,11 @@ def exp_value(x, prec):
     return +result
 
 
-def ramanujan_constant(prec=50):
+def ramanujan_constant(prec: int = 35) -> str:
     """Calculate Ramanujan's constant: e^(pi * sqrt(163)).
 
-    Args:
-        prec (int): Number of significant digits (default 50).
-
-    Returns:
-        Decimal: Ramanujan's constant.
+    :param prec: Precision digits.
+    :return: String representation of Ramanujan's constant to requested precision.
     """
     getcontext().prec = prec + 10
 
@@ -81,11 +64,21 @@ def ramanujan_constant(prec=50):
 
     getcontext().prec = prec
     result = exp_value(exponent, prec)
-    return result
+    return str(result)
+
+
+class TestRamanujanConstant(unittest.TestCase):
+    """Test cases for ramanujan_constant."""
+
+    def test_precision(self) -> None:
+        res = ramanujan_constant(35)
+        # Expected value begins with:
+        # 262537412640768743.99999999999925...
+        self.assertTrue(
+            res.startswith("262537412640768743.99999999999925"),
+            f"Result {res} did not match expected prefix",
+        )
 
 
 if __name__ == "__main__":
-    # Get the first 31 digits (30 after the dot plus the leading digit)
-    # Ramanujan's constant ~= 262537412640768743.999999999999250072...
-    result = ramanujan_constant(prec=35)
-    print(result)
+    unittest.main()
