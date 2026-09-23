@@ -1,3 +1,3 @@
-⍝ https://arraybox.dev/#Yky4
+⍝ https://arraybox.dev/#zA1n
 
 Wlp ← ⌈/∘,∘.((0=≢⍤∩)××⍥≢)⍨
