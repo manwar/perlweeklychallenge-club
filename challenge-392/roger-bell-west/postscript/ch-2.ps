@@ -1,0 +1,116 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/set.intersection {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+
+% end included library code
+
+/wordslengthproduct {
+    0 dict begin
+    /a exch def
+    /ws a { s2a toset } map def
+    0
+    0 1 ws length 2 sub {
+        /i exch def
+        i 1 add 1 ws length 1 sub {
+            /j exch def
+            ws i get ws j get set.intersection length 0 eq {
+                a i get length a j get length mul max
+            } if
+        } for
+    } for
+    end
+} bind def
+
+(wordslengthproduct) test.start
+[(a) (ab) (abc) (d) (de) (def)] wordslengthproduct 9 eq test
+[(a) (aa) (aaa) (aaaa)] wordslengthproduct 0 eq test
+[(meet) (app) (code) (sky) (bold)] wordslengthproduct 16 eq test
+[(a) (ab) (abc) (abcd) (efghi)] wordslengthproduct 20 eq test
+[(xyz) (w) (abcdefg) (hij)] wordslengthproduct 21 eq test
+test.end

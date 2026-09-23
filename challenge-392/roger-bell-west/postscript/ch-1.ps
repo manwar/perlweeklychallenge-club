@@ -1,0 +1,144 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/apush.left { % [b c] a -> [a b c]
+    exch % a [b c]
+    [ 3 1 roll aload pop ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/is_palindrome {
+    0 dict begin
+    /a exch def
+    /l a length def
+    true
+    0 1 l 2 idiv {
+        /i exch def
+        a i get a l i sub 1 sub get ne {
+            pop false
+            exit
+        } if
+    } for
+    end
+} bind def
+
+/convertpalindrome {
+    0 dict begin
+    s2a /c0 exch def
+    /i 0 def
+    {
+        /c c0 deepcopy def
+        0 1 i 1 sub {
+            /n exch def
+            c c0 c0 length i sub n add get apush.left /c exch def
+        } for
+        c is_palindrome {
+            c a2s
+            exit
+        } if
+        /i i 1 add def
+    } loop
+    end
+} bind def
+
+(convertpalindrome) test.start
+(pinnipeds) convertpalindrome (sdepinnipeds) eq test
+(abcd) convertpalindrome (dcbabcd) eq test
+(bananas) convertpalindrome (sananabananas) eq test
+(dissident) convertpalindrome (tnedissident) eq test
+(cailliachs) convertpalindrome (shcailliachs) eq test
+test.end
