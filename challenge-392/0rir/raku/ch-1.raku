@@ -24,16 +24,16 @@ my @Test =
     "abc",          "cbabc",
     "aba",          "aba",
     "abba",          "abba",
+    "abbaa",          "aabbaa",
     "",             "",
 ;
 plan +@Test ÷ 2;
 
 multi task( $a  where *.flip eq $a ) { $a }
-multi task( $a ) { # where *.chars > 1 ) {
-       #check for usable embedded palidromes
-    my $embedded = '';
-    my @e-tail = $a.indices( $a.substr( 0,1));
-    for  @e-tail[@e-tail.end...^0] -> \t {
+multi task( $a ) {
+    my $embedded = '';                          # largest prefix palindrome
+    my @e-tail = $a.indices( $a.substr( 0,1));  # regex likely doable & better
+    for @e-tail[@e-tail.end...^0] -> \t {
         my $flip-q = $a.substr( 0, t + 1);
         if $flip-q eq $flip-q.flip {
             return $a.substr( t+1).flip ~ $flip-q ~ $a.substr: t+1;
