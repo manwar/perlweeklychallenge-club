@@ -4,9 +4,18 @@ use warnings;
 use List::Util qw(sum0);
 use Test::More;
 
-# Task 2: Prime Step
-# Find the absolute difference of the sum of the ASCII values of the characters
-# in the string to the nearest prime number.
+=head1 NAME
+
+ch-2.pl - Prime Step
+
+=head1 DESCRIPTION
+
+You are given a string with English alphabetic characters only.
+
+What is the absolute difference of the sum of the ASCII values of the characters
+in the string to the nearest prime number?
+
+=cut
 
 sub is_prime ($n) {
     return 0 if $n < 2;
