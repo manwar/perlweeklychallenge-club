@@ -35,24 +35,31 @@ class TestMakePalindrome(unittest.TestCase):
     """Test cases for make_palindrome."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with pinnipeds."""
         self.assertEqual(make_palindrome("pinnipeds"), "sdepinnipeds")
 
     def test_example_2(self) -> None:
+        """Test example 2 with abcd."""
         self.assertEqual(make_palindrome("abcd"), "dcbabcd")
 
     def test_example_3(self) -> None:
+        """Test example 3 with bananas."""
         self.assertEqual(make_palindrome("bananas"), "sananabananas")
 
     def test_example_4(self) -> None:
+        """Test example 4 with dissident."""
         self.assertEqual(make_palindrome("dissident"), "tnedissident")
 
     def test_example_5(self) -> None:
+        """Test example 5 with cailliachs."""
         self.assertEqual(make_palindrome("cailliachs"), "shcailliachs")
 
     def test_already_palindrome(self) -> None:
+        """Test string that is already a palindrome."""
         self.assertEqual(make_palindrome("racecar"), "racecar")
 
     def test_single_char(self) -> None:
+        """Test single character string."""
         self.assertEqual(make_palindrome("a"), "a")
 
 

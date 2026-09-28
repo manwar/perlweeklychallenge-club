@@ -3,8 +3,18 @@ use v5.38;
 use warnings;
 use experimental 'signatures';
 
-# Task 1: Make Palindrome
-# Convert given string to palindrome by adding minimum characters in front of it.
+=head1 NAME
+
+ch-1.pl - Make Palindrome
+
+=head1 DESCRIPTION
+
+Convert given string to palindrome by adding minimum characters in front of it.
+
+You are given a string. Write a script to convert the given string to a
+palindrome by adding characters in front of it.
+
+=cut
 
 sub make_palindrome ($str) {
     return $str if length($str) <= 1;
