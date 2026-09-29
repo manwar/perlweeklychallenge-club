@@ -34,6 +34,7 @@ repos:
         args:
           - --fix
           - --target-version=py39
+          - --extend-select=D100,D101,D102,D103
       - id: ruff-format
   - repo: https://github.com/asottile/blacken-docs
     rev: 1.20.0
@@ -51,6 +52,14 @@ repos:
         language: system
         types:
           - python
+        pass_filenames: true
+      - id: check-perl-pod
+        name: check-perl-pod
+        entry: >-
+          python3 -c 'import sys, re; errors = [f"{p}: missing POD section(s): {sec_str}" for p in sys.argv[1:] for c in [open(p, "r", encoding="utf-8", errors="replace").read()] for missing in [[sec for sec, reg in [("=head1 NAME", r"^=head1\s+NAME"), ("=head1 DESCRIPTION", r"^=head1\s+DESCRIPTION")] if not re.search(reg, c, re.M)]] if missing for sec_str in [", ".join(missing)]]; [print(e) for e in errors]; sys.exit(1 if errors else 0)'
+        language: system
+        types:
+          - perl
         pass_filenames: true
       - id: perlcritic
         name: perlcritic
