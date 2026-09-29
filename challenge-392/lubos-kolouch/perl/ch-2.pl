@@ -4,9 +4,16 @@ use warnings;
 use experimental 'signatures';
 use List::Util qw(max);
 
-# Task 2: Maximum Product of Word Lengths
-# Return maximum len($words[i]) * len($words[j]) where the two words do not share common letters.
-# If no such two words exist, return 0.
+=head1 NAME
+
+ch-2.pl - Maximum Product of Word Lengths
+
+=head1 DESCRIPTION
+
+Return maximum len($words[i]) * len($words[j]) where the two words do not
+share common letters. If no such two words exist, return 0.
+
+=cut
 
 sub max_product (@words) {
     return 0 if @words < 2;

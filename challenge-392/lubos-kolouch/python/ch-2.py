@@ -50,18 +50,23 @@ class TestMaxProduct(unittest.TestCase):
     """Test cases for max_product."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with multiple small words."""
         self.assertEqual(max_product(["a", "ab", "abc", "d", "de", "def"]), 9)
 
     def test_example_2(self) -> None:
+        """Test example 2 where all words share common letters."""
         self.assertEqual(max_product(["a", "aa", "aaa", "aaaa"]), 0)
 
     def test_example_3(self) -> None:
+        """Test example 3 with words meet, app, code, sky, bold."""
         self.assertEqual(max_product(["meet", "app", "code", "sky", "bold"]), 16)
 
     def test_example_4(self) -> None:
+        """Test example 4 with growing words."""
         self.assertEqual(max_product(["a", "ab", "abc", "abcd", "efghi"]), 20)
 
     def test_example_5(self) -> None:
+        """Test example 5 with various combinations."""
         self.assertEqual(max_product(["xyz", "w", "abcdefg", "hij"]), 21)
 
 
