@@ -21,9 +21,11 @@ class HammingDistanceExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with ints = (4, 14, 2)."""
         self.assertEqual(hamming_distance_sum((4, 14, 2)), 6)
 
     def test_example_2(self) -> None:
+        """Test example 2 with ints = (4, 14, 4)."""
         self.assertEqual(hamming_distance_sum((4, 14, 4)), 4)
 
 
