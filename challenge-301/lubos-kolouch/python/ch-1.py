@@ -32,9 +32,11 @@ class LargestNumberExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with ints = (20, 3)."""
         self.assertEqual(largest_number((20, 3)), "320")
 
     def test_example_2(self) -> None:
+        """Test example 2 with ints = (3, 30, 34, 5, 9)."""
         self.assertEqual(largest_number((3, 30, 34, 5, 9)), "9534330")
 
 
