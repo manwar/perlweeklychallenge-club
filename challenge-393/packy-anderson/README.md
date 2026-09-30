@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Go hang a salami, I'm a lasagna hog!](https://packy.dardan.com/b/zw)
+[Perl Weekly Challenge: The Water Fell on the Floor!](https://packy.dardan.com/b/10A)
