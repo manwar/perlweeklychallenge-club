@@ -42,12 +42,15 @@ class BeautifulArrangementExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with n = 2."""
         self.assertEqual(beautiful_arrangements(2), 2)
 
     def test_example_2(self) -> None:
+        """Test example 2 with n = 1."""
         self.assertEqual(beautiful_arrangements(1), 1)
 
     def test_example_3(self) -> None:
+        """Test example 3 with n = 10."""
         self.assertEqual(beautiful_arrangements(10), 700)
 
 

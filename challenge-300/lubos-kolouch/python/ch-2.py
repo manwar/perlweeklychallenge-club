@@ -45,9 +45,11 @@ class NestedArrayExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with ints = (5, 4, 0, 3, 1, 6, 2)."""
         self.assertEqual(nested_array_max((5, 4, 0, 3, 1, 6, 2)), 4)
 
     def test_example_2(self) -> None:
+        """Test example 2 with ints = (0, 1, 2)."""
         self.assertEqual(nested_array_max((0, 1, 2)), 1)
 
 
