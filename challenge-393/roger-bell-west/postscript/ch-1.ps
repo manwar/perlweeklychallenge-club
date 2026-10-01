@@ -1,0 +1,79 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/pythagorasmultiplied {
+    0 dict begin
+    /n exch def
+    0
+    5 1 n {
+        /c exch def
+        /csquared c c mul def
+        1 1 c 2 sub {
+            /a exch def
+            /asquared a a mul def
+            a 1 add 1 c 1 sub {
+                dup mul /bsquared exch def
+                /tot asquared bsquared add def
+                tot csquared gt {
+                    exit
+                } if
+                tot csquared eq {
+                    1 add
+                } if
+            } for
+        } for
+    } for
+    2 mul
+    end
+} bind def
+
+(pythagorasmultiplied) test.start
+20 pythagorasmultiplied 12 eq test
+7 pythagorasmultiplied 2 eq test
+1 pythagorasmultiplied 0 eq test
+15 pythagorasmultiplied 8 eq test
+30 pythagorasmultiplied 22 eq test
+test.end
