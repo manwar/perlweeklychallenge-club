@@ -1,38 +1,87 @@
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 3;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
 
-sub minimum_swaps {
-    my @ints = @_;
-    my $n    = scalar @ints;
+use Type::Params    qw(compile);
+use Types::Standard qw(ArrayRef Int);
+
+=pod
+
+=head1 NAME
+
+ch-2.pl - Semi-Ordered Permutation (WWC 297 Task 2)
+
+=head1 SYNOPSIS
+
+  perl ch-2.pl   # runs the embedded tests
+
+=head1 DESCRIPTION
+
+You are given a 0-indexed permutation of n integers nums.
+A permutation is called semi-ordered if the first number equals 1 and the last
+number equals n. You can make the permutation semi-ordered using adjacent swaps.
+Return the minimum number of adjacent swaps.
+
+=cut
+
+my $INTS_CHECK = compile( ArrayRef [Int] );
+
+sub minimum_swaps ($ints) {
+    ($ints) = $INTS_CHECK->($ints);
+    my $n = scalar @$ints;
+    return 0 if $n <= 1;
+
     my ( $pos1, $posn );
-
-    # Find positions of 1 and n
-    for my $i ( 0 .. $#ints ) {
-        $pos1 = $i if $ints[$i] == 1;
-        $posn = $i if $ints[$i] == $n;
+    for my $i ( 0 .. $#$ints ) {
+        $pos1 = $i if $ints->[$i] == 1;
+        $posn = $i if $ints->[$i] == $n;
     }
 
-    my $total_swaps;
+    die 'Permutation must contain 1 and n' if !defined $pos1 || !defined $posn;
+
     if ( $pos1 < $posn ) {
-        $total_swaps = $pos1 + ( $n - 1 - $posn );
+        return $pos1 + ( $n - 1 - $posn );
     }
     else {
-        $total_swaps = $pos1 + ( $n - 1 - $posn ) - 1;
+        return $pos1 + ( $n - 1 - $posn ) - 1;
     }
-
-    return $total_swaps;
 }
 
-# Unit Tests
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    die "CLI not implemented; run without args for tests\n";
+}
 
-# Test Example 1
-is( minimum_swaps( 2, 1, 4, 3 ), 2, 'Example 1' );
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
 
-# Test Example 2
-is( minimum_swaps( 2, 4, 1, 3 ), 3, 'Example 2' );
+    my @cases = (
+        { label => 'Example 1', ints => [ 2, 1, 4, 3 ],    expected => 2 },
+        { label => 'Example 2', ints => [ 2, 4, 1, 3 ],    expected => 3 },
+        { label => 'Example 3', ints => [ 1, 3, 2, 4, 5 ], expected => 0 },
+    );
 
-# Test Example 3
-is( minimum_swaps( 1, 3, 2, 4, 5 ), 0, 'Example 3' );
+    Test::More::plan( tests => scalar @cases );
+    for my $case (@cases) {
+        Test::More::is( minimum_swaps( $case->{ints} ), $case->{expected}, $case->{label} );
+    }
+}
 
-done_testing();
+_run_cli(@ARGV);
+
+=pod
+
+=head1 FUNCTIONS
+
+=head2 minimum_swaps($ints)
+
+Calculates the minimum number of adjacent swaps needed to make the permutation semi-ordered.
+
+=cut
