@@ -51,9 +51,9 @@ sub task($n)
 {
     my $count = 0;
 
-    for my $c (  1 .. $n )
+    for my $c (  5 .. $n )
     {
-        for my $a ( 1 .. floor(sqrt( ($c*$c -1) / 2)) )
+        for my $a ( 3 .. floor(sqrt( $c*$c - 16 )) )
         {
             for my $b ( $a+1 .. floor(sqrt($c*$c - $a*$a) ))
             {

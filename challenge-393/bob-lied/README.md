@@ -4,4 +4,4 @@
 
 - [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-393/bob-lied)
 
-- [Blog](https://dev.to/boblied/)
+- [Blog](https://dev.to/boblied/pwc-393-triangles-and-primes-4fej)

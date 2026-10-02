@@ -61,7 +61,7 @@ sub task($str)
         my $p = prev_prime($s);
         my $n = next_prime($s);
         $logger->debug("$p -- $s -- $n");
-        return min( abs($s-prev_prime($s)), abs($s-next_prime($s)) );
+        return min( $s-$p, $n-$s );
     }
 }
 
