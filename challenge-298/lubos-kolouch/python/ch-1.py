@@ -40,6 +40,7 @@ class MaximalSquareExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1."""
         matrix = (
             (1, 0, 1, 0, 0),
             (1, 0, 1, 1, 1),
@@ -49,9 +50,11 @@ class MaximalSquareExamples(unittest.TestCase):
         self.assertEqual(maximal_square_area(matrix), 4)
 
     def test_example_2(self) -> None:
+        """Test example 2."""
         self.assertEqual(maximal_square_area(((0, 1), (1, 0))), 1)
 
     def test_example_3(self) -> None:
+        """Test example 3."""
         self.assertEqual(maximal_square_area(((0,),)), 0)
 
 
