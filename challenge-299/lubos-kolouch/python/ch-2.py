@@ -53,6 +53,7 @@ class WordSearchExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 finding BDCA in the grid."""
         grid = (
             ("A", "B", "D", "E"),
             ("C", "B", "C", "A"),
@@ -62,6 +63,7 @@ class WordSearchExamples(unittest.TestCase):
         self.assertTrue(word_search(grid, "BDCA"))
 
     def test_example_2(self) -> None:
+        """Test example 2 where ABAC cannot be formed."""
         grid = (
             ("A", "A", "B", "B"),
             ("C", "C", "B", "A"),
@@ -71,6 +73,7 @@ class WordSearchExamples(unittest.TestCase):
         self.assertFalse(word_search(grid, "ABAC"))
 
     def test_example_3(self) -> None:
+        """Test example 3 finding CCCAA in the grid."""
         grid = (
             ("B", "A", "B", "A"),
             ("C", "C", "C", "C"),

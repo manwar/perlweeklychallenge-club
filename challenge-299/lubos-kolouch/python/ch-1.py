@@ -26,18 +26,24 @@ class ReplaceWordsExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1 with cat, bat, rat."""
         self.assertEqual(
-            replace_words(("cat", "bat", "rat"), "the cattle was rattle by the battery"),
+            replace_words(
+                ("cat", "bat", "rat"),
+                "the cattle was rattle by the battery",
+            ),
             "the cat was rat by the bat",
         )
 
     def test_example_2(self) -> None:
+        """Test example 2 with single-character roots."""
         self.assertEqual(
             replace_words(("a", "b", "c"), "aab aac and cac bab"),
             "a a a c b",
         )
 
     def test_example_3(self) -> None:
+        """Test example 3 with man and bike."""
         self.assertEqual(
             replace_words(("man", "bike"), "the manager was hit by a biker"),
             "the man was hit by a bike",
@@ -51,7 +57,7 @@ def main(argv: Sequence[str] | None = None) -> None:
         unittest.main(argv=[sys.argv[0]])
         return
     if len(args) != 2:
-        raise SystemExit("Usage: python3 ch-1.py \"word1 word2 ...\" \"sentence\"")
+        raise SystemExit('Usage: python3 ch-1.py "word1 word2 ..." "sentence"')
 
     words = args[0].split()
     sentence = args[1]
