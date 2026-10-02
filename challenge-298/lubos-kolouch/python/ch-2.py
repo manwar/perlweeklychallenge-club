@@ -31,15 +31,19 @@ class RightIntervalExamples(unittest.TestCase):
     """Example-based tests from the specification."""
 
     def test_example_1(self) -> None:
+        """Test example 1."""
         self.assertEqual(right_interval_indices(((3, 4), (2, 3), (1, 2))), [-1, 0, 1])
 
     def test_example_2(self) -> None:
+        """Test example 2."""
         self.assertEqual(right_interval_indices(((1, 4), (2, 3), (3, 4))), [-1, 2, -1])
 
     def test_example_3(self) -> None:
+        """Test example 3."""
         self.assertEqual(right_interval_indices(((1, 2),)), [-1])
 
     def test_example_4(self) -> None:
+        """Test example 4."""
         self.assertEqual(right_interval_indices(((1, 4), (2, 2), (3, 4))), [-1, 1, -1])
 
 
