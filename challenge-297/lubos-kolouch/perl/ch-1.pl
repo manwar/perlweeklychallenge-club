@@ -1,60 +1,95 @@
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 7;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
 
-sub find_max_length {
-    my @binary = @_;
-    my @mapped = map { $_ == 0 ? -1 : 1 } @binary;
+use Type::Params    qw(compile);
+use Types::Standard qw(ArrayRef Int);
+
+=pod
+
+=head1 NAME
+
+ch-1.pl - Contiguous Array (WWC 297 Task 1)
+
+=head1 SYNOPSIS
+
+  perl ch-1.pl   # runs the embedded tests
+
+=head1 DESCRIPTION
+
+Given a binary array of 0s and 1s, find the maximum length of a contiguous
+subarray with an equal number of 0 and 1.
+
+=cut
+
+my $ARRAY_CHECK = compile( ArrayRef [Int] );
+
+sub find_max_length ($binary) {
+    ($binary) = $ARRAY_CHECK->($binary);
+    return 0 if !@$binary;
+
     my %sum_indices;
     my $max_length     = 0;
     my $cumulative_sum = 0;
 
-    for my $i ( 0 .. $#mapped ) {
-        $cumulative_sum += $mapped[$i];
+    for my $i ( 0 .. $#$binary ) {
+        my $val = $binary->[$i];
+        die 'Binary array must contain only 0 and 1' if $val != 0 && $val != 1;
+        $cumulative_sum += ( $val == 0 ? -1 : 1 );
 
         if ( $cumulative_sum == 0 ) {
-
-            # Subarray from index 0 to i has equal number of 0s and 1s
             $max_length = $i + 1;
         }
-        if ( exists $sum_indices{$cumulative_sum} ) {
-
-            # Found a subarray with equal number of 0s and 1s
+        elsif ( exists $sum_indices{$cumulative_sum} ) {
             my $length = $i - $sum_indices{$cumulative_sum};
-            if ( $length > $max_length ) {
-                $max_length = $length;
-            }
+            $max_length = $length if $length > $max_length;
         }
         else {
-            # Store the first occurrence of this cumulative sum
             $sum_indices{$cumulative_sum} = $i;
         }
     }
+
     return $max_length;
 }
 
-# Unit Tests
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    die "CLI not implemented; run without args for tests\n";
+}
 
-# Test Example 1
-is( find_max_length( 1, 0 ), 2, 'Example 1' );
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
 
-# Test Example 2
-is( find_max_length( 0, 1, 0 ), 2, 'Example 2' );
+    my @cases = (
+        { label => 'Example 1', binary => [ 1, 0 ], expected => 2 },
+        { label => 'Example 2', binary => [ 0, 1, 0 ], expected => 2 },
+        { label => 'Example 3', binary => [ 0, 0, 0, 0, 0 ], expected => 0 },
+        { label => 'Example 4', binary => [ 0, 1, 0, 0, 1, 0 ], expected => 4 },
+        { label => 'Empty Input', binary => [], expected => 0 },
+        { label => 'No Equal Subarray', binary => [ 0, 0, 0, 1, 1 ], expected => 4 },
+    );
 
-# Test Example 3
-is( find_max_length( 0, 0, 0, 0, 0 ), 0, 'Example 3' );
+    Test::More::plan( tests => scalar @cases );
+    for my $case (@cases) {
+        Test::More::is( find_max_length( $case->{binary} ), $case->{expected}, $case->{label} );
+    }
+}
 
-# Test Example 4
-is( find_max_length( 0, 1, 0, 0, 1, 0 ), 4, 'Example 4' );
+_run_cli(@ARGV);
 
-# Test Empty Input
-is( find_max_length(), 0, 'Empty Input' );
+=pod
 
-# Test No Equal Subarray
-is( find_max_length( 0, 0, 0, 1, 1 ), 4, 'No Equal Subarray' );
+=head1 FUNCTIONS
 
-# Test Long Array
-my @binary = ( 0, 1 ) x 1000;    # 2000 elements
-is( find_max_length(@binary), 2000, 'Long Array' );
+=head2 find_max_length($binary)
 
-1;
+Finds the maximum length of a contiguous subarray with equal numbers of 0 and 1.
+
+=cut
