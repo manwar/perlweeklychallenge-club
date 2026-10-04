@@ -52,7 +52,6 @@ say prime_step(shift);
 
 sub prime_step {
     my $csum = vecsum map ord, split //, shift;
-    say "csum=$csum";
     is_prime($csum) ?
         0 :
         vecmin $csum - prev_prime($csum), next_prime($csum) - $csum;
