@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 392 by Bob Lied
+# Solutions to weekly challenge 393 by Bob Lied
 
-- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-392/)
+- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-393/)
 
-- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-392/bob-lied)
+- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-393/bob-lied)
 
-- [Blog](https://dev.to/boblied/pwc-391-median-boxes-27o4)
+- [Blog](https://dev.to/boblied/pwc-393-triangles-and-primes-4fej)
