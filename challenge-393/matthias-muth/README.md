@@ -53,7 +53,7 @@ Triples of positive integers $(a, b, c)$ with $a^2+b^2=c^2$ are called *Pythagor
 
 While reading about this type of triples on [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_triple), I came across  *[Euclid's Formula](https://en.wikipedia.org/wiki/Pythagorean_triple#Generating_a_triple)*, which states that for any positive integers $m$ and $n$ with  $m > n > 0$,
 
-$\quad ( m^2 - n^2,\, 2 m n,\, m^2 + n ^2 )$
+$\quad ( m^2 - n^2, \text{ } 2 m n, \text{ } m^2 + n ^2 )$
 
 is a Pythagorean triple.
 

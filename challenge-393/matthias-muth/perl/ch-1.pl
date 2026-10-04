@@ -22,7 +22,7 @@ use v5.36;
 
 use Math::Prime::Util qw( gcd );
 
-sub pythagoras_multiplied( $limit ) {
+sub pythagoras_multiplied_euclid( $limit ) {
     my $count = 0;
     # For any m, a lower bound for the hypotenuse is m² + 1.
     # End the loop if that exceeds the limit.
@@ -60,7 +60,7 @@ sub pythagoras_multiplied( $limit ) {
 # Therefore, ( a, b ) and ( b, a ) are always distinct solutions, and we can
 # always count both.
 
-sub pythagoras_multiplied_souble_loop( $n ) {
+sub pythagoras_multiplied( $n ) {
     my $count = 0;
     for my $c ( 5..$n ) {
         my $c_squared = $c * $c;
