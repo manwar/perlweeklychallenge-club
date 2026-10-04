@@ -1,3 +1,3 @@
-# The Weekly Challenge 392
+# The Weekly Challenge 393
 
-Blog: [The palindromic length](https://dev.to/simongreennet/weekly-challenge-the-palindromic-length-299i)
+Blog: [Pythagoras Prime](https://dev.to/simongreennet/weekly-challenge-pythagoras-prime-32ko)
