@@ -11,9 +11,9 @@ sub avc(@str is copy)
 {
     @str .= sort(-*.chars);
 
-    my $v =  /<[aeiou]>/;
-    my $c = /<-[aeiou]>/;
-    my %m = (@str.pop ~~ m:ex/[$c? [$v$c]+ $v?] | $c$v/).classify(*.chars).Map;
+    my $v        =  /<[aeiou]>/;
+    my $c        = /<-[aeiou]>/;
+    my %m is Map = (@str.pop ~~ m:ex/[$c? [$v$c]+ $v?] | $c$v/).classify(*.chars);
 
     for %m.keys.sort(-*) -> $k
     {
