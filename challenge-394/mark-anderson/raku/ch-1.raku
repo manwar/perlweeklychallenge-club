@@ -13,9 +13,8 @@ sub alternate-case($str is copy)
                                                [(<:Lu>) (<:Ll>) <:!Lu>] || 
                                                [(<:Ll>) (<:Lu>) <:!Ll>] 
                                            ]  
-                              
                                       / -> ($a,$b)
     {
-        take $str ~~ s:c($a.from)/$a$b/$b$a/;
+        take $str ~~ s:c($a.from)/$a$b/$b$a/
     }    
 }
