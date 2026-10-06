@@ -19,8 +19,7 @@ sub avc(@str is copy)
     {
         .return if .elems given gather for flat %m{$k} -> $s
         { 
-            take ~$s if all @str.head.contains($s), 
-                            @str.tail.contains($s) 
+            take ~$s if @str.all.contains($s) 
         }
     }
 }
