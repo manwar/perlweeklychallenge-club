@@ -1,42 +1,39 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Matchstick Square - Perl Weekly Challenge 296 task 2."""
 
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
 import unittest
 
 
-def can_form_square(nums: list[int]) -> bool:
-    """
-    Determines if it's possible to form a square using all the sticks provided in the list,
-    where each stick's length is given, and each side of the square is formed
-    by combining one or more sticks.
+def can_form_square(nums: Sequence[int]) -> bool:
+    """Determine if it is possible to form a square using all sticks."""
+    if len(nums) < 4:
+        return False
 
-    Args:
-        nums (List[int]): List of integers representing stick lengths.
-
-    Returns:
-        bool: True if it's possible to form a square, False otherwise.
-    """
     total_length = sum(nums)
     if total_length % 4 != 0:
         return False
 
     target_side_length = total_length // 4
+    sticks = sorted(nums, reverse=True)
 
-    nums.sort(reverse=True)
-
-    if nums[0] > target_side_length:
+    if sticks[0] > target_side_length:
         return False
 
     sides = [0] * 4
 
     def dfs(index: int) -> bool:
-        if index == len(nums):
+        if index == len(sticks):
             return all(side == target_side_length for side in sides)
         for i in range(4):
-            if sides[i] + nums[index] <= target_side_length:
-                sides[i] += nums[index]
+            if sides[i] + sticks[index] <= target_side_length:
+                sides[i] += sticks[index]
                 if dfs(index + 1):
                     return True
-                sides[i] -= nums[index]
+                sides[i] -= sticks[index]
             if sides[i] == 0:
                 break
         return False
@@ -44,27 +41,39 @@ def can_form_square(nums: list[int]) -> bool:
     return dfs(0)
 
 
-# Unit Tests
-
-
 class TestMatchstickSquare(unittest.TestCase):
+    """Unit tests for can_form_square."""
 
-    def test_example1(self):
-        self.assertTrue(can_form_square([1, 2, 2, 2, 1]), 'Example 1')
+    def test_example1(self) -> None:
+        """Test example 1."""
+        self.assertTrue(can_form_square([1, 2, 2, 2, 1]))
 
-    def test_example2(self):
-        self.assertFalse(can_form_square([2, 2, 2, 4]), 'Example 2')
+    def test_example2(self) -> None:
+        """Test example 2."""
+        self.assertFalse(can_form_square([2, 2, 2, 4]))
 
-    def test_example3(self):
-        self.assertFalse(can_form_square([2, 2, 2, 2, 4]), 'Example 3')
+    def test_example3(self) -> None:
+        """Test example 3."""
+        self.assertFalse(can_form_square([2, 2, 2, 2, 4]))
 
-    def test_example4(self):
-        self.assertTrue(can_form_square([3, 4, 1, 4, 3, 1]), 'Example 4')
+    def test_example4(self) -> None:
+        """Test example 4."""
+        self.assertTrue(can_form_square([3, 4, 1, 4, 3, 1]))
 
-    def test_additional(self):
-        self.assertTrue(can_form_square([1, 1, 2, 2, 2]), 'Additional Test - True')
-        self.assertFalse(can_form_square([3, 3, 3, 3, 4]), 'Additional Test - False')
+    def test_additional_true(self) -> None:
+        """Test additional case returning true."""
+        self.assertTrue(can_form_square([1, 1, 2, 2, 2]))
+
+    def test_additional_false(self) -> None:
+        """Test additional case returning false."""
+        self.assertFalse(can_form_square([3, 3, 3, 3, 4]))
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    _ = argv
+    unittest.main(argv=[sys.argv[0]])
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

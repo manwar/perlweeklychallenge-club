@@ -1,35 +1,38 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 4;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
+
+use Type::Params    qw(compile);
+use Types::Standard qw(ArrayRef Int);
 
 =pod
 
+=head1 NAME
+
+ch-2.pl - Matchstick Square (WWC 296 Task 2)
+
+=head1 SYNOPSIS
+
+  perl ch-2.pl   # runs the embedded tests
+
 =head1 DESCRIPTION
 
-This script determines if it's possible to form a square using all the sticks provided in an array, where each stick's length is given, and each side of the square is formed by combining one or more sticks.
-
-=head1 FUNCTIONS
-
-=head2 can_form_square(\@ints)
-
-Given an array reference of integers representing stick lengths, returns 'true' if it's possible to form a square using all sticks, 'false' otherwise.
-
-=over 4
-
-=item * C<\@ints> - Reference to an array of integers (stick lengths).
-
-=back
-
-Returns 'true' or 'false'.
+This script determines if it's possible to form a square using all the sticks provided
+in an array, where each stick's length is given, and each side of the square is formed
+by combining one or more sticks.
 
 =cut
 
-sub can_form_square {
-    my ($ints_ref) = @_;
-    my @sticks = @$ints_ref;
+my $INTS_CHECK = compile( ArrayRef [Int] );
 
-    # Total length must be divisible by 4
+sub can_form_square ($sticks_ref) {
+    ($sticks_ref) = $INTS_CHECK->($sticks_ref);
+    my @sticks = @$sticks_ref;
+    return 'false' if @sticks < 4;
+
     my $total_length = 0;
     $total_length += $_ for @sticks;
 
@@ -37,24 +40,18 @@ sub can_form_square {
 
     my $side_length = $total_length / 4;
 
-    # Sort sticks in descending order to optimize
+    # Sort sticks in descending order to optimize pruning
     @sticks = sort { $b <=> $a } @sticks;
 
-    # Early rejection if any stick is longer than the side length
     return 'false' if $sticks[0] > $side_length;
 
-    # Initialize sides
     my @sides = ( 0, 0, 0, 0 );
-
     return _dfs( \@sticks, 0, \@sides, $side_length ) ? 'true' : 'false';
 }
 
-sub _dfs {
-    my ( $sticks_ref, $index, $sides_ref, $target ) = @_;
+sub _dfs ( $sticks_ref, $index, $sides_ref, $target ) {
     if ( $index == @$sticks_ref ) {
-
-        # Check if all sides are equal to target
-        foreach my $side (@$sides_ref) {
+        for my $side (@$sides_ref) {
             return 0 if $side != $target;
         }
         return 1;
@@ -70,7 +67,7 @@ sub _dfs {
             $sides_ref->[$i] -= $stick;
         }
 
-        # If the side is 0, no need to try other sides at this level
+        # If the side is 0, no need to try other empty sides at this level
         if ( $sides_ref->[$i] == 0 ) {
             last;
         }
@@ -78,10 +75,39 @@ sub _dfs {
     return 0;
 }
 
-# Unit Tests
-is( can_form_square( [ 1, 2, 2, 2, 1 ] ),    'true',  'Example 1' );
-is( can_form_square( [ 2, 2, 2, 4 ] ),       'false', 'Example 2' );
-is( can_form_square( [ 2, 2, 2, 2, 4 ] ),    'false', 'Example 3' );
-is( can_form_square( [ 3, 4, 1, 4, 3, 1 ] ), 'true',  'Example 4' );
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    die "CLI not implemented; run without args for tests\n";
+}
 
-done_testing();
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
+
+    my @cases = (
+        { label => 'Example 1', sticks => [ 1, 2, 2, 2, 1 ],    expected => 'true' },
+        { label => 'Example 2', sticks => [ 2, 2, 2, 4 ],       expected => 'false' },
+        { label => 'Example 3', sticks => [ 2, 2, 2, 2, 4 ],    expected => 'false' },
+        { label => 'Example 4', sticks => [ 3, 4, 1, 4, 3, 1 ], expected => 'true' },
+    );
+
+    Test::More::plan( tests => scalar @cases );
+    for my $case (@cases) {
+        Test::More::is( can_form_square( $case->{sticks} ), $case->{expected}, $case->{label} );
+    }
+}
+
+_run_cli(@ARGV);
+
+=pod
+
+=head1 FUNCTIONS
+
+=head2 can_form_square(\@ints)
+
+Returns 'true' if it's possible to form a square using all sticks, 'false' otherwise.
+
+=cut

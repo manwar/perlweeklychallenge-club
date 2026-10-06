@@ -1,9 +1,22 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 6;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
+
+use Type::Params    qw(compile);
+use Types::Standard qw(Str);
 
 =pod
+
+=head1 NAME
+
+ch-1.pl - String Compression and Decompression (WWC 296 Task 1)
+
+=head1 SYNOPSIS
+
+  perl ch-1.pl   # runs the embedded tests
 
 =head1 DESCRIPTION
 
@@ -17,28 +30,17 @@ For compression:
 For decompression:
 - Expand the compressed string back to its original form.
 
-=head1 FUNCTIONS
-
-=head2 compress_string($chars)
-
-Compresses the input string using run-length encoding as per the problem statement.
-
-=over 4
-
-=item * C<$chars> - The input string consisting of alphabetic characters.
-
-=back
-
-Returns the compressed string.
-
 =cut
 
-sub compress_string {
-    my ($chars)    = @_;
+my $STR_CHECK = compile(Str);
+
+sub compress_string ($chars) {
+    ($chars) = $STR_CHECK->($chars);
     my $compressed = '';
     my @chars      = split //, $chars;
     my $i          = 0;
-    my $n          = @chars;
+    my $n          = scalar @chars;
+
     while ( $i < $n ) {
         my $current_char = $chars[$i];
         my $count        = 1;
@@ -57,30 +59,15 @@ sub compress_string {
     return $compressed;
 }
 
-=head2 decompress_string($compressed)
-
-Decompresses the compressed string back to its original form.
-
-=over 4
-
-=item * C<$compressed> - The compressed string.
-
-=back
-
-Returns the original uncompressed string.
-
-=cut
-
-sub decompress_string {
-    my ($compressed) = @_;
+sub decompress_string ($compressed) {
+    ($compressed) = $STR_CHECK->($compressed);
     my $decompressed = '';
     my @chars        = split //, $compressed;
     my $i            = 0;
-    my $n            = @chars;
+    my $n            = scalar @chars;
+
     while ( $i < $n ) {
         if ( $chars[$i] =~ /\d/ ) {
-
-            # Collect the full number (in case of multiple digits)
             my $count = '';
             while ( $i < $n && $chars[$i] =~ /\d/ ) {
                 $count .= $chars[$i];
@@ -98,13 +85,51 @@ sub decompress_string {
     return $decompressed;
 }
 
-# Unit Tests
-is( compress_string("abbc"),    "a2bc",  'Example 1 Compression' );
-is( compress_string("aaabccc"), "3ab3c", 'Example 2 Compression' );
-is( compress_string("abcc"),    "ab2c",  'Example 3 Compression' );
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    die "CLI not implemented; run without args for tests\n";
+}
 
-is( decompress_string("a2bc"),  "abbc",    'Example 1 Decompression' );
-is( decompress_string("3ab3c"), "aaabccc", 'Example 2 Decompression' );
-is( decompress_string("ab2c"),  "abcc",    'Example 3 Decompression' );
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
 
-done_testing();
+    my @compress_cases = (
+        { label => 'Example 1 Compression', in => 'abbc',    expected => 'a2bc' },
+        { label => 'Example 2 Compression', in => 'aaabccc', expected => '3ab3c' },
+        { label => 'Example 3 Compression', in => 'abcc',    expected => 'ab2c' },
+    );
+
+    my @decompress_cases = (
+        { label => 'Example 1 Decompression', in => 'a2bc',  expected => 'abbc' },
+        { label => 'Example 2 Decompression', in => '3ab3c', expected => 'aaabccc' },
+        { label => 'Example 3 Decompression', in => 'ab2c',  expected => 'abcc' },
+    );
+
+    Test::More::plan( tests => scalar( @compress_cases + @decompress_cases ) );
+    for my $case (@compress_cases) {
+        Test::More::is( compress_string( $case->{in} ), $case->{expected}, $case->{label} );
+    }
+    for my $case (@decompress_cases) {
+        Test::More::is( decompress_string( $case->{in} ), $case->{expected}, $case->{label} );
+    }
+}
+
+_run_cli(@ARGV);
+
+=pod
+
+=head1 FUNCTIONS
+
+=head2 compress_string($chars)
+
+Compresses the input string using run-length encoding.
+
+=head2 decompress_string($compressed)
+
+Decompresses the compressed string back to its original form.
+
+=cut
