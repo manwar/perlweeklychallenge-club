@@ -62,19 +62,19 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-   use v5.36;
-   use utf8::all;
+   use v5.40;
+   use Math::Prime::Util 'gcd';
 
-   # Given a positive integer i, return all unique
-   # lowest-form fractions n/m (for n, m in 1..i)
-   # in increasing numeric order:
+   # Given a positive integer i, return all unique lowest-form
+   # fractions n/m (for n, m in 1..i) in increasing numeric order:
    sub unique_fractions ( $i ) {
       return () if $i !~ m/^[1-9]\d*$/;
       my @fractions;
       foreach    my $n (1..$i) {
          foreach my $m (1..$i) {
-            push @fractions, [$n,$m]
-            if 1==$n || 1==$m || (0!=$n%$m && 0!=$m%$n)
+            if ( 1 == gcd($n, $m) ) {
+               push @fractions, [$n,$m];
+            }
          }
       }
       sort {$a->[0]/$a->[1] <=> $b->[0]/$b->[1]} @fractions;
