@@ -21,11 +21,11 @@ for(@ARGV){
 sub fragments($word, $rest){
     my @frags;
     for my $start(0..length($word)-1){
-	for my $length(1..length($word) - $start){
-	    my $frag = substr $word, $start, $length;
-	    next unless $frag=~/^[^$vowels]?([$vowels][^$vowels])*[$vowels]?$/;
-	    push @frags, $frag if grep {m/$frag/} @$rest;
-	}
+        for my $length(1..length($word) - $start){
+            my $frag = substr $word, $start, $length;
+            next unless $frag=~/^[^$vowels]?([$vowels][^$vowels])*[$vowels]?$/;
+            push @frags, $frag if grep {m/$frag/} @$rest;
+        }
     }
     return [@frags];
 }
