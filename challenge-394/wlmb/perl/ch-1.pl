@@ -14,20 +14,26 @@ die <<~"FIN" unless @ARGV;
     FIN
 for(@ARGV){
     try {
-	my $in=$_;
-	die "Expected even sized string: $in" unless length($_) % 2 == 0;
-	die "Extraneous character found: $in" unless /^[A-Za-z]*$/;
-	s/[A-Z]/0/g;
-	s/[a-z]/1/g;
-	my $sum=(my $test=$_)=~tr/1/x/;
-	die "Unbalanced string: $in" unless $sum*2 == length;
-	my $count=0;
-	++$count while
-	    s/011|110/101/
+        my $in=$_;
+        die "Expected even sized string: $in" unless length($_) % 2 == 0;
+        die "Extraneous character found: $in" unless /^[A-Za-z]*$/;
+        s/[A-Z]/0/g;
+        s/[a-z]/1/g;
+        my $sum=(my $test=$_)=~tr/1/x/;
+        die "Unbalanced string: $in" unless $sum*2 == length;
+        my $count=0;
+        ++$count while
+	       s/0011/0101/
+	    || s/^011/101/
+	    || s/001$/010/
+	    || s/1100/1010/
+	    || s/^100/010/
+	    || s/110$/010/
+	    || s/011|110/101/
 	    || s/100|001/010/;
-	say "$in -> $count";
+        say "$in -> $count";
     }
     catch($e){
-	warn $e;
+        warn $e;
     }
 }
