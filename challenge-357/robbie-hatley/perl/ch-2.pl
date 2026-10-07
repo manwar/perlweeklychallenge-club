@@ -44,16 +44,15 @@ Output: 1/5, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 4/5, 1/1,
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-We need only include integers (n/1), minimal fractions (1/m), and lowest-form fractions (n/m where
-0!=n%m and 0!=m%n), because due to the way the problem is written, if a non-lowest fraction n/m exists,
-its lowest form will also.
+I simply generate all possible fractions with numerator n and denominator m in the stated range,
+then print the ones where are in lowest form (1 == gcd(n,m)).
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
-Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
-single-quoted array of positive integers, in proper Perl syntax, like so:
+Input is via either built-in variables or via @ARGV. If using @ARGV, provide one-or-more arguments which must
+be positive integers, like so:
 
-./ch-2.pl '(8,9,10,11)'
+./ch-2.pl 8 9 10 11
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
@@ -62,19 +61,19 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-   use v5.36;
-   use utf8::all;
+   use v5.40;
+   use Math::Prime::Util 'gcd';
 
-   # Given a positive integer i, return all unique
-   # lowest-form fractions n/m (for n, m in 1..i)
-   # in increasing numeric order:
+   # Given a positive integer i, return all unique lowest-form
+   # fractions n/m (for n, m in 1..i) in increasing numeric order:
    sub unique_fractions ( $i ) {
       return () if $i !~ m/^[1-9]\d*$/;
       my @fractions;
       foreach    my $n (1..$i) {
          foreach my $m (1..$i) {
-            push @fractions, [$n,$m]
-            if 1==$n || 1==$m || (0!=$n%$m && 0!=$m%$n)
+            if ( 1 == gcd($n, $m) ) {
+               push @fractions, [$n,$m];
+            }
          }
       }
       sort {$a->[0]/$a->[1] <=> $b->[0]/$b->[1]} @fractions;
@@ -82,7 +81,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
-my @ints = @ARGV ? eval($ARGV[0]) :
+my @ints = @ARGV ? @ARGV :
 (
    # Example 1 input:
    3,
