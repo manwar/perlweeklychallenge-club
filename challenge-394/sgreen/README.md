@@ -1,3 +1,3 @@
-# The Weekly Challenge 393
+# The Weekly Challenge 394
 
-Blog: [Pythagoras Prime](https://dev.to/simongreennet/weekly-challenge-pythagoras-prime-32ko)
+Blog: [The one about alternating](https://dev.to/simongreennet/weekly-challenge-the-one-about-alternating-2agf)
