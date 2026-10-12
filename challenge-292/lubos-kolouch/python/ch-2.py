@@ -1,132 +1,100 @@
-import re
+#!/usr/bin/env python3
+"""Zuma Game - Perl Weekly Challenge 292 task 2."""
+
+from __future__ import annotations
+
 from collections import deque
-from typing import Dict, Set, Tuple, List
+from collections.abc import Sequence
+import re
+import sys
+import unittest
 
 
 def eliminate(board: str) -> str:
-    """
-    Eliminates consecutive groups of three or more identical balls from the board.
-    Repeats the process until no more eliminations can occur.
-
-    Args:
-        board (str): The current state of the board.
-
-    Returns:
-        str: The board after all possible eliminations.
-    """
-    pattern = re.compile(r'(.)\1{2,}')
+    """Eliminate consecutive groups of three or more identical balls from the board."""
+    pattern = re.compile(r"(.)\1{2,}")
     changed = True
     while changed:
-        # Substitute sequences of 3 or more identical balls with an empty string
-        board, num_subs = pattern.subn('', board)
+        board, num_subs = pattern.subn("", board)
         changed = num_subs > 0
     return board
 
 
 def find_min_steps(board: str, hand: str) -> int:
-    """
-    Finds the minimum number of balls to insert into the board to clear it, using the balls in hand.
-
-    Args:
-        board (str): The initial state of the board.
-        hand (str): The balls available to insert.
-
-    Returns:
-        int: The minimum number of insertions needed to clear the board, or -1 if impossible.
-    """
-    # Initialize hand counts
-    hand_counts: Dict[str, int] = {}
+    """Find minimum number of balls to insert from hand to clear board, or -1."""
+    hand_counts: dict[str, int] = {}
     for c in hand:
         hand_counts[c] = hand_counts.get(c, 0) + 1
 
-    # Initialize queue for BFS
-    queue: deque[Tuple[str, Dict[str, int], int]] = deque()
+    queue: deque[tuple[str, dict[str, int], int]] = deque()
     queue.append((board, hand_counts.copy(), 0))
 
-    # Visited states
-    visited: Set[Tuple[str, Tuple[Tuple[str, int], ...]]] = set()
+    visited: set[tuple[str, tuple[tuple[str, int], ...]]] = set()
 
     while queue:
         current_board, current_hand, steps = queue.popleft()
 
-        # If the board is empty, return the number of steps
         if not current_board:
             return steps
 
-        # Generate a unique key for the current state
-        # Using tuple of sorted items in current_hand for hashability
         hand_key = tuple(sorted(current_hand.items()))
         state_key = (current_board, hand_key)
 
-        # Skip if we've already visited this state
         if state_key in visited:
             continue
         visited.add(state_key)
 
-        # Try inserting each ball in hand at each position
         for i in range(len(current_board) + 1):
-            for color in current_hand.keys():
-                if current_hand[color] == 0:
+            for color in sorted(current_hand.keys()):
+                if current_hand[color] <= 0:
                     continue
 
-                # Insert the ball
                 new_board = current_board[:i] + color + current_board[i:]
-
-                # Eliminate balls
                 new_board = eliminate(new_board)
 
-                # Decrease the hand count
                 new_hand = current_hand.copy()
                 new_hand[color] -= 1
                 if new_hand[color] == 0:
                     del new_hand[color]
 
-                # Prepare the new state
-                new_steps = steps + 1
-
-                # Generate a unique key for the new state
                 new_hand_key = tuple(sorted(new_hand.items()))
                 new_state_key = (new_board, new_hand_key)
 
-                # Skip if we've already visited this state
                 if new_state_key in visited:
                     continue
 
-                # Enqueue the new state
-                queue.append((new_board, new_hand, new_steps))
+                queue.append((new_board, new_hand, steps + 1))
 
-    # If we cannot clear the board
     return -1
 
 
-if __name__ == "__main__":
-    # Test cases
-    tests: List[Dict[str, any]] = [
-        {
-            'board': "WRRBBW",
-            'hand': "RB",
-            'expected': -1
-        },
-        {
-            'board': "WWRRBBWW",
-            'hand': "WRBRW",
-            'expected': 2
-        },
-        {
-            'board': "G",
-            'hand': "GGGGG",
-            'expected': 2
-        },
-        {
-            'board': "RBYYBBRRB",
-            'hand': "YRBGB",
-            'expected': 3
-        },
-    ]
+class TestZumaGame(unittest.TestCase):
+    """Unit tests for find_min_steps."""
 
-    for test in tests:
-        result = find_min_steps(test['board'], test['hand'])
-        print(f"Input: board = \"{test['board']}\", hand = \"{test['hand']}\"")
-        print(f"Output: {result}")
-        print(f"Expected: {test['expected']}")
-        print("-" * 40)
+    def test_example1(self) -> None:
+        """Test example 1."""
+        self.assertEqual(find_min_steps("WRRBBW", "RB"), -1)
+
+    def test_example2(self) -> None:
+        """Test example 2."""
+        self.assertEqual(find_min_steps("WWRRBBWW", "WRBRW"), 2)
+
+    def test_example3(self) -> None:
+        """Test example 3."""
+        self.assertEqual(find_min_steps("G", "GGGGG"), 2)
+
+    def test_example4(self) -> None:
+        """Test example 4."""
+        self.assertEqual(find_min_steps("RBYYBBRRB", "YRBGB"), 3)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) == 3:
+        print(f"Output: {find_min_steps(argv[1], argv[2])}")
+        return
+    unittest.main(argv=[sys.argv[0]])
+
+
+if __name__ == "__main__":
+    main(sys.argv)
