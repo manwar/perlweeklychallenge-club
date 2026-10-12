@@ -1,0 +1,69 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 188
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2022-10-27
+
+
+
+
+
+1 Task 1 - Divisible Pairs
+══════════════════════════
+
+  You are given list of integers @list of size $n and divisor $k.
+
+  Write a script to find out count of pairs in the given list that
+  satisfies the following rules.
+
+  The pair (i, j) is eligible if and only if a) 0 <= i < j < len(list)
+  b) list[i] + list[j] is divisible by k
+
+
+  ┌────
+  │ Example 1
+  │ Input: @list = (4, 5, 1, 6), $k = 2
+  │ Output: 2
+  │
+  │ Example 2
+  │ Input: @list = (1, 2, 3, 4), $k = 2
+  │ Output: 2
+  │
+  │ Example 3
+  │ Input: @list = (1, 3, 4, 5), $k = 3
+  │ Output: 2
+  │
+  │ Example 4
+  │ Input: @list = (5, 1, 2, 3), $k = 4
+  │ Output: 2
+  │
+  │ Example 5
+  │ Input: @list = (7, 2, 4, 5), $k = 4
+  │ Output: 1
+  └────
+
+
+1.1 Raku
+────────
+
+  Go over all combinations of elements as per rules and check if their
+  sum is divisible by divisor.
+
+  ┌────
+  │ unit sub MAIN(
+  │     Int $divisor, *@list is copy where *.elems > 0
+  │ );
+  │ @list = @list>>.Int;
+  │
+  │ my Int $pairs;
+  │ for 0 ... @list.end -> $i {
+  │     for $i ... @list.end -> $j {
+  │         next if $i == $j;
+  │         $pairs++ if (@list[$i] + @list[$j]) %% $divisor;
+  │     }
+  │ }
+  │ put $pairs;
+  └────
