@@ -16,16 +16,25 @@ int main (int argc, char ** argv) {
             }
             ptr ++;
         }
+
+        /* Now, parse the numbers */
         int r1, r2, i1, i2;
         if (sscanf (line, "%d %d %d %d", &r1, &i1, &r2, &i2) != 4) {
             perror ("Failed to parse input");
             exit (1);
         }
 
+        /* Calculate the real and imaginary parts */
         int r = r1 * r2 - i1 * i2;
         int i = r1 * i2 + r2 * i1;
 
-        printf ("%d+%s%d%si\n", r, i < 0 ? "(" : "", i, i < 0 ? ")" : "");
+        /* Print results */
+        if (i < 0) {
+            printf ("%d+(%d)i\n", r, i);
+        }
+        else {
+            printf ("%d+%di\n", r, i);
+        }
     }
     exit (0);
 }
