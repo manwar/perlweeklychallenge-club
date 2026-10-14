@@ -1,0 +1,257 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/set.difference {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known not {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/wordsquares {
+    0 dict begin
+    /a exch def
+    /words a toset def
+    /l a 0 get length def
+    /queue [
+        a {
+            [ exch ]
+        } forall
+    ] def
+    []
+    {
+        queue length 0 eq {
+            exit
+        } if
+        queue apop.left
+        /p exch def
+        /queue exch def
+        p length l eq {
+            pop
+            p
+            exit
+        } if
+        words p toset set.difference keys { dup length string exch exch cvs } map {
+            /ca exch def
+            /valid true def
+            ca s2a enumerate.array {
+                aload pop
+                /c exch def
+                /i exch def
+                i p length ge {
+                    exit
+                } if
+                c p i get p length get ne {
+                    /valid false def
+                    exit
+                } if
+            } forall
+            valid {
+                /queue queue
+                p deepcopy ca apush.right
+                apush.right def
+            } if
+        } forall
+    } loop
+    end
+} bind def
+
+(wordsquares) test.start
+[(MA) (AM) (MY) (ME)] wordsquares [(MA) (AM)] deepeq test
+[(SUN) (USE) (NET) (SEE) (TEN)] wordsquares [(SUN) (USE) (NET)] deepeq test
+[(BOAT) (TEAL) (AREA) (TSAR) (OGRE)] wordsquares [(BOAT) (OGRE) (AREA) (TEAL)] deepeq test
+[(CARD) (AREA) (REAR) (DART)] wordsquares [(CARD) (AREA) (REAR) (DART)] deepeq test
+[(HEART) (TREND) (EMBER) (RESIN) (ABUSE)] wordsquares [(HEART) (EMBER) (ABUSE) (RESIN) (TREND)] deepeq test
+test.end
