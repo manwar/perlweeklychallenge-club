@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+subset Complex where * ~~ /^ \-? \d+ \+ \(? \-? \d+ \)? i $/;
+
+unit sub MAIN (Complex $num1, Complex $num2, :v(:$verbose));
+
+sub parse-complex(Str $s)
+{
+  $s ~~ /^ (\-?\d+) \+ \(? (\-?\d+) \)? i $/;
+  ($0.Int, $1.Int);
+}
+
+my ($a, $b) = parse-complex($num1);
+my ($c, $d) = parse-complex($num2);
+
+my $real    = $a * $c - $b * $d;
+my $imag    = $a * $d + $b * $c;
+
+if $verbose
+{
+  say ": Real: $a * $c - $b * $d = $real";
+  say ": Imag: $a * $d + $b * $c = $imag";
+}
+
+say "$real+{ $imag < 0 ?? "($imag)" !! $imag }i";
