@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Alternate Tune, Alternate View](https://packy.dardan.com/b/10R)
+[Perl Weekly Challenge: There was magic abroad in the air...](https://packy.dardan.com/b/111)

@@ -1,94 +1,161 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use bignum;  # For handling large numbers
+use feature 'signatures';
+no warnings 'experimental::signatures';
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
 
-# Factorial function
-sub factorial {
-    my ($n) = @_;
-    return 1 if $n == 0;
-    my $product = 1;
-    $product *= $_ for 1 .. $n;
-    return $product;
+use Math::BigInt;
+
+=pod
+
+=head1 NAME
+
+ch-2.pl - Poker Hand Rankings (WWC 291 Task 2)
+
+=head1 SYNOPSIS
+
+  perl ch-2.pl   # runs calculations and embedded tests
+
+=head1 DESCRIPTION
+
+A draw poker hand consists of 5 cards drawn from a standard pack of 52 cards.
+An ace can rank either high or low.
+
+This script determines:
+1. Total number of 5-card hands: C(52, 5).
+2. Number of different hands for each of the 10 ranks.
+3. Verification that the sum of the 10 rank counts equals total hands.
+
+=cut
+
+sub nCr ( $n, $r ) {
+    return Math::BigInt->new(0) if $r < 0 || $r > $n;
+    return Math::BigInt->new(1) if $r == 0 || $r == $n;
+    $r = $n - $r if $r > $n - $r;
+
+    my $num = Math::BigInt->new(1);
+    my $den = Math::BigInt->new(1);
+
+    for my $i ( 1 .. $r ) {
+        $num->bmul( $n - $i + 1 );
+        $den->bmul($i);
+    }
+    return $num->bdiv($den);
 }
 
-# Combination function nCr
-sub nCr {
-    my ($n, $r) = @_;
-    return factorial($n) / (factorial($r) * factorial($n - $r));
+sub calculate_poker_hands () {
+    my $total_hands = nCr( 52, 5 );
+    my %counts;
+
+    # 1. Royal Flush: 4 suits * 1
+    $counts{'Royal Flush'} = Math::BigInt->new(4);
+
+    # 2. Straight Flush: 9 possible rank starts (A-2-3-4-5 up to 9-10-J-Q-K) * 4 suits
+    $counts{'Straight Flush'} = Math::BigInt->new( 9 * 4 );
+
+    # 3. Four of a Kind: 13 ranks * C(4,4) * 48 remaining cards
+    $counts{'Four of a Kind'} = Math::BigInt->new(13)->bmul( nCr( 48, 1 ) );
+
+    # 4. Full House: 13 * C(4,3) * 12 * C(4,2)
+    $counts{'Full House'} = Math::BigInt->new(13)->bmul( nCr( 4, 3 ) )->bmul(12)->bmul( nCr( 4, 2 ) );
+
+    # 5. Flush: 4 suits * C(13,5) - Royal Flush - Straight Flush
+    my $all_flushes = Math::BigInt->new(4)->bmul( nCr( 13, 5 ) );
+    $counts{'Flush'} = $all_flushes->bsub( $counts{'Royal Flush'} )->bsub( $counts{'Straight Flush'} );
+
+    # 6. Straight: 10 sequences * 4^5 - Royal Flush - Straight Flush
+    my $all_straights = Math::BigInt->new(10)->bmul( Math::BigInt->new(4)->bpow(5) );
+    $counts{'Straight'} = $all_straights->bsub( $counts{'Royal Flush'} )->bsub( $counts{'Straight Flush'} );
+
+    # 7. Three of a Kind: 13 * C(4,3) * C(12,2) * 4^2
+    $counts{'Three of a Kind'} =
+      Math::BigInt->new(13)->bmul( nCr( 4, 3 ) )->bmul( nCr( 12, 2 ) )->bmul( Math::BigInt->new(4)->bpow(2) );
+
+    # 8. Two Pair: C(13,2) * C(4,2)^2 * 11 * 4
+    $counts{'Two Pair'} =
+      nCr( 13, 2 )->bmul( nCr( 4, 2 )->bpow(2) )->bmul(11)->bmul(4);
+
+    # 9. One Pair: 13 * C(4,2) * C(12,3) * 4^3
+    $counts{'One Pair'} =
+      Math::BigInt->new(13)->bmul( nCr( 4, 2 ) )->bmul( nCr( 12, 3 ) )->bmul( Math::BigInt->new(4)->bpow(3) );
+
+    # 10. High Card: Total hands - all other hands
+    my $sum_non_high = Math::BigInt->new(0);
+    for my $rank ( keys %counts ) {
+        $sum_non_high->badd( $counts{$rank} );
+    }
+    $counts{'High Card'} = Math::BigInt->new($total_hands)->bsub($sum_non_high);
+
+    return ( $total_hands, \%counts );
 }
 
-# Total number of 5-card hands
-my $total_hands = nCr(52, 5);
-
-# Initialize counts for each hand rank
-my %hand_counts;
-
-# Royal Flush
-# There are 4 suits, and each suit has one Royal Flush
-$hand_counts{'Royal Flush'} = 4;
-
-# Straight Flush (excluding Royal Flush)
-# Total Straight Flushes = (Number of sequences starting from Ace to 10) * Number of suits - Royal Flushes
-# There are 9 possible sequences (A-2-3-4-5 to 10-J-Q-K-A)
-$hand_counts{'Straight Flush'} = (9 * 4) - $hand_counts{'Royal Flush'};
-
-# Four of a Kind
-# Choose rank for the quadruple and choose one card from remaining 48 cards
-$hand_counts{'Four of a Kind'} = 13 * nCr(48, 1);
-
-# Full House
-# Choose rank for triple, choose 3 suits out of 4
-# Choose rank for pair, choose 2 suits out of 4
-$hand_counts{'Full House'} = 13 * nCr(4,3) * 12 * nCr(4,2);
-
-# Flush (excluding Royal Flush and Straight Flush)
-# Total Flushes - Royal Flushes - Straight Flushes
-# Total Flushes = Number of suits * Number of ways to choose 5 cards from 13
-my $total_flushes = 4 * nCr(13,5);
-$hand_counts{'Flush'} = $total_flushes - $hand_counts{'Royal Flush'} - $hand_counts{'Straight Flush'};
-
-# Straight (excluding Royal Flush and Straight Flush)
-# Total Straights = Number of sequences * Number of suits^5 - Straight Flushes
-my $total_straights = 10 * 4**5;  # 10 sequences from A-2-3-4-5 to 10-J-Q-K-A
-$hand_counts{'Straight'} = $total_straights - $hand_counts{'Royal Flush'} - $hand_counts{'Straight Flush'};
-
-# Three of a Kind
-# Choose rank for triple, choose 3 suits out of 4
-# Choose 2 different ranks from remaining 12 ranks, choose one card from each
-$hand_counts{'Three of a Kind'} = 13 * nCr(4,3) * nCr(12,2) * (4**2);
-
-# Two Pair
-# Choose 2 ranks out of 13 for pairs, choose 2 suits out of 4 for each
-# Choose one rank from remaining 11 ranks, choose one suit out of 4
-$hand_counts{'Two Pair'} = nCr(13,2) * (nCr(4,2)**2) * 11 * 4;
-
-# One Pair
-# Choose one rank for the pair, choose 2 suits out of 4
-# Choose 3 different ranks from remaining 12, choose one suit out of 4 for each
-$hand_counts{'One Pair'} = 13 * nCr(4,2) * nCr(12,3) * (4**3);
-
-# High Card (Nothing)
-# Total possible hands excluding all other hands
-$hand_counts{'High Card'} = $total_hands;
-for my $hand (keys %hand_counts) {
-    next if $hand eq 'High Card';
-    $hand_counts{'High Card'} -= $hand_counts{$hand};
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    my ( $total, $counts ) = calculate_poker_hands();
+    say "Total 5-card hands: $total";
+    for my $rank (
+        'Royal Flush', 'Straight Flush', 'Four of a Kind', 'Full House',
+        'Flush',       'Straight',       'Three of a Kind', 'Two Pair',
+        'One Pair',    'High Card'
+      )
+    {
+        printf "%-16s: %s\n", $rank, $counts->{$rank};
+    }
 }
 
-# Output the results
-print "Total number of 5-card hands: $total_hands\n\n";
-print "Number of hands for each rank:\n";
-for my $hand (
-    'Royal Flush', 'Straight Flush', 'Four of a Kind', 'Full House',
-    'Flush', 'Straight', 'Three of a Kind', 'Two Pair', 'One Pair', 'High Card'
-) {
-    printf "%-15s: %d\n", $hand, $hand_counts{$hand};
+sub _run_tests {
+    require Test::More;
+    Test::More->import;
+
+    my ( $total, $counts ) = calculate_poker_hands();
+
+    # Known combinatorial hand counts
+    my %expected = (
+        'Royal Flush'     => 4,
+        'Straight Flush'  => 36,
+        'Four of a Kind'  => 624,
+        'Full House'      => 3744,
+        'Flush'           => 5108,
+        'Straight'        => 10200,
+        'Three of a Kind' => 54912,
+        'Two Pair'        => 123552,
+        'One Pair'        => 1098240,
+        'High Card'       => 1302540,
+    );
+
+    Test::More::plan( tests => 12 );
+    Test::More::is( $total->bstr, '2598960', 'Total hands is 2,598,960' );
+
+    my $sum = Math::BigInt->new(0);
+    for my $rank (
+        'Royal Flush', 'Straight Flush', 'Four of a Kind', 'Full House',
+        'Flush',       'Straight',       'Three of a Kind', 'Two Pair',
+        'One Pair',    'High Card'
+      )
+    {
+        Test::More::is( $counts->{$rank}->bstr, "$expected{$rank}", "$rank count matches" );
+        $sum->badd( $counts->{$rank} );
+    }
+
+    Test::More::is( $sum->bstr, $total->bstr, 'Sum of all 10 ranks equals total hands' );
 }
 
-# Verify the sum
-my $sum = 0;
-$sum += $hand_counts{$_} for keys %hand_counts;
-print "\nSum of all hand counts: $sum\n";
-print "Verification: ", ($sum == $total_hands) ? "Passed" : "Failed", "\n";
+_run_cli(@ARGV);
 
+=pod
+
+=head1 FUNCTIONS
+
+=head2 nCr($n, $r)
+
+Calculates the binomial coefficient C(n, r) using Math::BigInt.
+
+=head2 calculate_poker_hands()
+
+Calculates total 5-card combinations and frequencies of all 10 poker hand ranks.
+
+=cut
