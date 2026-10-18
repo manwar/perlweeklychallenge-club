@@ -1,3 +1,3 @@
-# The Weekly Challenge 394
+# The Weekly Challenge 395
 
-Blog: [The one about alternating](https://dev.to/simongreennet/weekly-challenge-the-one-about-alternating-2agf)
+Blog: [The complex square](https://dev.to/simongreennet/the-complex-square-3312)
