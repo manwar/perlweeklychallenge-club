@@ -1,0 +1,111 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/trionicarray {
+    0 dict begin
+    /a exch def
+    /state 0 def
+    /prev a 0 get def
+    true
+    1 1 a length 1 sub {
+        a exch get /n exch def
+        /dir 0 def
+        n prev gt {
+            /dir 1 def
+        } {
+            n prev lt {
+                /dir -1 def
+            } {
+                pop false
+                exit
+            } ifelse
+        } ifelse
+        1 {
+            state 0 eq {
+                dir 1 eq {
+                    /state 1 def
+                } {
+                    pop false
+                } ifelse
+                exit
+            } if
+            state 1 eq {
+                dir -1 eq {
+                    /state 2 def
+                } if
+                exit
+            } if
+            state 2 eq {
+                dir 1 eq {
+                    /state 3 def
+                } if
+                exit
+            } if
+            state 3 eq {
+                dir -1 eq {
+                    pop false
+                } if
+            } if
+        } repeat
+        dup not {
+            exit
+        } if
+        /prev n def
+    } for
+    dup {
+        pop
+        state 3 eq
+    } if
+    end
+} bind def
+
+(trionicarray) test.start
+[1 3 5 4 2 6 8] trionicarray test
+[1 4 4 2 1 3 5] trionicarray not test
+[2 10 3 1 9] trionicarray test
+[1 2 3 4 3 2 1] trionicarray not test
+[1 3 2 4 1 5 2] trionicarray not test
+test.end
