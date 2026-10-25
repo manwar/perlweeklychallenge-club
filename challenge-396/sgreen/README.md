@@ -1,3 +1,1 @@
-# The Weekly Challenge 395
-
-Blog: [The complex square](https://dev.to/simongreennet/the-complex-square-3312)
+# The Weekly Challenge 396
