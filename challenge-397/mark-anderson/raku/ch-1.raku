@@ -9,7 +9,7 @@ is asp(1,1,1,10),   4;
 
 sub asp(*@arr)
 {
-    my $n    = (@arr.sum / @arr.elems + 1).Int;
+    my $n    = @arr.sum div @arr.elems + 1;
     my @ints = max(1,$n)..max(1,@arr.max + 1);
     (@ints (-) @arr).min.key
 }
