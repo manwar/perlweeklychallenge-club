@@ -1,7 +1,7 @@
-# Solutions to weekly challenge 396 by Bob Lied
+# Solutions to weekly challenge 397 by Bob Lied
 
-- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-396/)
+- [The Task](https://theweeklychallenge.org/blog/perl-weekly-challenge-397/)
 
-- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-396/bob-lied)
+- [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-397/bob-lied)
 
-- [Blog](https://dev.to/boblied/pwc-396-finishing-order-trionic-array-57h2)
+- [Blog](https://dev.to/boblied/)
