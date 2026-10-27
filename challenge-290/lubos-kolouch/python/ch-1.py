@@ -1,21 +1,26 @@
+"""Task 1: Double Exist.
+
+Check if there exist two indices i and j such that i != j and
+ints[i] == 2 * ints[j].
+"""
+
 import unittest
-from typing import List
 
 
 def double_exist(ints: list[int]) -> bool:
-    """
-    Checks if there exist two indices i and j in the list such that:
+    """Check if there exist two indices i and j in the list such that:
+
     1) i != j
     2) 0 <= i, j < len(ints)
     3) ints[i] == 2 * ints[j]
 
     Args:
-        ints (List[int]): A list of integers.
+        ints: A list of integers.
 
     Returns:
         bool: True if such indices exist, False otherwise.
     """
-    seen = set()
+    seen: set[int] = set()
     for num in ints:
         if num == 0:
             if 0 in seen:
@@ -27,24 +32,31 @@ def double_exist(ints: list[int]) -> bool:
     return False
 
 
-# Unit Tests
 class TestDoubleExist(unittest.TestCase):
-    def test_example1(self):
+    """Unit tests for double_exist."""
+
+    def test_example1(self) -> None:
+        """Test with example 1."""
         self.assertEqual(double_exist([6, 2, 3, 3]), True, "Example 1")
 
-    def test_example2(self):
+    def test_example2(self) -> None:
+        """Test with example 2."""
         self.assertEqual(double_exist([3, 1, 4, 13]), False, "Example 2")
 
-    def test_example3(self):
+    def test_example3(self) -> None:
+        """Test with example 3."""
         self.assertEqual(double_exist([2, 1, 4, 2]), True, "Example 3")
 
-    def test_with_zero(self):
+    def test_with_zero(self) -> None:
+        """Test with zeros."""
         self.assertEqual(double_exist([0, 0]), True, "Zero case")
 
-    def test_negative_numbers(self):
+    def test_negative_numbers(self) -> None:
+        """Test with negative numbers."""
         self.assertEqual(double_exist([-2, -1, -4, -2]), True, "Negative numbers")
 
-    def test_no_pair(self):
+    def test_no_pair(self) -> None:
+        """Test when no pair exists."""
         self.assertEqual(double_exist([1, 3, 5, 7]), False, "No pair exists")
 
 
