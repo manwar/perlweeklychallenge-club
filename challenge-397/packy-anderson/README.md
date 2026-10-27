@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: What do I get out of this?](https://packy.dardan.com/b/11Z)
+[Perl Weekly Challenge: Latch on to the affirmative](https://packy.dardan.com/b/123)
