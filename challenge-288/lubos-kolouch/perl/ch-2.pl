@@ -1,9 +1,20 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 3;
+use Type::Params -sigs;
+use Types::Standard qw(ArrayRef Str);
+use List::Util qw(max);
+use Test::More;
 
 =pod
+
+=head1 NAME
+
+ch-2.pl - Contiguous Block (The Weekly Challenge 288 Task 2)
+
+=head1 SYNOPSIS
+
+  perl ch-2.pl   # runs the embedded tests
 
 =head1 DESCRIPTION
 
@@ -13,51 +24,24 @@ A contiguous block consists of elements containing the same symbol which share a
 
 =head1 FUNCTIONS
 
-=head2 largest_contiguous_block(\@matrix)
+=head2 largest_contiguous_block($matrix_ref)
 
-Given a reference to a 2D array representing the matrix, returns the size of the largest contiguous block.
-
-=over 4
-
-=item * C<\@matrix> - Reference to a 2D array of 'x' and 'o'.
-
-=back
-
-Returns the size of the largest contiguous block as an integer.
-
-=back
+Given a reference to a 2D array representing the matrix, returns the size of the largest contiguous block as an integer.
 
 =cut
 
-sub largest_contiguous_block {
-    my ($matrix_ref) = @_;
-    my @matrix = @$matrix_ref;
-    my $rows = scalar @matrix;
-    my $cols = scalar @{ $matrix[0] };
-    my @visited = map { [(0) x $cols] } (0 .. $rows - 1);
-    my $max_block_size = 0;
+signature_for largest_contiguous_block => (
+    method     => 0,
+    positional => [ ArrayRef[ArrayRef[Str]] ],
+);
 
-    for my $i (0 .. $rows - 1) {
-        for my $j (0 .. $cols - 1) {
-            if (!$visited[$i][$j]) {
-                my $block_size = dfs($matrix_ref, \@visited, $i, $j, $matrix[$i][$j]);
-                $max_block_size = $block_size if $block_size > $max_block_size;
-            }
-        }
-    }
-
-    return $max_block_size;
-}
-
-sub dfs {
-    my ($matrix_ref, $visited_ref, $i, $j, $symbol) = @_;
-    my @matrix = @$matrix_ref;
-    my $rows = scalar @matrix;
-    my $cols = scalar @{ $matrix[0] };
+sub dfs ($matrix_ref, $visited_ref, $i, $j, $symbol) {
+    my $rows = scalar @$matrix_ref;
+    my $cols = scalar @{ $matrix_ref->[0] };
 
     return 0 if $i < 0 || $i >= $rows || $j < 0 || $j >= $cols;
     return 0 if $visited_ref->[$i][$j];
-    return 0 if $matrix[$i][$j] ne $symbol;
+    return 0 if $matrix_ref->[$i][$j] ne $symbol;
 
     $visited_ref->[$i][$j] = 1;
     my $size = 1;
@@ -71,29 +55,66 @@ sub dfs {
     return $size;
 }
 
-# Unit Tests
-my $matrix1 = [
-    ['x', 'x', 'x', 'x', 'o'],
-    ['x', 'o', 'o', 'o', 'o'],
-    ['x', 'o', 'o', 'o', 'o'],
-    ['x', 'x', 'x', 'o', 'o'],
-];
-is(largest_contiguous_block($matrix1), 11, 'Example 1');
+sub largest_contiguous_block ($matrix_ref) {
+    return 0 if !@$matrix_ref || !@{ $matrix_ref->[0] };
 
-my $matrix2 = [
-    ['x', 'x', 'x', 'x', 'x'],
-    ['x', 'o', 'o', 'o', 'o'],
-    ['x', 'x', 'x', 'x', 'o'],
-    ['x', 'o', 'o', 'o', 'o'],
-];
-is(largest_contiguous_block($matrix2), 11, 'Example 2');
+    my $rows = scalar @$matrix_ref;
+    my $cols = scalar @{ $matrix_ref->[0] };
+    my @visited = map { [(0) x $cols] } (0 .. $rows - 1);
+    my $max_block_size = 0;
 
-my $matrix3 = [
-    ['x', 'x', 'x', 'o', 'o'],
-    ['o', 'o', 'o', 'x', 'x'],
-    ['o', 'x', 'x', 'o', 'o'],
-    ['o', 'o', 'o', 'x', 'x'],
-];
-is(largest_contiguous_block($matrix3), 7, 'Example 3');
+    for my $i (0 .. $rows - 1) {
+        for my $j (0 .. $cols - 1) {
+            if (!$visited[$i][$j]) {
+                my $block_size = dfs($matrix_ref, \@visited, $i, $j, $matrix_ref->[$i][$j]);
+                $max_block_size = $block_size if $block_size > $max_block_size;
+            }
+        }
+    }
 
-done_testing();
+    return $max_block_size;
+}
+
+sub _run_cli (@args) {
+    _run_tests();
+}
+
+sub _run_tests {
+    my $matrix1 = [
+        ['x', 'x', 'x', 'x', 'o'],
+        ['x', 'o', 'o', 'o', 'o'],
+        ['x', 'o', 'o', 'o', 'o'],
+        ['x', 'x', 'x', 'o', 'o'],
+    ];
+
+    my $matrix2 = [
+        ['x', 'x', 'x', 'x', 'x'],
+        ['x', 'o', 'o', 'o', 'o'],
+        ['x', 'x', 'x', 'x', 'o'],
+        ['x', 'o', 'o', 'o', 'o'],
+    ];
+
+    my $matrix3 = [
+        ['x', 'x', 'x', 'o', 'o'],
+        ['o', 'o', 'o', 'x', 'x'],
+        ['o', 'x', 'x', 'o', 'o'],
+        ['o', 'o', 'o', 'x', 'x'],
+    ];
+
+    my @cases = (
+        { label => 'Example 1', matrix => $matrix1, expected => 11 },
+        { label => 'Example 2', matrix => $matrix2, expected => 11 },
+        { label => 'Example 3', matrix => $matrix3, expected => 7 },
+        { label => 'Single cell', matrix => [['x']], expected => 1 },
+    );
+
+    plan( tests => scalar @cases );
+    for my $case (@cases) {
+        is( largest_contiguous_block( $case->{matrix} ), $case->{expected}, $case->{label} );
+    }
+    done_testing();
+}
+
+_run_cli(@ARGV);
+
+=cut

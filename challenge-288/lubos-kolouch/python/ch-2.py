@@ -1,20 +1,25 @@
+#!/usr/bin/env python3
+"""Contiguous Block - The Weekly Challenge 288 Task 2."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
 import unittest
-from typing import List
 
 
 def largest_contiguous_block(matrix: list[list[str]]) -> int:
-    """
-    Finds the size of the largest contiguous block in a given matrix of 'x' and 'o'.
+    """Find the size of the largest contiguous block in a matrix of 'x' and 'o'.
 
     A contiguous block consists of elements containing the same symbol which share
     an edge (not just a corner) with other elements in the block, and where there
     is a path between any two of these elements that crosses only those shared edges.
 
     Args:
-        matrix (List[List[str]]): The input matrix of 'x' and 'o'.
+        matrix: The input matrix of 'x' and 'o'.
 
     Returns:
-        int: The size of the largest contiguous block.
+        The size of the largest contiguous block.
     """
     if not matrix or not matrix[0]:
         return 0
@@ -50,42 +55,53 @@ def largest_contiguous_block(matrix: list[list[str]]) -> int:
     return max_block_size
 
 
-# Unit Tests
 class TestLargestContiguousBlock(unittest.TestCase):
-    def test_example1(self):
+    """Unit tests for largest_contiguous_block."""
+
+    def test_example1(self) -> None:
+        """Test example 1 from description."""
         matrix = [
             ["x", "x", "x", "x", "o"],
             ["x", "o", "o", "o", "o"],
             ["x", "o", "o", "o", "o"],
             ["x", "x", "x", "o", "o"],
         ]
-        self.assertEqual(largest_contiguous_block(matrix), 11, "Example 1")
+        self.assertEqual(largest_contiguous_block(matrix), 11)
 
-    def test_example2(self):
+    def test_example2(self) -> None:
+        """Test example 2 from description."""
         matrix = [
             ["x", "x", "x", "x", "x"],
             ["x", "o", "o", "o", "o"],
             ["x", "x", "x", "x", "o"],
             ["x", "o", "o", "o", "o"],
         ]
-        self.assertEqual(largest_contiguous_block(matrix), 11, "Example 2")
+        self.assertEqual(largest_contiguous_block(matrix), 11)
 
-    def test_example3(self):
+    def test_example3(self) -> None:
+        """Test example 3 from description."""
         matrix = [
             ["x", "x", "x", "o", "o"],
             ["o", "o", "o", "x", "x"],
             ["o", "x", "x", "o", "o"],
             ["o", "o", "o", "x", "x"],
         ]
-        self.assertEqual(largest_contiguous_block(matrix), 7, "Example 3")
+        self.assertEqual(largest_contiguous_block(matrix), 7)
 
-    def test_empty_matrix(self):
-        self.assertEqual(largest_contiguous_block([]), 0, "Empty Matrix")
+    def test_empty_matrix(self) -> None:
+        """Test empty matrix returns 0."""
+        self.assertEqual(largest_contiguous_block([]), 0)
 
-    def test_single_element(self):
+    def test_single_element(self) -> None:
+        """Test single element returns 1."""
         matrix = [["x"]]
-        self.assertEqual(largest_contiguous_block(matrix), 1, "Single Element")
+        self.assertEqual(largest_contiguous_block(matrix), 1)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    unittest.main(argv=[sys.argv[0]])
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main(sys.argv)
