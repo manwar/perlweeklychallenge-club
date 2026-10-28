@@ -1,11 +1,16 @@
+#!/usr/bin/env python3
+"""Valid Number - The Weekly Challenge 287 Task 2."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
 import re
-from typing import Any
+import sys
 import unittest
 
 
 def is_valid_number(s: str) -> bool:
-    """
-    Determines if the given string is a valid number based on specific rules.
+    """Determine if the given string is a valid number.
 
     A valid number is defined as:
     - An integer number followed by an optional exponent.
@@ -23,10 +28,10 @@ def is_valid_number(s: str) -> bool:
     - An exponent is defined with an exponent notation 'e' or 'E' followed by an integer number.
 
     Args:
-        s (str): The input string.
+        s: The input string.
 
     Returns:
-        bool: True if the string is a valid number, False otherwise.
+        True if the string is a valid number, False otherwise.
     """
     pattern = r"""
         ^                       # Start of string
@@ -49,27 +54,65 @@ def is_valid_number(s: str) -> bool:
     return bool(regex.match(s))
 
 
-# Unit Tests
 class TestValidNumber(unittest.TestCase):
+    """Unit tests for is_valid_number."""
 
-    def test_examples(self):
-        self.assertEqual(is_valid_number("1"), True, 'Example 1')
-        self.assertEqual(is_valid_number("a"), False, 'Example 2')
-        self.assertEqual(is_valid_number("."), False, 'Example 3')
-        self.assertEqual(is_valid_number("1.2e4.2"), False, 'Example 4')
-        self.assertEqual(is_valid_number("-1."), True, 'Example 5')
-        self.assertEqual(is_valid_number("+1E-8"), True, 'Example 6')
-        self.assertEqual(is_valid_number(".44"), True, 'Example 7')
+    def test_example1(self) -> None:
+        """Test Example 1: '1' is a valid number."""
+        self.assertTrue(is_valid_number("1"))
 
-    def test_additional(self):
-        self.assertEqual(is_valid_number("6e6.5"), False,
-                         'Exponent with decimal')
-        self.assertEqual(is_valid_number(""), False, 'Empty string')
-        self.assertEqual(is_valid_number("123"), True, 'Integer number')
-        self.assertEqual(is_valid_number("-."), False,
-                         'Negative dot without digits')
-        self.assertEqual(is_valid_number("1e"), False, 'Incomplete exponent')
+    def test_example2(self) -> None:
+        """Test Example 2: 'a' is not a valid number."""
+        self.assertFalse(is_valid_number("a"))
+
+    def test_example3(self) -> None:
+        """Test Example 3: '.' is not a valid number."""
+        self.assertFalse(is_valid_number("."))
+
+    def test_example4(self) -> None:
+        """Test Example 4: '1.2e4.2' is not a valid number (non-integer exponent)."""
+        self.assertFalse(is_valid_number("1.2e4.2"))
+
+    def test_example5(self) -> None:
+        """Test Example 5: '-1.' is a valid decimal number."""
+        self.assertTrue(is_valid_number("-1."))
+
+    def test_example6(self) -> None:
+        """Test Example 6: '+1E-8' is a valid number with exponent."""
+        self.assertTrue(is_valid_number("+1E-8"))
+
+    def test_example7(self) -> None:
+        """Test Example 7: '.44' is a valid decimal number."""
+        self.assertTrue(is_valid_number(".44"))
+
+    def test_exponent_with_decimal(self) -> None:
+        """Test exponent containing a decimal point."""
+        self.assertFalse(is_valid_number("6e6.5"))
+
+    def test_empty_string(self) -> None:
+        """Test empty string."""
+        self.assertFalse(is_valid_number(""))
+
+    def test_integer_number(self) -> None:
+        """Test standard integer string."""
+        self.assertTrue(is_valid_number("123"))
+
+    def test_negative_dot_only(self) -> None:
+        """Test negative dot without digits."""
+        self.assertFalse(is_valid_number("-."))
+
+    def test_incomplete_exponent(self) -> None:
+        """Test incomplete exponent symbol."""
+        self.assertFalse(is_valid_number("1e"))
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) > 1:
+        print(f"Output: {is_valid_number(argv[1])}")
+        return
+    unittest.main(argv=[sys.argv[0]])
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main(sys.argv)
