@@ -1,14 +1,25 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
-use Test::More tests => 3;
+use Type::Params -sigs;
+use Types::Standard qw(ArrayRef Int);
+use Test::More;
 
 =pod
 
+=head1 NAME
+
+ch-1.pl - Third Distinct Maximum (The Weekly Challenge 289 Task 1)
+
+=head1 SYNOPSIS
+
+  perl ch-1.pl 5 6 4 1
+  perl ch-1.pl   # runs the embedded tests
+
 =head1 DESCRIPTION
 
-This script finds the third distinct maximum number in a given array of integers.
-If the third maximum doesn't exist, it returns the maximum number.
+Given an array of integers, returns the third distinct maximum number.
+If the third maximum does not exist, returns the maximum number.
 
 =head1 FUNCTIONS
 
@@ -17,18 +28,14 @@ If the third maximum doesn't exist, it returns the maximum number.
 Given an array reference of integers, returns the third distinct maximum number.
 If it doesn't exist, returns the maximum number.
 
-=over 4
-
-=item * C<\@ints> - Reference to an array of integers.
-
-=back
-
-Returns the third distinct maximum if it exists, otherwise the maximum number.
-
 =cut
 
-sub third_distinct_maximum {
-    my ($ints_ref) = @_;
+signature_for third_distinct_maximum => (
+    method     => 0,
+    positional => [ ArrayRef[Int] ],
+);
+
+sub third_distinct_maximum ($ints_ref) {
     my %seen;
     my @distinct_descending = sort { $b <=> $a } grep { !$seen{$_}++ } @$ints_ref;
 
@@ -39,9 +46,32 @@ sub third_distinct_maximum {
     }
 }
 
-# Unit Tests
-is(third_distinct_maximum([5, 6, 4, 1]), 4, 'Example 1');
-is(third_distinct_maximum([4, 5]), 5, 'Example 2');
-is(third_distinct_maximum([1, 2, 2, 3]), 1, 'Example 3');
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    my @ints = map { int($_) } @args;
+    my $out  = third_distinct_maximum( \@ints );
+    say "Output: $out";
+}
 
-done_testing();
+sub _run_tests {
+    my @cases = (
+        { label => 'Example 1', ints => [ 5, 6, 4, 1 ],     expected => 4 },
+        { label => 'Example 2', ints => [ 4, 5 ],           expected => 5 },
+        { label => 'Example 3', ints => [ 1, 2, 2, 3 ],     expected => 1 },
+        { label => 'Single elem', ints => [ 10 ],           expected => 10 },
+        { label => 'Negative nums', ints => [ -1, -2, -3, -4 ], expected => -3 },
+    );
+
+    plan( tests => scalar @cases );
+    for my $case (@cases) {
+        is( third_distinct_maximum( $case->{ints} ), $case->{expected}, $case->{label} );
+    }
+    done_testing();
+}
+
+_run_cli(@ARGV);
+
+=cut

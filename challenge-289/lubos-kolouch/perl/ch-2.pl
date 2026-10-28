@@ -1,20 +1,38 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
 use utf8;
-use Test::More tests => 2;
+use Type::Params -sigs;
+use Types::Standard qw(Str);
 use List::Util 'shuffle';
+use Test::More;
 
 =pod
+
+=head1 NAME
+
+ch-2.pl - Jumble Letters (The Weekly Challenge 289 Task 2)
+
+=head1 SYNOPSIS
+
+  perl ch-2.pl "According to a research at Cambridge University."
+  perl ch-2.pl   # runs the embedded tests
 
 =head1 DESCRIPTION
 
 This script takes English text as input and outputs a jumbled version according to the following rules:
 
-- The first and last letter of every word must stay the same.
-- The remaining letters in the word are scrambled in a random order (if that happens to be the original order, that is OK).
-- Whitespace, punctuation, and capitalization must stay the same.
-- The order of words does not change, only the letters inside the word.
+=over 4
+
+=item * The first and last letter of every word must stay the same.
+
+=item * The remaining letters in the word are scrambled in a random order (if that happens to be the original order, that is OK).
+
+=item * Whitespace, punctuation, and capitalization must stay the same.
+
+=item * The order of words does not change, only the letters inside the word.
+
+=back
 
 =head1 FUNCTIONS
 
@@ -22,30 +40,26 @@ This script takes English text as input and outputs a jumbled version according 
 
 Scrambles a single word according to the rules.
 
-=over 4
-
-=item * C<$word> - The word to scramble.
-
-=back
-
-Returns the scrambled word.
-
 =cut
 
-sub scramble_word {
-    my ($word) = @_;
+signature_for scramble_word => (
+    method     => 0,
+    positional => [ Str ],
+);
+
+sub scramble_word ($word) {
     # If word length is less than or equal to 3, return it as is
     return $word if length($word) <= 3;
 
     my $first_letter = substr($word, 0, 1);
     my $last_letter  = substr($word, -1, 1);
-    my $middle = substr($word, 1, -1);
+    my $middle       = substr($word, 1, -1);
     my @middle_letters = split //, $middle;
 
     # Scramble the middle letters
     @middle_letters = shuffle(@middle_letters);
     my $scrambled_middle = join '', @middle_letters;
-    my $scrambled_word = $first_letter . $scrambled_middle . $last_letter;
+    my $scrambled_word   = $first_letter . $scrambled_middle . $last_letter;
 
     # Determine capitalization style
     if ($word =~ /^[A-Z]+$/) {
@@ -60,7 +74,7 @@ sub scramble_word {
     } else {
         # Mixed case, preserve capitalization per letter
         my @original_chars = split //, $word;
-        my @caps = map { $_ =~ /[A-Z]/ } @original_chars;
+        my @caps = map { $_ =~ /[A-Z]/ ? 1 : 0 } @original_chars;
         my @scrambled_chars = split //, $scrambled_word;
         for my $i (0 .. $#scrambled_chars) {
             if ($caps[$i]) {
@@ -79,18 +93,14 @@ sub scramble_word {
 
 Scrambles the text by scrambling each word according to the rules.
 
-=over 4
-
-=item * C<$text> - The text to scramble.
-
-=back
-
-Returns the scrambled text.
-
 =cut
 
-sub scramble_text {
-    my ($text) = @_;
+signature_for scramble_text => (
+    method     => 0,
+    positional => [ Str ],
+);
+
+sub scramble_text ($text) {
     my @tokens = split /(\s+|[^\w\s]+)/, $text;
     my @scrambled_tokens;
 
@@ -105,9 +115,16 @@ sub scramble_text {
     return join '', @scrambled_tokens;
 }
 
-# Unit Tests
-{
-    # Seed the random number generator for reproducibility
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    my $text = join ' ', @args;
+    say scramble_text($text);
+}
+
+sub _run_tests {
     srand(42);
 
     my $input_text = "According to a research at Cambridge University.";
@@ -117,6 +134,13 @@ sub scramble_text {
     my $word = 'Perl';
     my $scrambled_word = scramble_word($word);
     ok($scrambled_word eq 'Prel' || $scrambled_word eq 'Perl', 'Test scramble_word');
+
+    my $short = 'the';
+    is(scramble_word($short), 'the', 'Test short word 3 chars');
+
+    done_testing();
 }
 
-done_testing();
+_run_cli(@ARGV);
+
+=cut
