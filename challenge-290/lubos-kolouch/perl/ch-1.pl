@@ -1,9 +1,17 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(ArrayRef Int);
 use Test::More tests => 3;
 
-=pod
+=head1 NAME
+
+ch-1.pl - Double Exist
+
+=head1 SYNOPSIS
+
+    perl ch-1.pl
 
 =head1 DESCRIPTION
 
@@ -17,22 +25,18 @@ This script checks if there exist two indices $i and $j in an array of integers 
 
 =head1 FUNCTIONS
 
-=head2 double_exist(\@ints)
+=head2 double_exist($ints_ref)
 
 Given an array reference of integers, returns 'true' if such indices exist, 'false' otherwise.
 
-=over 4
-
-=item * C<\@ints> - Reference to an array of integers.
-
-=back
-
-Returns 'true' or 'false'.
-
 =cut
 
-sub double_exist {
-    my ($ints_ref) = @_;
+signature_for double_exist => (
+    method => 0,
+    positional => [ ArrayRef[Int] ],
+);
+
+sub double_exist ($ints_ref) {
     my %seen;
     foreach my $num (@$ints_ref) {
         # Check for zero separately to avoid division by zero

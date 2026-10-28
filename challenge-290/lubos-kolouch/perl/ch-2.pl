@@ -1,9 +1,17 @@
-#!/usr/bin/perl
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(Str);
 use Test::More tests => 3;
 
-=pod
+=head1 NAME
+
+ch-2.pl - Luhn's Algorithm
+
+=head1 SYNOPSIS
+
+    perl ch-2.pl
 
 =head1 DESCRIPTION
 
@@ -25,18 +33,14 @@ Given a string containing digits (and possibly other characters), the script:
 
 Validates the input string using Luhn's Algorithm.
 
-=over 4
-
-=item * C<$str> - The input string containing digits and possibly other characters.
-
-=back
-
-Returns 'true' if the payload matches the correct check digit, 'false' otherwise.
-
 =cut
 
-sub luhn_algorithm {
-    my ($str) = @_;
+signature_for luhn_algorithm => (
+    method => 0,
+    positional => [ Str ],
+);
+
+sub luhn_algorithm ($str) {
     my @digits = $str =~ /(\d)/g;
 
     # Return false if there are not enough digits
@@ -55,7 +59,6 @@ sub luhn_algorithm {
         $sum += $digit;
     }
 
-    my $total = $sum + $payload;
     my $correct_check_digit = (10 - ($sum % 10)) % 10;
 
     return $payload == $correct_check_digit ? 'true' : 'false';
