@@ -1,9 +1,16 @@
+#!/usr/bin/env python3
+"""Strong Password - The Weekly Challenge 287 Task 1."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+import re
+import sys
 import unittest
 
 
 def strong_password_steps(s: str) -> int:
-    """
-    Calculates the minimum number of steps required to make the given string a strong password.
+    """Calculate the minimum steps to make the password strong.
 
     A strong password must:
     - Be at least 6 characters long.
@@ -11,18 +18,17 @@ def strong_password_steps(s: str) -> int:
     - Not contain three repeating characters in a row.
 
     Args:
-        s (str): The input password string.
+        s: The input password string.
 
     Returns:
-        int: The minimum number of steps required to make the password strong.
+        The minimum number of steps required to make the password strong.
     """
-    import re
     missing_types = 3
-    if re.search(r'[a-z]', s):
+    if re.search(r"[a-z]", s):
         missing_types -= 1
-    if re.search(r'[A-Z]', s):
+    if re.search(r"[A-Z]", s):
         missing_types -= 1
-    if re.search(r'\d', s):
+    if re.search(r"\d", s):
         missing_types -= 1
 
     repeats_to_fix = 0
@@ -44,16 +50,37 @@ def strong_password_steps(s: str) -> int:
     return total_steps
 
 
-# Unit Tests
 class TestStrongPassword(unittest.TestCase):
+    """Unit tests for strong_password_steps."""
 
-    def test_examples(self):
-        self.assertEqual(strong_password_steps("a"), 5, 'Example 1')
-        self.assertEqual(strong_password_steps("aB2"), 3, 'Example 2')
-        self.assertEqual(strong_password_steps("PaaSW0rd"), 0, 'Example 3')
-        self.assertEqual(strong_password_steps("Paaasw0rd"), 1, 'Example 4')
-        self.assertEqual(strong_password_steps("aaaaa"), 3, 'Example 5')
+    def test_example1(self) -> None:
+        """Test Example 1: 'a' requires 5 steps."""
+        self.assertEqual(strong_password_steps("a"), 5)
+
+    def test_example2(self) -> None:
+        """Test Example 2: 'aB2' requires 3 steps."""
+        self.assertEqual(strong_password_steps("aB2"), 3)
+
+    def test_example3(self) -> None:
+        """Test Example 3: 'PaaSW0rd' is already strong (0 steps)."""
+        self.assertEqual(strong_password_steps("PaaSW0rd"), 0)
+
+    def test_example4(self) -> None:
+        """Test Example 4: 'Paaasw0rd' requires 1 step."""
+        self.assertEqual(strong_password_steps("Paaasw0rd"), 1)
+
+    def test_example5(self) -> None:
+        """Test Example 5: 'aaaaa' requires 3 steps."""
+        self.assertEqual(strong_password_steps("aaaaa"), 3)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) > 1:
+        print(f"Output: {strong_password_steps(argv[1])}")
+        return
+    unittest.main(argv=[sys.argv[0]])
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main(sys.argv)
