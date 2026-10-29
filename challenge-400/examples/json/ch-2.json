@@ -1,0 +1,52 @@
+{
+  "challenge": {
+    "week": 400,
+    "task": 2,
+    "name": "Minimum Genetic Mutation"
+  },
+  "input_vars": [ "$start_gene", "$end_gene", "@gene_bank" ],
+  "examples": [
+    {
+      "name": "Example 1",
+      "in": ["AACCGGTT", "AACCGGTA", ["AACCGCTA", "AAACGGTA"]],
+      "out": [-1]
+    },
+    {
+      "name": "Example 2",
+      "in": [
+        "AACCGGTT",
+        "AACCGGAA",
+        ["AACCGGTA", "AACCGGAA", "AACCGCTA", "AACCCTAA", "AACCGTAA"]
+      ],
+      "out": [2]
+    },
+    {
+      "name": "Example 3",
+      "in": ["AAAAAAAA", "AAAAACCC", ["CAAAAAAA", "CCAAAAAA", "AAAAAAAC"]],
+      "out": [-1]
+    },
+    {
+      "name": "Example 4",
+      "in": [
+        "GAAAAAAA",
+        "GCCCCCCC",
+        [
+          "GCAAAAAA",
+          "GCCAAAAA",
+          "GCCCAAAA",
+          "GCCCCAAA",
+          "GCCCCCAA",
+          "GCCCCCCAA",
+          "GCCCCCCA",
+          "GCCCCCCC"
+        ]
+      ],
+      "out": [7]
+    },
+    {
+      "name": "Example 5",
+      "in": ["AACCGGTT", "AACCGGTT", ["AACCGGTA"]],
+      "out": [0]
+    }
+  ]
+}
