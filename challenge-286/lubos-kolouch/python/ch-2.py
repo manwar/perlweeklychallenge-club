@@ -1,64 +1,82 @@
-from typing import List
+#!/usr/bin/env python3
+"""Order Game - The Weekly Challenge 286 Task 2."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
 import unittest
 
 
-def order_game(ints: List[int]) -> int:
-    """
-    Simulates the Order Game on the given list of integers.
+def order_game(ints: list[int]) -> int:
+    """Simulate the Order Game on the given list of integers.
 
     In the Order Game:
-    - At each round, the array is reduced by pairing elements.
+    - At each round, the array is reduced by pairing consecutive elements.
     - For each pair at an even index (starting from 0), take the minimum of the pair.
     - For each pair at an odd index, take the maximum of the pair.
     - Repeat the process until only one element remains.
 
     Args:
-        ints (List[int]): A list of integers whose length is a power of 2.
+        ints: A list of integers whose length is a power of 2.
 
     Returns:
-        int: The last remaining integer after playing the game.
+        The last remaining integer after playing the game.
     """
-    current_list = ints.copy()
+    current_list = list(ints)
     while len(current_list) > 1:
-        next_list = []
+        next_list: list[int] = []
         n = len(current_list)
         for i in range(n // 2):
+            first = current_list[2 * i]
+            second = current_list[2 * i + 1]
             if i % 2 == 0:
-                # Even index: take minimum
-                next_list.append(
-                    min(current_list[2 * i], current_list[2 * i + 1]))
+                next_list.append(min(first, second))
             else:
-                # Odd index: take maximum
-                next_list.append(
-                    max(current_list[2 * i], current_list[2 * i + 1]))
+                next_list.append(max(first, second))
         current_list = next_list
     return current_list[0]
 
 
-# Unit Tests
 class TestOrderGame(unittest.TestCase):
+    """Unit tests for order_game."""
 
-    def test_example1(self):
+    def test_example1(self) -> None:
+        """Test Example 1: [2, 1, 4, 5, 6, 3, 0, 2] -> 1."""
         ints = [2, 1, 4, 5, 6, 3, 0, 2]
-        self.assertEqual(order_game(ints), 1, 'Example 1')
+        self.assertEqual(order_game(ints), 1)
 
-    def test_example2(self):
+    def test_example2(self) -> None:
+        """Test Example 2: [0, 5, 3, 2] -> 0."""
         ints = [0, 5, 3, 2]
-        self.assertEqual(order_game(ints), 0, 'Example 2')
+        self.assertEqual(order_game(ints), 0)
 
-    def test_example3(self):
+    def test_example3(self) -> None:
+        """Test Example 3: 16 integers -> 2."""
         ints = [9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8]
-        self.assertEqual(order_game(ints), 2, 'Example 3')
+        self.assertEqual(order_game(ints), 2)
 
-    def test_power_of_two_length(self):
-        ints = [1, 2]
-        self.assertEqual(order_game(ints), 1, 'Length 2 array')
+    def test_power_of_two_length(self) -> None:
+        """Test minimal pair of 2 integers."""
+        ints = [7, 3]
+        self.assertEqual(order_game(ints), 3)
 
-    def test_large_array(self):
-        ints = [i for i in range(16)]
-        result = order_game(ints)
-        self.assertIsInstance(result, int, 'Result is an integer')
+    def test_monotonic(self) -> None:
+        """Test list of 4 integers."""
+        ints = [1, 2, 3, 4]
+        # Round 1: i=0: min(1,2)=1, i=1: max(3,4)=4 -> [1, 4]
+        # Round 2: i=0: min(1,4)=1 -> 1
+        self.assertEqual(order_game(ints), 1)
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) > 1:
+        nums = [int(x) for x in argv[1:]]
+        print(f"Output: {order_game(nums)}")
+        return
+    unittest.main(argv=[sys.argv[0]])
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main(sys.argv)
