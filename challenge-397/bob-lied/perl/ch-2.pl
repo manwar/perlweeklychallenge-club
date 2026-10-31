@@ -65,16 +65,27 @@ my $logger;
 exit(!runTest()) if $DoTest;
 exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say '(', join(", ", task(@ARGV)->@*), ')';
+say '(', join(", ", task_LOOKUP(@ARGV)->@*), ')';
 
 #=============================================================================
-sub task(@arr)
+sub task_LOOKUP($arr)
 {
-    my %mirror = map { $_ => reflect($_) } @arr;
+    my %mirror = map { $_ => reflect($_) } $arr->@*;
 
-    [ sort { $mirror{$a} <=> $mirror{$b} || $a <=> $b } @arr ];
+    [ sort { $mirror{$a} <=> $mirror{$b} || $a <=> $b } $arr->@* ];
 }
 
+sub task_TRANSFORM($arr)
+{
+    # Schwartzian transform
+    [ map { $_->[0] }
+        sort { $a->[1] <=> $b->[1] || $a->[0] <=> $b->[0] }
+            map { [ $_, reflect($_) ] } $arr->@*
+    ]
+}
+
+use Memoize;
+memoize('reflect');
 sub reflect($n)
 {
     return oct( reverse sprintf("%bb0", $n) );
@@ -94,11 +105,17 @@ sub runTest
     is( reflect(12), 3, "reflect 12");
     is( reflect(0b1011011011), 0b1101101101, "reflect bigger number");
 
-    is( task(     3,  6, 12), [     3,  6, 12], "Example 1");
-    is( task( 1,  2,  4,  8), [ 1,  2,  4,  8], "Example 2");
-    is( task( 7,  8,  9, 10), [ 8, 10,  7,  9], "Example 3");
-    is( task( 5,  9, 15, 17), [ 5,  9, 15, 17], "Example 4");
-    is( task(11, 13, 14, 19), [14, 13, 11, 19], "Example 5");
+    is( task_LOOKUP([     3,  6, 12]), [     3,  6, 12], "Example 1");
+    is( task_LOOKUP([ 1,  2,  4,  8]), [ 1,  2,  4,  8], "Example 2");
+    is( task_LOOKUP([ 7,  8,  9, 10]), [ 8, 10,  7,  9], "Example 3");
+    is( task_LOOKUP([ 5,  9, 15, 17]), [ 5,  9, 15, 17], "Example 4");
+    is( task_LOOKUP([11, 13, 14, 19]), [14, 13, 11, 19], "Example 5");
+
+    is( task_TRANSFORM([     3,  6, 12]), [     3,  6, 12], "Example 1");
+    is( task_TRANSFORM([ 1,  2,  4,  8]), [ 1,  2,  4,  8], "Example 2");
+    is( task_TRANSFORM([ 7,  8,  9, 10]), [ 8, 10,  7,  9], "Example 3");
+    is( task_TRANSFORM([ 5,  9, 15, 17]), [ 5,  9, 15, 17], "Example 4");
+    is( task_TRANSFORM([11, 13, 14, 19]), [14, 13, 11, 19], "Example 5");
 
     done_testing;
 }
@@ -106,9 +123,11 @@ sub runTest
 sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
+    my @data = (1001 .. 1100);
 
     cmpthese($repeat, {
-            label => sub { },
+            lookup    => sub { task_LOOKUP(\@data) },
+            transform => sub { task_TRANSFORM(\@data) },
         });
 }
 

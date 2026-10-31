@@ -65,14 +65,15 @@ sub task(@arr)
     my $start = sum0(@arr) / @arr;
     $start = 0 if $start < 0;
 
-    @arr = ( sort { $a <=> $b } grep { $_ > $start && $_ > 0 } @arr );
+    @arr = ( sort { $a <=> $b } grep { $_ > $start } @arr );
 
     my $beg = floor($start);
     while ( defined(my $end = shift @arr) )
     {
         return $beg+1 if ( $end - $beg > 1 );
-        $beg = $end;
     }
+    continue { $beg = $end }
+
     return $beg+1;
 }
 

@@ -4,4 +4,4 @@
 
 - [The Solution](https://github.com/boblied/perlweeklychallenge-club/tree/master/challenge-397/bob-lied)
 
-- [Blog](https://dev.to/boblied/)
+- [Blog](https://dev.to/boblied/pwc-397-reflection-2dcd)
