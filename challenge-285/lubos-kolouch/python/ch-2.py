@@ -1,10 +1,15 @@
-from typing import List
+#!/usr/bin/env python3
+"""Making Change - The Weekly Challenge 285 Task 2."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
 import unittest
 
 
 def making_change(amount: int) -> int:
-    """
-    Compute the number of ways to make change for the given amount in cents using US coins.
+    """Compute the number of ways to make change for the given amount in cents.
 
     Coins available:
     - Penny (P): 1 cent
@@ -16,14 +21,20 @@ def making_change(amount: int) -> int:
     Order of coin selection does not matter.
 
     Args:
-        amount (int): The amount in cents (non-negative integer).
+        amount: The amount in cents (non-negative integer).
 
     Returns:
-        int: The number of distinct ways to make change.
+        The number of distinct ways to make change.
+
+    Raises:
+        ValueError: If amount is negative.
     """
-    coins = [1, 5, 10, 25, 50]
-    dp = [0] * (amount + 1)
-    dp[0] = 1  # There is one way to make 0 cents
+    if amount < 0:
+        raise ValueError("Amount must be non-negative")
+
+    coins: tuple[int, ...] = (1, 5, 10, 25, 50)
+    dp: list[int] = [0] * (amount + 1)
+    dp[0] = 1
 
     for coin in coins:
         for i in range(coin, amount + 1):
@@ -32,25 +43,39 @@ def making_change(amount: int) -> int:
     return dp[amount]
 
 
-# Unit Tests
 class TestMakingChange(unittest.TestCase):
+    """Unit tests for making_change."""
 
-    def test_example1(self):
-        self.assertEqual(making_change(9), 2, 'Example 1')
+    def test_example1(self) -> None:
+        """Test Example 1: amount = 9 -> 2."""
+        self.assertEqual(making_change(9), 2)
 
-    def test_example2(self):
-        self.assertEqual(making_change(15), 6, 'Example 2')
+    def test_example2(self) -> None:
+        """Test Example 2: amount = 15 -> 6."""
+        self.assertEqual(making_change(15), 6)
 
-    def test_example3(self):
-        self.assertEqual(making_change(100), 292, 'Example 3')
+    def test_example3(self) -> None:
+        """Test Example 3: amount = 100 -> 292."""
+        self.assertEqual(making_change(100), 292)
 
-    def test_zero_amount(self):
-        self.assertEqual(making_change(0), 1, 'Zero amount')
+    def test_zero_amount(self) -> None:
+        """Test zero amount: amount = 0 -> 1."""
+        self.assertEqual(making_change(0), 1)
 
-    def test_negative_amount(self):
-        with self.assertRaises(IndexError):
+    def test_negative_amount(self) -> None:
+        """Test negative amount raises ValueError."""
+        with self.assertRaises(ValueError):
             making_change(-1)
 
 
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) > 1:
+        amount = int(argv[1])
+        print(f"Output: {making_change(amount)}")
+        return
+    unittest.main(argv=[sys.argv[0]])
+
+
 if __name__ == "__main__":
-    unittest.main()
+    main(sys.argv)
