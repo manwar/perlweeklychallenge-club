@@ -1,74 +1,140 @@
-#!/usr/bin/perl
-use strict;
-use warnings FATAL => 'all';
+#!/usr/bin/env perl
+use v5.38;
+use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(ArrayRef Int);
+use Test::More;
 
-sub min_cost_to_equal_elements {
-    my ($ints_ref, $x, $y) = @_;
-    my @ints = @$ints_ref;
+=pod
 
-    my $min_cost = "inf";
-    my $max_val = max(@ints);
-    my $min_val = min(@ints);
+=head1 NAME
 
-    print "Initial array: (@ints)\n";
-    print "Cost for Level 1 (x): $x\n";
-    print "Cost for Level 2 (y): $y\n";
+ch-2.pl - Equalize Array (The Weekly Challenge 270 Task 2)
 
-    for my $target ($min_val .. $max_val) {
+=head1 SYNOPSIS
+
+  perl ch-2.pl   # runs the embedded tests
+
+=head1 DESCRIPTION
+
+You are given an array of integers, @ints and two integers, $x and $y.
+Write a script to equalize the array with the minimum cost.
+
+In one operation you can:
+- Level 1: Increase any element by 1 with cost $x.
+- Level 2: Increase any two different elements by 1 with cost $y.
+
+=head1 FUNCTIONS
+
+=head2 min_cost_to_equal_elements(\@ints, $x, $y)
+
+Given an array reference of integers and operation costs $x and $y, returns the
+minimum cost required to make all elements equal.
+
+=cut
+
+signature_for min_cost_to_equal_elements => (
+    method     => 0,
+    positional => [ ArrayRef [Int], Int, Int ],
+);
+
+sub min_cost_to_equal_elements ($ints, $x, $y) {
+    my $n = scalar @$ints;
+    return 0 if $n <= 1;
+    if ( $n == 2 ) {
+        return abs( $ints->[0] - $ints->[1] ) * $x;
+    }
+
+    my $min_val = $ints->[0];
+    my $max_val = $ints->[0];
+    for my $val (@$ints) {
+        $min_val = $val if $val < $min_val;
+        $max_val = $val if $val > $max_val;
+    }
+
+    if ( 2 * $x <= $y ) {
         my $cost = 0;
-        print "\nTrying to make all elements equal to: $target\n";
+        $cost += ( $max_val - $_ ) * $x for @$ints;
+        return $cost;
+    }
 
-        for my $num (@ints) {
-            my $diff = abs($target - $num);
-            print "Difference for element $num to target $target: $diff\n";
+    my $best  = undef;
+    my $limit = $max_val + ( $max_val - $min_val ) + 2;
 
-            my $cost_addition;
-            if ($y < 2 * $x) {
-                my $level_2_ops = int($diff / 2);
-                my $level_1_ops = $diff % 2;
-                $cost_addition = ($level_2_ops * $y) + ($level_1_ops * $x);
-                print "Using Level 2 and Level 1. Cost to adjust $num to $target: $cost_addition\n";
-            } else {
-                $cost_addition = $diff * $x;
-                print "Using only Level 1. Cost to adjust $num to $target: $cost_addition\n";
-            }
+    for my $target ( $max_val .. $limit ) {
+        my $total_diff = 0;
+        $total_diff += ( $target - $_ ) for @$ints;
+        my $max_diff = $target - $min_val;
 
-            $cost += $cost_addition;
+        my ( $pairs, $singles );
+        if ( 2 * $max_diff <= $total_diff ) {
+            $pairs   = int( $total_diff / 2 );
+            $singles = $total_diff % 2;
+        }
+        else {
+            $pairs   = $total_diff - $max_diff;
+            $singles = $total_diff - 2 * $pairs;
         }
 
-        print "Total cost to make all elements $target: $cost\n";
-        $min_cost = $cost if $cost < $min_cost;
+        my $cost = ( $pairs * $y ) + ( $singles * $x );
+        if ( !defined $best || $cost < $best ) {
+            $best = $cost;
+        }
     }
 
-    return $min_cost;
+    return $best;
 }
 
-sub max {
-    my @array = @_;
-    my $max = $array[0];
-    foreach (@array) {
-        $max = $_ if $_ > $max;
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
     }
-    return $max;
+    _run_tests();
 }
 
-sub min {
-    my @array = @_;
-    my $min = $array[0];
-    foreach (@array) {
-        $min = $_ if $_ < $min;
+sub _run_tests {
+    my @cases = (
+        {
+            label    => 'Example 1',
+            ints     => [ 4, 1 ],
+            x        => 3,
+            y        => 2,
+            expected => 9,
+        },
+        {
+            label    => 'Example 2',
+            ints     => [ 2, 3, 3, 3, 5 ],
+            x        => 2,
+            y        => 1,
+            expected => 6,
+        },
+        {
+            label    => 'Target higher than max',
+            ints     => [ 1, 2, 2 ],
+            x        => 3,
+            y        => 1,
+            expected => 2,
+        },
+        {
+            label    => 'Already equal',
+            ints     => [ 5, 5, 5 ],
+            x        => 2,
+            y        => 1,
+            expected => 0,
+        },
+    );
+
+    plan( tests => scalar @cases );
+    for my $case (@cases) {
+        is(
+            min_cost_to_equal_elements( $case->{ints}, $case->{x}, $case->{y} ),
+            $case->{expected},
+            $case->{label}
+        );
     }
-    return $min;
 }
 
-# Example 1
-my @ints1 = (4, 1);
-my $x1 = 3;
-my $y1 = 2;
-print "Minimum cost: " . min_cost_to_equal_elements(\@ints1, $x1, $y1) . "\n";  # Expected Output: 9
+_run_cli(@ARGV);
 
-# Example 2
-my @ints2 = (2, 3, 3, 3, 5);
-my $x2 = 2;
-my $y2 = 1;
-print "Minimum cost: " . min_cost_to_equal_elements(\@ints2, $x2, $y2) . "\n";  # Expected Output: 6
+=cut

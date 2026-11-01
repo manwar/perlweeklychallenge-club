@@ -1,44 +1,65 @@
-""" Perl Weekly Challenge 270 LK Task 1 Python """
+#!/usr/bin/env python3
+"""Special Positions in a Binary Matrix - Perl Weekly Challenge 270 Task 1."""
 
-from typing import List
+from __future__ import annotations
+
+import unittest
 
 
-def num_special_positions(matrix: List[List[int]]) -> int:
+def num_special_positions(matrix: list[list[int]]) -> int:
+    """Return the number of special positions in a binary matrix.
+
+    A position (i, j) is special if matrix[i][j] == 1 and all other elements in row i
+    and column j are 0.
     """
-    num_special_positions A position (i, j) is called special if $matrix[i][j] == 1 and all other elements in the row i and column j are 0.
-
-    Args:
-        matrix (List[List[int]]): input matrix
-
-    Returns:
-        int: count of special positions
-    """
+    if not matrix or not matrix[0]:
+        return 0
 
     rows = len(matrix)
     cols = len(matrix[0])
 
-    def is_special(i: int, j: int) -> bool:
-        for x in range(rows):
-            if x != i and matrix[x][j] == 1:
-                return False
-        for y in range(cols):
-            if y != j and matrix[i][y] == 1:
-                return False
-        return True
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(matrix[r][c] for r in range(rows)) for c in range(cols)]
 
     special_count = 0
-    for i in range(rows):
-        for j in range(cols):
-            if matrix[i][j] == 1 and is_special(i, j):
+    for r in range(rows):
+        if row_sums[r] != 1:
+            continue
+        for c in range(cols):
+            if matrix[r][c] == 1 and col_sums[c] == 1:
                 special_count += 1
 
     return special_count
 
 
-# Example 1
-matrix1 = [[1, 0, 0], [0, 0, 1], [1, 0, 0]]
-assert num_special_positions(matrix1) == 1
+class TestSpecialPositions(unittest.TestCase):
+    """Unit tests for num_special_positions."""
 
-# Example 2
-matrix2 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-assert num_special_positions(matrix2) == 3
+    def test_example1(self) -> None:
+        """Test example 1 from challenge description."""
+        matrix = [[1, 0, 0], [0, 0, 1], [1, 0, 0]]
+        self.assertEqual(num_special_positions(matrix), 1)
+
+    def test_example2(self) -> None:
+        """Test example 2 from challenge description."""
+        matrix = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        self.assertEqual(num_special_positions(matrix), 3)
+
+    def test_non_square(self) -> None:
+        """Test non-square matrix."""
+        matrix = [[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]]
+        self.assertEqual(num_special_positions(matrix), 3)
+
+    def test_all_zeros(self) -> None:
+        """Test matrix with no 1s."""
+        matrix = [[0, 0], [0, 0]]
+        self.assertEqual(num_special_positions(matrix), 0)
+
+
+def main() -> None:
+    """Run unit tests."""
+    unittest.main()
+
+
+if __name__ == "__main__":
+    main()
