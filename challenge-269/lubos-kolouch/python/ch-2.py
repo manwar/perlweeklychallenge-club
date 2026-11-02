@@ -1,49 +1,59 @@
-from typing import List
+#!/usr/bin/env python3
+"""Distribute Elements - Perl Weekly Challenge 269 Task 2."""
+
+from __future__ import annotations
+
 import unittest
 
 
-def distribute_elements(ints: List[int]) -> List[int]:
+def distribute_elements(ints: list[int]) -> list[int]:
+    """Distribute elements into two lists according to last element comparisons.
+
+    1. Move ints[0] to arr1.
+    2. Move ints[1] to arr2.
+    3. For remaining elements, if arr1[-1] > arr2[-1], append to arr1;
+       otherwise append to arr2.
+    4. Return arr1 + arr2.
     """
-    Distribute elements of the given list into two separate lists according to the specified rules
-    and return the concatenated result.
+    if len(ints) <= 1:
+        return list(ints)
 
-    Args:
-    ints (List[int]): The input list of distinct integers.
+    arr1: list[int] = [ints[0]]
+    arr2: list[int] = [ints[1]]
 
-    Returns:
-    List[int]: The concatenated list of elements from the two distributed lists.
-    """
-    arr1 = []
-    arr2 = []
-
-    # Initial placement
-    if ints:
-        arr1.append(ints.pop(0))
-    if ints:
-        arr2.append(ints.pop(0))
-
-    # Distribute remaining elements
-    for elem in ints:
+    for elem in ints[2:]:
         if arr1[-1] > arr2[-1]:
             arr1.append(elem)
         else:
             arr2.append(elem)
 
-    # Concatenate and return result
     return arr1 + arr2
 
 
-# Unit tests
 class TestDistributeElements(unittest.TestCase):
-    def test_example_1(self):
+    """Unit tests for distribute_elements."""
+
+    def test_example_1(self) -> None:
+        """Test Example 1 from challenge description."""
         self.assertEqual(distribute_elements([2, 1, 3, 4, 5]), [2, 3, 4, 5, 1])
 
-    def test_example_2(self):
+    def test_example_2(self) -> None:
+        """Test Example 2 from challenge description."""
         self.assertEqual(distribute_elements([3, 2, 4]), [3, 4, 2])
 
-    def test_example_3(self):
+    def test_example_3(self) -> None:
+        """Test Example 3 from challenge description."""
         self.assertEqual(distribute_elements([5, 4, 3, 8]), [5, 3, 4, 8])
+
+    def test_two_elements(self) -> None:
+        """Test distribution with exactly two elements."""
+        self.assertEqual(distribute_elements([10, 20]), [10, 20])
+
+
+def main() -> None:
+    """Run unit tests."""
+    unittest.main()
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
