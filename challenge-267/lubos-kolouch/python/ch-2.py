@@ -1,18 +1,22 @@
-""" Challenge 267 Task 2 LK Python"""
+#!/usr/bin/env python3
+"""Line Counts - The Weekly Challenge 267 Task 2."""
 
-from typing import Tuple, List
+from __future__ import annotations
+
+from collections.abc import Sequence
+import sys
+import unittest
 
 
-def line_counts(s: str, widths: List[int]) -> Tuple[int, int]:
-    """
-    Calculates the number of lines and the width of the last line required to display a string.
+def line_counts(s: str, widths: list[int]) -> tuple[int, int]:
+    """Calculate the number of lines and width of the last line for a string.
 
     Args:
-    s (str): The input string consisting of lowercase English letters.
-    widths (List[int]): A list of 26 integers representing the width of each character from 'a' to 'z'.
+        s: The input string consisting of lowercase English letters.
+        widths: A list of 26 integers representing character widths ('a' to 'z').
 
     Returns:
-    Tuple[int, int]: A tuple containing the number of lines used and the width of the last line.
+        A tuple (lines, last_line_width).
     """
     max_width = 100
     current_width = 0
@@ -29,10 +33,29 @@ def line_counts(s: str, widths: List[int]) -> Tuple[int, int]:
     return lines, current_width
 
 
-# Test cases
-assert line_counts("abcdefghijklmnopqrstuvwxyz", [10] * 26) == (3, 60)
-assert line_counts("bbbcccdddaaa", [4, 10] + [10] * 24) == (2, 4)
+class TestLineCounts(unittest.TestCase):
+    """Unit tests for line_counts."""
 
-# Print results for visualization
-print(line_counts("abcdefghijklmnopqrstuvwxyz", [10] * 26))  # Output: (3, 60)
-print(line_counts("bbbcccdddaaa", [4, 10] + [10] * 24))  # Output: (2, 4)
+    def test_example1(self) -> None:
+        """Test Example 1: 'abcdefghijklmnopqrstuvwxyz' with uniform widths 10."""
+        widths = [10] * 26
+        self.assertEqual(line_counts("abcdefghijklmnopqrstuvwxyz", widths), (3, 60))
+
+    def test_example2(self) -> None:
+        """Test Example 2: 'bbbcccdddaaa' with custom widths."""
+        widths = [4, 10] + [10] * 24
+        self.assertEqual(line_counts("bbbcccdddaaa", widths), (2, 4))
+
+
+def main(argv: Sequence[str] | None = None) -> None:
+    """Command-line interface."""
+    if argv and len(argv) > 2:
+        s = argv[1]
+        widths = [int(x) for x in argv[2:]]
+        print(f"Output: {line_counts(s, widths)}")
+        return
+    unittest.main(argv=[sys.argv[0]])
+
+
+if __name__ == "__main__":
+    main(sys.argv)
