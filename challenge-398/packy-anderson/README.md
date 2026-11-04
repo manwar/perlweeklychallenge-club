@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: Latch on to the affirmative](https://packy.dardan.com/b/123)
+[Perl Weekly Challenge: It makes no difference if it's divisible or not...](https://packy.dardan.com/b/12_)
