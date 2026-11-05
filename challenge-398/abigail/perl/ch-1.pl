@@ -6,13 +6,15 @@ use strict;
 use warnings;
 no  warnings 'syntax';
 
+use POSIX qw [lround];
+
 while (my $line = <>) {
     my ($sum, $count) = (0, 0);
     foreach my $number (grep {$_ % 6 == 0} split /\s+/ => $line) {
         $sum += $number;
         $count ++;
     }
-    say $sum ? int (.5 + $sum / $count) : 0;
+    say $sum ? lround ($sum / $count) : 0;
 }
 
 __END__
