@@ -1,0 +1,91 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/divisibleaverage {
+    0 dict begin
+    { 6 mod 0 eq } filter
+    /b exch def
+    b length 0 eq {
+        0
+    } {
+        b { add } reduce cvr b length cvr div 0.5 add cvi
+    } ifelse
+    end
+} bind def
+
+(divisibleaverage) test.start
+[18 5 7 11] divisibleaverage 18 eq test
+[6 12 18 24 30 40] divisibleaverage 18 eq test
+[3 9 15 21 27] divisibleaverage 0 eq test
+[6 12 14 20] divisibleaverage 9 eq test
+[6 6 6 12 12] divisibleaverage 8 eq test
+test.end

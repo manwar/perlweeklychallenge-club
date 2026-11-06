@@ -1,0 +1,165 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                true
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                {
+                    pop
+                    /k exch def
+                    a k known {
+                        b k known {
+                            a k get b k get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            pop false
+                        } ifelse
+                    } {
+                        pop false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/stringdifference {
+    0 dict begin
+    /a exch def
+    /da [
+        a
+        {
+            [ exch
+              s2a 2 -1 rotor {
+                  aload pop
+                  exch sub
+              } forall
+            ]
+        } forall
+    ] def
+    /dx 0 def
+    1 1 a length 1 sub {
+        /b exch def
+        da 0 get da b get deepeq not {
+            dx 0 gt {
+                /dx 0 def
+                exit
+            } {
+                /dx b def
+            } ifelse
+        } if
+    } for
+    a dx get
+    end
+} bind def
+
+(stringdifference) test.start
+[(ab) (bc) (cd) (zy)] stringdifference (zy) eq test
+[(cba) (fed) (azy)] stringdifference (azy) eq test
+[(pop) (ada) (beb) (cfc)] stringdifference (pop) eq test
+[(aaaa) (zzzz) (mmmm) (aaba)] stringdifference (aaba) eq test
+[(aceg) (bdfh) (cegi) (azbz)] stringdifference (azbz) eq test
+test.end
