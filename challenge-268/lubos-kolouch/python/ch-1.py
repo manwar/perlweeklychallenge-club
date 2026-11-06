@@ -1,72 +1,76 @@
-""" Challenge 268 LK Task 1 Python """
+#!/usr/bin/env python3
+"""Magic Number - The Weekly Challenge 268 Task 1."""
 
-from typing import List
+from __future__ import annotations
+
+import sys
 import unittest
 
-# Type definition for clarity
-IntList = List[int]
 
-
-def arrays_are_equal(a: IntList, b: IntList) -> bool:
-    """Check if two lists contain the same elements in any order."""
-    return sorted(a) == sorted(b)
-
-
-def find_magic_number(x: IntList, y: IntList) -> int:
-    """
-    Find the magic number that, when added to each element of x, gives the elements of y.
+def find_magic_number(x: list[int], y: list[int]) -> int:
+    """Find the magic number that transforms array x into array y when added.
 
     Args:
-    x (IntList): The first list of integers.
-    y (IntList): The second list of integers.
+        x: The first list of integers.
+        y: The second list of integers.
 
     Returns:
-    int: The magic number.
+        The magic number added to each element of x to yield y.
 
     Raises:
-    ValueError: If no magic number is found or input arrays are invalid.
+        ValueError: If lists are empty, have different sizes, or no magic number exists.
     """
     if len(x) != len(y):
         raise ValueError("Input arrays must be of the same size")
     if not x or not y:
         raise ValueError("Input arrays must not be empty")
 
-    possible_candidates = set()
-    for i in range(len(x)):
-        for j in range(len(y)):
-            possible_candidates.add(y[j] - x[i])
+    sorted_x = sorted(x)
+    sorted_y = sorted(y)
 
-    for candidate in possible_candidates:
-        transformed_x = [xi + candidate for xi in x]
-        if arrays_are_equal(transformed_x, y):
-            return candidate
+    diff = sorted_y[0] - sorted_x[0]
+    for xi, yi in zip(sorted_x, sorted_y):
+        if yi - xi != diff:
+            raise ValueError("No magic number found")
 
-    raise ValueError("No magic number found")
+    return diff
 
 
-# Unit tests
 class TestMagicNumber(unittest.TestCase):
-    def test_example_1(self):
+    """Unit tests for find_magic_number."""
+
+    def test_example_1(self) -> None:
+        """Test Example 1: x = [3, 7, 5], y = [9, 5, 7] -> 2."""
         self.assertEqual(find_magic_number([3, 7, 5], [9, 5, 7]), 2)
 
-    def test_example_2(self):
+    def test_example_2(self) -> None:
+        """Test Example 2: x = [1, 2, 1], y = [5, 4, 4] -> 3."""
         self.assertEqual(find_magic_number([1, 2, 1], [5, 4, 4]), 3)
 
-    def test_example_3(self):
+    def test_example_3(self) -> None:
+        """Test Example 3: x = [2], y = [5] -> 3."""
         self.assertEqual(find_magic_number([2], [5]), 3)
 
-    def test_different_size(self):
+    def test_different_size(self) -> None:
+        """Test ValueError when lists have different sizes."""
         with self.assertRaises(ValueError):
             find_magic_number([1, 2, 3], [4, 5])
 
-    def test_empty_arrays(self):
+    def test_empty_arrays(self) -> None:
+        """Test ValueError when lists are empty."""
         with self.assertRaises(ValueError):
             find_magic_number([], [])
 
-    def test_no_magic_number(self):
+    def test_no_magic_number(self) -> None:
+        """Test ValueError when no single magic number works."""
         with self.assertRaises(ValueError):
             find_magic_number([1, 2, 3], [10, 20, 30])
 
 
+def main() -> None:
+    """Run unit tests."""
+    unittest.main(argv=[sys.argv[0]])
+
+
 if __name__ == "__main__":
-    unittest.main()
+    main()
