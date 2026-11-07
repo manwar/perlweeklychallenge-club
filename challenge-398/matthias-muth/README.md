@@ -1,259 +1,295 @@
-# Reflections on Missing Numbers
-**Challenge 397 solutions in Perl by Matthias Muth**
+# Sixes to Average and Strings to Buckets
 
-## Task 1: Absent Smallest Positive
+**Challenge 398 solutions in Perl by Matthias Muth**
 
-> You are given an array of integers.<br/>
-> Write a script to return the smallest absent positive integer such that it is strictly greater than the average of all elements in the given array.
+## Task 1: Divisible Average
+
+> You are given an array of positive integers.<br/>
+> Write a script to return the closest integer to the mean value of all even integers that are divisible by 3. If none is divisible, return 0.
 >
 > **Example 1**
 >
 > ```text
-> Input: @arr = (1, 2, 4, 5, 6)
-> Output: 7
+> Input: @arr = (18, 5, 7, 11)
+> Output: 18
 >
-> Average: (1 + 2 + 4 + 5 + 6) / 5 = 3.6
-> We need the smallest positive integer absent from nums that is strictly greater than 3.6.
-> The positive integers greater than 3.6 are 4, 5, 6, 7, ....
->
-> 4 is in the given array.
-> 5 is in the given array.
-> 6 is in the given array.
-> 7 is not in.
+> 18 is the only even number and divisible by 3.
+> Average: 18 / 1 = 18.
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @arr = (-5, -2, -1, 3)
-> Output: 1
+> Input: @arr = (6, 12, 18, 24, 30, 40)
+> Output: 18
 >
-> Average: (-5 -2 -1 + 3) / 4 = -1.25
-> We need the smallest absent positive integer strictly greater than -1.25.
-> Positive integers are 1, 2, 3, 4, ... (all are strictly greater than -1.25).
->
-> 1 is positive and absent from the given array.
+> The qualifying numbers are 6, 12, 18, 24, and 30.
+> Average: (6 + 12 + 18 + 24 + 30) / 5 = 90 / 5 = 18
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @arr = (1, 2, 3)
-> Output: 4
+> Input: @arr = (3, 9, 15, 21, 27)
+> Output: 0
 >
-> Average: (1 + 2 + 3) / 3 = 2.0
-> We need an integer strictly greater than 2.0.
->
-> 3 is in the given array.
-> 4 is not in.
+> None of the elements are even.
+> Since no elements qualify, return 0.
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @arr = (2, 3, 7, 8)
-> Output: 6
+> Input: @arr = (6, 12, 14, 20)
+> Output: 9
 >
-> Average: (2 + 3 + 7 + 8) / 4 = 5.0
-> We need an integer strictly greater than 5.0.
->
-> 6 is not in the given array.
+> The qualifying numbers are 6 and 12.
+> Average: (6 + 12) / 2 = 9.
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @arr = (1, 1, 1, 10)
-> Output: 4
+> Input: @arr = (6, 6, 6, 12, 12)
+> Output: 8
 >
-> Average: (1 + 1 + 1 + 10) / 4 = 3.25
-> Positive integers strictly greater than 3.25: 4, 5, 6, ...
->
-> 4 is not in the given array.
+> All five numbers are even and divisible by 3.
+> Average: (6 + 6 + 6 + 12 + 12) / 5 = 8.4 => 8
 > ```
 
-All input arrays in the examples are already sorted, but the
-task description doesn't make this mandatory,
-so let's sort the array first, just to be sure.
+Even though the task description is very short, let's have a closer look at a couple of things:
 
-We are looking for the first integer that is strictly greater
-than the average of the elements in the array,
-and which itself does not occur in the array. In addition, that number must be positive. The first guess for the target number therefore is the first integer following that average. If the average is negative, we start with `1`, though:
+* >  all even integers that are divisible by 3
 
-```perl
-    use List::Util qw( sum );
-    my $avg = sum( @arr ) / @arr;
-    my $target = $avg <= 0 ? 1 : int( $avg ) + 1;
-```
+  If an integer is even and also divisible by 3, it is always divisible by 6. So, removing all non-qualifying numbers from the `@arr` array is as easy as this:
 
-Then, we loop over the (sorted) array elements, skipping all numbers that are smaller than our current target.
+  ```perl
+      @arr = grep { $_ % 6 == 0 } @arr;
+  ```
 
-If we encounter an entry that is *larger* (but not equal) than our target, we know that our target is not present in the array, and can immediately return it as the result.
+* > the closest integer to the mean value of [...]
 
-If we encounter an entry that is *equal* to our target, we increment the target and continue trying with the new value.
+  This means *rounding* to the nearest integer. We can use the common rounding idiom `int( $value + 0.5 )`, which rounds up values with a fractional part of 0.5 to the next higher integer, at least for positive values. And as the task description assures us that all input values are positive, the average will be positive, too. With `@arr` containing only numbers divisible by 6, we can return the result like this:
 
-Once we reach the end of the array, we can safely return the current
-target value, because we know it is larger than the last number in the array.
+  ```
+      return @arr ? int( sum( @arr ) / @arr + 0.5 ) : 0;
+  ```
 
-Putting everything together:
+  This also makes sure that we don't get a division-by-zero runtime error when there are no numbers that qualify.
+
+So, everything together: 
 
 ```perl
 use v5.36;
 use List::Util qw( sum );
 
-sub absent_smallest_positive( @arr ) {
-    @arr = sort { $a <=> $b } @arr;
-    my $avg = sum( @arr ) / @arr;
-    my $target = $avg <= 0 ? 1 : int( $avg ) + 1;
-    for ( @arr ) {
-        return $target if $_ > $target;
-        ++$target if $_ == $target;
-    }
-    return $target;
+sub divisible_average( @arr ) {
+    @arr = grep { $_ % 6 == 0 } @arr;
+    return @arr ? int( sum( @arr ) / @arr + 0.5 ) : 0;
 }
 ```
 
-## Task 2: Binary Reflection
+## Task 2: String Difference
 
-> You are given an array of integer.<br/>
-> Write a script to sort the given array in ascending order based on the binary reflection of each element. If two different numbers have the same binary reflection, the smaller original number should appear first.
+> You are given an array of equal length strings.<br/>
+> Write a script to find the difference integer array of each word in the given array. There will be one word with a different array; return that word.<br/>
+> Each words[i] can be converted into a difference integer array difference[i] of length n - 1 where difference[i][j] = words[i][j+1] - words[i][j]
 >
 > **Example 1**
 >
 > ```text
-> Input: @arr = (3, 6, 12)
-> Output: (3, 6, 12)
+> Input: @words = ("ab", "bc", "cd", "zy")
+> Output: "zy"
 >
-> Decimal 3  = Binary 11 -> reverse is also same 11 = Decimal 3
-> Decimal 6  = Binary 110 -> reverse 011 = Decimal 3
-> Decimal 12 = Binary 1100 -> 0011 = Decimal 3
->
-> All three elements have the same binary reflection (3).
-> Since they tie, they are sorted by their original values in ascending order: (3, 6, 12).
+> "ab" => [1 - 0] = [1]
+> "bc" => [2 - 1] = [1]
+> "cd" => [3 - 2] = [1]
+> "zy" => [24 - 25] = [-1]
 > ```
 >
 > **Example 2**
 >
 > ```text
-> Input: @arr = (1, 2, 4, 8)
-> Output: (1, 2, 4, 8)
+> Input: @words = ("cba", "fed", "azy")
+> Output: "azy"
 >
-> Decimal 1 = Binary 1 -> reverse is also same 1 = Decimal 1
-> Decimal 2 = Binary 10 -> reverse is 01 = Decimal 1
-> Decimal 4 = Binary 100 -> reverse 001 = Decimal 1
-> Decimal 8 = Binary 1000 -> reverse is 0001 = Decimal 1
->
-> All elements reflect to 1. Tie-breaking by original value yields (1, 2, 4, 8).
+> "cba" => [1 - 2, 0 - 1] = [-1, -1]
+> "fed" => [4 - 5, 3 - 4] = [-1, -1]
+> "azy" => [25 - 0, 24 - 25] = [25, -1]
 > ```
 >
 > **Example 3**
 >
 > ```text
-> Input: @arr = (7, 8, 9, 10)
-> Output: (8, 10, 7, 9)
+> Input: @words = ("pop", "ada", "beb", "cfc")
+> Output: "pop"
 >
-> Decimal 8  = Binary 1000 -> reverse 0001 = Decimal 1
-> Decimal 9  = Binary 1001 -> reverse 1001 = Decimal 9
-> Decimal 10 = Binary 1010 -> reverse 0101 = Decimal 5
-> Decimal 7  = Binary 111 -> reverse 111 = Decimal 7
->
-> Binary reflections:
-> 8  -> 1
-> 9  -> 9
-> 10 -> 5
-> 7  -> 7
->
-> Sorting by reflection values (1, 5, 7, 9) gives original elements (8, 10, 7, 9).
+> "pop" => [14 - 15, 15 - 14] = [-1, 1]
+> "ada" => [3 - 0, 0 - 3] = [3, -3]
+> "beb" => [4 - 1, 1 - 4] = [3, -3]
+> "cfc" => [5 - 2, 2 - 5] = [3, -3]
 > ```
 >
 > **Example 4**
 >
 > ```text
-> Input: @arr = (5, 9, 15, 17)
-> Output: (5, 9, 15, 17)
+> Input: @words = ("aaaa", "zzzz", "mmmm", "aaba")
+> Output: "aaba"
 >
-> Decimal 5  = Binary 101 -> reverse 101 = Decimal 5
-> Decimal 9  = Binary 1001 -> reverse 1001 = Decimal 9
-> Decimal 15 = Binary 1111 -> reverse 1111 = Decimal 15
-> Decimal 17 = Binary 10001 -> reverse 10001 = Decimal 17
->
-> All numbers are binary palindromes, so their reflections match their original decimal values (5, 9, 15, 17),
-> leaving the array order unchanged.
+> "aaaa" => [0 - 0, 0 - 0, 0 - 0] = [0, 0, 0]
+> "zzzz" => [25 - 25, 25 - 25, 25 - 25] = [0, 0, 0]
+> "mmmm" => [12 - 12, 12 - 12, 12 - 12] = [0, 0, 0]
+> "aaba" => [0 - 0, 1 - 0, 0 - 1] = [0, 1, -1]
 > ```
 >
 > **Example 5**
 >
 > ```text
-> Input: @arr = (11, 13, 14, 19)
-> Output: (14, 13, 11, 19)
+> Input: @words = ("aceg", "bdfh", "cegi", "azbz")
+> Output: "azbz"
 >
-> Decimal 11 = Binary 1011 -> reverse 1101 = Decimal 13
-> Decimal 13 = Binary 1101 -> reverse 1011 = Decimal 11
-> Decimal 14 = Binary 1110 -> reverse 0111 = Decimal 7
-> Decimal 19 = Binary 10011 -> reverse 11001 = Decimal 25
->
-> Reflections:
-> 14 -> 7
-> 13 -> 11
-> 11 -> 13
-> 19 -> 25
->
-> Sorted by reflection values (7, 11, 13, 25) yields (14, 13, 11, 19).
+> "aceg" => [2 - 0, 4 - 2, 6 - 4] = [2, 2, 2]
+> "bdfh" => [3 - 1, 5 - 3, 7 - 5] = [2, 2, 2]
+> "cegi" => [4 - 2, 6 - 4, 8 - 6] = [2, 2, 2]
+> "azbz" => [25 - 0, 1 - 25, 25 - 1] = [25, -24, 24]
 > ```
 
-Actually, there are two challenges to solve in this task:
+So we are looking for an outlier in a set of input words,
+and it is an array of letter differences that is the distinguishing criterion.
 
-* how to calculate the 'reverse binary' for a given number,
-* how to sort the array of numbers according to a criterion that is not the number itself.
+Comparing arrays,
+or counting how often the same array occurs
+in a set of arrays involves a lot of repeated comparisons.
+I will make this part of the task easier
+by defining a *signature* for every array,
+which can be used in comparisons more easily.   
 
-Let's have a look at the first one:
+So I split the task into steps:
 
-Reversing the bits of a number can be done in Perl using a sequence of `pack` and `unpack` calls, but most of the time, these calls work on chunks of eight bits, so we will end up shifting values around to remove leading binary zeros.
+* Determine the array of letter differences for each input token.
 
-If performance were important, I would try the `pack`/`unpack` approach and benchmark it to see how well it performs. But for a solution that only needs to cover the small examples that we have, I choose something that is much less complicated, maybe even elegant:
+  I will use the `slide` function from `List::MoreUtils`
+  to walk through the letters of a word in pairs. The `slide` function applies the block to successive pairs of elements, which can be accessed by the `$a` and `$b` variables.. Here, `$a` and `$b` represent two consecutive letters, and `ord` converts each letter into its numeric character value.:
 
-* A string with the binary representation of a number can be produced with `sprintf "%b", $number`, that's easy enough.
+  ```perl
+      slide { ord( $b ) - ord( $a ) } split "", $word
+  ```
 
-* Reversing that string can be done using `reverse` (in scalar context!).
+* Now I have a 'difference  array' for each input word.<br/>
+  For finding the outlier in these arrays,
+  I need to count how often each array occurs.<br/>
+  To make this easier,
+  I create a *signature* for each array which then can be used for counting. 
 
-* For transforming the reversed string of `0`s and `1`s back into a number, we can use Perl's builtin `oct` function. We prepend `0b` to our string, and `oct` returns the expected value.
+* The *signature*  could be an md5 or sha-1 checksum,
+  but the easiest is to just concatenate all array elements into a string,
+  using separators between the elements to make the result unambiguous:
 
-I created a little function for this:
+  ```perl
+      my $signature = join ",", slide { ord( $b ) - ord( $a ) } split "", $word;
+  ```
 
-```perl
-sub reflected( $n ) {
-    return oct "0b" . reverse sprintf( "%b", $n );
-}
-```
+  For example:
 
-For the second part, sorting the array using special criteria, I use a well-known Perl idiom: the [*Schwartzian Transform*](https://en.wikipedia.org/wiki/Schwartzian_transform).
+  ```text
+  "aceg" => [2 - 0, 4 - 2, 6 - 4] = [2, 2, 2]        => "2,2,2"
+  "azbz" => [25 - 0, 1 - 25, 25 - 1] = [25, -24, 24] => "25,-24,24"
+  ```
 
-The idea is to transform every array element into an anonymous array containing the original value and the value that we want to use for sorting (the *key*). The computation of the key needs to be done only once for each element in the array. Then, in sorting, the *key* can be used as a sorting criterion. After the sorting step, the original values are extracted from the sorted two-element arrays, delivering the values in sorted order.
+* Now I can count the signatures like this:
 
-In our case, the key is computed using the `reflected` function above. The advantage of doing a *Schwartzian Transform* over calling `reflected` inside the `sort` comparison code block is that the number of calls is reduced to only one call per array element, as opposed to two calls per comparison when used in the `sort` code block.
+  ```perl
+      my %counts;
+      for my $word ( @words ) {
+          my $signature =
+              join ",", slide { ord( $b ) - ord( $a ) } split "", $word;
+          ++$counts{$signature};
+      }
+  ```
 
-The two-element anonymous arrays are set up using `map [ $_, reflected $_ ], @arr`. The comparison code block then can use another Perl idiom for concisely chaining comparisons:
+  There will be one entry in `%counts` that contains `1` as a value,
+  representing the outlier.
 
-```perl
-    sort { $a->[1] <=> $b->[1] || $a->[0] <=> $b->[0] } ...
-```
+But actually that doesn't help me, because I need to return the outlier itself,
+not just the signature of its difference array.<br/>
+So actually the previous step will not be used, but this one:
 
-If the first comparison returns `0`, meaning that the reflection values are equal, the second comparison is evaluated and determines the order of the two elements.
+* Instead of keeping the count in `$counts{$signature}` (as a scalar value),
+  I will keep the list of the words that lead to this signature,
+  using an anonymous array.<br/>
+  This is like sorting the words into **buckets**,
+  where the buckets are labeled with the difference array signatures.
 
-Together with the `reflected` function definition above, this is my complete solution:
+  For Example 2 from the task description, these are the signatures: 
+
+  ```text
+  "cba" => [1 - 2, 0 - 1] = [-1, -1]    => "-1,-1"
+  "fed" => [4 - 5, 3 - 4] = [-1, -1]    => "-1,-1"
+  "azy" => [25 - 0, 24 - 25] = [25, -1] => "25,-1"
+  ```
+
+  The `%counts`hash would have been this:
+
+  ```perl
+      (
+          "-1,-1" => 2,
+          "25,-1" => 1,
+      )
+  ```
+
+  Now the `%buckets` hash will contain this:
+
+  ```perl
+      (
+          "-1,-1" => [ "cba", "fed" ],
+          "25,-1" => [ "azy" ],
+      )
+  ```
+
+* Now we can find the bucket that has only one entry, and return its single entry:
+
+  ```perl
+      return ( grep $_->@* == 1, values %buckets )[0][0];
+  ```
+
+  `grep` returns the list of all buckets it finds that only contain one element. Even if we expect only one, it still is a list, of which we use the first element (using the first `[0]`) for the first bucket found, of which we then again take the first element (using the other `[0]`), which gives us the outlier word.
+
+  This also works well if there are two or more outliers (each with a distinct, singular signature). In this case, one of them is returned, and as the order of hash entries in Perl is randomized (for security reasons), we cannot predict which one will come first. No good test 
+
+  But it doesn't work when there is *no* outlier.
+  In that case, the list returned by `grep` is empty. The first `[0]` will not result in a bucket (a valid arrayref), but in `undef`. Then, the second `[0]` will try using `undef` as an anonymous array, which will abort the script with an error message ('`Can't use an undefined value as an ARRAY reference`').
+
+  So I revise this step:
+
+* REVISED: Return the first word from the first bucket that has only one entry:
+
+  ```perl
+      return ( map $_->[0], grep $_->@* == 1, values %buckets )[0];
+  ```
+
+  Now,  `map` directly extracts the first (and only) element from any bucket
+  that `grep` finds to contain exactly one element.
+
+  The result will be a list of words, and normally it will contain only one word, because we expect exactly one outlier.
+
+  As before, if there is more than one outlier, the first one will be returned ( by the outer `[0]`).   
+
+  But now, if there is no outlier, it is the list of words that will be empty, not a list of buckets, as before. Taking the zeroth element simply results in an `undef` return value, not in a runtime error or program abort.
+
+Now I think it it is robust enough to put it into a complete solution:
 
 ```perl
 use v5.36;
+use List::MoreUtils qw( slide );
 
-sub reflected( $n ) {
-    return oct "0b" . reverse sprintf( "%b", $n );
-}
-
-sub binary_reflection( @arr ) {
-    return map $_->[0],
-        sort { $a->[1] <=> $b->[1] || $a->[0] <=> $b->[0] }
-            map [ $_, reflected $_ ],
-                @arr;
+sub string_difference( @words ) {
+    my %buckets;
+    for my $word ( @words ) {
+        my $signature =
+            join ",", slide { ord( $b ) - ord( $a ) } split "", $word;
+        push $buckets{$signature}->@*, $word;
+    }
+    return ( map $_->[0], grep $_->@* == 1, values %buckets )[0];
 }
 ```
 
