@@ -1,5 +1,6 @@
 #!/opt/homebrew/bin/gawk
 
+function round (x) {r = x >= 0 ? int (x + .5) : int (x - .5); return r}
 
 #
 # Loop over each line of input
@@ -13,5 +14,5 @@
             count ++
         }
     }
-    print sum ? int (.5 + sum / count) : 0
+    print sum ? round(sum / count) : 0
 }
