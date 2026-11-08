@@ -1,3 +1,3 @@
-# The Weekly Challenge 397
+# The Weekly Challenge 398
 
-Blog: [An average reflection](https://dev.to/simongreennet/weekly-challenge-an-average-reflection-4b28)
+Blog: [A different average](https://dev.to/simongreennet/weekly-challenge-a-different-average-33nm)
