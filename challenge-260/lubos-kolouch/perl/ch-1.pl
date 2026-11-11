@@ -1,36 +1,100 @@
-package  ch1;
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(ArrayRef Int);
+use Test::More;
 
-use Data::Dumper;
+=pod
 
-sub unique_occurrences {
-    my @ints = @_;
+=head1 NAME
+
+ch-1.pl - Unique Occurrences (The Weekly Challenge 260 Task 1)
+
+=head1 SYNOPSIS
+
+  perl ch-1.pl 1 2 2 1 1 3
+  perl ch-1.pl   # runs the embedded tests
+
+=head1 DESCRIPTION
+
+You are given an array of integers, C<@ints>.
+
+Write a script to return C<1> if the number of occurrences of each value in the
+given array is unique or C<0> otherwise.
+
+=head1 FUNCTIONS
+
+=head2 unique_occurrences($ints)
+
+Checks whether the frequency of each distinct integer in C<$ints> is unique.
+
+=over 4
+
+=item * C<$ints> - Reference to an array of integers.
+
+=back
+
+Returns C<1> if all occurrence counts are unique, or C<0> otherwise.
+
+=cut
+
+signature_for unique_occurrences => (
+    method     => 0,
+    positional => [ ArrayRef [Int] ],
+);
+
+sub unique_occurrences ($ints) {
     my %count;
+    $count{$_}++ for @$ints;
 
-    # Count occurrences of each value in the array
-    $count{$_}++ for @ints;
-
-    # Check if the number of occurrences is unique
     my %occurrences_count;
-    foreach my $value ( values %count ) {
-        $occurrences_count{$value}++;
+    for my $freq ( values %count ) {
+        return 0 if $occurrences_count{$freq}++;
     }
 
-    # Return 1 if all occurrences are unique, 0 otherwise
-    return ( scalar keys %occurrences_count == scalar values %count ) ? 1 : 0;
+    return 1;
 }
 
-# Example 1
-my @ints1 = ( 1, 2, 2, 1, 1, 3 );
-print "Example 1: " . unique_occurrences(@ints1) . "\n";
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    my @ints   = map { int($_) } @args;
+    my $result = unique_occurrences( \@ints );
+    say "Output: $result";
+}
 
-# Example 2
-my @ints2 = ( 1, 2, 3 );
-print "Example 2: " . unique_occurrences(@ints2) . "\n";
+sub _run_tests {
+    my @cases = (
+        {
+            label    => 'Example 1',
+            ints     => [ 1, 2, 2, 1, 1, 3 ],
+            expected => 1,
+        },
+        {
+            label    => 'Example 2',
+            ints     => [ 1, 2, 3 ],
+            expected => 0,
+        },
+        {
+            label    => 'Example 3',
+            ints     => [ -2, 0, 1, -2, 1, 1, 0, 1, -2, 9 ],
+            expected => 1,
+        },
+    );
 
-# Example 3
-my @ints3 = ( -2, 0, 1, -2, 1, 1, 0, 1, -2, 9 );
-print "Example 3: " . unique_occurrences(@ints3) . "\n";
+    plan( tests => scalar @cases );
+    for my $case (@cases) {
+        is(
+            unique_occurrences( $case->{ints} ),
+            $case->{expected},
+            $case->{label}
+        );
+    }
+}
 
-1;
+_run_cli(@ARGV);
+
+=cut
