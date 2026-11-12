@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: It makes no difference if it's divisible or not...](https://packy.dardan.com/b/12_)
+[Perl Weekly Challenge: So many strings I was searching...](https://packy.dardan.com/b/12u)
