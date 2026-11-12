@@ -1,0 +1,193 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/lsub {
+    0 dict begin
+    /t exch def
+    /wm exch def
+    /strt 0 def
+    /state 0 def
+    [
+        0 1 wm length 1 sub {
+            /n exch def
+            state 0 eq {
+                wm n get t eq {
+                    /strt n def
+                    /state 1 def
+                } if
+            } {
+                wm n get t ne {
+                    n strt sub
+                    /state 0 def
+                } if
+            } ifelse
+        } for
+        state 1 eq {
+            wm length strt sub
+        } if
+    ] listmax
+    end
+} bind def
+
+/longestrepeatingcharacter {
+    0 dict begin
+    /k exch def
+    s2a /origin exch def
+    /targets origin toset def
+    0
+    targets keys {
+        /t exch def
+        /queue 0 array def
+        /queue queue [ origin 0 ] apush.right def
+        {
+            queue length 0 eq {
+                exit
+            } if
+            queue apop.left
+            aload pop
+            /ct exch def
+            /wm exch def
+            /queue exch def
+            wm t lsub max
+            ct k lt {
+                /ctp ct 1 add def
+                0 1 wm length 1 sub {
+                    /n exch def
+                    wm n get t ne {
+                        /wmp wm deepcopy def
+                        wmp n t put
+                        /queue queue [ wmp ctp ] apush.right def
+                    } if
+                } for
+            } if
+        } loop
+    } forall
+    end
+} bind def
+
+(longestrepeatingcharacter) test.start
+(AAAAA) 2 longestrepeatingcharacter 5 eq test
+(ABCDE) 4 longestrepeatingcharacter 5 eq test
+(AAABBBBAA) 1 longestrepeatingcharacter 5 eq test
+(ABACADA) 2 longestrepeatingcharacter 5 eq test
+(BAAABAAAA) 1 longestrepeatingcharacter 8 eq test
+test.end

@@ -1,0 +1,140 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+
+% end included library code
+
+/longestabsolutepath {
+    0 dict begin
+    /components 0 array def
+    0 exch
+    (\n) strsplit {
+        /entry exch def
+        /depth 1 def
+        {
+            entry (\t) anchorsearch {
+                pop
+                /entry exch def
+                /depth depth 1 add def
+            } {
+                pop
+                exit
+            } ifelse
+        } loop
+        {
+            components length depth ge {
+                exit
+            } if
+            /components components 0 apush.right def
+        } loop
+        {
+            components length depth lt {
+                exit
+            } if
+            /components components apop.right pop def
+        } loop
+        /components components entry length apush.right def
+        entry (.) search {
+            pop pop pop
+            components { add } reduce components length add 1 sub max
+        } {
+            pop
+        } ifelse
+    } forall
+    end
+} bind def
+
+(longestabsolutepath) test.start
+(dir\n\tsubdir1\n\t\tsubsubdir1\n\tsubdir2) longestabsolutepath 0 eq test
+(file1.txt\nfile2.ext\na.png) longestabsolutepath 9 eq test
+(my documents\n\tproject v1.0\n\t\tnotes v1.txt\n\timage.png) longestabsolutepath 38 eq test
+(root\n\ta\n\t\tb\n\t\t\tc.txt\n\td\n\t\te.txt) longestabsolutepath 14 eq test
+(a\n\tb\n\t\tc\n\t\t\td\n\t\t\t\te.txt\n\tvery_long_directory_name\n\t\tf.txt) longestabsolutepath 32 eq test
+test.end
