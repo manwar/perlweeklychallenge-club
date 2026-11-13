@@ -1,59 +1,158 @@
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(Str);
+use Test::More;
 
-sub load_grid {
-    my ($file_path) = @_;
-    open my $fh, '<', $file_path or die "Could not open file: $!";
-    my @grid = map { [ split ' ', $_ ] } <$fh>;
-    close $fh;
-    return \@grid;
-}
+=pod
 
-sub load_words {
-    my ($file_path) = @_;
-    open my $fh, '<', $file_path or die "Could not open file: $!";
-    my %words = map { chomp; $_ => 1 } <$fh>;
-    close $fh;
-    return \%words;
-}
+=head1 NAME
 
-sub find_words_in_grid {
-    my ( $grid, $words ) = @_;
-    my @found_words;
-    my @directions = (
-        [ -1, -1 ], [ -1, 0 ],  [ -1, 1 ], [ 0, -1 ],
-        [ 0,  1 ],  [ 1,  -1 ], [ 1,  0 ], [ 1, 1 ]
-    );
+ch-2.pl - Line Parser (The Weekly Challenge 259 Task 2)
 
-    my $rows = @$grid;
-    my $cols = @{ $grid->[0] };
+=head1 SYNOPSIS
 
-    for my $row ( 0 .. $rows - 1 ) {
-        for my $col ( 0 .. $cols - 1 ) {
-            foreach my $dir (@directions) {
-                my ( $dx, $dy ) = @$dir;
-                my ( $x,  $y )  = ( $row, $col );
-                my $word = '';
-                while ( $x >= 0 && $x < $rows && $y >= 0 && $y < $cols ) {
-                    $word .= $grid->[$x][$y];
-                    push @found_words, $word if exists $words->{$word};
-                    $x += $dx;
-                    $y += $dy;
-                }
-            }
+  perl ch-2.pl '{% id field1="value1" field2=42 %}'
+  perl ch-2.pl   # runs the embedded tests
+
+=head1 DESCRIPTION
+
+You are given a template tag line (or multiline block).
+
+Write a script to parse the line, extracting the tag name, key-value field
+attributes (supporting unquoted numbers and double-quoted strings with escape
+sequences), and optional multiline text body.
+
+=head1 FUNCTIONS
+
+=head2 parse_line($input)
+
+Parses a single-line or multiline template tag string.
+
+=over 4
+
+=item * C<$input> - The string input to parse.
+
+=back
+
+Returns a hash reference with keys C<name>, C<fields>, and optionally C<text>.
+
+=cut
+
+signature_for parse_line => (
+    method     => 0,
+    positional => [Str],
+);
+
+sub parse_line ($input) {
+    my %result;
+
+    my ( $name, $attrs, $text );
+    if ( $input =~ m/\A\s*\{%\s*(\w+)(.*?)\s*%\}(?:\r?\n([\s\S]*?)\r?\n\s*\{%\s*end\1\s*%\})?\s*\z/s ) {
+        $name  = $1;
+        $attrs = $2;
+        $text  = $3;
+    }
+    else {
+        ( $name, $attrs ) = ( $input =~ m/\{%\s*(\w+)(.*?)\s*%\}/s );
+    }
+
+    return {} unless defined $name;
+
+    $result{name}   = $name;
+    $result{fields} = {};
+
+    while ( $attrs =~ m/(\w+)=(?:(-?\d+(?:\.\d+)?)|"((?:\\.|[^"\\])*)")/g ) {
+        my $key     = $1;
+        my $num_val = $2;
+        my $str_val = $3;
+
+        if ( defined $num_val ) {
+            $result{fields}{$key} = 0 + $num_val;
+        }
+        else {
+            $str_val =~ s/\\(.)/$1/g;
+            $result{fields}{$key} = $str_val;
         }
     }
-    return \@found_words;
+
+    if ( defined $text ) {
+        $result{text} = $text;
+    }
+
+    return \%result;
 }
 
-# Example usage
-# Replace the file paths with the actual paths to your grid and words files
-my $grid_file  = 'grid.txt';
-my $words_file = 'words.txt';
+sub _run_cli (@args) {
+    if ( !@args ) {
+        _run_tests();
+        return;
+    }
+    my $input  = join( ' ', @args );
+    my $result = parse_line($input);
+    require Data::Dumper;
+    say Data::Dumper::Dumper($result);
+}
 
-my $grid        = load_grid($grid_file);
-my $words       = load_words($words_file);
-my $found_words = find_words_in_grid( $grid, $words );
+sub _run_tests {
+    my @cases = (
+        {
+            label    => 'Example 1',
+            input    => q/{%  id   field1="value1"    field2="value2"  field3=42 %}/,
+            expected => {
+                name   => 'id',
+                fields => {
+                    field1 => 'value1',
+                    field2 => 'value2',
+                    field3 => 42,
+                },
+            },
+        },
+        {
+            label    => 'Example 2 - escaped quotes',
+            input    => q/{%  youtube title="Title \"quoted\" done" %}/,
+            expected => {
+                name   => 'youtube',
+                fields => {
+                    title => 'Title "quoted" done',
+                },
+            },
+        },
+        {
+            label    => 'Example 3 - escaped backslash',
+            input    => q/{%  youtube title="Title with escaped backslash \\\\" %}/,
+            expected => {
+                name   => 'youtube',
+                fields => {
+                    title => 'Title with escaped backslash \\',
+                },
+            },
+        },
+        {
+            label    => 'Example 4 - multiline tag',
+            input    => "{% id field1=\"value1\" field2=\"value2\" %}\nLINES\n{% endid %}",
+            expected => {
+                name   => 'id',
+                fields => {
+                    field1 => 'value1',
+                    field2 => 'value2',
+                },
+                text   => 'LINES',
+            },
+        },
+    );
 
-print "Found words:\n";
-print "$_\n" foreach @$found_words;
+    plan( tests => scalar @cases );
+    for my $case (@cases) {
+        is_deeply(
+            parse_line( $case->{input} ),
+            $case->{expected},
+            $case->{label}
+        );
+    }
+}
+
+_run_cli(@ARGV);
+
+=cut
