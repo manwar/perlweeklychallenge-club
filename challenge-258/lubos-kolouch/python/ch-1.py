@@ -1,31 +1,43 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Count Even Digits Number - Perl Weekly Challenge 258 Task 1."""
 
-from typing import Tuple
+from __future__ import annotations
+
+import unittest
 
 
-def count_even_digits(ints: tuple[int, ...]) -> int:
-    """
-    Counts the number of integers in the given tuple that have an even number of digits.
+def count_even_digits(ints: list[int] | tuple[int, ...]) -> int:
+    """Count integers in the sequence that have an even number of digits.
 
-    Parameters:
-    ints (Tuple[int, ...]): A tuple of positive integers.
+    Args:
+        ints: A list or tuple of positive integers.
 
     Returns:
-    int: The count of integers with an even number of digits.
+        The count of integers with an even number of digits.
     """
-    even_digits_count = 0
-    for num in ints:
-        if len(str(num)) % 2 == 0:
-            even_digits_count += 1
-    return even_digits_count
+    return sum(1 for num in ints if len(str(abs(num))) % 2 == 0)
 
 
-# Assert tests
-assert count_even_digits((10, 1, 111, 24, 1000)) == 3, "Test Case  1 Failed"
-assert count_even_digits((111, 1, 11111)) == 0, "Test Case  2 Failed"
-assert count_even_digits((2, 8, 1024, 256)) == 1, "Test Case  3 Failed"
+class TestCountEvenDigits(unittest.TestCase):
+    """Unit tests for count_even_digits."""
 
-# Example usage
-print(count_even_digits((10, 1, 111, 24, 1000)))  # Output:  3
-print(count_even_digits((111, 1, 11111)))  # Output:  0
-print(count_even_digits((2, 8, 1024, 256)))  # Output:  1
+    def test_example_1(self) -> None:
+        """Test Example 1: (10, 1, 111, 24, 1000)."""
+        self.assertEqual(count_even_digits((10, 1, 111, 24, 1000)), 3)
+
+    def test_example_2(self) -> None:
+        """Test Example 2: (111, 1, 11111)."""
+        self.assertEqual(count_even_digits((111, 1, 11111)), 0)
+
+    def test_example_3(self) -> None:
+        """Test Example 3: (2, 8, 1024, 256)."""
+        self.assertEqual(count_even_digits([2, 8, 1024, 256]), 1)
+
+
+def main() -> None:
+    """Run unit tests."""
+    unittest.main()
+
+
+if __name__ == "__main__":
+    main()
