@@ -1,3 +1,3 @@
-# The Weekly Challenge 398
+# The Weekly Challenge 399
 
-Blog: [A different average](https://dev.to/simongreennet/weekly-challenge-a-different-average-33nm)
+Blog: [The longest](https://dev.to/simongreennet/weekly-challenge-the-longest-39d4)
