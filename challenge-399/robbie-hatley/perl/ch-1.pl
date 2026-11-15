@@ -24,8 +24,8 @@ of the longest reachable substring of a single letter.
 PROBLEM NOTES:
 
 To solve this problem, I'll generate every substring of the string, then calculate the aomac (Abundance Of
-Most-Abundant Character) for each substring. Then if length - aomac is less-than-or-equal to k and length is
-greater than max, update max. Then simply return max.
+Most-Abundant Character) for each substring. Then if length - aomac is less-than-or-equal-to k and length is
+greater than max, update max. Then return max.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
