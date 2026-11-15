@@ -111,9 +111,9 @@ class Node
     method findLongest()
     {
         my $longest = 0;
-        my @stack = ( [$self, -1] );
+        my @queue = ( [$self, -1] );
 
-        while ( defined(my $x = shift @stack) )
+        while ( defined(my $x = shift @queue) )
         {
             my ($node, $sofar) = $x->@*;
             $logger->debug("FIND: sofar=$sofar node=$node");
@@ -129,7 +129,8 @@ class Node
             for my $child ( $node->getChildren->@* )
             {
                 $logger->debug("FIND: push $child");
-                push @stack, [ $child, $sofar + 1 + length($node->name) ];
+                # Add 1 for the / separator
+                push @queue, [ $child, $sofar + 1 + length($node->name) ];
             }
         }
         return $longest;
