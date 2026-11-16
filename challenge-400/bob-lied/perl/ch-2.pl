@@ -85,35 +85,23 @@ sub task($start_gene, $end_gene, $gene_bank)
     # end_gene must exist in gene_bank
     return -1 unless first { $_ eq $end_gene } $gene_bank->@*;
 
-    my $minMutateCount = length($start_gene);
-    my @queue;
-    for ( oneMutationAway($start_gene, $gene_bank) )
-    {
-        push @queue, [ $_, 0 ];
-    }
+    # Breadth-first search for shortest path
+    my @queue = map { [ $_, 1 ] } oneMutationAway($start_gene, $gene_bank);
 
     my %seen;
     while ( my $x = shift @queue )
     {
-        my ( $g, $count ) = $x->@*; 
+        my ( $gene, $count ) = $x->@*; 
 
-        next if $seen{$g};
-        $seen{$g} = true;
-        $logger->debug("LOOK: $g, $count");
+        next if $seen{$gene};
 
-        my $stepCount = $count + 1;
-        if ( $g eq $end_gene )
-        {
-            $minMutateCount = $stepCount if $stepCount < $minMutateCount;
-            next;
-        }
+        return $count if ( $gene eq $end_gene );
 
-        for ( oneMutationAway($g, $gene_bank) )
-        {
-            push @queue, [ $_, $stepCount ] unless $seen{$_};
-        }
+        $seen{$gene} = true;
+        push @queue, map { [ $_, $count+1 ] }
+                grep { ! $seen{$_} } oneMutationAway($gene, $gene_bank);
     }
-    return $minMutateCount;
+    return -1;
 }
 
 sub oneMutationAway($g, $bank)
