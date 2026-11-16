@@ -1,24 +1,39 @@
+#!/usr/bin/env python3
+"""Odd Character - Perl Weekly Challenge 255 task 1."""
+
+from __future__ import annotations
+
+from collections import Counter
+import unittest
+
+
 def find_odd_character(s: str, t: str) -> str:
-    """
-    Finds the additional character in string t.
-
-    :param s: Original string.
-    :param t: Modified string with one extra character.
-    :return: The additional character.
-    """
-    from collections import Counter
-
+    """Return the additional character present in string t compared to s."""
     count_s = Counter(s)
     count_t = Counter(t)
 
-    for char in count_t:
-        if count_t[char] > count_s.get(char, 0):
+    for char, count in count_t.items():
+        if count > count_s.get(char, 0):
             return char
 
     return ""
 
 
-# Tests
-assert find_odd_character("Perl", "Preel") == "e"
-assert find_odd_character("Weekly", "Weeakly") == "a"
-assert find_odd_character("Box", "Boxy") == "y"
+class TestFindOddCharacter(unittest.TestCase):
+    """Unit tests for find_odd_character."""
+
+    def test_example_1(self) -> None:
+        """Verify Example 1."""
+        self.assertEqual(find_odd_character("Perl", "Preel"), "e")
+
+    def test_example_2(self) -> None:
+        """Verify Example 2."""
+        self.assertEqual(find_odd_character("Weekly", "Weeakly"), "a")
+
+    def test_example_3(self) -> None:
+        """Verify Example 3."""
+        self.assertEqual(find_odd_character("Box", "Boxy"), "y")
+
+
+if __name__ == "__main__":
+    unittest.main()
