@@ -106,10 +106,10 @@ sub task($start_gene, $end_gene, $gene_bank)
 
 sub oneMutationAway($g, $bank)
 {
-    grep { geneDiff($g, $_) == 1 } $bank->@*;
+    grep { genediffCount($g, $_) == 1 } $bank->@*;
 }
 
-sub geneDiff($beg, $end)
+sub genediffCount($beg, $end)
 {
     return sum0 map
         { substr($beg, $_, 1) eq substr($end, $_, 1) ? 0 : 1 }
