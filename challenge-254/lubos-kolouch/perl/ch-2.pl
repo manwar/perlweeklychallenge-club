@@ -1,34 +1,54 @@
-use strict;
+#!/usr/bin/env perl
+use v5.38;
 use warnings;
+use Type::Params -sigs;
+use Types::Standard qw(Str);
+use Test::More;
 
-sub reverse_vowels {
-    my ($s)    = @_;
+=head1 NAME
+
+ch-2.pl - Reverse Vowels
+
+=head1 SYNOPSIS
+
+    perl ch-2.pl
+
+=head1 DESCRIPTION
+
+Solution for The Weekly Challenge 254, Task 2: Reverse Vowels.
+Reverses all vowels (a, e, i, o, u) in a given string while preserving
+the original case of each vowel position.
+
+=head1 FUNCTIONS
+
+=head2 reverse_vowels($s)
+
+Returns a copy of C<$s> with all vowels reversed in order, preserving the
+uppercase/lowercase pattern of the original vowel positions.
+
+=cut
+
+signature_for reverse_vowels => (
+    method     => 0,
+    positional => [Str],
+);
+
+sub reverse_vowels ($s) {
     my @vowels = reverse( $s =~ /[aeiou]/ig );
     my @chars  = split //, $s;
 
-    # Replace vowels in the string with reversed vowels
     for my $i ( 0 .. $#chars ) {
         if ( $chars[$i] =~ /[aeiouAEIOU]/ ) {
             my $replacement = shift @vowels;
-
-            # Adjusting case of the replacement vowel to match original
-            if ( $chars[$i] =~ /[AEIOU]/ ) {
-                $replacement = uc($replacement);
-            }
-            else {
-                $replacement = lc($replacement);
-            }
-            $chars[$i] = $replacement;
+            $chars[$i] = ( $chars[$i] =~ /[AEIOU]/ ) ? uc($replacement) : lc($replacement);
         }
     }
 
     return join '', @chars;
 }
 
-# Tests
-use Test::More;
-ok( reverse_vowels("Raku") eq "Ruka",   'Test Raku' );
-ok( reverse_vowels("Perl") eq "Perl",   'Test Perl' );
-ok( reverse_vowels("Julia") eq "Jaliu", 'Test Julia' );
-ok( reverse_vowels("Uiua") eq "Auiu",   'Test Uiua' );
+is( reverse_vowels('Raku'),  'Ruka',  'Example 1: Raku -> Ruka' );
+is( reverse_vowels('Perl'),  'Perl',  'Example 2: Perl -> Perl' );
+is( reverse_vowels('Julia'), 'Jaliu', 'Example 3: Julia -> Jaliu' );
+is( reverse_vowels('Uiua'),  'Auiu',  'Example 4: Uiua -> Auiu' );
 done_testing();

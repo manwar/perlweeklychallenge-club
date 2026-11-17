@@ -1,35 +1,41 @@
+#!/usr/bin/env python3
+"""Three Power - Perl Weekly Challenge 254, Task 1."""
+
+from __future__ import annotations
+
+import unittest
+
+
 def is_power_of_three(n: int) -> bool:
-    """
-    Checks if a positive integer is a power of three.
-
-    Args:
-        n: The positive integer to check.
-
-    Returns:
-        True if n is a power of three, False otherwise.
-
-    Raises:
-        ValueError: If n is not a positive integer.
-    """
-
-    if n <= 0:
-        raise ValueError("Input must be a positive integer.")
-
-    # If n is 1, it's trivially a power of three
-    if n == 1:
+    """Return True if n is a power of three (or 0 = 0^3), False otherwise."""
+    if n == 0:
         return True
+    if n < 1:
+        return False
 
-    # Repeatedly divide n by 3 until it reaches 1 or becomes negative
     while n % 3 == 0:
         n //= 3
 
-    # If n is 1 after the division, it was a power of three
     return n == 1
 
 
-# Assert tests (corrected)
-assert is_power_of_three(27) is True
-assert is_power_of_three(81) is True
-assert is_power_of_three(6) is False
+class TestThreePower(unittest.TestCase):
+    """Unit tests for the is_power_of_three function."""
 
-print("All tests passed!")
+    def test_examples(self) -> None:
+        """Verify all challenge examples and edge cases."""
+        cases: list[tuple[int, bool]] = [
+            (27, True),
+            (0, True),
+            (6, False),
+            (1, True),
+            (81, True),
+            (-3, False),
+        ]
+        for value, expected in cases:
+            with self.subTest(value=value):
+                self.assertEqual(is_power_of_three(value), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
