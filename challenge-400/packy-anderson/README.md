@@ -21,4 +21,4 @@
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
-[Perl Weekly Challenge: So many strings I was searching...](https://packy.dardan.com/b/12u)
+[Perl Weekly Challenge: We rolled down the long and winding interstate in our '53 DeSota...](https://packy.dardan.com/b/13f)
