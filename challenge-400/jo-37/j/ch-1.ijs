@@ -17,9 +17,12 @@ intervals =: adverb define
   NB. inplace value setter
   '`si srun smax' =. (0 })`(1 })`(2 })
 
-  NB. new values
+  NB. new values depending on "skip":
+  NB. set or increment
   ni =. ({:@[)`({:@[ + i)@.({.@[)
+  NB. reset or set
   nrun =. (0:)`({:@[ + run)@.({.@[)
+  NB. set or keep
   nmax =. run`max@.({.@[)
 
   NB. integer decadic logarithm
@@ -41,7 +44,7 @@ intervals =: adverb define
   NB. step back from transition point to smallest preceding duplicate
   back =. (] [`([ - 10 p.~ |. @: >: @ i. @ <: @ ])@.(1&<@]) ntz)
 
-  NB.  digits are always duplicate beyond this value
+  NB. digits are always duplicate beyond this value
   stop =. _:^:(9876543210&<)
 
   NB. return "(0, target)" for unique digits
