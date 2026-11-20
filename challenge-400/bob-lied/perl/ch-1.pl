@@ -52,14 +52,17 @@ say task($_) for @ARGV;
 
 sub task($int)
 {
-    use List::Util qw/max/;
-    use List::MoreUtils qw/slide duplicates/;
-    return max
-            slide { $b - $a }
-                grep { duplicates(split(//, $_)) == 0 }
-                    1 .. $int;
+    use List::Util qw/max/; use List::MoreUtils qw/slide/;
+    return max slide { $b - $a } grep !/(.).*\1/, 1 .. $int;
 }
 
+sub task2($int)
+{
+    use List::Util qw/max/;
+    use List::MoreUtils qw/slide duplicates/;
+    return max slide { $b - $a }
+                grep { duplicates(split(//, $_)) == 0 } 1 .. $int;
+}
 
 sub runTest
 {
@@ -70,6 +73,12 @@ sub runTest
     is( task(  500),  11, "Example 3");
     is( task( 2026), 105, "Example 4");
     is( task(10000), 105, "Example 5");
+
+    is( task2(   20),   2, "Example 1");
+    is( task2(  110),   4, "Example 2");
+    is( task2(  500),  11, "Example 3");
+    is( task2( 2026), 105, "Example 4");
+    is( task2(10000), 105, "Example 5");
 
     done_testing;
 }

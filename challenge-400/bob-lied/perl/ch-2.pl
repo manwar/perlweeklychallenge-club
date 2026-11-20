@@ -89,7 +89,7 @@ sub task($start_gene, $end_gene, $gene_bank)
     my @queue = map { [ $_, 1 ] } oneMutationAway($start_gene, $gene_bank);
 
     my %seen;
-    while ( my $x = shift @queue )
+    while ( my $x = pop @queue )
     {
         my ( $gene, $count ) = $x->@*; 
 
