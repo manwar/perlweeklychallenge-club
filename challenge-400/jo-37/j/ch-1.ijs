@@ -74,7 +74,7 @@ intervals =: adverb define
   NB. returns pair "(uniq, target)"
   skip =. (] dupl`uniq@.is_uniq frd rxmatch to_str)@i
 
-  NB. loop over u while x in not less than "i" component of y 
+  NB. loop over u while x is greater/equal "i" component of y 
   NB. return final result for n = _. or all for n = a:
   while_ge_i =. conjunction def 'u^:([ >: i)^:n'
 
