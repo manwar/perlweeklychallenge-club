@@ -1,17 +1,34 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Smallest Index - Perl Weekly Challenge 250, Task 1."""
 
-import typing
+from __future__ import annotations
+
+import unittest
 
 
-# Define a function to find the smallest index i such that i mod 10 == ints[i] using list comprehension
 def smallest_index(ints: list[int]) -> int:
-    # Create a list of indices that satisfy the condition using list comprehension
-    indices = [i for i in range(len(ints)) if i % 10 == ints[i]]
-    # Return the smallest index if the list is not empty, otherwise return -1
-    return min(indices) if indices else -1
+    """Return the smallest index i such that i % 10 == ints[i], or -1."""
+    for i, value in enumerate(ints):
+        if i % 10 == value:
+            return i
+    return -1
 
 
-# Test the function with some examples
-print(smallest_index([0, 1, 2]))  # Output: 0
-print(smallest_index([4, 3, 2, 1]))  # Output: 2
-print(smallest_index([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]))  # Output: -1
+class TestSmallestIndex(unittest.TestCase):
+    """Unit tests for the smallest_index function."""
+
+    def test_examples(self) -> None:
+        """Verify all challenge examples and edge cases."""
+        cases: list[tuple[list[int], int]] = [
+            ([0, 1, 2], 0),
+            ([4, 3, 2, 1], 2),
+            ([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], -1),
+            ([], -1),
+        ]
+        for ints, expected in cases:
+            with self.subTest(ints=ints):
+                self.assertEqual(smallest_index(ints), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
