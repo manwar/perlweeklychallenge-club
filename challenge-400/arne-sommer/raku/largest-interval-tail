@@ -1,0 +1,30 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0,
+               :v(:$verbose));
+
+my @kept;
+my $best = 0;
+
+for 1 .. $n -> $i
+{
+  my @digits = $i.comb;
+
+  next if @digits.repeated;
+
+  if @kept
+  {
+    my $jump = $i - @kept.tail;
+    if $jump > $best
+    {
+      $best = $jump;
+      say ": { @kept.tail } -> $i, jump $jump" if $verbose;
+    }
+  }
+
+  @kept.push: $i;
+}
+
+say ": seq: @kept[]" if $verbose;
+
+say $best;
