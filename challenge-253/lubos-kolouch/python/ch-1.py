@@ -1,32 +1,45 @@
-def split_strings(words, separator):
-    """
-    Splits strings in an array by a given separator and returns non-empty strings.
+#!/usr/bin/env python3
+"""Split Strings - Perl Weekly Challenge 253, Task 1."""
 
-    Args:
-    words (List[str]): A list of strings to be split.
-    separator (str): The character used as a separator.
+from __future__ import annotations
 
-    Returns:
-    List[str]: A list of non-empty strings after splitting by the separator.
-    """
-    result = []
+import unittest
+
+
+def split_strings(words: list[str], separator: str) -> list[str]:
+    """Split each string in words by separator and return non-empty parts."""
+    result: list[str] = []
     for word in words:
-        # Split each word by the separator and extend the result list
-        result.extend([s for s in word.split(separator) if s])
+        result.extend(part for part in word.split(separator) if part)
     return result
 
 
-# Tests
-assert split_strings(["one.two.three", "four.five", "six"], ".") == [
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-]
-assert split_strings(["$perl$$", "$$raku$"], "$") == ["perl", "raku"]
+class TestSplitStrings(unittest.TestCase):
+    """Unit tests for the split_strings function."""
 
-# Sample Outputs
-print(split_strings(["one.two.three", "four.five", "six"], "."))
-print(split_strings(["$perl$$", "$$raku$"], "$"))
+    def test_examples(self) -> None:
+        """Verify all challenge examples and edge cases."""
+        cases: list[tuple[list[str], str, list[str]]] = [
+            (
+                ["one.two.three", "four.five", "six"],
+                ".",
+                ["one", "two", "three", "four", "five", "six"],
+            ),
+            (
+                ["$perl$$", "$$raku$"],
+                "$",
+                ["perl", "raku"],
+            ),
+            (
+                ["...", ".."],
+                ".",
+                [],
+            ),
+        ]
+        for words, separator, expected in cases:
+            with self.subTest(words=words, separator=separator):
+                self.assertEqual(split_strings(words, separator), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
