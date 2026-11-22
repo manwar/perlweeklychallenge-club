@@ -53,16 +53,16 @@ intervals =: adverb define
   tr2 =. 10 ^ 1 + ldi
 
   NB. smallest next transition point
-  ntr =. (] (tr2@[)`]@.(<) tr1)
+  ntr =. ] (tr2@[)`]@.(<) tr1
 
   NB. number to char array
   to_str =. 0&":@]
 
   NB. number of trailing zeroes
-  ntz =. ((0 1) {:: '0*$' rxmatch to_str)
+  ntz =. (0 1) {:: '0+$' rxmatch to_str
 
   NB. step back from transition point to smallest preceding duplicate
-  back =. (] [`([ - 10 #. >: @ i. @ <: @ ])@.(1&<@]) ntz)
+  back =. ] [`([ - 10 #. >: @ i. @ <: @ ])@.(1&<@]) ntz
 
   NB. digits are always duplicate beyond this value
   stop =. _:^:(9876543210&<)
