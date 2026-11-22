@@ -65,7 +65,7 @@ do.
 
         Name =. 'name' from_ex Ex
         Examples =. 'in' from_ex Ex
-        Expected =: 'out' from_ex Ex
+        Expected =. 'out' from_ex Ex
         echo Name ,. Examples ,. Expected
         Result =: ,L:0 (>@(2&{::) mgm >@}:)&.> Examples
         echo Result
