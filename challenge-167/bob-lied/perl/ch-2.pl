@@ -15,17 +15,16 @@
 #   gamma(5); # 24
 #   gamma(7); # 719.99
 #=============================================================================
-#=============================================================================
 
 use v5.44;
+use utf8;
 
 
 use Getopt::Long;
 my $Verbose = false;
 my $DoTest  = false;
-my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose, "benchmark:i" => \$Benchmark);
+GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 my $logger;
 {
     use Log::Log4perl qw(:easy);
@@ -36,33 +35,57 @@ my $logger;
 #=============================================================================
 
 exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-say $_ for @ARGV;   # TODO command line processing here
+say Γ($_) for @ARGV;
 
 #=============================================================================
-sub gamma($n)
+sub Γ($z)
 {
-    return 0;
+    use constant π => 4 * atan2(1,1);
+
+    die "Negative argument to Γ()" if $z < 0;
+
+    # Magic coefficients from Wikipedia article
+    use constant  g => 7;
+    use constant p0 => 0.99999999999980993;
+    state @p  = (    676.5203681218851,
+                   -1259.1392167224028,
+                     771.32342877765313,
+                    -176.61502916214059,
+                      12.507343278686905,
+                      -0.13857109526572012,
+                       0.0000099843695780195716,
+                       0.00000015056327351493116,
+    );
+
+    if ( $z < 0.5 )
+    {
+        return π / ( sin( π * $z ) * Γ( 1 - $z ) );
+    }
+
+    my $x = p0;
+    for my ($i, $p) ( indexed @p )
+    {
+        $x += $p / ( $z + $i );
+    }
+
+    my $t = $z + g - 0.5;
+    return sqrt(2*π) * ( $t**( $z - 0.5 ) ) * exp(-$t) * $x;
 }
 
 sub runTest
 {
     use Test2::V1 -ipP;
 
-    is( task(3),   1.99, "gamma(3)");
-    is( task(5),  24,    "gamma(5)");
-    is( task(7), 719.99, "gamma(7)");
+    my $tolerance = 10e-8;
+
+    ok( abs( Γ(3) -   2.00 ) < $tolerance, "Γ(3)");
+    ok( abs( Γ(5) -  24.00 ) < $tolerance, "Γ(5)");
+    ok( abs( Γ(7) - 720.00 ) < $tolerance, "Γ(7)");
+
+    ok( abs( Γ(0.4) - 2.2181595 ) < $tolerance, "Γ(0.4)");
+    ok( abs( Γ(0.5) - 1.7724538 ) < $tolerance, "Γ(0.5)");
+    ok( abs( Γ(3.5) - 3.3233509 ) < $tolerance, "Γ(3.5)");
 
     done_testing;
 }
-
-sub runBenchmark($repeat)
-{
-    use Benchmark qw/cmpthese/;
-
-    cmpthese($repeat, {
-            label => sub { },
-        });
-}
-
