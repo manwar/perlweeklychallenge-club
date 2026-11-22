@@ -1,10 +1,5 @@
 #!/usr/bin/raku
 
-# It uses a sliding-window (two-pointer) algorithm. A frequency map tracks
-# characters in the window; when the window would require more than k
-# replacements, the left edge advances. It runs in O(n) time and uses O(d) space,
-#  where d is the number of distinct characters.
-
 sub MAIN(
     $str,
     $k
