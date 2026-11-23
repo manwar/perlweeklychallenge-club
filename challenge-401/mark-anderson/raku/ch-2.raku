@@ -76,10 +76,10 @@ sub reconstruct-digits-v2($str)
     G.parse($str, actions => Actions).made
 }
 
+my %json = from-json "../../examples/json/ch-2.json".IO.slurp;
+
 for &reconstruct-digits, &reconstruct-digits-v2
 {
-    my %json = from-json "../../examples/json/ch-2.json".IO.slurp;
-
     for %json<examples>.flat -> $example
     {
         is .($example<in>), $example<out>, $example<name>
