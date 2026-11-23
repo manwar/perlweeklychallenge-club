@@ -27,7 +27,7 @@ sub reconstruct-digits-v2($str)
 {
     # 
     # This isn't an efficient solution but the final
-    # test only takes about 1/2 second on my computer.  
+    # test only takes about 0.4 second on my computer.  
     #
 
     grammar G
@@ -35,15 +35,15 @@ sub reconstruct-digits-v2($str)
         my $zero  = <z e r o>\   .permutations>>.join.join('|');
         my $one   = <o n e>\     .permutations>>.join.join('|');
         my $two   = <t w o>\     .permutations>>.join.join('|');
-        my $three = <t h r e e>\ .permutations>>.join.join('|');
+        my $three = <t h r e e>\ .permutations.unique(with => &[eqv])>>.join.join('|');
         my $four  = <f o u r>\   .permutations>>.join.join('|');
         my $five  = <f i v e>\   .permutations>>.join.join('|');
         my $six   = <s i x>\     .permutations>>.join.join('|');
-        my $seven = <s e v e n>\ .permutations>>.join.join('|');
+        my $seven = <s e v e n>\ .permutations.unique(with => &[eqv])>>.join.join('|');
         my $eight = <e i g h t>\ .permutations>>.join.join('|');
-        my $nine  = <n i n e>\   .permutations>>.join.join('|');
+        my $nine  = <n i n e>\   .permutations.unique(with => &[eqv])>>.join.join('|');
 
-        token TOP { <cardinal>+ } # 474 alternations 😳 
+        token TOP { <cardinal>+ } # 342 alternations 😳 
     
         proto token cardinal            {*} 
               token cardinal:sym<zero>  { <$zero>  }
