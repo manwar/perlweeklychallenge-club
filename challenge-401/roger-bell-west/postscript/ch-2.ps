@@ -1,0 +1,336 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/tocounter {
+    2 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n 2 copy 0 dget 1 add put
+    } forall
+    c
+    end
+} bind def
+
+/set.union {
+    1 dict begin
+    /s 0 dict def
+    2 {
+        s copy /s exch def
+    } repeat
+    s
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+/counter.sub {
+    0 dict begin
+    /b exch def
+    /a exch def
+    <<
+        a keys toset b keys toset set.union keys {
+            /k exch def
+            k
+            a k known {
+                a k get
+                b k known {
+                    b k get sub
+                } if
+            } {
+                b k get neg
+            } ifelse
+        } forall
+    >>
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 1 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/counter.is_subset {
+    0 dict begin
+    /large exch def
+    /small exch def
+    true
+    small {
+        /v exch def
+        /k exch def
+        large k known not {
+            pop false
+            exit
+        } if
+        v large k get gt {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+
+% end included library code
+
+/reconstructdigits {
+    0 dict begin
+    /cc [
+        [
+            (zero)
+            (one)
+            (two)
+            (three)
+            (four)
+            (five)
+            (six)
+            (seven)
+            (eight)
+            (nine)
+        ] {
+            s2a tocounter 
+        } forall
+    ] def
+    s2a tocounter /cs exch def
+    [
+        [ 2 6 0 7 4 3 5 8 1 9 ] {
+            /d exch def
+            {
+                cc d get cs counter.is_subset {
+                    d
+                    /cs cs cc d get counter.sub def
+                } {
+                    exit
+                } ifelse
+            } loop
+        } forall
+    ] quicksort
+    { alloccvs } map
+    { strconcat } reduce
+    end
+} bind def
+
+(reconstructdigits) test.start
+(zroezerotwowtwotwo) reconstructdigits (00222) eq test
+(esveeneinght) reconstructdigits (78) eq test
+(oneenineeninefive) reconstructdigits (1599) eq test
+(zeroonetwothreeeightfivesixsevenninefour) reconstructdigits (0123456789) eq test
+(ninenineninenine) reconstructdigits (9999) eq test
+test.end

@@ -1,0 +1,264 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+    count /test.stack2 exch def
+    test.stack test.stack2 ne {
+        print
+        (Warning: stack deviation ) print
+        test.stack2 test.stack sub print
+        (\r\n) print
+    } if
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/rat.reduce {
+    0 dict begin
+    dup
+    aload pop gcd /g exch def
+    { g idiv } map
+    end
+} bind def
+
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/rat.cvs {
+    0 dict begin
+    aload pop
+    /b exch def
+    /a exch def
+    [
+        a alloccvs s2a aload pop
+        47
+        b alloccvs s2a aload pop
+    ] a2s
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+    count /test.stack exch def
+} bind def
+
+/gcd {
+    {
+        dup
+        3 1 roll
+        mod
+        dup 0 eq {
+            pop exit
+        } if
+    } loop
+} bind def
+
+/rat.add {
+    0 dict begin
+    /b exch def
+    /a exch def
+    [
+        a 0 get b 1 get mul
+        b 0 get a 1 get mul
+        add
+        a 1 get b 1 get mul
+    ]
+    rat.reduce
+    end
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+
+% end included library code
+
+/fractionaladditionsubstraction {
+    0 dict begin
+    /cv exch def
+    /state 0 def
+    /n 0 def
+    /num 0 def
+    /sign 0 def
+    /i 0 def
+    /terms [
+        {
+            i cv length ge {
+                exit
+            } if
+            1 {
+                state 0 eq {
+                    1 {
+                        cv i get 43 eq {
+                            /state 0 def
+                            /i i 1 add def
+                            exit
+                        } if
+                        cv i get c.isdigit {
+                            /sign 1 def
+                            /state 1 def
+                            /n cv i get 48 sub def
+                            /i i 1 add def
+                            exit
+                        } if
+                        cv i get 45 eq {
+                            /sign -1 def
+                            /state 1 def
+                            /n 0 def
+                            /i i 1 add def
+                        } if
+                    } repeat
+                    exit
+                } if
+                state 1 eq {
+                    1 {
+                        cv i get c.isdigit {
+                            /n n 10 mul cv i get 48 sub add def
+                            /i i 1 add def
+                            exit
+                        } if
+                        cv i get 47 eq {
+                            /num n sign mul def
+                            /n 0 def
+                            /state 2 def
+                            /i i 1 add def
+                        } if
+                    } repeat
+                    exit
+                } if
+                state 2 eq {
+                    cv i get c.isdigit {
+                        /n n 10 mul cv i get 48 sub add def
+                        /i i 1 add def
+                    } {
+                        [ num n ]
+                        /state 0 def
+                    } ifelse
+                } if
+            } repeat
+        } loop
+        state 2 eq {
+            [ num n ]
+        } if
+    ] def
+    /out terms 0 get deepcopy def
+    1 1 terms length 1 sub {
+        terms exch get
+        out exch rat.add
+        /out exch def
+    } for
+    out rat.cvs
+} bind def
+
+(fractionaladditionsubstraction) test.start
+(1/2+3/2) fractionaladditionsubstraction (2/1) eq test
+(-5/2-3/2) fractionaladditionsubstraction (-4/1) eq test
+(5/3-5/3) fractionaladditionsubstraction (0/1) eq test
+(10/10-1/10+2/5) fractionaladditionsubstraction (13/10) eq test
+(1/6+1/6+1/6) fractionaladditionsubstraction (1/2) eq test
+test.end
