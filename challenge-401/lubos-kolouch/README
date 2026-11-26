@@ -1,14 +1,13 @@
-# The Weekly Challenge 397 - Lubos Kolouch
+# The Weekly Challenge 401 - Lubos Kolouch
 
-Solutions for Task 1 (Absent Smallest Positive) and Task 2 (Binary Reflection) in Perl and Python.
+Solutions for Task 1 (Fractional Addition Substraction) and Task 2 (Reconstruct Digits) in Perl and Python.
 
-## Task 1: Absent Smallest Positive
-- Given an array of integers, calculate the arithmetic mean.
-- Find the smallest positive integer ($k \ge 1$) that is strictly greater than the average and does not appear in the input array.
-- Implemented using set lookups in $O(N)$ time and $O(N)$ space in Perl and Python.
+## Task 1: Fractional Addition Substraction
+- Parse signed fractions from the expression string and accumulate their sum.
+- Reduce the numerator and denominator at each step using the greatest common divisor (`gcd`).
+- Return the reduced fraction formatted as `num/den` (with `0/1` for zero).
 
-## Task 2: Binary Reflection
-- Sort an array in ascending order based on the binary reflection of each element.
-- The binary reflection reverses the bit representation without leading zeros and parses back to decimal.
-- Ties are broken by original value in ascending order.
-- Implemented via Schwartzian transform / key sorting in $O(N \log N)$ time in Perl and Python.
+## Task 2: Reconstruct Digits
+- Count character frequencies in the scrambled input string.
+- Deduce the exact count of each digit `0`–`9` using unique identifying letters (`z`, `w`, `u`, `x`, `g`, then `o`, `h`, `f`, `s`, `i`).
+- Concatenate the digits in ascending order in $O(N)$ time and $O(1)$ extra space.
