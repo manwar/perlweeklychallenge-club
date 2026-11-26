@@ -1,38 +1,50 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Linear Recurrence of Second Order - Perl Weekly Challenge 246, Task 2."""
 
-import numpy as np
+from __future__ import annotations
+
+import unittest
 
 
-def is_linear_recurrence(a):
+def is_linear_recurrence(a: list[int]) -> bool:
+    """Return True if a forms a second-order linear recurrence with integer factors."""
     if len(a) < 5:
         return False
 
-    # Forming matrix to solve the linear equations
-    A = np.array([[a[0], a[1]], [a[1], a[2]]])
-    B = np.array([a[2], a[3]])
-
-    # Solve for p and q
-    try:
-        p, q = np.linalg.solve(A, B)
-    except np.linalg.LinAlgError:
-        return False  # Cannot solve if the matrix A is singular
-
-    # Check if p and q are integers
-    if not (p.is_integer() and q.is_integer()):
-        return False
-
-    # Verify the recurrence for the rest of the array
-    for i in range(4, len(a)):
-        if a[i] != int(p) * a[i - 2] + int(q) * a[i - 1]:
+    det = a[0] * a[2] - a[1] ** 2
+    if det != 0:
+        p_num = a[2] * a[2] - a[1] * a[3]
+        q_num = a[0] * a[3] - a[1] * a[2]
+        if p_num % det != 0 or q_num % det != 0:
             return False
+        p = p_num // det
+        q = q_num // det
+    elif a[0] == 0:
+        p, q = 0, 0
+    else:
+        if a[1] % a[0] != 0:
+            return False
+        p, q = 0, a[1] // a[0]
 
-    return True
+    return all(a[i] == p * a[i - 2] + q * a[i - 1] for i in range(2, len(a)))
 
 
-# Tests
-assert is_linear_recurrence([1, 1, 2, 3, 5]) == True, "Fibonacci sequence"
-assert is_linear_recurrence([4, 2, 4, 5, 7]) == False, "Even-odd mismatch"
-assert is_linear_recurrence([4, 1, 2, -3, 8]) == True, "Custom sequence"
+class TestLinearRecurrence(unittest.TestCase):
+    """Unit tests for the is_linear_recurrence function."""
 
-# Main
-print("true" if is_linear_recurrence([4, 1, 2, -3, 8]) else "false")
+    def test_examples(self) -> None:
+        """Verify all challenge examples and edge cases."""
+        cases: list[tuple[list[int], bool]] = [
+            ([1, 1, 2, 3, 5], True),
+            ([4, 2, 4, 5, 7], False),
+            ([4, 1, 2, -3, 8], True),
+            ([1, 2, 4, 8, 16], True),
+            ([0, 0, 0, 0, 0], True),
+        ]
+        for seq, expected in cases:
+            with self.subTest(seq=seq):
+                self.assertEqual(is_linear_recurrence(seq), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
