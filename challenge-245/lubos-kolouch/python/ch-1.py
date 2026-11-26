@@ -1,26 +1,29 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Sort Language - Perl Weekly Challenge 245, Task 1."""
+
+from __future__ import annotations
 
 import unittest
-from typing import List, Tuple
 
 
 def sort_language(langs: list[str], popularity: list[int]) -> list[str]:
-    combined = sorted(zip(langs, popularity), key=lambda x: x[1])
+    """Return languages sorted by ascending popularity."""
+    combined = sorted(zip(langs, popularity, strict=True), key=lambda x: x[1])
     return [lang for lang, _ in combined]
 
 
-# Test Cases
 class TestSortLanguage(unittest.TestCase):
-    def test_example_1(self):
-        self.assertEqual(
-            sort_language(["perl", "c", "python"], [2, 1, 3]), ["c", "perl", "python"]
-        )
+    """Unit tests for the sort_language function."""
 
-    def test_example_2(self):
-        self.assertEqual(
-            sort_language(["c++", "haskell", "java"], [1, 3, 2]),
-            ["c++", "java", "haskell"],
-        )
+    def test_examples(self) -> None:
+        """Verify all challenge examples."""
+        cases: list[tuple[list[str], list[int], list[str]]] = [
+            (["perl", "c", "python"], [2, 1, 3], ["c", "perl", "python"]),
+            (["c++", "haskell", "java"], [1, 3, 2], ["c++", "java", "haskell"]),
+        ]
+        for langs, popularity, expected in cases:
+            with self.subTest(langs=langs, popularity=popularity):
+                self.assertEqual(sort_language(langs, popularity), expected)
 
 
 if __name__ == "__main__":
