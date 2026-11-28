@@ -1,26 +1,29 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+"""Floor Sum - Perl Weekly Challenge 243, Task 2."""
 
-import math
-from typing import List
+from __future__ import annotations
+
+import unittest
 
 
 def floor_sum(nums: list[int]) -> int:
-    """
-    Calculate the sum of floor division results for every combination of elements in the array.
-
-    Args:
-    nums (List[int]): A list of positive integers.
-
-    Returns:
-    int: The sum of the floor division results.
-    """
-    return sum(
-        math.floor(nums[i] / nums[j])
-        for i in range(len(nums))
-        for j in range(len(nums))
-    )
+    """Return the sum of floor(nums[i] / nums[j]) for all pairs (i, j)."""
+    return sum(a // b for a in nums for b in nums)
 
 
-# Tests
-assert floor_sum([2, 5, 9]) == 10
-assert floor_sum([7, 7, 7, 7, 7, 7, 7]) == 49
+class TestFloorSum(unittest.TestCase):
+    """Unit tests for the floor_sum function."""
+
+    def test_examples(self) -> None:
+        """Verify all challenge examples."""
+        cases: list[tuple[list[int], int]] = [
+            ([2, 5, 9], 10),
+            ([7, 7, 7, 7, 7, 7, 7], 49),
+        ]
+        for nums, expected in cases:
+            with self.subTest(nums=nums):
+                self.assertEqual(floor_sum(nums), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
